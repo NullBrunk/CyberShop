@@ -20,5 +20,14 @@ All notable changes to this project will be documented in this file.
 ```bash
 # [1.0] - 24 avril 2023
 - Creation of the Laravel project
+- Deleted Eloquent ORM cause (i don't like ORM's)
+- Added the Makefile
+```
+
+# Installation
+
+```bash
+sudo make db
+sudo make serv
 
 ```
