@@ -13,3 +13,14 @@
 
 An E-Commerce website in Laravel
 
+# Changelog
+
+```md
+# Changelog
+All notable changes to this project will be documented in this file.
+
+
+# [1.0] - 24 avril 2023
+- Creation of the Laravel project
+
+```
