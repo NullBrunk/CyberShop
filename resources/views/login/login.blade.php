@@ -97,8 +97,10 @@
                     
                     
                             <form method="post" class="login-form">
+                                {{ csrf_field() }}
+
                                 <div class="form-group">
-                                    <input type="text" id="name" name="name" class="form-control rounded-left" placeholder="Username" required>
+                                    <input type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required>
                                 </div>
                     
                                 <div class="form-group d-flex">

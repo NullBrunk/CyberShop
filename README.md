@@ -24,14 +24,31 @@ All notable changes to this project will be documented in this file.
 - Added the Makefile
 
 # [1.1] - 28 avril 2023
-- Started the front end (Using this template https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/)
-- Added Signup & Login page
+- Started the front end (Using https://bootstrapmade.com/)
+- Updated DATABASE & TABLES 
+- Implemented Login & Signup pages 
+- Implemented the Laravel Request Validator (for signup & login) 
 ```
 
 # Installation
 
+```sql
+CREATE DATABASE ecommerce;
+use ecommerce;
+
+CREATE TABLE users(
+    `id` INT AUTO_INCREMENT,
+    `mail` VARCHAR(50) UNIQUE NOT NULL,
+    `pass` TEXT NOT NULL,
+    `is_admin` SMALLINT DEFAULT 0,
+
+    PRIMARY KEY(`id`)   
+);
+```
+Then
 ```bash
 sudo make db
 sudo make serv
-
 ```
+
+

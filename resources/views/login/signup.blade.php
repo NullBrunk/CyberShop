@@ -97,14 +97,34 @@
                     
                     
                             <form method="post" class="login-form">
+                            
+                                {{ csrf_field() }}
+
+                                @if ($errors->has('email'))
+                                    <div class="alert alert-danger">
+                                        You must enter a valid mail adress
+                                    </div>
+                                @endif
                                 <div class="form-group">
-                                    <input type="text" id="name" name="name" class="form-control rounded-left" placeholder="Username" required>
+                                    <input type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required>
                                 </div>
-                    
+
+
+                                @if ($errors->has('pass'))
+                                    <div class="alert alert-danger">
+                                        Password is required !
+                                    </div>
+                                @endif
                                 <div class="form-group d-flex">
                                     <input type="password" id="pass" name="pass" class="form-control rounded-left" placeholder="Password" required>
                                 </div>
 
+                                
+                                @if ($errors->has('repass'))
+                                    <div class="alert alert-danger">
+                                        Password are not same !
+                                    </div>
+                                @endif
                                 <div class="form-group d-flex">
                                     <input type="password" id="pass" name="repass" class="form-control rounded-left" placeholder="Re Password" required>
                                 </div>
@@ -113,8 +133,7 @@
                                     <button type="submit" class="form-control btn btn-primary rounded submit px-3">Login</button>
                                 </div>
 
-                        
-                    
+              
                                 <div class="form-group d-md-flex">
                     
                                     <div class="w-50">

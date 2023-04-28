@@ -1,33 +1,40 @@
 <?php
 
+use App\Http\Controllers\Login;
+use App\Http\Controllers\Signup;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
-
+// Statics pages
 Route::get('/', function () {
     return view('static.index');
-});
-
-Route::get('/login', function () {
-    return view('login.login');
-});
-
-Route::get('/signup', function () {
-    return view('login.signup');
 });
 
 Route::get('/about', function () {
     return view('static.about');
 });
+
+Route::get('/contact', function () {
+    return view('static.contact');
+});
+
+
+// Login / Signup 
+Route::get('/login', function () {
+    return view('login.login');
+});
+Route::post('/login', [ Login::class, 'login' ] );
+
+
+Route::get('/signup', function () {
+    return view('login.signup');
+});
+Route::post('/signup', [ Signup::class, 'signup' ] );
+
+
+// Disconnect
+Route::get('/disconnect', function () {
+    session_start();
+    session_destroy();
+});
+
 
