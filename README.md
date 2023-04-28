@@ -22,6 +22,10 @@ All notable changes to this project will be documented in this file.
 - Creation of the Laravel project
 - Deleted Eloquent ORM cause (i don't like ORM's)
 - Added the Makefile
+
+# [1.1] - 28 avril 2023
+- Started the front end (Using this template https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/)
+- Added Signup & Login page
 ```
 
 # Installation
