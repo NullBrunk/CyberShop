@@ -11,7 +11,7 @@
 
 # E-Commerce
 
-An E-Commerce website in Laravel
+An E-Commerce website with the Laravel Framework
 
 # Changelog
 
