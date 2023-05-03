@@ -7,7 +7,6 @@
 ![repo size](https://img.shields.io/github/repo-size/NullBrunk/E-Commerce?style=for-the-badge)
 
 ![image](https://user-images.githubusercontent.com/125673909/236008769-2e900822-be7e-4c74-a87e-bfcc22bd69ec.png)
-![image](https://user-images.githubusercontent.com/125673909/236008883-52c67def-b3dd-4713-9a73-906aa35e6ee3.png)
 
 
 </div>
@@ -21,16 +20,19 @@ An E-Commerce website with the Laravel Framework
 All notable changes to this project will be documented in this file.
 
 ```bash
-# [1.0] - 24 avril 2023
+# [1.0] - 24 april 2023
 - Creation of the Laravel project
 - Deleted Eloquent ORM cause i hate ORM
 - Added the Makefile
 
-# [1.1] - 28 avril 2023
+# [1.1] - 28 april 2023
 - Started the front end (Using https://bootstrapmade.com/)
 - Updated DATABASE & TABLES 
 - Implemented Login & Signup pages 
 - Implemented the Laravel Request Validator (for signup & login) 
+
+# [1.2] - 3 march 2023
+- Front end updates (glightbox)
 ```
 
 # Installation

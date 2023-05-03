@@ -88,39 +88,39 @@
           </div>
         </div>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="200">
+        <div class="row portfolio-container">
 
-          <div class="col-md-3 portfolio-item filter-web">
+          <div class="col-md-3 portfolio-item filter-laptop filter-gaming">
             <div class="portfolio-wrap" style="border-radius: 5px;">
               <img src="assets/img/computer.png" class="img-fluid imgpres" alt="">
               <div class="portfolio-info">
 
                 <div class="portfolio-links">
-                  <a href="https://mondecolepocket.com/" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                  <a href="" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
           </div>
           
-          <div class="col-md-3 portfolio-item filter-web">
+          <div class="col-md-3 portfolio-item filter-dresses">
             <div class="portfolio-wrap" style="border-radius: 5px;">
               <img src="assets/img/slip.png" class="img-fluid imgpres" alt="">
               <div class="portfolio-info">
 
                 <div class="portfolio-links">
-                  <a href="https://mondecolepocket.com/" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                  <a href="" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="col-md-3 portfolio-item filter-web">
+          <div class="col-md-3 portfolio-item filter-health">
             <div class="portfolio-wrap" style="border-radius: 5px;">
               <img src="assets/img/parfum.png" class="img-fluid imgpres" alt="">
               <div class="portfolio-info">
 
                 <div class="portfolio-links">
-                  <a href="https://mondecolepocket.com/" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                  <a href="" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
@@ -128,13 +128,13 @@
                  
   
           
-          <div class="col-md-3 portfolio-item filter-web">
+          <div class="col-md-3 portfolio-item filter-beauty">
             <div class="portfolio-wrap" style="border-radius: 5px;">
               <img src="assets/img/champignon.png" class="img-fluid imgpres" alt="">
               <div class="portfolio-info">
 
                 <div class="portfolio-links">
-                  <a href="https://mondecolepocket.com/" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                  <a href="" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
                 </div>
               </div>
             </div>
