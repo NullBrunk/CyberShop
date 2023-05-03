@@ -35,6 +35,7 @@ Route::post('/signup', [ Signup::class, 'signup' ] );
 Route::get('/disconnect', function () {
     session_start();
     session_destroy();
+    return redirect('/');
 });
 
 

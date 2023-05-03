@@ -99,6 +99,12 @@
                             <form method="post" class="login-form">
                                 {{ csrf_field() }}
 
+                                @if(isset($_GET['f']) or $errors->has('email') or $errors->has('pass'))
+                                    <div class="alert alert-danger">
+                                        Wrong username or password !
+                                    </div>
+                                @endif
+
                                 <div class="form-group">
                                     <input type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required>
                                 </div>

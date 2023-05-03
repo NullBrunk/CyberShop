@@ -29,10 +29,10 @@ class Login extends Controller
             $_SESSION['logged'] = true;
             $_SESSION['mail'] = $r['mail'];
             $_SESSION['pass'] = $r['pass'];
-            return redirect('/users');
+            return redirect('/');
         }
         else {
-            return redirect('/login');
+            return redirect('/login?f');
         }
 
     }
