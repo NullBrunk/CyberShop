@@ -110,18 +110,12 @@
 
           @endforeach
 
-
-
-         
-
-          
-
           
 
         </div>
 
       </div>
-    </section><!-- End Portfolio Section -->
+    </section>
 
   </footer><!-- End Footer -->
 
