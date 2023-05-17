@@ -2,7 +2,6 @@
 
 <a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a>
   
-    Ce projet est encore en cours de développement !
     
 ![GitHub top language](https://img.shields.io/github/languages/top/NullBrunk/E-Commerce?style=for-the-badge)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/NullBrunk/E-Commerce?style=for-the-badge)
@@ -14,28 +13,9 @@
 </div> 
 
 # E-Commerce
-
 An E-Commerce website with the Laravel Framework
+( This site is still under construction )
 
-# Changelog
-
-All notable changes to this project will be documented in this file.
-
-```bash
-# [1.0] - 24 april 2023
-- Creation of the Laravel project
-- Deleted Eloquent ORM cause i hate ORM
-- Added the Makefile
-
-# [1.1] - 28 april 2023
-- Started the front end (Using https://bootstrapmade.com/)
-- Updated DATABASE & TABLES 
-- Implemented Login & Signup pages 
-- Implemented the Laravel Request Validator (for signup & login) 
-
-# [1.2] - 3 march 2023
-- Front end updates (glightbox)
-```
 
 # Installation
 
@@ -51,8 +31,20 @@ CREATE TABLE users(
 
     PRIMARY KEY(`id`)   
 );
+
+CREATE TABLE product(
+    `id` INT AUTO_INCREMENT,
+    `id_user` INT NOT NULL,
+    `name` VARCHAR(45) NOT NULL,
+    `price` FLOAT,
+    `descr` TEXT,
+    `class` TEXT,
+
+    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
+    PRIMARY KEY(`id`)
+);
 ```
-Then
+
 ```bash
 sudo make db
 sudo make serv

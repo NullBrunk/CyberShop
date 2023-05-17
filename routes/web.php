@@ -2,12 +2,8 @@
 
 use App\Http\Controllers\Login;
 use App\Http\Controllers\Signup;
+use App\Http\Controllers\Index;
 use Illuminate\Support\Facades\Route;
-
-// Statics pages
-Route::get('/', function () {
-    return view('static.index');
-});
 
 Route::get('/about', function () {
     return view('static.about');
@@ -16,6 +12,11 @@ Route::get('/about', function () {
 Route::get('/contact', function () {
     return view('static.contact');
 });
+
+// root page
+
+
+Route::get('/', [ Index::class, 'showIndex' ] );
 
 
 // Login / Signup 
