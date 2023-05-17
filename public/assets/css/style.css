@@ -1809,5 +1809,15 @@ section {
 
 .imgpres {
   width: 25vh;
+}
 
+.show {
+  font-size: 22px;
+  color: white;
+  display: none;
+  font-weight: bold;
+}
+
+.portfolio-wrap:hover .show {
+  display: block;
 }

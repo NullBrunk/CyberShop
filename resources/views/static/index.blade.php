@@ -92,16 +92,22 @@
 
           <div class="col-md-3 portfolio-item filter-laptop filter-gaming">
             <div class="portfolio-wrap" style="border-radius: 5px;">
+            
               <img src="assets/img/computer.png" class="img-fluid imgpres" alt="">
-              <div class="portfolio-info">
+                <div class="portfolio-info">
 
                 <div class="portfolio-links">
                   <a href="" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
                 </div>
+
               </div>
+              <p class="show">158,99 $</p>
             </div>
+
           </div>
           
+
+
           <div class="col-md-3 portfolio-item filter-dresses">
             <div class="portfolio-wrap" style="border-radius: 5px;">
               <img src="assets/img/slip.png" class="img-fluid imgpres" alt="">
@@ -111,6 +117,7 @@
                   <a href="" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
                 </div>
               </div>
+              <p class="show">33,85 $</p>
             </div>
           </div>
 
@@ -123,6 +130,7 @@
                   <a href="" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
                 </div>
               </div>
+              <p class="show">42,95 $</p>
             </div>
           </div>
                  
@@ -137,6 +145,7 @@
                   <a href="" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
                 </div>
               </div>
+              <p class="show">14,99 $</p>
             </div>
           </div>
 
