@@ -11,7 +11,7 @@ class Index extends Controller
         $r = $r -> fetchAll();
 
         return view("index", ["data" => $r]);
-        
+
     }
 
 }

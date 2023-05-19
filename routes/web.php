@@ -19,6 +19,7 @@ Route::get('/contact', function () {
 Route::get('/', [ Index::class, 'showIndex' ] );
 
 
+
 // Login / Signup 
 Route::get('/login', function () {
     return view('login.login');
