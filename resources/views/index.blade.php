@@ -99,7 +99,7 @@
                   <div class="portfolio-info">
 
                   <div class="portfolio-links">
-                    <a href="" target="_blank" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+                    <a href="/details?id={{ $d['id'] }}" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
                   </div>
 
                 </div>

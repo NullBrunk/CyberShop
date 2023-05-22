@@ -3,6 +3,7 @@
 use App\Http\Controllers\Login;
 use App\Http\Controllers\Signup;
 use App\Http\Controllers\Index;
+use App\Http\Controllers\Details;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/about', function () {
@@ -41,3 +42,11 @@ Route::get('/disconnect', function () {
 });
 
 
+// Details 
+
+Route::get('/detail', function () {
+    return view('static.details');
+});
+
+
+Route::get('/details', [Details::class, 'RenderDetails']);

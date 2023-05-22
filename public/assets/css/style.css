@@ -1821,3 +1821,14 @@ section {
 .portfolio-wrap:hover .show {
   display: block;
 }
+
+.addtocart {
+  background-color: #293e61 !important; 
+  margin-top: 20px;
+  font-size: 22px !important;
+  padding: 14px 28px;
+  border-radius: 50px;
+  color: #fff;
+  border: 2px solid #47b2e4;
+  font-weight: 600;
+}

@@ -8,7 +8,7 @@ serv: ## Lance le serveur PHP sur le port 80
 test: ## Lancer les test unitaires
 	@php ./vendor/bin/phpunit
 
-db: ## Lance mysql
+db: ## Lancer MariaDB
 	sudo systemctl start mariadb
 
 help: 
