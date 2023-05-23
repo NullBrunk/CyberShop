@@ -8,7 +8,7 @@ session_start();
 
 class Login extends Controller
 {
-    public function login(LoginReq $req){
+    public function __invoke(LoginReq $req){
         
         if(isset($_SESSION['logged'])){
             return redirect('/users');

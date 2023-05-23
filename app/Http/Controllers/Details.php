@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 class Details extends Controller
 {
-    public function RenderDetails(){
+    public function __invoke(){
         
         include_once __DIR__ . '/../Database/config.php';
         

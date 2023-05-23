@@ -103,7 +103,13 @@
                                     <div class="alert alert-danger">
                                         You must enter a valid mail adress
                                     </div>
+                                
+                                @elseif (isset($error))
+                                    <div class="alert alert-danger">
+                                        Error in account creation !
+                                    </div>
                                 @endif
+
                                 <div class="form-group">
                                     <input type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required>
                                 </div>
