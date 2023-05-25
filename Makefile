@@ -1,7 +1,8 @@
 .DEFAULT_GOAL = help
 port ?= 80
-info ?= "Update Makefile"
 
+# the -m info of git commit
+info ?= "Updated Makefile"
 
 serv: ## Start the PHP server on port 80
 	@sudo php artisan serve --port=$(port) --host=0.0.0.0
