@@ -16,11 +16,11 @@ use App\Http\Controllers\Index;
 
 Route::get('/about', function () {
     return view('static.about');
-});
+}) -> name("about");
 
 Route::get('/contact', function () {
     return view('static.contact');
-});
+}) -> name("contact");
 
 Route::get('/detail', function () {
     return view('static.details');
@@ -45,11 +45,11 @@ Route::post('/signup', Signup::class );
 
 Route::get('/signup', function () {
     return view('login.signup');
-});
+}) -> name("signup");
 
 Route::get('/login', function () {
     return view('login.login');
-});
+}) -> name("login");
 
 
 
@@ -58,7 +58,7 @@ Route::get('/login', function () {
 Route::get('/disconnect', function () {
     session_destroy();
     return redirect('/');
-});
+}) -> name("disconnect");
 
 
 

@@ -7,20 +7,20 @@
       
       
         <ul>
-            <li><a class="nav-link scrollto" href="/about">About</a></li>
-            <li><a class="nav-link scrollto" href="/contact">Contact</a></li>
+            <li><a class="nav-link scrollto" href="{{ route("about") }}">About</a></li>
+            <li><a class="nav-link scrollto" href="{{ route("contact") }}">Contact</a></li>
         
         @if(isset($_SESSION['logged']))
           <li style="list-style-type: none;" class="dropdown"><a href="#"><i style="font-size: 32px !important;" class="bx bx-user-circle"></i></a>
                   <ul>
                     <li><a href="#">Profile</a></li>
                     <li><a href="#">Settings</a></li>
-                    <li><a href="/disconnect">Disconnect</a></li>
+                    <li><a href="{{ route("disconnect") }}">Disconnect</a></li>
                   </ul>
           </li>
         @else
-            <li><a class="nav-link scrollto" href="/signup">Signup</a></li>
-            <li style="list-style-type: none;"><a class="getstarted scrollto" href="/login">Login</a></li>  
+            <li><a class="nav-link scrollto" href="{{ route("signup") }}">Signup</a></li>
+            <li style="list-style-type: none;"><a class="getstarted scrollto" href="{{ route("login") }}">Login</a></li>  
             @endif
         </ul>
 
