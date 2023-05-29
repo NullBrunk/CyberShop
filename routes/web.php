@@ -2,8 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Details;
-use App\Http\Controllers\Signup;
-use App\Http\Controllers\Login;
+use App\Http\Controllers\Users;
 use App\Http\Controllers\Index;
 
 
@@ -36,8 +35,8 @@ Route::get('/', Index::class ) -> name("root");
 
 // Login / Signup
 
-Route::post('/login', Login::class );
-Route::post('/signup', Signup::class );
+Route::post('/login',  [ Users::class, "get" ] );
+Route::post('/signup', [ Users::class, "store" ] );
 
 
 Route::get('/signup', function () {
@@ -53,8 +52,11 @@ Route::get('/login', function () {
 // Disconnect
 
 Route::get('/disconnect', function () {
+
+    session_start();
     session_destroy();
     return redirect('/');
+
 }) -> name("disconnect");
 
 

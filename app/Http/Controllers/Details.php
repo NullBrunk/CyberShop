@@ -36,7 +36,7 @@ class Details extends Controller {
             return view("details", ["data" => $data]);
         }
         else {
-            abort(403);
+            abort(404);
         }
 
     }
