@@ -22,9 +22,6 @@ Route::get('/contact', function () {
     return view('static.contact');
 }) -> name("contact");
 
-Route::get('/detail', function () {
-    return view('static.details');
-});
 
 /*
 |---------------------------------------------

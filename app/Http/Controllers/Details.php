@@ -33,7 +33,7 @@ class Details extends Controller {
         $data = $details -> fetch();
         
         if($data){
-            return view("static.details", ["data" => $data]);
+            return view("details", ["data" => $data]);
         }
         else {
             abort(403);
