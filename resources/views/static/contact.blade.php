@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    @extends('../layout/header')
+    @include('../layout/header')
 <main>
 <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact" style="padding-top: 10%;">

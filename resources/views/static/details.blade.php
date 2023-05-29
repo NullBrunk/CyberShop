@@ -32,7 +32,7 @@
 
 <body>
 
-  @extends('../layout/header')
+  @include('../layout/header')
 
   <main id="main">
 

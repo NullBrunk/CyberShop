@@ -34,7 +34,7 @@
 
 <body>
 
-@extends('layout/header')
+@include('layout/header')
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">

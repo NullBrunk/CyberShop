@@ -36,7 +36,7 @@
     <!-- ======= Header ======= -->
     
     <main id="main">
-        @extends('../layout/header')
+        @include('../layout/header')
 
 
 
