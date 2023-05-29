@@ -97,12 +97,14 @@
                             
                                 {{ csrf_field() }}
 
-                                @if ($errors->has('email'))
+                                @error("email")
                                     <div class="alert alert-danger">
                                         You must enter a valid mail adress
                                     </div>
+                                @enderror
+                                   
                                 
-                                @elseif (isset($error))
+                                @if(isset($error))
                                     <div class="alert alert-danger">
                                         Error in account creation !
                                     </div>
@@ -113,21 +115,23 @@
                                 </div>
 
 
-                                @if ($errors->has('pass'))
+                                @error("pass")
                                     <div class="alert alert-danger">
                                         Password is required !
                                     </div>
-                                @endif
+                                @enderror
+
                                 <div class="form-group d-flex">
                                     <input type="password" id="pass" name="pass" class="form-control rounded-left" placeholder="Password" required>
                                 </div>
 
                                 
-                                @if ($errors->has('repass'))
+                                @error("repass")
                                     <div class="alert alert-danger">
                                         Password are not same !
                                     </div>
-                                @endif
+                                @enderror
+
                                 <div class="form-group d-flex">
                                     <input type="password" id="pass" name="repass" class="form-control rounded-left" placeholder="Re Password" required>
                                 </div>
