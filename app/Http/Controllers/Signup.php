@@ -9,15 +9,13 @@ class Signup extends Controller
 {
     public function __invoke(SignupReq $request){
 
-        $validated = $request -> validated();
-        
         include_once __DIR__ . '/../Database/config.php';
         
         $create_user = $pdo -> prepare("INSERT INTO `users`(mail, pass) VALUES (:mail, :pass)");
         try {
             $create_user -> execute(array(
-        	    "mail" => $validated["email"],
-        	    "pass" => $validated["pass"]
+        	    "mail" => $request["email"],
+        	    "pass" => $request["pass"]
             ));
         }
 
