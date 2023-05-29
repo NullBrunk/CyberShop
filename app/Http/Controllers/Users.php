@@ -46,6 +46,7 @@ class Users extends Controller
             return redirect(route("root"));
         }
         else {
+
             return redirect(route("login") . "?f");
         }
 

@@ -99,11 +99,11 @@
                                         Wrong username or password !
                                     </div>
                                 @endif
+                  
 
                                 <div class="form-group">
                                     <input type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required>
                                 </div>
-                    
                                 <div class="form-group d-flex">
                                     <input type="password" id="pass" name="pass" class="form-control rounded-left" placeholder="Password" required>
                                 </div>

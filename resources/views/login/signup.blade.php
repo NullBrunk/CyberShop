@@ -111,7 +111,7 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <input type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required>
+                                    <input value="{{ old("email") }}" type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required>
                                 </div>
 
 
@@ -122,7 +122,7 @@
                                 @enderror
 
                                 <div class="form-group d-flex">
-                                    <input type="password" id="pass" name="pass" class="form-control rounded-left" placeholder="Password" required>
+                                    <input value="{{ old("pass") }}" type="password" id="pass" name="pass" class="form-control rounded-left" placeholder="Password" required>
                                 </div>
 
                                 
@@ -133,7 +133,7 @@
                                 @enderror
 
                                 <div class="form-group d-flex">
-                                    <input type="password" id="pass" name="repass" class="form-control rounded-left" placeholder="Re Password" required>
+                                    <input value="{{ old("repass") }}"type="password" id="pass" name="repass" class="form-control rounded-left" placeholder="Re Password" required>
                                 </div>
                     
                                 <div class="form-group">
