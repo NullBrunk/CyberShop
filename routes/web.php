@@ -64,4 +64,4 @@ Route::get('/disconnect', function () {
 
 // Details 
 
-Route::get('/details', Details::class );
+Route::get('/details/{post:slug}', Details::class );
