@@ -33,7 +33,7 @@ Route::get('/detail', function () {
 
 */
 
-Route::get('/', Index::class );
+Route::get('/', Index::class ) -> name("root");
 
 
 

@@ -36,8 +36,6 @@
 </head>
 
 <body>
-
-    
   @include('../layout/header')
 
   <div id="preloader"></div>

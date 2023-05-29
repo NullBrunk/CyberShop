@@ -8,6 +8,7 @@ session_start();
 
 class Login extends Controller
 {
+
     public function __invoke(LoginReq $req){
         
         if(isset($_SESSION['logged'])){
@@ -17,22 +18,25 @@ class Login extends Controller
         $validated = $req -> validated();
     
         include_once __DIR__ . '/../Database/config.php';
-        $r = $pdo -> prepare("SELECT * FROM `users` WHERE mail=:mail AND BINARY pass=:pass");
-        $r -> execute(array(
+        
+        $user_info = $pdo -> prepare("SELECT * FROM `users` WHERE mail=:mail AND BINARY pass=:pass");
+        $user_info -> execute(array(
             "mail" => $validated["email"],
         	"pass" => $validated["pass"]
         ));
-        $r = $r -> fetch();
+        $data = $user_info -> fetch();
 
-        if($r){
-            $_SESSION['admin'] = $r['is_admin'];
+        if($data){
+            $_SESSION['admin'] = $data['is_admin'];
             $_SESSION['logged'] = true;
-            $_SESSION['mail'] = $r['mail'];
-            $_SESSION['pass'] = $r['pass'];
-            return redirect('/');
+            $_SESSION['mail'] = $data['mail'];
+            $_SESSION['pass'] = $data['pass'];
+            return redirect(route("root"));
         }
+        
+        # If the request is validated but the user:pass is wrong 
         else {
-            return redirect('/login?f');
+            return redirect(route("login") . "?f");
         }
 
     }

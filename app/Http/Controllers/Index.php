@@ -7,10 +7,11 @@ class Index extends Controller {
     public function __invoke(){
         
         include_once __DIR__ . '/../Database/config.php';
-        $r = $pdo -> query("SELECT * FROM `product`");
-        $r = $r -> fetchAll();
 
-        return view("index", ["data" => $r]);
+        $products = $pdo -> query("SELECT * FROM `product`");
+        $data = $products -> fetchAll();
+
+        return view("index", ["data" => $data]);
 
     }
 }
