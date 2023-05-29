@@ -64,4 +64,4 @@ Route::get('/disconnect', function () {
 
 // Details 
 
-Route::get('/details/{id}', Details::class );
+Route::get('/details/{product_id}', Details::class );

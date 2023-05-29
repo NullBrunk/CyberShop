@@ -7,13 +7,9 @@ use Illuminate\Http\Request;
 
 class Details extends Controller {
     
-    public function __invoke(Request $request){
+    public function __invoke(Request $request, $product_id){
         
         include_once __DIR__ . '/../Database/config.php';
-        
-        $splitted_url = explode('/', $request -> url());
-        $product_id = $splitted_url[array_key_last($splitted_url)];
-
             
         # Get the user and the product details
         $details = $pdo -> prepare("
