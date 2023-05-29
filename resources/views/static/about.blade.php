@@ -39,9 +39,6 @@
         @include('../layout/header')
 
 
-
-
-
 <!-- ======= About Us Section ======= -->
 <section id="about" class="about" style="padding-top: 10%">
     <div class="container" data-aos="fade-up">
