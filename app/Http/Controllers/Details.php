@@ -20,6 +20,7 @@ class Details extends Controller {
             descr, 
             class, 
             mail, 
+            image,
             name 
             
             FROM product 

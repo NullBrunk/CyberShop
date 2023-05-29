@@ -58,7 +58,7 @@
               <div class="swiper-wrapper align-items-center">
 
 
-                  <img style="width: 60% !important;" src="../assets/img/product_img/{{ $data["pid"] }}.png" alt="">
+                  <img style="width: 60% !important;" src="../assets/img/product_img/{{ $data["image"] }}.png" alt="">
 
               </div>
               <div class="swiper-pagination"></div>

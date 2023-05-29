@@ -39,6 +39,7 @@ CREATE TABLE product(
     `price` FLOAT,
     `descr` TEXT,
     `class` TEXT,
+    `image` VARCHAR(32) NOT NULL,
 
     FOREIGN KEY(`id_user`) REFERENCES users(`id`),
     PRIMARY KEY(`id`)
