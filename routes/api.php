@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Products;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +19,6 @@ Route::get('/user', function (Request $request) {
 });
 
 */
+
+Route::get("/products/{search}", [ Products::class, "search" ]);
+    

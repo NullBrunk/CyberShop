@@ -84,14 +84,14 @@
         </div>
 
 
+        <div class="row portfolio-container">
         @foreach($data as $d)
 
-          <div class="row portfolio-container">
 
             <div class="col-md-3 portfolio-item {{ $d['class'] }}">
               <div class="portfolio-wrap" style="border-radius: 5px;">
               
-                <img src="assets/img/product_img/{{ $d['image'] }}.png" class="img-fluid imgpres" alt="">
+                <img src="/storage/product_img/{{ $d['image'] }}.png" class="img-fluid imgpres" alt="">
                   <div class="portfolio-info">
 
                   <div class="portfolio-links">

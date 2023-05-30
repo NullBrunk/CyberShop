@@ -1,4 +1,5 @@
 @php(session_start())
+
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
     <div class="container d-flex align-items-center">
 
@@ -8,8 +9,10 @@
       
       
         <ul>
-            <li><a class="nav-link scrollto" href="{{ route("about") }}">About</a></li>
-            <li><a class="nav-link scrollto" href="{{ route("contact") }}">Contact</a></li>
+
+          <li><a class="nav-link scrollto" href="{{ route("articles") }}">Articles</a></li>            
+          <li><a class="nav-link scrollto" href="{{ route("about") }}">About</a></li>
+          <li><a class="nav-link scrollto" href="{{ route("contact") }}">Contact</a></li>
         
         @if(isset($_SESSION['logged']))
           <li style="list-style-type: none;" class="dropdown"><a href="#"><i style="font-size: 32px !important;" class="bx bx-user-circle"></i></a>

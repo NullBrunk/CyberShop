@@ -64,3 +64,8 @@ Route::get('/disconnect', function () {
 // Details 
 
 Route::get('/details/{product_id}', Details::class );
+
+// Articles && SearchBar
+Route::get("/articles", function (){
+    return view("articles");
+}) -> name("articles");

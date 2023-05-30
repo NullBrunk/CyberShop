@@ -47,7 +47,7 @@ CREATE TABLE product(
 ```
 
 ```bash
-sudo make db
+sudo make link
 sudo make serv
 ```
 

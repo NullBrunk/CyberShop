@@ -1118,3 +1118,9 @@ section {
   border: 2px solid #47b2e4;
   font-weight: 600;
 }
+
+.links {
+  font-size:22px;
+  margin-top:50%;
+  color: white !important;
+}
