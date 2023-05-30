@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\Logged;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Details;
 use App\Http\Controllers\Users;
@@ -57,7 +59,7 @@ Route::get('/disconnect', function () {
     session_destroy();
     return redirect('/');
 
-}) -> name("disconnect");
+}) -> name("disconnect") -> middleware(Logged::class);
 
 
 
@@ -69,3 +71,7 @@ Route::get('/details/{product_id}', Details::class );
 Route::get("/articles", function (){
     return view("articles");
 }) -> name("articles");
+
+Route::get("/test", function(){
+    return "Yo!";
+}) -> middleware(Logged::class);
