@@ -17,6 +17,7 @@
         @if(isset($_SESSION['logged']))
           <li style="list-style-type: none;" class="dropdown"><a href="#"><i style="font-size: 32px !important;" class="bx bx-user-circle"></i></a>
                   <ul>
+                    <li><a href="#">Sell</a></li>
                     <li><a href="#">Profile</a></li>
                     <li><a href="#">Settings</a></li>
                     <li><a href="{{ route("disconnect") }}">Disconnect</a></li>

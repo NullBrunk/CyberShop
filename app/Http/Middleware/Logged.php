@@ -16,11 +16,11 @@ class Logged
     public function handle(Request $request, Closure $next): Response
     {
         session_start();
-        if( isset($_SESSION['logged']) ){
-            return $next($request);
-        }
-        else {
+        
+        if( !isset($_SESSION['logged']) ){
             return redirect(route("login"));
         }
+
+        return $next($request);
     }
 }

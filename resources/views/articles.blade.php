@@ -76,17 +76,21 @@ const container = document.getElementById("container");
 function addproduct(id, image, price, classe){
   container.innerHTML += `         
 
-<div class="col-md-3 portfolio-item ${classe}">
-  <div class="portfolio-wrap" style="border-radius: 5px;">
-  
-    <a href="/details/${id}"><img src="/storage/product_img/${image}.png" class="img-fluid imgpres" alt="">
-      </a>
+  <div class="col-md-3 portfolio-item ${classe}">
+              <div class="portfolio-wrap" style="border-radius: 5px;">
+              <a href="/details/${id}">
+                <img src="/storage/product_img/${image}.png" class="img-fluid imgpres" alt="">
+              </a>
+              <div class="portfolio-info">
+                
+                <div class="portfolio-links">
+                    <p class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><strong>${price} $</strong></p>
+                  </div>
 
+                </div>
+              </div>
 
-
-    <p class="show">${price}$</p>
-  </div>
-</div>`
+            </div>`
 }
 
 input.addEventListener('input', 

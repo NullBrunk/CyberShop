@@ -44,6 +44,15 @@ CREATE TABLE product(
     FOREIGN KEY(`id_user`) REFERENCES users(`id`),
     PRIMARY KEY(`id`)
 );
+
+CREATE TABLE buyed(
+    `id_user` INT NOT NULL,
+    `id_product` INT NOT NULL,
+    `quantity` INT NOT NULL ,
+
+    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
+    FOREIGN KEY(`id_product`) REFERENCES product(`id`)
+);
 ```
 
 ```bash

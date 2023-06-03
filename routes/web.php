@@ -15,13 +15,9 @@ use App\Http\Controllers\Index;
 
 */
 
-Route::get('/about', function () {
-    return view('static.about');
-}) -> name("about");
+Route::view('/about', 'static.about') -> name("about");
 
-Route::get('/contact', function () {
-    return view('static.contact');
-}) -> name("contact");
+Route::view('/contact', 'static.contact') -> name("contact");
 
 
 /*
@@ -37,17 +33,13 @@ Route::get('/', Index::class ) -> name("root");
 
 // Login / Signup
 
-Route::post('/login',  [ Users::class, "get" ] );
+Route::post('/login',  [ Users::class, "show" ] );
 Route::post('/signup', [ Users::class, "store" ] );
 
 
-Route::get('/signup', function () {
-    return view('login.signup');
-}) -> name("signup");
+Route::view('/signup', 'login.signup') -> name("signup");
 
-Route::get('/login', function () {
-    return view('login.login');
-}) -> name("login");
+Route::view('/login', 'login.login') -> name("login");
 
 
 
@@ -55,7 +47,6 @@ Route::get('/login', function () {
 
 Route::get('/disconnect', function () {
 
-    session_start();
     session_destroy();
     return redirect('/');
 
@@ -68,10 +59,12 @@ Route::get('/disconnect', function () {
 Route::get('/details/{product_id}', Details::class );
 
 // Articles && SearchBar
-Route::get("/articles", function (){
-    return view("articles");
-}) -> name("articles");
+Route::view("/articles", "articles") -> name("articles");
 
-Route::get("/test", function(){
-    return "Yo!";
+/*
+
+Route::get("/example", function(){
+    return "Example";
 }) -> middleware(Logged::class);
+
+*/

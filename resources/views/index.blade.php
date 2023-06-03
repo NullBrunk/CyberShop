@@ -90,16 +90,16 @@
 
             <div class="col-md-3 portfolio-item {{ $d['class'] }}">
               <div class="portfolio-wrap" style="border-radius: 5px;">
-              
+              <a href="/details/{{ $d['id'] }}">
                 <img src="/storage/product_img/{{ $d['image'] }}.png" class="img-fluid imgpres" alt="">
-                  <div class="portfolio-info">
-
-                  <div class="portfolio-links">
-                    <a href="/details/{{ $d['id'] }}" class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><i class="bx bx-link"></i></a>
+              </a>
+              <div class="portfolio-info">
+                
+                <div class="portfolio-links">
+                    <p class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><strong>{{$d['price']}} $</strong></p>
                   </div>
 
                 </div>
-                <p class="show">{{$d['price']}}$</p>
               </div>
 
             </div>

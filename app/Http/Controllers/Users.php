@@ -21,7 +21,7 @@ class Users extends Controller
         Display an error
     */
     
-    public function get(LoginReq $request){
+    public function show(LoginReq $request){
         
         include_once __DIR__ . '/../Database/config.php';
        
