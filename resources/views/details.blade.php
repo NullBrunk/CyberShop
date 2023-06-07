@@ -38,11 +38,11 @@
   <main id="main">
 
     <!-- ======= Breadcrumbs ======= -->
-    <section id="breadcrumbs" class="breadcrumbs">
+    <section id="breadcrumbs" class="breadcrumbs" style="padding-top: 86px; padding-bottom: 0px !important;">
       <div class="container">
 
         <ol></ol>
-        <h2>{{$data["name"]}} - Details</h2>
+        <h2>{{$data["name"]}}</h2>
 
       </div>
     </section><!-- End Breadcrumbs -->
@@ -65,9 +65,10 @@
             </div>
           </div>
 
-          <div class="col-lg-4">
-            <div class="portfolio-info">
-              <h3>Product information</h3>
+          <div class="col-lg-4"  style="color: white; background-color: #293e61 !important; border-radius: 12px;">
+            <div class="portfolio-info" style="padding-bottom: 10px;" >
+              <h2>Product information</h2>
+              <hr>
               <ul>
                 <?php
                   // Get all the categories 
@@ -87,16 +88,17 @@
                 <li><strong>Category</strong>: {{ $todisplay }}</li>
                 <li><strong>Seller</strong>: {{ $data['mail'] }}</li>
                 <li><strong>Price</strong>: {{ $data['price'] }}$</li>
+                <br>
+                <h3></h3>
               </ul>
             </div>
-            <div class="portfolio-description">
-              <h2>Description:</h2>
-              <p>
+            <div class="portfolio-info">
+              <p class="descr">
                 {{ $data['descr'] }}
               </p> 
 
             </div>
-            <br>
+            
             <form class="navbar" method="post" action="/add">        
               <input class="addtocart" type="submit" value="Add to cart">
               <input type="hidden" value="{{$data['pid']}}">
@@ -109,6 +111,16 @@
 
       </div>
     </section><!-- End Portfolio Details Section -->
+    <hr>
+
+    <section id="breadcrumbs" style="padding-top: 1%;" class="breadcrumbs">
+      <div class="container">
+
+        <ol></ol>
+        <h2>Comments</h2>
+
+      </div>
+    </section><!-- End Breadcrumbs -->
 
   </main><!-- End #main -->
 
