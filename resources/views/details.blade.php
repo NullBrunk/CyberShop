@@ -65,7 +65,7 @@
             </div>
           </div>
 
-          <div class="col-lg-4"  style="color: white; background-color: #293e61 !important; border-radius: 12px;">
+          <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px;">
             <div class="portfolio-info" style="padding-bottom: 10px;" >
               <h2>Product information</h2>
               <hr>
@@ -119,6 +119,19 @@
 
         <ol></ol>
         <h2>Comments</h2>
+
+        @if($errors->has('comment') or $errors->has('id'))
+            <div class="alert alert-danger">
+                An error has occured !
+            </div>
+        @endif
+
+        <form method="post" action="{{ route("addComment") }}">
+          @csrf
+          <input name="comment" type="text">
+          <input name="id" type="hidden" value="{{$data['pid']}}">
+          <input type="submit" value="Post comment">
+        </form>
 
       </div>
     </section><!-- End Breadcrumbs -->

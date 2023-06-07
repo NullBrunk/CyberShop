@@ -4,6 +4,7 @@ use App\Http\Middleware\Logged;
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Products;
+use App\Http\Controllers\Comments;
 use App\Http\Controllers\Details;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Index;
@@ -57,7 +58,7 @@ Route::get('/disconnect', function () {
 
 // Details 
 
-Route::get('/details/{product_id}', Details::class );
+Route::get('/details/{product_id}', Details::class ) -> name("details");
 
 // Articles && SearchBar
 Route::view("/articles", "articles") -> name("articles");
@@ -72,6 +73,15 @@ Route::get(
     "/delete/{id}", 
     [ Products::class, 'deleteProductFromCart' ] 
 ) -> middleware(Logged::class) -> name('removeCart');
+
+
+// Comments
+
+Route::post(
+    "/comments",
+    [ Comments::class, "store" ]
+) -> middleware(Logged::class) -> name("addComment");
+
 
 /*
 

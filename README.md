@@ -53,6 +53,28 @@ CREATE TABLE buyed(
     FOREIGN KEY(`id_user`) REFERENCES users(`id`),
     FOREIGN KEY(`id_product`) REFERENCES product(`id`)
 );
+
+CREATE TABLE selled(
+    `id_user` INT NOT NULL,
+    `id_product` INT NOT NULL,
+    `quantity` INT NOT NULL ,
+
+    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
+    FOREIGN KEY(`id_product`) REFERENCES product(`id`)
+);
+
+
+CREATE TABLE comments(
+    `id` INT AUTO_INCREMENT,
+    `id_product` INT NOT NULL, 
+    `id_user` INT NOT NULL,
+    `content` TEXT NOT NULL,
+    `writed_at` DATETIME NOT NULL,
+
+    PRIMARY KEY(`id`),
+    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
+    FOREIGN KEY(`id_product`) REFERENCES product(`id`)
+)
 ```
 
 ```bash

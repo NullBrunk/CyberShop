@@ -53,7 +53,7 @@
                   <li id="{{$i}}">
                     <p class="show_cart">
                     <img style="padding-left: 3%; width: 22%;" 
-                    src="../storage/product_img/{{ $p["image"] }}.png">
+                     src="../storage/product_img/{{ $p["image"] }}.png">
                     
                     
                     <a href="/details/{{$p['id']}}">{{ $p["name"] }}</a>
