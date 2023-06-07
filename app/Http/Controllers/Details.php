@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 
 
 class Details extends Controller {
     
-    public function __invoke(Request $request, $product_id){
+    public function __invoke($product_id){
         
         include_once __DIR__ . '/../Database/config.php';
             

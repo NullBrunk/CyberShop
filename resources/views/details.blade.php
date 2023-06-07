@@ -99,9 +99,10 @@
 
             </div>
             
-            <form class="navbar" method="post" action="/add">        
+            <form class="navbar" method="post" action="{{route("addCart")}}">  
+              @csrf      
               <input class="addtocart" type="submit" value="Add to cart">
-              <input type="hidden" value="{{$data['pid']}}">
+              <input type="hidden"  name="id" value="{{$data['pid']}}">
             </form>
           
           </div>

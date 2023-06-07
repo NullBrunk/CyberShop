@@ -3,6 +3,7 @@
 use App\Http\Middleware\Logged;
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Products;
 use App\Http\Controllers\Details;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Index;
@@ -60,6 +61,17 @@ Route::get('/details/{product_id}', Details::class );
 
 // Articles && SearchBar
 Route::view("/articles", "articles") -> name("articles");
+
+// Cart Managment
+Route::post(
+    "/add", 
+    [ Products::class, 'addProductToCart' ] 
+) -> middleware(Logged::class) -> name('addCart');
+
+Route::get(
+    "/delete/{id}", 
+    [ Products::class, 'deleteProductFromCart' ] 
+) -> middleware(Logged::class) -> name('removeCart');
 
 /*
 
