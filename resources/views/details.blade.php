@@ -124,6 +124,15 @@
             <div class="alert alert-danger">
                 An error has occured !
             </div>
+        @elseif(isset($_SESSION['done']))
+            <div class="alert alert-success">
+                Your comment has been posted
+            </div>
+
+            <?php
+              unset($_SESSION['done'])
+            ?>
+            
         @endif
 
         <form method="post" action="{{ route("addComment") }}">

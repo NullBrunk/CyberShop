@@ -23,7 +23,7 @@ class Users extends Controller
     
     public function show(LoginReq $request){
         
-        include_once __DIR__ . '/../Database/config.php';
+        include_once __DIR__ . '/../../Database/config.php';
        
         if(isset($_SESSION['logged'])){
             return redirect('/');
@@ -62,7 +62,7 @@ class Users extends Controller
     */
     public function store(SignupReq $request){
 
-        include_once __DIR__ . '/../Database/config.php';
+        include_once __DIR__ . '/../../Database/config.php';
         
         $create_user = $pdo -> prepare("INSERT INTO `users`(mail, pass) VALUES (:mail, :pass)");
         try {

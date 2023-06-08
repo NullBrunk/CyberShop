@@ -9,7 +9,7 @@ class Comments extends Controller
 {
     public function store(CommentsReq $request){
         
-        include_once __DIR__ . "/../Database/config.php";
+        include_once __DIR__ . "/../../Database/config.php";
        
         $id_user = $_SESSION['id'];
         $id_product = $request -> input("id");
@@ -28,7 +28,7 @@ class Comments extends Controller
             "comment" => $comment,
         ]);
 
-
+        $_SESSION['done'] = true;
         return redirect(route("details", $id_product));
     }
 

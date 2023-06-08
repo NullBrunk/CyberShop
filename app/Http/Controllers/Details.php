@@ -8,7 +8,7 @@ class Details extends Controller {
     
     public function __invoke($product_id){
         
-        include_once __DIR__ . '/../Database/config.php';
+        include_once __DIR__ . '/../../Database/config.php';
             
         # Get the user and the product details
         $details = $pdo -> prepare("

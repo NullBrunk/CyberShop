@@ -12,7 +12,7 @@ class Products extends Controller
     public function search(string $search) : array
     {
 
-        include_once __DIR__ . "/../Database/config.php";
+        include_once __DIR__ . "/../../Database/config.php";
 
         $search_product = $pdo -> prepare("SELECT id,image,price,class FROM product WHERE `name` LIKE CONCAT('%', :search, '%')");
         $search_product -> execute([
@@ -26,7 +26,7 @@ class Products extends Controller
 
     public function addProductToCart(Request $req){
         
-        include_once __DIR__ . "/../Database/config.php";
+        include_once __DIR__ . "/../../Database/config.php";
 
         $product_id = $req -> input('id');
         if($product_id){
