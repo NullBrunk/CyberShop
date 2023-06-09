@@ -124,24 +124,111 @@
             <div class="alert alert-danger">
                 An error has occured !
             </div>
-        @elseif(isset($_SESSION['done']))
-            <div class="alert alert-success">
-                Your comment has been posted
-            </div>
-
-            <?php
-              unset($_SESSION['done'])
-            ?>
-            
         @endif
 
+        
+        @if($errors -> has('rating'))
+          <div class="alert alert-danger">
+            You need to give a rating !
+          </div>
+        @endif
+
+        @if(isset($_SESSION['done']))
+              <div class="alert alert-success">
+                  Your comment has been posted
+              </div>
+
+              <?php
+                unset($_SESSION['done'])
+              ?> 
+        @endif
+
+        <div style="display: flex">
         <form method="post" action="{{ route("addComment") }}">
           @csrf
-          <input name="comment" type="text">
+          <input name="comment" type="text" value="{{old("comment")}}">
           <input name="id" type="hidden" value="{{$data['pid']}}">
           <input type="submit" value="Post comment">
-        </form>
 
+          <div class="rating">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5"></label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4"></label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3"></label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2"></label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1"></label>
+          </div>
+          
+        </form>
+      </div>
+
+
+        <hr class="margin-bottom:40px;">
+        <div id="comments">
+        </div>
+
+        <script>
+          async function getComm() {
+            let id = {{$data['pid']}};
+            let resp = await fetch(window.location.href+"/../../api/comments/"+id);
+    
+            if(resp.status !==  404){
+              const data = await resp.json();
+              array = await data;
+
+              commentDiv = document.getElementById("comments")
+
+              array.forEach(e => {
+                
+                rat = e.rating
+                stars = "";
+                for ( let i = 0; i < rat; i++ )
+                    stars += '<i class="bi bi-star-fill" style="color:#ffa41c; "></i>';
+                
+                for ( let i = rat; i < 5; i++ )
+                    stars += '<i class="bi bi-star" style="color: #de7921;"></i>';
+                
+
+
+                commentDiv.innerHTML += `
+                <div id="${e.id}" class="comments">
+                
+                
+                <div class="profile">
+                  <i style="font-size:32px; color:#a8b6b7;" class="bi bi-person-circle"> </i>
+                  <p class="name">
+                    ${e.mail}
+                  </p> 
+                </div>
+                <div class=stars>
+                  ${stars}
+                </div>
+
+                <div class="at">
+                ${e.writed_at}
+                </div>
+                <div class="comment">
+                ${e.content}
+                <hr>
+                </div>
+                
+                </div>
+                `
+              });
+            }
+            else {
+              return false;
+            }
+          };
+
+          getComm()
+
+
+        </script>
       </div>
     </section><!-- End Breadcrumbs -->
 

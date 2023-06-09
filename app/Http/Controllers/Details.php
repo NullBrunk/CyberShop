@@ -37,7 +37,7 @@ class Details extends Controller {
         }
         else {
             abort(404);
-        }
-
+        }       
     }
+
 }

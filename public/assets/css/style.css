@@ -1166,3 +1166,61 @@ section {
   padding: 0px;
   margin: 0px;
 }
+
+.rating {
+  margin-top: 2px;
+  display: flex;
+}
+
+.rating input {
+  display: none;
+}
+
+.rating label {
+  font-size: 28px;
+
+  float: right;
+  cursor: pointer;
+  color: #ccc;
+}
+
+.rating label:before {
+  content: '\2605'; 
+}
+
+.rating input:checked ~ label {
+  color: #f7d419; 
+}
+
+.rating label:hover,
+.rating label:hover ~ label {
+  color: #f7d419; 
+}
+
+.profile{
+  display:flex;
+}
+
+.name {
+  font-family: "Amazon Ember",Arial,sans-serif;
+  margin-left: 12px;
+  margin-top: 14px;
+}
+
+.stars {
+  font-size:14px;
+}
+
+.at {
+  font-family: "Amazon Ember",Arial,sans-serif;
+  font-size: 14px;
+  color:#9fa1a1;
+}
+
+.comment {
+  margin-top: 2%;
+  margin-bottom:2%;
+
+  font-family: "Amazon Ember",Arial,sans-serif;
+  color: #0F1111;
+}

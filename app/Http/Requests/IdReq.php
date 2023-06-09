@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CommentsReq extends FormRequest
+class IdReq extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,9 +22,7 @@ class CommentsReq extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer',
-            'comment' => 'required|string',
-            'rating' => 'required|integer|max:5|min:1'
+            "id" => "required:integer"
         ];
     }
 }
