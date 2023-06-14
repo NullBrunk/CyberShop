@@ -52,7 +52,9 @@ class Comments extends Controller
         ON 
         users.id=comments.id_user
         
-        WHERE id_product=:id"
+        WHERE id_product=:id
+        ORDER BY writed_at DESC
+        "
         
     );
         

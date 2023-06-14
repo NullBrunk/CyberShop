@@ -111,7 +111,7 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <input value="{{ old("email") }}" type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required>
+                                    <input value="{{ old("email") }}" type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required autofocus>
                                 </div>
 
 

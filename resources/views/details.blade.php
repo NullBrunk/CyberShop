@@ -144,12 +144,12 @@
         @endif
 
         <div style="display: flex">
-        <form method="post" action="{{ route("addComment") }}">
+        <form method="post" action="{{ route("addComment") }}" style="width:100%;">
           @csrf
-          <input name="comment" type="text" value="{{old("comment")}}">
+          <textarea placeholder="Type something ..." class="commentbar" name="comment" type="text" value="{{old("comment")}}"></textarea>
           <input name="id" type="hidden" value="{{$data['pid']}}">
-          <input type="submit" value="Post comment">
-
+          <br>
+          
           <div class="rating">
             <input type="radio" id="star5" name="rating" value="5">
             <label for="star5"></label>
@@ -162,10 +162,13 @@
             <input type="radio" id="star1" name="rating" value="1">
             <label for="star1"></label>
           </div>
-          
+
+          <input style="border: 2px solid #cccccc !important; border-radius: 4px; padding: 4px 4px; margin-left:80%; color: black; background-color: #cccccc;" class="" type="submit" value="Post comment">
+          <br>
+
         </form>
       </div>
-
+      <br><br><br><br>
 
         <hr class="margin-bottom:40px;">
         <div id="comments">
