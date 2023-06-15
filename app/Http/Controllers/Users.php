@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\SignupReq;
 use App\Http\Requests\LoginReq;
+use App\Http\Requests\UpdateProfileReq;
 use Exception;
 
 
@@ -77,5 +78,44 @@ class Users extends Controller
         }
 
         return redirect("/login");
+    }
+
+    public function profile(UpdateProfileReq $req){
+
+        include_once __DIR__ . '/../../Database/config.php';
+        
+        $update_user = $pdo -> prepare("
+        UPDATE users SET 
+        
+        mail=:newmail, 
+        pass=:newpass 
+        
+        WHERE 
+        
+        mail=:oldmail 
+        AND pass=:oldpass
+        
+        ");
+       
+        try {
+            $update_user -> execute([
+                "newmail" => $req['email'],
+                "newpass" => $req['password'],
+                "oldmail" => $_SESSION['mail'],
+                "oldpass" => $_SESSION['pass'],
+            ]);
+        }
+        catch (Exception $e){
+            $_SESSION['nul'] = true;
+            return redirect(route("profile"));            
+        }
+
+
+        $_SESSION['mail'] = $req['email'];
+        $_SESSION['pass'] = $req['password'];
+
+        $_SESSION['done'] = true;
+        return redirect(route("profile"));
+
     }
 }

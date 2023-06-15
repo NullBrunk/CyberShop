@@ -72,12 +72,5 @@ class Comments extends Controller
         
     }
     
-    public function remove(){
 
-    }
-    
-    public function update(){
-
-    }
-    
 }

@@ -163,7 +163,7 @@
             <label for="star1"></label>
           </div>
 
-          <input style="border: 2px solid #cccccc !important; border-radius: 4px; padding: 4px 4px; margin-left:80%; color: black; background-color: #cccccc;" class="" type="submit" value="Post comment">
+          <input style="border: 2px solid #cccccc !important; border-radius: 4px; padding: 4px 4px; margin-left:80%; color: #444444; background-color: #cccccc;" class="" type="submit" value="Post comment">
           <br>
 
         </form>

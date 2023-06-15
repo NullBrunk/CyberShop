@@ -83,10 +83,14 @@ Route::post(
 ) -> middleware(Logged::class) -> name("addComment");
 
 
-/*
-
-Route::get("/example", function(){
+Route::get("/sell", function(){
     return "Example";
-}) -> middleware(Logged::class);
+}) -> middleware(Logged::class) -> name("sell");
 
-*/
+
+Route::view("/profile", "user.profile") -> middleware(Logged::class) -> name("profile"); 
+
+Route::post(
+    "/profile",
+    [ Users::class, "profile"]
+) -> middleware(Logged::class) -> name("profile");
