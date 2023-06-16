@@ -58,7 +58,7 @@
               <div class="swiper-wrapper align-items-center">
 
 
-                  <img style="width: 60% !important;" src="../storage/product_img/{{ $data["image"] }}.png" alt="">
+                  <img style="width: 60% !important;" src="../storage/product_img/{{ $data["image"] }}" alt="">
 
               </div>
               <div class="swiper-pagination"></div>
@@ -70,22 +70,8 @@
               <h2>Product information</h2>
               <hr>
               <ul>
-                <?php
-                  // Get all the categories 
-                  $allcateg = explode(' ', $data["class"]);
-                
-                  // Parcourir + assigner
-                  $todisplay = "";
 
-                  foreach($allcateg as $categ){
-                    $todisplay .= ucfirst(explode('-', $categ)[1]) . ", ";
-                  }
-
-                  $todisplay = trim($todisplay, ", ")
-
-                ?>
-                
-                <li><strong>Category</strong>: {{ $todisplay }}</li>
+                <li><strong>Category</strong>: {{ ucfirst(explode('-', $data["class"])[1]) }}</li>
                 <li><strong>Seller</strong>: {{ $data['mail'] }}</li>
                 <li><strong>Price</strong>: {{ $data['price'] }}$</li>
                 <br>
@@ -98,12 +84,20 @@
               </p> 
 
             </div>
-            
+            @if($data['mail'] !== $_SESSION["mail"])
             <form class="navbar" method="post" action="{{route("addCart")}}">  
               @csrf      
               <input class="addtocart" type="submit" value="Add to cart">
               <input type="hidden"  name="id" value="{{$data['pid']}}">
             </form>
+            
+            @else
+              <form class="navbar" method="post" action="{{route("deleteProduct", $data['pid'])}}">  
+                @csrf      
+                <input type="hidden" name="_method" value="DELETE">
+                <input class="addtocart" type="submit" value="Delete product">
+            </form>
+            @endif
           
           </div>
           

@@ -10,7 +10,6 @@ class Index extends Controller {
 
         $products = $pdo -> query("SELECT * FROM `product`");
         $data = $products -> fetchAll();
-
         return view("index", ["data" => $data]);
 
     }

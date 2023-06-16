@@ -63,7 +63,7 @@
 
               <p style="color: #6c757d !important; font-size: 1rem; font-weight: 500; line-height 1,2; font-family: 'Jost', sans-serif; white-space: nowrap;" class="heading-small text-muted mb-4">User information  
                 <button onclick="undisable()" class="btn-profile">
-                 Edit 
+                  Edit 
                   <i class="bi bi-pencil-square"></i>
 
                 </button>
@@ -125,24 +125,48 @@
 
                 <hr class="my-4">
                 <!-- Address -->
-                <h6 class="heading-small text-muted mb-4">Buyed products</h6>
-                <²div class="pl-lg-4">
+                <h6 class="heading-small text-muted mb-4">Selling products</h6>
+                <div class="pl-lg-4">
                   <div class="row">
                     
+
+                        <div class="row portfolio-container">
+                        @foreach($data as $d)
+                
+                
+                            <div class="col-md-3 portfolio-item">
+                              <div class="portfolio-wrap" style="border-radius: 5px;">
+                              <a href="/details/{{ $d['id'] }}">
+                                <img src="/storage/product_img/{{ $d['image'] }}" class="img-fluid imgpres" alt="">
+                              </a>
+                              <div class="portfolio-info">
+                                
+
+                
+                                </div>
+                              </div>
+                
+                            </div>
+                
+                          @endforeach
+                
+                          
+                
+                        </div>
+                
+                      </div>
+                    </div>
+
+
+                   
+
                   </div>
           
                 </div>
 
                 <hr class="my-4">
 
-                <!-- Description -->
 
-                <h6 class="heading-small text-muted mb-4">Selled products</h6>
-                <div class="pl-lg-4">
-                  <div class="row">
-                    
-                  </div>
-                </div>
 
             </div>
           </div>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Http\Requests\StoreReq;
 
 class Products extends Controller
 {
@@ -60,5 +60,87 @@ class Products extends Controller
         }
 
         return abort(403);
+    }
+
+    public function store(StoreReq $req){      
+
+        include_once __DIR__ . "/../../Database/config.php";
+
+        if(!in_array($req["category"], [ 
+            "filter-laptop", 
+            "filter-dresses",
+            "filter-gaming",
+            "filter-health",
+            "filter-beauty"
+        ])){
+            return abort(403);
+        }
+
+        $img = $req["product_img"];
+
+        if($img !== null && !$img -> getError()){
+
+            $imgPath = $req["product_img"] -> store("product_img", "public");
+
+            $store_product = $pdo -> prepare("
+                INSERT INTO 
+                    product(`id_user`, `name`, `price`, `descr`, `class`, `image`)
+                VALUES
+                    (:id_user, :name, :price, :descr, :class, :image)
+            ");
+            $store_product -> execute([
+                "id_user" => $_SESSION["id"],
+                "name" => $req["name"],
+                "price" => $req["price"],
+                "descr" => $req["description"],
+                "class" => $req["category"],
+                "image" => substr($imgPath, 12),
+            ]);
+
+        }
+        else {
+            $_SESSION["error"] = true;
+            return view("sell");
+        }
+
+        $_SESSION["done"] = true;
+        return view("sell");
+
+    }
+    
+    public function delete($id){
+        
+        include_once __DIR__ . "/../../Database/config.php"; 
+
+        session_start();
+
+        $values = [
+            "product_id" => $id,
+            "id_user" => $_SESSION["id"],
+        ];
+
+
+        $select_pr = $pdo -> prepare("SELECT * FROM product WHERE id=:product_id AND id_user=:id_user");
+        $select_pr -> execute($values);
+        $data = $select_pr -> fetch();
+
+        if(empty($data)){
+            return abort(403);
+        }
+        unlink(__DIR__ . "/../../../public/storage/product_img/" . $data['image'] );
+
+
+        $del_product = $pdo -> prepare("
+            DELETE FROM 
+                product 
+            WHERE 
+                id=:product_id 
+            AND 
+                id_user=:id_user
+        ");
+
+        $del_product -> execute($values);
+
+        return redirect("/");
     }
 }

@@ -118,4 +118,22 @@ class Users extends Controller
         return redirect(route("profile"));
 
     }
+
+    public function showProfile(){
+
+        include_once __DIR__ . '/../../Database/config.php';
+
+
+        # get products that the current user is selling 
+        $selling_product = $pdo -> prepare("
+            SELECT * FROM product WHERE id_user = :id
+        "); 
+
+        $selling_product -> execute([
+            "id" => $_SESSION["id"]
+        ]);
+        
+        # return the correct view with the informations
+        return view("user.profile", [ "data" => $selling_product -> fetchAll(\PDO::FETCH_ASSOC) ]);
+    }
 }

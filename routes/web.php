@@ -83,14 +83,23 @@ Route::post(
 ) -> middleware(Logged::class) -> name("addComment");
 
 
-Route::get("/sell", function(){
-    return "Example";
-}) -> middleware(Logged::class) -> name("sell");
-
-
-Route::view("/profile", "user.profile") -> middleware(Logged::class) -> name("profile"); 
+Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell"); 
+Route::post(
+    "sell",
+    [ Products::class, "store" ]
+) -> middleware(Logged::class) -> name("sellProduct");
 
 Route::post(
     "/profile",
     [ Users::class, "profile"]
 ) -> middleware(Logged::class) -> name("profile");
+
+Route::get(
+    "/profile",
+    [Users::class, "showProfile"]
+) -> middleware(Logged::class);
+
+Route::delete(
+    "/delete/{slug}",
+    [ Products::class, "delete" ]
+) -> name("deleteProduct");

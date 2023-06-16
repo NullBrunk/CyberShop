@@ -84,7 +84,7 @@
             <div class="col-md-3 portfolio-item {{ $d['class'] }}">
               <div class="portfolio-wrap" style="border-radius: 5px;">
               <a href="/details/{{ $d['id'] }}">
-                <img src="/storage/product_img/{{ $d['image'] }}.png" class="img-fluid imgpres" alt="">
+                <img src="/storage/product_img/{{ $d['image'] }}" class="img-fluid imgpres" alt="">
               </a>
               <div class="portfolio-info">
                 

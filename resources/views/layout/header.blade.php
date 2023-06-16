@@ -29,12 +29,7 @@
                 let elem = document.getElementById(id)
                 elem.remove()
 
-                let np = document.getElementById("price")
-                let newprice = total - price;
-
-                np.innerHTML = "Buy ( " + newprice + "$ )"
-
-                
+              
             };
 
             </script>
@@ -55,10 +50,10 @@
                   <li id="{{$i}}">
                     <p class="show_cart">
                     <img style="padding-left: 3%; width: 22%;" 
-                     src="../storage/product_img/{{ $p["image"] }}.png">
+                     src="../storage/product_img/{{ $p["image"] }}">
                     
                     
-                    <a href="/details/{{$p['id']}}">{{ $p["name"] }}</a>
+                    <a href="/details/{{$p['id']}}">{{ substr($p["name"], 0, 12) }}</a>
                     
                       <i onclick="deleteitem({{$i}}, {{$p['price']}}, {{$total}})" class="bx bx-trash-alt trash-cart"></i>
                     
@@ -68,7 +63,7 @@
                   @php($i++)
                 @endforeach
 
-                <li><a id="price" class="button" href="/">Buy ( {{$total}}$ )</a></li>
+                <li><a id="price" class="button" href="/">Buy</a></li>
               </ul>
             </li>
           @endif
@@ -76,7 +71,6 @@
           <li style="list-style-type: none;" class="dropdown"><a href="#"><i style="font-size: 32px !important;" class="bx bx-user-circle"></i></a>
                   <ul>
                     <li><a href="{{ route("profile") }}">Profile</a></li>
-                    <li><a href="#">Settings</a></li>
                     <li><a href="{{ route("disconnect") }}">Disconnect</a></li>
                   </ul>
           </li>
