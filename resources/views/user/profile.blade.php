@@ -125,13 +125,17 @@
 
                 <hr class="my-4">
                 <!-- Address -->
-                <h6 class="heading-small text-muted mb-4">Selling products</h6>
+                <h6 class="heading-small text-muted mb-4">Products that you sell</h6>
                 <div class="pl-lg-4">
                   <div class="row">
                     
 
                         <div class="row portfolio-container">
-                        @foreach($data as $d)
+                          @if(empty($data))
+                            You are not selling any product yet, <a style="width: 20% !important;" href="{{route("sellProduct")}}">start here !</a>
+                          @endif
+                        
+                          @foreach($data as $d)
                 
                 
                             <div class="col-md-3 portfolio-item">
@@ -159,13 +163,14 @@
 
                     <hr class="my-4">
                     <h6 class="heading-small text-muted mb-4">Delete my account</h6>
-                    <div class="alert alert-danger">
-                      You will also delete the products that you are selling
+                    <div class="">
+                      Once your account is deleted, all the comments, products that you sell, history <br> of the products that you buyed/selled will be <strong>permanently deleted</strong> !
                     </div>
+                    <br>
                     
                     <form class="navbar" method="post" action="{{route("deleteAccount")}}">  
                       @csrf      
-                      <input type="submit" id="input-sub" name="submit" value="Delete my account" class="btn btn-primary" style="background-color: #32325d;">
+                      <input type="submit" id="input-sub" name="submit" value="DELETE ACCOUNT" class="btn btn-primary" style="border: 1px solid #af2024; background-color: #af2024;">
                     </form>
                    
 

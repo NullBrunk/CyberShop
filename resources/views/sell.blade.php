@@ -110,11 +110,12 @@
               <ul>
                
 
-                <li><strong>Name    : <input style="margin-left: 12%; font-size: 18px; padding-left: 11%; width: 70%;border: 1px solid #eeeeee; border-radius: 5px; background-color: #324769; color: white;" placeholder="Name of the product" type="text" name="name" value="{{old("name")}}"></strong></li>
+                <li><strong>Name    : <input style="margin-left: 11%; font-size: 18px; padding-left: 11%; width: 70%;border: 0px solid #eeeeee; border-radius: 5px; background-color: #293e61; color: white;" placeholder="Name of the product" type="text" name="name" value="{{old("name")}}"></strong></li>
+                <li><strong>Price    : <input style="margin-left: 13%; font-size: 18px; padding-left: 11%; width: 70%;border: 0px solid #eeeeee; border-radius: 5px; background-color: #293e61; color: white;" placeholder="Price of the product" type="text" name="price" value="{{old("price")}}"></strong></li>
                 
                 <li><strong>Category : 
 
-                  <select style="margin-left: 5%; font-size: 18px; padding-left: 18%; width: 70%;border: 1px solid #eeeeee; border-radius: 5px; background-color: #324769; color: white;" name="category">
+                  <select style="height: 7vh; margin-left: 5%; font-size: 18px; padding-left: 18%; width: 70%;border: 0px solid #eeeeee; border-radius: 5px; background-color: #293e61; color: white;" name="category">
                     
                     <option value="filter-laptop" >Informatics</option>
                     <option value="filter-dresses">Dresses</option>
@@ -124,16 +125,15 @@
 
 
                 </select>
-                  
+
                 </strong></li>                
-                <li><strong>Price    : <input style="margin-left: 13%; font-size: 18px; padding-left: 11%; width: 70%;border: 1px solid #eeeeee; border-radius: 5px; background-color: #324769; color: white;" placeholder="Price of the product" type="number" name="price" value="{{old("price")}}"></strong></li>
                 <br>
                 <h3></h3>
               </ul>
             </div>
             <div class="portfolio-info">
               <p class="descr">
-                  <textarea style="padding-left: 4px; padding-top: 4px; border-radius: 5px; border: 0; width: 100%; height: 20vh; font-size: 16px;" placeholder="Description of the product" type="text" name="description">{{old("description")}}</textarea>      
+                  <textarea style="background-color: #293e61; color: white; padding-left: 8px; padding-top: 8px; border-radius: 5px; border: 0; width: 100%; height: 15vh; font-size: 16px;" placeholder="Description of the product" type="text" name="description">{{old("description")}}</textarea>      
               </p> 
 
             </div>
