@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreReq;
+use Illuminate\Support\Facades\Storage;
+
 
 class Products extends Controller
 {
@@ -126,8 +128,7 @@ class Products extends Controller
         if(empty($data)){
             return abort(403);
         }
-        unlink(__DIR__ . "/../../../public/storage/product_img/" . $data['image'] );
-
+        Storage::disk("public") -> delete("product_img/" . $data['image']);
 
         $del_product = $pdo -> prepare("
             DELETE FROM 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SignupReq;
 use App\Http\Requests\LoginReq;
 use App\Http\Requests\UpdateProfileReq;
+use Illuminate\Support\Facades\Storage;
+
 use Exception;
 
 
@@ -22,6 +24,7 @@ class Users extends Controller
         Display an error
     */
     
+
     public function show(LoginReq $request){
         
         include_once __DIR__ . '/../../Database/config.php';
@@ -55,12 +58,14 @@ class Users extends Controller
 
     }
 
+
     /* 
     Add a user in the database and redirect to the login page 
     
     if he is already in the DB
         Display an error
     */
+
     public function store(SignupReq $request){
 
         include_once __DIR__ . '/../../Database/config.php';
@@ -79,6 +84,7 @@ class Users extends Controller
 
         return redirect("/login");
     }
+
 
     public function profile(UpdateProfileReq $req){
 
@@ -119,6 +125,7 @@ class Users extends Controller
 
     }
 
+
     public function showProfile(){
 
         include_once __DIR__ . '/../../Database/config.php';
@@ -137,9 +144,22 @@ class Users extends Controller
         return view("user.profile", [ "data" => $selling_product -> fetchAll(\PDO::FETCH_ASSOC) ]);
     }
 
+
     public function delete(){
 
         include_once __DIR__ . '/../../Database/config.php';
+
+        # Delete images that are linked to the users products
+        
+        $imgs = $pdo -> prepare("SELECT image FROM product WHERE id_user=:id");
+        $imgs -> execute([
+            "id" => $_SESSION["id"]
+        ]); 
+        $imgs = $imgs -> fetchAll(\PDO::FETCH_ASSOC);
+
+        foreach($imgs as $img){
+            Storage::disk("public") -> delete("product_img/" . $img["image"]);
+        }
 
         # Delete buyed products, selled products, 
         # comments and products from the user
