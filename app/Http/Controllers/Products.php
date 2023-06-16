@@ -112,7 +112,6 @@ class Products extends Controller
         
         include_once __DIR__ . "/../../Database/config.php"; 
 
-        session_start();
 
         $values = [
             "product_id" => $id,

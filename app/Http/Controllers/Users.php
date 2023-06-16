@@ -136,4 +136,31 @@ class Users extends Controller
         # return the correct view with the informations
         return view("user.profile", [ "data" => $selling_product -> fetchAll(\PDO::FETCH_ASSOC) ]);
     }
+
+    public function delete(){
+
+        include_once __DIR__ . '/../../Database/config.php';
+
+        # Delete buyed products, selled products, 
+        # comments and products from the user
+
+        foreach(["buyed", "selled", "comments", "product"] as $table){
+            $a = $pdo -> prepare("DELETE FROM $table WHERE id_user=:id");
+            $a -> execute([
+                "id" => $_SESSION["id"]
+            ]);   
+        }
+
+        # Delete the user itself
+
+        $user_del = $pdo -> prepare("DELETE FROM users WHERE id=:id");
+        $user_del -> execute([
+            "id" => $_SESSION["id"]
+        ]); 
+
+        return redirect(route("disconnect"));
+      
+
+
+    }
 }

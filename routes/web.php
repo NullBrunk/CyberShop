@@ -21,6 +21,9 @@ Route::view('/about', 'static.about') -> name("about");
 
 Route::view('/contact', 'static.contact') -> name("contact");
 
+Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell"); 
+
+
 
 /*
 |---------------------------------------------
@@ -31,21 +34,20 @@ Route::view('/contact', 'static.contact') -> name("contact");
 
 Route::get('/', Index::class ) -> name("root");
 
+Route::post("/delete/account", [ Users::class, "delete" ] ) -> middleware(Logged::class) -> name("deleteAccount");
 
 
-// Login / Signup
+# Login / Signup
+
+Route::view('/signup', 'login.signup') -> name("signup");
+Route::view('/login', 'login.login') -> name("login");
 
 Route::post('/login',  [ Users::class, "show" ] );
 Route::post('/signup', [ Users::class, "store" ] );
 
 
-Route::view('/signup', 'login.signup') -> name("signup");
 
-Route::view('/login', 'login.login') -> name("login");
-
-
-
-// Disconnect
+# Disconnect
 
 Route::get('/disconnect', function () {
 
@@ -56,14 +58,18 @@ Route::get('/disconnect', function () {
 
 
 
-// Details 
+# Details 
 
 Route::get('/details/{product_id}', Details::class ) -> name("details");
 
-// Articles && SearchBar
+
+# Articles && SearchBar
+
 Route::view("/articles", "articles") -> name("articles");
 
-// Cart Managment
+
+# Cart Managment
+
 Route::post(
     "/add", 
     [ Products::class, 'addProductToCart' ] 
@@ -75,7 +81,7 @@ Route::get(
 ) -> middleware(Logged::class) -> name('removeCart');
 
 
-// Comments
+# Comments
 
 Route::post(
     "/comments",
@@ -83,11 +89,20 @@ Route::post(
 ) -> middleware(Logged::class) -> name("addComment");
 
 
-Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell"); 
+# Products 
+
 Route::post(
     "sell",
     [ Products::class, "store" ]
 ) -> middleware(Logged::class) -> name("sellProduct");
+
+Route::delete(
+    "/delete/{slug}",
+    [ Products::class, "delete" ]
+) -> middleware(Logged::class) -> name("deleteProduct");
+
+
+# Profile
 
 Route::post(
     "/profile",
@@ -99,7 +114,4 @@ Route::get(
     [Users::class, "showProfile"]
 ) -> middleware(Logged::class);
 
-Route::delete(
-    "/delete/{slug}",
-    [ Products::class, "delete" ]
-) -> name("deleteProduct");
+

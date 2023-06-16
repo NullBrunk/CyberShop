@@ -157,7 +157,16 @@
                       </div>
                     </div>
 
-
+                    <hr class="my-4">
+                    <h6 class="heading-small text-muted mb-4">Delete my account</h6>
+                    <div class="alert alert-danger">
+                      You will also delete the products that you are selling
+                    </div>
+                    
+                    <form class="navbar" method="post" action="{{route("deleteAccount")}}">  
+                      @csrf      
+                      <input type="submit" id="input-sub" name="submit" value="Delete my account" class="btn btn-primary" style="background-color: #32325d;">
+                    </form>
                    
 
                   </div>
@@ -165,7 +174,6 @@
                 </div>
 
                 <hr class="my-4">
-
 
 
             </div>
