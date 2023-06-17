@@ -49,6 +49,15 @@
             <div class="portfolio-details-slider swiper">
               <div class="swiper-wrapper align-items-center">
 
+                @if(isset($_SESSION['done']) && ($_SESSION['done'] === "updated")  )
+                  <div class="alert alert-success">
+                      Product updated succesfully !
+                  </div>
+
+                  <?php
+                      unset($_SESSION['done'])
+                  ?>
+                @endif
 
                   <img style="width: 60% !important;" src="../storage/product_img/{{ $data["image"] }}" alt="">
 
@@ -59,8 +68,12 @@
 
           <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px;">
             <div class="portfolio-info" style="padding-bottom: 10px;" >
-              <h2>Product information</h2>
-              <hr>
+              @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $data["mail"]))
+                <h2>Product information <a href="{{route("updateForm", $data['pid'])}}"> <i style="margin-left: 10%; " class="bi bi-pencil-square"></i></a></h2>
+              @else
+                <h2>Product information</h2>
+              @endif
+                <hr>
               <ul>
 
                   <li><strong>Category</strong>: {{ ucfirst(explode('-', $data["class"])[1]) }}</li>
@@ -123,7 +136,7 @@
           </div>
         @endif
 
-        @if(isset($_SESSION['done']))
+        @if(isset($_SESSION['done']) )
               <div class="alert alert-success">
                   Your comment has been posted
               </div>

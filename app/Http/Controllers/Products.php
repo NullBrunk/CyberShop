@@ -4,8 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreReq;
+use App\Http\Requests\UpdateProductReq;
+
 use Illuminate\Support\Facades\Storage;
 
+
+
+function verify_if_product_is_from_current_user($pdo, $id){
+    $validate = $pdo -> prepare("
+    SELECT users.id as uid, 
+        product.id as pid, 
+        id_user, 
+        price, 
+        descr, 
+        class, 
+        mail, 
+        image,
+        name 
+            
+    FROM product 
+        INNER JOIN users 
+        ON users.id=product.id_user 
+        WHERE product.id=:id_product
+        AND id_user=:id_user
+    ");
+    $validate -> execute([
+        "id_user" => $_SESSION['id'],
+        "id_product" => $id 
+    ]);
+    return $validate -> fetchAll(\PDO::FETCH_ASSOC);
+}
 
 class Products extends Controller
 {
@@ -142,5 +170,62 @@ class Products extends Controller
         $del_product -> execute($values);
 
         return redirect("/");
+    }
+
+    public function show_update_form($id){
+
+        include_once __DIR__ . "/../../Database/config.php";
+
+        $data = verify_if_product_is_from_current_user($pdo, $id);
+        if(!$data){
+            return abort(403);
+        }
+
+        return view("updateform", ["data" => $data[0]]);
+    }
+
+    public function update($id, UpdateProductReq $req){
+
+        include_once __DIR__ . "/../../Database/config.php";
+        
+        $data = verify_if_product_is_from_current_user($pdo, $id);
+
+        if(!$data){
+            return abort(403);
+        }
+
+        if(!in_array($req["category"], [ 
+            "filter-laptop", 
+            "filter-dresses",
+            "filter-gaming",
+            "filter-health",
+            "filter-beauty"
+        ])){
+            return abort(403);
+        }
+
+        $update_product = $pdo -> prepare("
+            UPDATE product 
+            SET
+                `name`=:name, 
+                `price`=:price, 
+                `class`=:class, 
+                `descr`=:descr
+            WHERE
+                id=:product_id
+            ");
+            
+        $update_product -> execute([
+            "name" => $req["name"],
+            "price" => $req["price"],
+            "descr" => $req["description"],
+            "class" => $req["category"],
+            "product_id" => $id
+        ]);
+
+        $_SESSION["done"] = "updated";
+        return redirect(route("details", $id));
+
+
     }
 }

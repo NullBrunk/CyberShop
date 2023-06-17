@@ -67,59 +67,95 @@ Route::get('/details/{product_id}', Details::class ) -> name("details");
 Route::view("/articles", "articles") -> name("articles");
 
 
+
+
 # Cart Managment
+Route::prefix('cart') -> group(function () {
+    Route::post(
+        "/add", 
+        [ Products::class, 'addProductToCart' ] 
+    ) -> middleware(Logged::class) -> name('addCart');
 
-Route::post(
-    "/add", 
-    [ Products::class, 'addProductToCart' ] 
-) -> middleware(Logged::class) -> name('addCart');
+    Route::get(
+        "/delete/{id}", 
+        [ Products::class, 'deleteProductFromCart' ] 
+    ) -> middleware(Logged::class) -> name('removeCart');
+});
 
-Route::get(
-    "/delete/{id}", 
-    [ Products::class, 'deleteProductFromCart' ] 
-) -> middleware(Logged::class) -> name('removeCart');
+
 
 
 # Comments
+Route::prefix('comments') -> group(function () {
 
-Route::post(
-    "/comments",
-    [ Comments::class, "store" ]
-) -> middleware(Logged::class) -> name("addComment");
+    Route::post(
+        "",
+        [ Comments::class, "store" ]
+    ) -> middleware(Logged::class) -> name("addComment");
 
 
-Route::get(
-    "/delete/comment/{article}/{id}",
-    [ Comments::class, "delete" ]
-) -> middleware(Logged::class) -> name("deleteComment");
+    Route::get(
+        "/delete/{article}/{id}",
+        [ Comments::class, "delete" ]
+    ) -> middleware(Logged::class) -> name("deleteComment");
+    
+});
+
+
 
 
 # Products 
+Route::prefix('product') -> group(function () {
 
-Route::post(
-    "sell",
-    [ Products::class, "store" ]
-) -> middleware(Logged::class) -> name("sellProduct");
+    Route::post(
+        "/sell",
+        [ Products::class, "store" ]
+    ) -> middleware(Logged::class) -> name("sellProduct");
 
-Route::delete(
-    "/delete/{slug}",
-    [ Products::class, "delete" ]
-) -> middleware(Logged::class) -> name("deleteProduct");
+
+    Route::delete(
+        "/delete/{slug}",
+        [ Products::class, "delete" ]
+    ) -> middleware(Logged::class) -> name("deleteProduct");
+
+
+    Route::get(
+        "/update/{id}",
+        [ Products::class, "show_update_form" ]
+    ) -> middleware(Logged::class) -> name("updateForm");
+
+
+    Route::post(
+        "/update/{id}",
+        [ Products::class, "update" ]
+    ) -> middleware(Logged::class) -> name("updateProduct");
+    
+
+    
+});
+
+
 
 
 # Profile
+Route::prefix('profile') -> group(function () {
 
-Route::post(
-    "/profile",
-    [ Users::class, "profile"]
-) -> middleware(Logged::class) -> name("profile");
+    Route::post(
+        "",
+        [ Users::class, "profile"]
+    ) -> middleware(Logged::class) -> name("profile");
+    
 
-Route::get(
-    "/profile",
-    [Users::class, "showProfile"]
-) -> middleware(Logged::class);
+    Route::get(
+        "",
+        [Users::class, "showProfile"]
+    ) -> middleware(Logged::class);
+    
 
-Route::get(
-    "/profile/delete", 
-    [ Users::class, "delete" ] 
-) -> middleware(Logged::class) -> name("deleteAccount");
+    Route::get(
+        "/delete", 
+        [ Users::class, "delete" ] 
+    ) -> middleware(Logged::class) -> name("deleteAccount");
+
+});
+
