@@ -84,7 +84,7 @@
               </p> 
 
             </div>
-            @if($data['mail'] !== $_SESSION["mail"])
+            @if(isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"])
             <form class="navbar" method="post" action="{{route("addCart")}}">  
               @csrf      
               <input class="addtocart" type="submit" value="Add to cart">
@@ -140,7 +140,7 @@
         <div style="display: flex">
         <form method="post" action="{{ route("addComment") }}" style="width:100%;">
           @csrf
-          <textarea placeholder="Type something ..." class="commentbar" name="comment" type="text" value="{{old("comment")}}"></textarea>
+          <textarea placeholder="Type something ..." class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
           <input name="id" type="hidden" value="{{$data['pid']}}">
           <br>
           
