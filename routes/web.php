@@ -89,6 +89,12 @@ Route::post(
 ) -> middleware(Logged::class) -> name("addComment");
 
 
+Route::get(
+    "/delete/comment/{article}/{id}",
+    [ Comments::class, "delete" ]
+) -> middleware(Logged::class) -> name("deleteComment");
+
+
 # Products 
 
 Route::post(
@@ -113,5 +119,4 @@ Route::get(
     "/profile",
     [Users::class, "showProfile"]
 ) -> middleware(Logged::class);
-
 

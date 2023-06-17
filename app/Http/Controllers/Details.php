@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use Illuminate\Support\Facades\Http;
 
 class Details extends Controller {
     
@@ -33,7 +33,18 @@ class Details extends Controller {
         $data = $details -> fetch();
         
         if($data){
-            return view("details", ["data" => $data]);
+            session_start();
+
+            $response = Http::get('http://127.0.0.1:8000/api/comments/'. $data['pid']);
+            
+            if($response -> notFound()){
+                $comments = [];
+            }
+            else {
+                $comments = $response -> body();
+            }
+
+            return view("details", ["data" => $data, "comments" => $comments]);
         }
         else {
             abort(404);

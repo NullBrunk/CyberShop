@@ -16,6 +16,7 @@
 An E-Commerce website with the Laravel Framework
 ( This site is still under construction )
 
+API is served on localhost:8000, Web App is iserved on localhost:79
 
 # Installation
 
@@ -79,6 +80,8 @@ CREATE TABLE comments(
 
 ```bash
 sudo make link
+
+sudo make api
 sudo make serv
 ```
 

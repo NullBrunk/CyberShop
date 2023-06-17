@@ -80,7 +80,7 @@
               </p> 
 
             </div>
-            @if(isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"])
+            @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"]))
             <form class="navbar" method="post" action="{{route("addCart")}}">  
               @csrf      
               <input class="addtocart" type="submit" value="Add to cart">
@@ -161,66 +161,56 @@
       <br><br><br><br>
 
         <hr class="margin-bottom:40px;">
+
         <div id="comments">
+
+            @if($comments)
+              @foreach(json_decode($comments, true) as $comm)
+
+                  <div id="{{ $comm["id"] }}" class="comments">
+                                
+                                
+                    <div class="profile">
+                        <i style="font-size:32px; color:#a8b6b7;" class="bi bi-person-circle"> </i>
+                        <p class="name">
+                            {{ $comm["mail"] }}
+                        </p> 
+
+                        @if(isset($_SESSION["mail"]) && $comm["mail"] === $_SESSION["mail"])
+                          <p class="trash"> 
+                            <a style="color: #af2024;" href="{{route("deleteComment", [$data['pid'], $comm["id"]] )}}">
+                              <i class='bi bi-trash2-fill'></i> 
+                            </a>
+                            </p>
+                        
+                        @endif 
+                    </div>
+                    <div class=stars>
+
+                      @for($i=0; $i<$comm["rating"]; $i++)
+                          <i class="bi bi-star-fill" style="color: #ffa41c;"></i>
+                      @endfor
+
+                      @for($i = $comm["rating"]; $i < 5; $i++)
+                          <i class="bi bi-star" style="color: #de7921;"></i>
+                      @endfor
+
+                    </div>
+
+                  <div class="at">
+                    {{ $comm["writed_at"] }}
+                  </div>
+                  <div class="comment">
+                    {{ $comm["content"] }}
+                  <hr>
+                  </div>
+                  
+                  </div>
+
+              @endforeach
+            @endif
         </div>
 
-        <script>
-          async function getComm() {
-            let id = {{$data['pid']}};
-            let resp = await fetch(window.location.href+"/../../api/comments/"+id);
-    
-            if(resp.status !==  404){
-              const data = await resp.json();
-              array = await data;
-
-              commentDiv = document.getElementById("comments")
-
-              array.forEach(e => {
-                
-                rat = e.rating
-                stars = "";
-                for ( let i = 0; i < rat; i++ )
-                    stars += '<i class="bi bi-star-fill" style="color:#ffa41c; "></i>';
-                
-                for ( let i = rat; i < 5; i++ )
-                    stars += '<i class="bi bi-star" style="color: #de7921;"></i>';
-                
-
-                commentDiv.innerHTML += `
-                <div id="${e.id}" class="comments">
-                
-                
-                <div class="profile">
-                  <i style="font-size:32px; color:#a8b6b7;" class="bi bi-person-circle"> </i>
-                  <p class="name">
-                    ${e.mail}
-                  </p> 
-                </div>
-                <div class=stars>
-                  ${stars}
-                </div>
-
-                <div class="at">
-                ${e.writed_at}
-                </div>
-                <div class="comment">
-                ${e.content}
-                <hr>
-                </div>
-                
-                </div>
-                `
-              });
-            }
-            else {
-              return false;
-            }
-          };
-
-          getComm()
-
-
-        </script>
       </div>
     </section><!-- End Breadcrumbs -->
 

@@ -72,5 +72,25 @@ class Comments extends Controller
         
     }
     
+    public function delete($article, $id){
+
+        include_once __DIR__ . "/../../Database/config.php";
+
+        $delete_comment = $pdo -> prepare("
+            DELETE FROM comments 
+            WHERE 
+                id=:id 
+            AND 
+                id_user=:id_user
+        ");
+        
+        $delete_comment -> execute([
+            "id_user" => $_SESSION["id"],
+            "id" => $id
+        ]);
+
+        return redirect(route("details", $article));
+
+    }
 
 }

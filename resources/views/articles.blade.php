@@ -90,7 +90,7 @@ input.addEventListener('input',
 
 async function(event) {
     let content = event.target.value;
-    let resp = await fetch(window.location.href+"/../api/products/"+content);
+    let resp = await fetch("http://localhost:8000/api/products/"+content);
     
     if(resp.status !==  404){
         const data = await resp.json();
