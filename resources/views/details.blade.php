@@ -21,13 +21,6 @@
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Arsha
-  * Updated: Mar 10 2023 with Bootstrap v5.2.3
-  * Template URL: https://bootstrapmade.com/arsha-free-bootstrap-html-template-corporate/
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body>
@@ -43,7 +36,6 @@
 
         <ol></ol>
         <h2>{{$data["name"]}}</h2>
-
       </div>
     </section><!-- End Breadcrumbs -->
 
@@ -71,16 +63,20 @@
               <hr>
               <ul>
 
-                <li><strong>Category</strong>: {{ ucfirst(explode('-', $data["class"])[1]) }}</li>
-                <li><strong>Seller</strong>: {{ $data['mail'] }}</li>
-                <li><strong>Price</strong>: {{ $data['price'] }}$</li>
+                  <li><strong>Category</strong>: {{ ucfirst(explode('-', $data["class"])[1]) }}</li>
+                  <li><strong>Seller</strong>: {{ $data['mail'] }}</li>
+                  <li><strong>Price</strong>: {{ $data['price'] }}$</li>
+
+                
                 <br>
                 <h3></h3>
               </ul>
             </div>
             <div class="portfolio-info">
               <p class="descr">
-                {{ $data['descr'] }}
+
+                  {{ $data['descr'] }}
+
               </p> 
 
             </div>
@@ -92,7 +88,7 @@
             </form>
             
             @else
-              <form class="navbar" method="post" action="{{route("deleteProduct", $data['pid'])}}">  
+            <form class="navbar" method="post" action="{{route("deleteProduct", $data['pid'])}}">  
                 @csrf      
                 <input type="hidden" name="_method" value="DELETE">
                 <input class="addtocart" type="submit" value="Delete product">
@@ -189,7 +185,6 @@
                 for ( let i = rat; i < 5; i++ )
                     stars += '<i class="bi bi-star" style="color: #de7921;"></i>';
                 
-
 
                 commentDiv.innerHTML += `
                 <div id="${e.id}" class="comments">

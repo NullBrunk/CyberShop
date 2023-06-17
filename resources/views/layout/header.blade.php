@@ -1,6 +1,7 @@
 @if(!isset($_SESSION))
   @php(session_start());
 @endif
+
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
     <div class="container d-flex align-items-center">
 
