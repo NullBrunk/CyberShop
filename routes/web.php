@@ -74,12 +74,12 @@ Route::prefix('cart') -> group(function () {
     Route::post(
         "/add", 
         [ Products::class, 'addProductToCart' ] 
-    ) -> middleware(Logged::class) -> name('addCart');
+    ) -> middleware(Logged::class) -> name('cart.add');
 
     Route::get(
         "/delete/{id}", 
         [ Products::class, 'deleteProductFromCart' ] 
-    ) -> middleware(Logged::class) -> name('removeCart');
+    ) -> middleware(Logged::class) -> name('cart.remove');
 });
 
 
@@ -91,13 +91,13 @@ Route::prefix('comments') -> group(function () {
     Route::post(
         "",
         [ Comments::class, "store" ]
-    ) -> middleware(Logged::class) -> name("addComment");
+    ) -> middleware(Logged::class) -> name("comment.add");
 
 
     Route::get(
         "/delete/{article}/{id}",
         [ Comments::class, "delete" ]
-    ) -> middleware(Logged::class) -> name("deleteComment");
+    ) -> middleware(Logged::class) -> name("comment.delete");
     
 });
 
@@ -110,25 +110,25 @@ Route::prefix('product') -> group(function () {
     Route::post(
         "/sell",
         [ Products::class, "store" ]
-    ) -> middleware(Logged::class) -> name("sellProduct");
+    ) -> middleware(Logged::class) -> name("product.sell");
 
 
     Route::delete(
         "/delete/{slug}",
         [ Products::class, "delete" ]
-    ) -> middleware(Logged::class) -> name("deleteProduct");
+    ) -> middleware(Logged::class) -> name("product.delete");
 
 
     Route::get(
         "/update/{id}",
         [ Products::class, "show_update_form" ]
-    ) -> middleware(Logged::class) -> name("updateForm");
+    ) -> middleware(Logged::class) -> name("product.updateform");
 
 
     Route::post(
         "/update/{id}",
         [ Products::class, "update" ]
-    ) -> middleware(Logged::class) -> name("updateProduct");
+    ) -> middleware(Logged::class) -> name("product.update");
     
 
     

@@ -132,7 +132,7 @@
 
                         <div class="row portfolio-container">
                           @if(empty($data))
-                            You are not selling any product yet, <a style="width: 20% !important;" href="{{route("sellProduct")}}">start here !</a>
+                            You are not selling any product yet, <a style="width: 20% !important;" href="{{route("product.sell")}}">start here !</a>
                           @endif
                         
                           @foreach($data as $d)

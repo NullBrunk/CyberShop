@@ -24,7 +24,7 @@
             <script>
 
             async function deleteitem(id, price, total) {
-                url = "/delete/"+id
+                url = "/cart/delete/"+id
                 let resp = await fetch(url);
 
                 let elem = document.getElementById(id)

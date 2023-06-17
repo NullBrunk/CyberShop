@@ -69,7 +69,7 @@
           <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px;">
             <div class="portfolio-info" style="padding-bottom: 10px;" >
               @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $data["mail"]))
-                <h2>Product information <a href="{{route("updateForm", $data['pid'])}}"> <i style="margin-left: 10%; " class="bi bi-pencil-square"></i></a></h2>
+                <h2>Product information <a href="{{route("product.updateform", $data['pid'])}}"> <i style="margin-left: 10%; " class="bi bi-pencil-square"></i></a></h2>
               @else
                 <h2>Product information</h2>
               @endif
@@ -94,14 +94,14 @@
 
             </div>
             @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"]))
-            <form class="navbar" method="post" action="{{route("addCart")}}">  
+            <form class="navbar" method="post" action="{{route("cart.add")}}">  
               @csrf      
               <input class="addtocart" type="submit" value="Add to cart">
               <input type="hidden"  name="id" value="{{$data['pid']}}">
             </form>
             
             @else
-            <form class="navbar" method="post" action="{{route("deleteProduct", $data['pid'])}}">  
+            <form class="navbar" method="post" action="{{route("product.delete", $data['pid'])}}">  
                 @csrf      
                 <input type="hidden" name="_method" value="DELETE">
                 <input class="addtocart" type="submit" value="Delete product">
@@ -147,7 +147,7 @@
         @endif
 
         <div style="display: flex">
-        <form method="post" action="{{ route("addComment") }}" style="width:100%;">
+        <form method="post" action="{{ route("comment.add") }}" style="width:100%;">
           @csrf
           <textarea placeholder="Type something ..." class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
           <input name="id" type="hidden" value="{{$data['pid']}}">
@@ -191,7 +191,7 @@
 
                         @if(isset($_SESSION["mail"]) && $comm["mail"] === $_SESSION["mail"])
                           <p class="trash"> 
-                            <a style="color: #af2024;" href="{{route("deleteComment", [$data['pid'], $comm["id"]] )}}">
+                            <a style="color: #af2024;" href="{{route("comment.delete", [$data['pid'], $comm["id"]] )}}">
                               <i class='bi bi-trash2-fill'></i> 
                             </a>
                             </p>
