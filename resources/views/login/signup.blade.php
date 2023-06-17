@@ -130,7 +130,7 @@
                                 </div>
                     
                                 <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Login</button>
+                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign-Up</button>
                                 </div>
 
               

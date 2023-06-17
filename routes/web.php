@@ -34,7 +34,6 @@ Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell");
 
 Route::get('/', Index::class ) -> name("root");
 
-Route::post("/delete/account", [ Users::class, "delete" ] ) -> middleware(Logged::class) -> name("deleteAccount");
 
 
 # Login / Signup
@@ -120,3 +119,7 @@ Route::get(
     [Users::class, "showProfile"]
 ) -> middleware(Logged::class);
 
+Route::get(
+    "/profile/delete", 
+    [ Users::class, "delete" ] 
+) -> middleware(Logged::class) -> name("deleteAccount");

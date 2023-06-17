@@ -168,11 +168,18 @@
                     </div>
                     <br>
                     
-                    <form class="navbar" method="post" action="{{route("deleteAccount")}}">  
-                      @csrf      
-                      <input type="submit" id="input-sub" name="submit" value="DELETE ACCOUNT" class="btn btn-primary" style="border: 1px solid #af2024; background-color: #af2024;">
-                    </form>
-                   
+                    <p onclick="boum()" class="btn btn-primary" style="border: 1px solid #af2024; background-color: #af2024;">
+                      DELETE ACCOUNT
+                    </p>
+
+                    <script>
+                      function boum(){
+                        if(confirm("Are you sure that you wan't to delete your account ?")){
+                            window.location.href = "/profile/delete"
+                        }
+                        
+                      }
+                    </script>
 
                   </div>
           
