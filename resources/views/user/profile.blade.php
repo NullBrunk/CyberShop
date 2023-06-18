@@ -36,7 +36,7 @@
 
       function undisable(){
 
-        for(elem of ["email", "input-sub", "password"])
+        for(elem of ["email", "input-sub", "newpass", "renewpass", "oldpass"])
           document.getElementById(elem).disabled = !document.getElementById(elem).disabled
 
       
@@ -71,16 +71,7 @@
 
 
 
-          @if($errors -> has("email") or $errors -> has("password") or isset($_SESSION['nul']))
-              <div class="alert alert-danger">
-                An error has occured
-              </div>
-
-              <?php
-                unset($_SESSION['nul']);
-              ?>
-
-          @elseif(isset($_SESSION['done']))
+          @if(isset($_SESSION['done']))
             <div class="alert alert-success">
                 Your information have been updated
             </div>
@@ -97,6 +88,16 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group focused">
+                        @if($errors -> has("email") or isset($_SESSION['nul']))
+                          <div class="alert alert-danger">
+                              The entered mail is invalid !
+                          </div>
+
+                          <?php
+                            unset($_SESSION['nul']);
+                          ?>
+
+                       @endif
                         <label class="form-control-label" for="input-address">E-mail</label>
                         <input id="email" name="email" class="form-control form-control-alternative" placeholder="Your e-mail address" value="{{$_SESSION['mail']}}" type="text" disabled>
                         
@@ -107,14 +108,63 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group focused">
+                        @if($errors -> has("oldpass"))
+                          <div class="alert alert-danger">
+                              The old password cannot be empty !
+                          </div>
+                        @endif
+
+                        @if(isset($_SESSION["notsame"]))
+                          <div class="alert alert-danger">
+                            The entered password does not match your actual password
+                          </div>
+
+                          <?php
+                              unset($_SESSION["notsame"]);
+                          ?>
+                        @endif
                         <label class="form-control-label" for="input-address">Password</label>
 
-                        <input id="password" name="password" class="form-control form-control-alternative" placeholder="Your password" value="{{$_SESSION['pass']}}" type="password" disabled>
+                        <input id="oldpass" name="oldpass" class="form-control form-control-alternative" placeholder="Your current password"  type="password" disabled>
                       
              
                       </div>
                     </div>
                   </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group focused">
+                        <label class="form-control-label" for="input-address">New password</label>
+                        
+                        @if($errors -> has("newpass"))
+                          <div class="alert alert-danger">
+                              You must enter a valid new password
+                          </div>
+                        @endif
+                        <input id="newpass" name="newpass" class="form-control form-control-alternative" placeholder="Enter a new password" type="password" disabled>
+                      
+             
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group focused">
+
+                        @if($errors -> has("renewpass"))
+                          <div class="alert alert-danger">
+                              Passwords are not same !
+                          </div>
+                        @endif
+                        <input id="renewpass" name="renewpass" class="form-control form-control-alternative" placeholder="Re-enter the new password" type="password" disabled>
+                      
+             
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
                 <input type="submit" id="input-sub" name="submit" value="Update" class="btn btn-primary" style="background-color: #32325d;" disabled>
              

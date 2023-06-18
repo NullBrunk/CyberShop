@@ -27,7 +27,7 @@ use ecommerce;
 CREATE TABLE users(
     `id` INT AUTO_INCREMENT,
     `mail` VARCHAR(50) UNIQUE NOT NULL,
-    `pass` TEXT NOT NULL,
+    `pass` VARCHAR(130) NOT NULL,
     `is_admin` SMALLINT DEFAULT 0,
 
     PRIMARY KEY(`id`)   
@@ -40,7 +40,7 @@ CREATE TABLE product(
     `price` FLOAT,
     `descr` TEXT,
     `class` TEXT,
-    `image` VARCHAR(32) NOT NULL,
+    `image` VARCHAR(50) NOT NULL,
 
     FOREIGN KEY(`id_user`) REFERENCES users(`id`),
     PRIMARY KEY(`id`)

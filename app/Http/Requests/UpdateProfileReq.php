@@ -23,7 +23,10 @@ class UpdateProfileReq extends FormRequest
     {
         return [
             "email" => "required|email|max:50",
-            "password" => "required", 
+            "oldpass" => "required",
+            "newpass" => "required", 
+            "renewpass" => "required|same:newpass", 
+
         ];
     }
 }

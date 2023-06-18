@@ -37,7 +37,7 @@ class Users extends Controller
         $user_info = $pdo -> prepare("SELECT * FROM `users` WHERE mail=:mail AND BINARY pass=:pass");
         $user_info -> execute(array(
             "mail" => $request["email"],
-        	"pass" => $request["pass"]
+        	"pass" =>  hash("sha512", hash("sha512", $request["pass"]))
         ));
         $data = $user_info -> fetch();
 
@@ -46,7 +46,6 @@ class Users extends Controller
             $_SESSION['admin'] = $data['is_admin'];
             $_SESSION['logged'] = true;
             $_SESSION['mail'] = $data['mail'];
-            $_SESSION['pass'] = $data['pass'];
             $_SESSION['cart'] = [];
 
             return redirect(route("root"));
@@ -74,7 +73,7 @@ class Users extends Controller
         try {
             $create_user -> execute(array(
                 "mail" => $request["email"],
-                "pass" => $request["pass"]
+                "pass" => hash("sha512", hash("sha512", $request["pass"]))
             ));
         }
 
@@ -89,7 +88,22 @@ class Users extends Controller
     public function profile(UpdateProfileReq $req){
 
         include_once __DIR__ . '/../../Database/config.php';
-        
+
+        $verify_user = $pdo -> prepare("
+            SELECT * FROM users WHERE mail=:mail AND pass=:pass
+        ");
+        $verify_user -> execute([
+            "mail" => $_SESSION['mail'],
+            "pass" => hash("sha512", hash("sha512", $req['oldpass']))
+        ]);
+
+        if(empty($verify_user -> fetch())){
+            $_SESSION["notsame"] = true;
+            return redirect(route("profile"));
+        }
+
+
+
         $update_user = $pdo -> prepare("
         UPDATE users SET 
         
@@ -99,16 +113,14 @@ class Users extends Controller
         WHERE 
         
         mail=:oldmail 
-        AND pass=:oldpass
         
         ");
        
         try {
             $update_user -> execute([
                 "newmail" => $req['email'],
-                "newpass" => $req['password'],
+                "newpass" => hash("sha512", hash("sha512", $req['newpass'])),
                 "oldmail" => $_SESSION['mail'],
-                "oldpass" => $_SESSION['pass'],
             ]);
         }
         catch (Exception $e){
@@ -118,7 +130,6 @@ class Users extends Controller
 
 
         $_SESSION['mail'] = $req['email'];
-        $_SESSION['pass'] = $req['password'];
 
         $_SESSION['done'] = true;
         return redirect(route("profile"));
