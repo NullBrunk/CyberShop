@@ -17,6 +17,7 @@
   <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="../assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
+  <script src="../assets/js/sweetalert2.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet">
@@ -50,9 +51,13 @@
               <div class="swiper-wrapper align-items-center">
 
                 @if(isset($_SESSION['done']) && ($_SESSION['done'] === "updated")  )
-                  <div class="alert alert-success">
-                      Product updated succesfully !
-                  </div>
+                  <script>
+                  Swal.fire(
+                        'Updated !',
+                        'Product updated successfully.',
+                        'success'
+                      ) 
+                  </script>
 
                   <?php
                       unset($_SESSION['done'])
@@ -137,9 +142,13 @@
         @endif
 
         @if(isset($_SESSION['done']) )
-              <div class="alert alert-success">
-                  Your comment has been posted
-              </div>
+          <script>
+              Swal.fire(
+                'Updated !',
+                'Your comment has been posted.',
+                'success'
+              ) 
+          </script>
 
               <?php
                 unset($_SESSION['done'])

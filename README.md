@@ -14,9 +14,10 @@
 
 # E-Commerce
 An E-Commerce website with the Laravel Framework
-( This site is still under construction )
 
-API is served on localhost:8000, Web App is iserved on localhost:79
+The Web App is iserved on localhost:80, and the API is served on localhost:8000.
+<br> 
+Note: the payment part is not and will not be implemented, as well as the E-mail verification part, cause i cant test it (No SMTP server).
 
 # Installation
 
@@ -46,25 +47,6 @@ CREATE TABLE product(
     PRIMARY KEY(`id`)
 );
 
-CREATE TABLE buyed(
-    `id_user` INT NOT NULL,
-    `id_product` INT NOT NULL,
-    `quantity` INT NOT NULL ,
-
-    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
-    FOREIGN KEY(`id_product`) REFERENCES product(`id`)
-);
-
-CREATE TABLE selled(
-    `id_user` INT NOT NULL,
-    `id_product` INT NOT NULL,
-    `quantity` INT NOT NULL ,
-
-    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
-    FOREIGN KEY(`id_product`) REFERENCES product(`id`)
-);
-
-
 CREATE TABLE comments(
     `id` INT AUTO_INCREMENT,
     `id_product` INT NOT NULL, 
@@ -75,7 +57,17 @@ CREATE TABLE comments(
     PRIMARY KEY(`id`),
     FOREIGN KEY(`id_user`) REFERENCES users(`id`),
     FOREIGN KEY(`id_product`) REFERENCES product(`id`)
-)
+);
+
+CREATE TABLE contact(
+    `id` INT AUTO_INCREMENT,
+    `readed` BOOL,
+    `email_contactor` VARCHAR(50) NOT NULL,
+    `email_contacted` VARCHAR(50) NOT NULL,
+    `content` TEXT NOT NULL,
+
+    PRIMARY KEY(`id`)
+);
 ```
 
 ```bash

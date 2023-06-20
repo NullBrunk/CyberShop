@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
 use App\Http\Controllers\Details;
+use App\Http\Controllers\Contact;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Index;
 
@@ -18,9 +19,6 @@ use App\Http\Controllers\Index;
 */
 
 Route::view('/about', 'static.about') -> name("about");
-
-Route::view('/contact', 'static.contact') -> name("contact");
-
 Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell"); 
 
 
@@ -33,7 +31,7 @@ Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell");
 */
 
 Route::get('/', Index::class ) -> name("root");
-
+Route::view("/todo", "static.todo");
 
 
 # Login / Signup
@@ -134,9 +132,6 @@ Route::prefix('product') -> group(function () {
     
 });
 
-
-
-
 # Profile
 Route::prefix('profile') -> group(function () {
 
@@ -159,3 +154,22 @@ Route::prefix('profile') -> group(function () {
 
 });
 
+
+# Contact
+
+Route::prefix('contact') -> group(function () {
+    Route::get(
+        "",
+        [ Contact::class, "show"]
+    ) -> middleware(Logged::class) -> name("contact");
+
+    Route::get(
+        "{slug}",
+        [ Contact::class, "show"]
+    ) -> middleware(Logged::class) -> name("contactuser");
+
+    Route::post(
+        "",
+        [ Contact::class, "send"]
+    ) -> middleware(Logged::class);
+});

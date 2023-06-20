@@ -17,6 +17,7 @@
   <link href="../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
   <link href="../assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
+  <script src="../assets/js/sweetalert2.js"></script>
 
   <!-- Template Main CSS File -->
   <link href="../assets/css/style.css" rel="stylesheet">
@@ -64,9 +65,13 @@
                       unset($_SESSION["error"]);
                     ?>
                   @elseif(isset($_SESSION["done"]))
-                    <div class="alert alert-success">
-                      Successfully added the product !
-                    </div>
+                    <script>
+                      Swal.fire(
+                            'Added !',
+                            'Succesfully added your product.',
+                            'success'
+                          ) 
+                    </script>
 
                     <?php
                       unset($_SESSION["done"]);

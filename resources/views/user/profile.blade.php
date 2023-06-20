@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
     <link href="assets/css/profile.css" rel="stylesheet">
 
+    <script src='assets/js/sweetalert2.js'></script>
 
 
   <!-- Google Fonts -->
@@ -21,6 +22,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
+  <script src="assets/js/sweetalert2.js"></script>
 
 </head>
     
@@ -52,7 +54,16 @@
             <div class="card-header bg-white border-0">
               <div class="row align-items-center">
                 <div class="col-8">
-                  <h3 class="mb-0">My account</h3>
+                  <h3 class="mb-0" style="width: 157%;">My account
+                    
+                <button 
+                  onclick="window.location.href = '/disconnect'" 
+                  class="btn btn-primary" 
+                  style="margin-left: 80%; border: 1px solid #af2024; background-color: #af2024;">
+                    Disconnect
+                </button>
+
+                  </h3>
                 </div>
                 <div class="col-4 text-right">
                 </div>
@@ -72,14 +83,76 @@
 
 
           @if(isset($_SESSION['done']))
-            <div class="alert alert-success">
-                Your information have been updated
-            </div>
+          <script>
+            Swal.fire(
+                  'Updated !',
+                  'Your information has been updated.',
+                  'success'
+                ) 
+          </script>
 
             <?php
               unset($_SESSION['done']);
             ?>
           @endif
+
+
+
+          @if($errors -> has("email") or isset($_SESSION['nul']))
+            <script>
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error !',
+                  text: 'The entered mail is invalid.',
+                })
+            </script> 
+
+          <?php
+            unset($_SESSION['nul']);
+          ?>
+
+          @elseif($errors -> has("oldpass"))
+            <script>
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error !',
+                  text: 'Old password cannot be empty.',
+                })
+            </script>
+          @elseif($errors -> has("newpass"))
+            <script>
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error !',
+                  text: 'You must enter a valid new password',
+                })
+            </script>
+              
+          @elseif($errors -> has("renewpass"))
+            <script>
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error !',
+                  text: 'New passwords are not same',
+                })
+            </script>
+          @endif
+          
+          
+          @if(isset($_SESSION["notsame"]))
+          <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error !',
+                text: 'The entered password does not match your actual password',
+              })
+          </script>
+
+          <?php
+              unset($_SESSION["notsame"]);
+          ?>
+         @endif
+  
           <form action="{{ route("profile") }}" method="post">
 
             @csrf
@@ -88,46 +161,20 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group focused">
-                        @if($errors -> has("email") or isset($_SESSION['nul']))
-                          <div class="alert alert-danger">
-                              The entered mail is invalid !
-                          </div>
-
-                          <?php
-                            unset($_SESSION['nul']);
-                          ?>
-
-                       @endif
+                        
                         <label class="form-control-label" for="input-address">E-mail</label>
-                        <input id="email" name="email" class="form-control form-control-alternative" placeholder="Your e-mail address" value="{{$_SESSION['mail']}}" type="text" disabled>
-                        
-
+                        <input id="email"  name="email" class="form-control form-control-alternative" placeholder="Your e-mail address" value="{{$_SESSION['mail']}}" type="text" disabled>
+                      
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group focused">
-                        @if($errors -> has("oldpass"))
-                          <div class="alert alert-danger">
-                              The old password cannot be empty !
-                          </div>
-                        @endif
-
-                        @if(isset($_SESSION["notsame"]))
-                          <div class="alert alert-danger">
-                            The entered password does not match your actual password
-                          </div>
-
-                          <?php
-                              unset($_SESSION["notsame"]);
-                          ?>
-                        @endif
+                       
                         <label class="form-control-label" for="input-address">Password</label>
-
-                        <input id="oldpass" name="oldpass" class="form-control form-control-alternative" placeholder="Your current password"  type="password" disabled>
-                      
-             
+                        <input id="oldpass" value="{{old("oldpass")}}" name="oldpass" class="form-control form-control-alternative" placeholder="Your current password"  type="password" disabled>
+                                  
                       </div>
                     </div>
                   </div>
@@ -135,16 +182,10 @@
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group focused">
-                        <label class="form-control-label" for="input-address">New password</label>
                         
-                        @if($errors -> has("newpass"))
-                          <div class="alert alert-danger">
-                              You must enter a valid new password
-                          </div>
-                        @endif
-                        <input id="newpass" name="newpass" class="form-control form-control-alternative" placeholder="Enter a new password" type="password" disabled>
+                        <label class="form-control-label" for="input-address">New password</label>
+                        <input id="newpass" name="newpass" value="{{old("newpass")}}"class="form-control form-control-alternative" placeholder="Enter a new password" type="password" disabled>
                       
-             
                       </div>
                     </div>
                   </div>
@@ -153,12 +194,8 @@
                     <div class="col-md-12">
                       <div class="form-group focused">
 
-                        @if($errors -> has("renewpass"))
-                          <div class="alert alert-danger">
-                              Passwords are not same !
-                          </div>
-                        @endif
-                        <input id="renewpass" name="renewpass" class="form-control form-control-alternative" placeholder="Re-enter the new password" type="password" disabled>
+                        
+                        <input id="renewpass" name="renewpass" value="{{old("renewpass")}}" class="form-control form-control-alternative" placeholder="Re-enter the new password" type="password" disabled>
                       
              
                       </div>
@@ -224,10 +261,22 @@
 
                     <script>
                       function boum(){
-                        if(confirm("Are you sure that you wan't to delete your account ?")){
-                            window.location.href = "/profile/delete"
-                        }
-                        
+
+                        Swal.fire({
+                            title: 'Are you sure?',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#293e61',
+                            cancelButtonColor: '#af2024',
+                            confirmButtonText: 'Yes, delete it!'
+                          }).then((result) => {
+                            if (result.isConfirmed) {
+                              window.location.href = "/profile/delete"
+                            
+                            }
+                          })
+                       
+   
                       }
                     </script>
 
@@ -249,3 +298,5 @@
 </body>
 
 </html>
+
+

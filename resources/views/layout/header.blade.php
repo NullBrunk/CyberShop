@@ -64,17 +64,13 @@
                   @php($i++)
                 @endforeach
 
-                <li><a id="price" class="button" href="/">Buy</a></li>
+                <li><a id="price" class="button" href="/todo">Buy</a></li>
               </ul>
             </li>
           @endif
 
-          <li style="list-style-type: none;" class="dropdown"><a href="#"><i style="font-size: 32px !important;" class="bx bx-user-circle"></i></a>
-                  <ul>
-                    <li><a href="{{ route("profile") }}">Profile</a></li>
-                    <li><a href="{{ route("disconnect") }}">Disconnect</a></li>
-                  </ul>
-          </li>
+          <a href="{{ route("profile") }}"><i style="font-size: 32px !important;" class="bx bx-user-circle"></i></a>
+
         @else
             <li><a class="nav-link scrollto" href="{{ route("signup") }}">Signup</a></li>
             <li style="list-style-type: none;"><a class="getstarted scrollto" href="{{ route("login") }}">Login</a></li>  
