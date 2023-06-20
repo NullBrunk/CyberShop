@@ -91,7 +91,7 @@ class Contact extends Controller
                     readed, mail_contactor, mail_contacted, content
                 ) 
             VALUES  (
-                    TRUE, :mail_contactor, :mail_contacted, :content 
+                    FALSE, :mail_contactor, :mail_contacted, :content 
                 )
         ");
 
