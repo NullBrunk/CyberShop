@@ -17,7 +17,7 @@ An E-Commerce website with the Laravel Framework
 
 The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 <br> 
-Note: the payment part is not and will not be implemented, as well as the E-mail verification part, cause i cant test it (No SMTP server).
+Note: the payment part is not and will not be implemented, as well as the E-mail verification part, cause i cant test it (No SMTP server & no paypal).
 
 # Installation
 
