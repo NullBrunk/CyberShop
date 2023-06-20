@@ -172,4 +172,5 @@ Route::prefix('contact') -> group(function () {
         "",
         [ Contact::class, "send"]
     ) -> middleware(Logged::class);
+
 });

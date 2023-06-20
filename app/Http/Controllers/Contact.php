@@ -50,10 +50,22 @@ class Contact extends Controller
         }
 
 
+        
         if($slug){
-            if(!in_array($slug, array_keys($exploitable_data))){
-                return abort(403);
+
+            $getmails = $pdo -> prepare("SELECT * FROM users WHERE mail = :slug");
+            $getmails -> execute(["slug" => $slug]);
+            
+            if(empty($getmails -> fetch())){
+                $_SESSION["contact_no_one"] = true;
+                return redirect(route("contact"));  
             }
+            else if($slug === $_SESSION["mail"]){
+                $_SESSION["contact_yourself"] = true;
+                return redirect(route("contact"));  
+            }
+
+
             
             return view("user.contact", [ "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
         }   
@@ -90,7 +102,6 @@ class Contact extends Controller
         ]);
 
         return redirect(route("contactuser", $mail));
-
-
     }
+
 }
