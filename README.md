@@ -38,7 +38,7 @@ CREATE TABLE product(
     `id` INT AUTO_INCREMENT,
     `id_user` INT NOT NULL,
     `name` VARCHAR(45) NOT NULL,
-    `price` FLOAT,
+    `price` TEXT,
     `descr` TEXT,
     `class` TEXT,
     `image` VARCHAR(50) NOT NULL,

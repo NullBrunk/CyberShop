@@ -53,6 +53,7 @@
 
                   <img style="width: 60% !important;" src="../../storage/product_img/{{ $data["image"] }}" alt="">
                   <br>
+                  <br>
                   @if(isset($_SESSION["done"]))
                     <div class="alert alert-success">
                       Successfully added the product !
@@ -73,9 +74,6 @@
                     <div class="alert alert-danger">
                         The price is required and must be an integer !
                     </div>
-                    @foreach ($errors->all() as $error)
-                    <div>{{ $error }}</div>
-                @endforeach
 
                   @endif
 
