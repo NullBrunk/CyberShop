@@ -23,7 +23,7 @@ class UpdateProductReq extends FormRequest
     {
         return [
             "category" => "required|max:20",
-            "price" => "required|integer",
+            "price" => "required|regex:/[0-9]*/u",
             "description" => "required",
             "name" => "required|max:45"
         ];

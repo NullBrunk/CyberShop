@@ -73,6 +73,10 @@
                     <div class="alert alert-danger">
                         The price is required and must be an integer !
                     </div>
+                    @foreach ($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
+
                   @endif
 
                   @if($errors -> has("description"))

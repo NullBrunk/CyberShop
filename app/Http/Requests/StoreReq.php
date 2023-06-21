@@ -24,7 +24,7 @@ class StoreReq extends FormRequest
         return [
             "product_img" => "required|image|max:2000",
             "category" => "required|max:20",
-            "price" => "required|integer",
+            "price" => "required|regex:/[0-9]*/u",
             "description" => "required",
             "name" => "required|max:45"
         ];
