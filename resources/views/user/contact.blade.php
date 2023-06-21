@@ -83,6 +83,8 @@
         <div class="left">
 
           <?php 
+
+
             $names = array_keys($data);  
           ?>
           @foreach($names as $n)

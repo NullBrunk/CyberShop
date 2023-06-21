@@ -56,7 +56,10 @@ class Contact extends Controller
             $getmails = $pdo -> prepare("SELECT * FROM users WHERE mail = :slug");
             $getmails -> execute(["slug" => $slug]);
             
-    
+            if(empty($getmails -> fetch())){
+                $_SESSION["contact_no_one"] = true;
+                return redirect(route("contact"));  
+            }
             if($slug === $_SESSION["mail"]){
                 $_SESSION["contact_yourself"] = true;
                 return redirect(route("contact"));  
