@@ -33,7 +33,8 @@
     font-size: 30px;
     height: 11%;
     width: 100%;
-    background-color: #eeeeee;
+    background-color: #293e61;
+    color: white;
 }
 
 .profile-box {
@@ -44,11 +45,14 @@
     padding-left: 5%;
     color: #1c1c1c;
     padding: 6%;
+    padding-top: 8%;
+    padding-bottom: 15%;
 }
 
 .msgs {
     height: 87%;
     margin-top: 1%;
+    overflow: scroll;
 }
 
 .textbar {
@@ -77,8 +81,8 @@
 }
 
 .message {
-    background-color: #f1f0f0;
-    padding: 10px;
+    background-color: #dbd7d7;
+    padding: 15px;
     border-radius: 5px;
     margin: 1%;
     word-wrap: break-word;
@@ -86,4 +90,13 @@
 
 .from-me {
     background-color: #d1eaf9;
+}
+
+.red {
+    background-color: #dbd7d7;
+}
+
+hr {
+    margin: 0;
+    padding: 0;
 }

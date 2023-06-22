@@ -53,7 +53,15 @@ class Contact extends Controller
         
         if($slug){
 
-            $getmails = $pdo -> prepare("SELECT * FROM users WHERE mail = :slug");
+            $getmails = $pdo -> prepare("
+                SELECT * FROM 
+                    contact 
+                WHERE 
+                    mail_contactor = :slug
+                OR 
+                    mail_contacted = :slug
+            ");
+
             $getmails -> execute(["slug" => $slug]);
             
             if(empty($getmails -> fetch())){

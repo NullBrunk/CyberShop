@@ -26,7 +26,6 @@ class UpdateProfileReq extends FormRequest
             "oldpass" => "required",
             "newpass" => "required", 
             "renewpass" => "required|same:newpass", 
-
         ];
     }
 }

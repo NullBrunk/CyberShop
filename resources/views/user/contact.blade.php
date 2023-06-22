@@ -88,8 +88,13 @@
             $names = array_keys($data);  
           ?>
           @foreach($names as $n)
-            <a class="profile-box" href="{{route("contactuser", $n)}}"> {{ $n }}</a> 
-            <hr>
+
+            @if(isset($user) && $user === $n)
+                <a class="profile-box red" href="{{route("contactuser", $n)}}"> {{ $n }}</a> 
+            @else
+                <a class="profile-box" href="{{route("contactuser", $n)}}"> {{ $n }}</a> 
+            @endif
+              <hr>
           @endforeach
           
 
@@ -121,7 +126,7 @@
 
             <div class="textbar">
               <form method="post" action="{{route("contact")}}">
-                <input placeholder="Send a message to {{ explode("/contact/", url() -> current())[1] }}" type="text" name="content" value="{{ old("content") }}">
+                <input placeholder="Send a message to {{ explode("/contact/", url() -> current())[1] }}" type="text" name="content" value="{{ old("content") }}" autofocus>
                 @csrf
                 <button name="submit"><i class="bx bx-send"></i></button>
               </form>
