@@ -128,27 +128,6 @@ class Users extends Controller
             return redirect(route("profile"));            
         }
 
-       /* if($req['email'] === $_SESSION["mail"]){
-            
-            
-            // Update mail in contact table when user changes it
-
-            $update_mail = $pdo -> prepare("
-                UPDATE contact SET 
-                    mail_contactor = :newmail
-                WHERE mail_contactor=:oldmail;
-
-                UPDATE contact SET 
-                    mail_contacted = :newmail
-                WHERE mail_contacted=:oldmail;
-            ");
-
-            $update_mail -> execute([
-                "newmail" => $req['email'],
-                "oldmail" => $_SESSION["mail"]
-            ]);
-
-        }*/
 
         $_SESSION['mail'] = $req['email'];
 
@@ -181,6 +160,7 @@ class Users extends Controller
 
         include_once __DIR__ . '/../../Database/config.php';
 
+
         # Delete images that are linked to the users products
         
         $imgs = $pdo -> prepare("SELECT image FROM product WHERE id_user=:id");
@@ -193,26 +173,42 @@ class Users extends Controller
             Storage::disk("public") -> delete("product_img/" . $img["image"]);
         }
 
-        # Delete buyed products, selled products, 
-        # comments and products from the user
 
-        foreach(["buyed", "selled", "comments", "product"] as $table){
-            $a = $pdo -> prepare("DELETE FROM $table WHERE id_user=:id");
-            $a -> execute([
-                "id" => $_SESSION["id"]
-            ]);   
+        # Delete comments
+        $c = $pdo -> prepare("DELETE FROM comments WHERE id_user=:id");
+        $c -> execute([
+            "id" => $_SESSION["id"]
+        ]); 
+
+
+        # Delete comments under user products
+        $c = $pdo -> prepare("SELECT * FROM product WHERE id_user=:id");
+        $c -> execute([
+            "id" => $_SESSION["id"]
+        ]);   
+
+        foreach($c -> fetchAll(\PDO::FETCH_ASSOC) as $product){
+            $delete = $pdo -> prepare("DELETE FROM comments WHERE id_product=:id");
+            $delete -> execute(["id" => $product["id"]]);
         }
+
+        # Delete user product 
+        $up = $pdo -> prepare("DELETE FROM product WHERE  id_user=:id");
+        $up -> execute(["id" => $_SESSION["id"]]);
+
+        # Delete contacts messages from the user
+        $c = $pdo -> prepare("
+            DELETE FROM contact WHERE id_contactor=:id OR id_contacted=:id"
+        );
+        $c -> execute(["id" => $_SESSION["id"]]);
+
 
         # Delete the user itself
 
         $user_del = $pdo -> prepare("DELETE FROM users WHERE id=:id");
-        $user_del -> execute([
-            "id" => $_SESSION["id"]
-        ]); 
+        $user_del -> execute(["id" => $_SESSION["id"]]); 
 
         return redirect(route("disconnect"));
-      
-
-
+    
     }
 }

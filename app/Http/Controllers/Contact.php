@@ -33,6 +33,7 @@ function getmsgs($mail){
                 contacted.mail_contacted = :mail 
             OR 
                 contactor.mail_contactor = :mail
+            ORDER BY contacted.id
         ");
 
 
@@ -56,13 +57,13 @@ class Contact extends Controller
 
                 // Mail of the other person
                 $mail = $data["mail_contactor"];
-                $toput = [ $data['content'], "me" => false ];
-            }
+                $toput = [ $data['content'], "me" => false, "id" => $data["id"]];
+            } 
             else {
                 
                 // Mail of the other person
                 $mail = $data["mail_contacted"];
-                $toput = [ $data['content'], "me" => true ];
+                $toput = [ $data['content'], "me" => true, "id" => $data["id"] ];
 
             }
 
@@ -129,6 +130,20 @@ class Contact extends Controller
 
         return redirect(route("contactuser", $mail));
         
+    }
+
+    public function delete($slug){
+
+        include_once __DIR__ . '/../../Database/config.php';
+
+        $del = $pdo -> prepare("DELETE FROM contact WHERE id=:slug AND id_contactor=:user");
+        $del -> execute([
+            "slug" => $slug,
+            "user" => $_SESSION["id"]
+        ]);
+
+        return redirect(url() -> previous());
+
     }
 
 }

@@ -28,6 +28,22 @@
 
 
 <body>
+  <script>
+    function menu(id){
+      const menu = document.getElementById(id)
+      if(menu.classList[3]){
+        menu.classList.remove("none")
+      }
+      else {
+        menu.classList.add("none") 
+      }
+
+      var chatDiv = document.getElementById("chat");
+      chatDiv.scrollTop += 40;
+
+    }
+
+  </script>
       @include('../layout/header')
 
       <div class="main">
@@ -101,22 +117,35 @@
         </div>
 
         <div class="right">
-          
           @if(isset($noone) && $noone === true)
           
           @else 
-            <div class="msgs">
+          <div class="msgs" id="chat">
               
               @if(isset($data[$user]))
                 @foreach($data[$user] as $d)
+
 
                   @if(!$d['me'])
                     <div class="message">{{$d[0]}}</div>
                   
                     @else 
                       <div class="message from-me">
-                        {{$d[0]}}
+                        {{$d[0]}} 
+                        
+
+                       
+                          <i onclick="menu({{$d['id']}})" class="dots bx bx-dots-vertical-rounded"></i>
+                                                   
+
+                      
+  
                       </div>
+                      <button 
+                    onclick="window.location.href = '{{ route('delete', $d['id']) }}'"
+                    id="{{$d["id"]}}"  class="btn btn-primary menu none" >
+                    DELETE <i class="bi bi-trash2-fill"></i>
+                </button>
                   @endif
                   
                 @endforeach
@@ -151,6 +180,11 @@
 
   <!-- Template Main JS File -->
   <script src="../assets/js/main.js"></script>
+
+      <script>
+var chat = document.getElementById("chat");
+chat.scrollTop = chat.scrollHeight; // Défilement vers le bas
+      </script>
 
 </body>
 

@@ -27,6 +27,8 @@ class Details extends Controller {
             INNER JOIN users 
             ON users.id=product.id_user 
             WHERE product.id=:id
+
+            ORDER BY product.id DESC
         ");
 
         $details -> execute( [ "id" => $product_id ] );

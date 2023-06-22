@@ -8,7 +8,7 @@ class Index extends Controller {
         
         include_once __DIR__ . '/../../Database/config.php';
 
-        $products = $pdo -> query("SELECT * FROM `product`");
+        $products = $pdo -> query("SELECT * FROM `product` ORDER BY id DESC");
         $data = $products -> fetchAll();
         return view("index", ["data" => $data]);
 

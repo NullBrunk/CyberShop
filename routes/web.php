@@ -173,4 +173,9 @@ Route::prefix('contact') -> group(function () {
         [ Contact::class, "send"]
     ) -> middleware(Logged::class);
 
+    Route::get(
+        "delete/{slug}",
+        [ Contact::class, "delete"]
+    ) -> middleware(Logged::class) -> name("delete");
+
 });
