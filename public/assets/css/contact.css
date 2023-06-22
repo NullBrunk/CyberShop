@@ -1,7 +1,11 @@
+body {
+    background-color: #37517e;
+}
+
 .main {
-    margin-top: 4%;
+    margin-top: 3%;
     padding: 3% 2%;
-    height: 92vh;
+    height: 91vh;
     background-color: #37517e;
 }
 
@@ -15,44 +19,34 @@
     width: 80%;
     border: 1px solid #e3e3e3;
     background-color: #f7f7f7;
-    height: 73vh;
+    height: 84vh;
 }
 
 .left {
     justify-content: left;
     width: 20%;
-    background-color: #ffffff;
-    overflow: scroll;
-    height: 73vh;
-}
-
-.header {
-    padding-left: 97%;
-    padding-top: 1%;
-    color: #32325d;
-    font-size: 30px;
-    height: 11%;
-    width: 100%;
     background-color: #293e61;
-    color: white;
+    overflow: scroll;
+    height: 84vh;
 }
 
 .profile-box {
     display: block;
     height: 10%;
     width: 100%;
-    font-size: 20px;
-    padding-left: 5%;
-    color: #1c1c1c;
-    padding: 6%;
+    font-size: 17px;
+    color: #fff;
+    padding-right: 7%;
     padding-top: 8%;
     padding-bottom: 15%;
+    padding-left: 8%;
 }
 
 .msgs {
     height: 87%;
     margin-top: 1%;
     overflow: scroll;
+    background-color: #fff;
 }
 
 .textbar {
@@ -93,12 +87,17 @@
 }
 
 .red {
-    background-color: #dbd7d7;
+    background-color: #37517e;
+}
+
+.profile-box:hover {
+    color: #dbd7d7;
 }
 
 hr {
     margin: 0;
     padding: 0;
+    color: #f7f7f7;
 }
 
 .dots{
@@ -137,4 +136,9 @@ hr {
 
 .none {
     display: none;
+}
+
+.sendmsg {
+    padding-top: 4%;
+    font-size: 31px;
 }

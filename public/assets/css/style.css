@@ -1293,3 +1293,7 @@ section {
   margin-top: 0vh;
   font-size: 26px; 
 }
+
+.portfolio-links {
+  word-wrap: break-word;
+}

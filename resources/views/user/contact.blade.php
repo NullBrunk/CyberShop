@@ -47,13 +47,7 @@
       @include('../layout/header')
 
       <div class="main">
-      <div class="header">
 
-        <div onclick="sendmsg()" class="sendmsg">
-          <i class="bx bx-mail-send"></i>
-        </div>
-
-      </div>
 
       <script>
 
@@ -97,7 +91,10 @@
       <div class="content">
 
         <div class="left">
-
+          <div onclick="sendmsg()" class="sendmsg profile-box">
+            <i class="bx bx-mail-send"></i> 
+          </div>
+          <div style="background: white; height: 1px;">_</div>
           <?php 
 
 
@@ -118,7 +115,7 @@
 
         <div class="right">
           @if(isset($noone) && $noone === true)
-          
+
           @else 
           <div class="msgs" id="chat">
               
