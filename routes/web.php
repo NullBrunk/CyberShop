@@ -158,21 +158,25 @@ Route::prefix('profile') -> group(function () {
 # Contact
 
 Route::prefix('contact') -> group(function () {
+
     Route::get(
         "",
         [ Contact::class, "show"]
     ) -> middleware(Logged::class) -> name("contact");
+
 
     Route::get(
         "{slug}",
         [ Contact::class, "show"]
     ) -> middleware(Logged::class) -> name("contactuser");
 
+
     Route::post(
         "",
         [ Contact::class, "send"]
     ) -> middleware(Logged::class);
 
+    
     Route::get(
         "delete/{slug}",
         [ Contact::class, "delete"]

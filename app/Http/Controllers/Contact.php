@@ -145,5 +145,4 @@ class Contact extends Controller
         return redirect(url() -> previous());
 
     }
-
 }

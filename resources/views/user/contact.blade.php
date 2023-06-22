@@ -125,27 +125,27 @@
               @if(isset($data[$user]))
                 @foreach($data[$user] as $d)
 
-
                   @if(!$d['me'])
                     <div class="message">{{$d[0]}}</div>
-                  
-                    @else 
-                      <div class="message from-me">
-                        {{$d[0]}} 
-                        
+                  @else 
+                    <div class="message from-me">
+                      {{$d[0]}} 
 
-                       
-                          <i onclick="menu({{$d['id']}})" class="dots bx bx-dots-vertical-rounded"></i>
-                                                   
+                      <i 
+                        onclick="menu({{$d['id']}})" 
+                        class="dots bx bx-dots-vertical-rounded"
+                      ></i>
+                                                  
+                    </div>
 
-                      
-  
-                      </div>
-                      <button 
-                    onclick="window.location.href = '{{ route('delete', $d['id']) }}'"
-                    id="{{$d["id"]}}"  class="btn btn-primary menu none" >
-                    DELETE <i class="bi bi-trash2-fill"></i>
-                </button>
+                    <button onclick="
+                      window.location.href = '{{ route('delete', $d['id']) }}'
+                      "
+                      id="{{$d["id"]}}"  
+                      class="btn btn-primary menu none" 
+                    >
+                        DELETE <i class="bi bi-trash2-fill"></i>
+                    </button>
                   @endif
                   
                 @endforeach
