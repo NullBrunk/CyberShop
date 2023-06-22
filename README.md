@@ -62,12 +62,27 @@ CREATE TABLE comments(
 CREATE TABLE contact(
     `id` INT AUTO_INCREMENT,
     `readed` BOOL,
-    `email_contactor` VARCHAR(50) NOT NULL,
-    `email_contacted` VARCHAR(50) NOT NULL,
+    `mail_contactor` VARCHAR(50) NOT NULL,
+    `mail_contacted` VARCHAR(50) NOT NULL,
     `content` TEXT NOT NULL,
 
     PRIMARY KEY(`id`)
 );
+
+DROP TABLE contact;
+CREATE TABLE contact(
+    `id` INT AUTO_INCREMENT,
+    `readed` BOOL,
+    `id_contactor` INT NOT NULL,
+    `id_contacted` INT NOT NULL,
+    `content` TEXT NOT NULL,
+
+    FOREIGN KEY(`id_contactor`) REFERENCES users(id),
+    FOREIGN KEY(`id_contacted`) REFERENCES users(id),
+
+    PRIMARY KEY(`id`)
+);
+
 ```
 
 ```bash

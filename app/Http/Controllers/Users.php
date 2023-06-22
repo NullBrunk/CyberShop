@@ -128,6 +128,27 @@ class Users extends Controller
             return redirect(route("profile"));            
         }
 
+       /* if($req['email'] === $_SESSION["mail"]){
+            
+            
+            // Update mail in contact table when user changes it
+
+            $update_mail = $pdo -> prepare("
+                UPDATE contact SET 
+                    mail_contactor = :newmail
+                WHERE mail_contactor=:oldmail;
+
+                UPDATE contact SET 
+                    mail_contacted = :newmail
+                WHERE mail_contacted=:oldmail;
+            ");
+
+            $update_mail -> execute([
+                "newmail" => $req['email'],
+                "oldmail" => $_SESSION["mail"]
+            ]);
+
+        }*/
 
         $_SESSION['mail'] = $req['email'];
 

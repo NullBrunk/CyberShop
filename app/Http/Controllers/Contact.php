@@ -3,29 +3,55 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactReq;
-use Illuminate\Http\Request;
+
+
+function getmsgs($mail){
+    
+    include_once __DIR__ . '/../../Database/config.php';
+
+    $convs = $pdo -> prepare("
+            SELECT * FROM
+                (
+                    SELECT contact.id ,readed,content,id_contacted,users.mail as mail_contacted 
+                    FROM contact 
+                    INNER JOIN 
+                        users 
+                    ON 
+                    contact.id_contacted = users.id
+                ) as contacted
+            INNER JOIN
+                (
+                    SELECT contact.id ,readed,content,id_contactor,users.mail as mail_contactor 
+                    FROM contact 
+                    INNER JOIN 
+                        users 
+                    ON 
+                        contact.id_contactor = users.id
+                ) as contactor
+            ON contacted.id = contactor.id 
+            WHERE 
+                contacted.mail_contacted = :mail 
+            OR 
+                contactor.mail_contactor = :mail
+        ");
+
+
+        $convs -> execute([
+            "mail" => $mail
+        ]);
+
+        return $convs -> fetchall(\PDO::FETCH_ASSOC);
+}
+
 
 class Contact extends Controller
 {
     public function show($slug = false){
         
-        include_once __DIR__ . '/../../Database/config.php';
-
-        $convs = $pdo -> prepare("
-            SELECT * FROM contact
-            WHERE 
-                mail_contacted = :mail
-            OR 
-                mail_contactor = :mail
-        ");
-
-        $convs -> execute([
-            "mail" => $_SESSION["mail"]
-        ]);
 
         $exploitable_data = [];
 
-        foreach($convs -> fetchall(\PDO::FETCH_ASSOC) as $data){
+        foreach(getmsgs($_SESSION["mail"]) as $data){
             if($data["mail_contacted"] === $_SESSION["mail"]){
 
                 // Mail of the other person
@@ -53,28 +79,12 @@ class Contact extends Controller
         
         if($slug){
 
-            $getmails = $pdo -> prepare("
-                SELECT * FROM 
-                    contact 
-                WHERE 
-                    mail_contactor = :slug
-                OR 
-                    mail_contacted = :slug
-            ");
-
-            $getmails -> execute(["slug" => $slug]);
-            
-            if(empty($getmails -> fetch())){
-                $_SESSION["contact_no_one"] = true;
-                return redirect(route("contact"));  
-            }
             if($slug === $_SESSION["mail"]){
                 $_SESSION["contact_yourself"] = true;
                 return redirect(route("contact"));  
             }
 
 
-            
             return view("user.contact", [ "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
         }   
         else {
@@ -92,24 +102,33 @@ class Contact extends Controller
             return abort(403);
         }
         $mail = $url[1];
+        
+        $id = $pdo -> prepare("SELECT id FROM users WHERE mail=:mail");
+        $id -> execute(["mail" => $mail]);
+        $id = $id -> fetch();
+        
+        if(empty($id)){
+            $_SESSION["contact_no_one"] = true;
+            return redirect("/contact");
+        }
 
         $send_msg = $pdo -> prepare("
-            INSERT INTO 
-                contact(
-                    readed, mail_contactor, mail_contacted, content
-                ) 
-            VALUES  (
-                    FALSE, :mail_contactor, :mail_contacted, :content 
-                )
+        INSERT INTO 
+            contact(
+                readed, id_contactor, id_contacted, content
+            ) 
+        VALUES  (
+                FALSE, :id_contactor, :id_contacted, :content 
+            )
         ");
-
         $send_msg -> execute([
-            "mail_contactor" => $_SESSION["mail"],
-            "mail_contacted" => $mail,
+            "id_contactor" => $_SESSION["id"],
+            "id_contacted" => $id['id'],
             "content" => $req["content"]
         ]);
 
         return redirect(route("contactuser", $mail));
+        
     }
 
 }
