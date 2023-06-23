@@ -39,10 +39,9 @@
         menu.classList.add("none");
         dots.classList.remove("mr-3")
       }
-
     }
-
   </script>
+
   @include('../layout/header')
 
   
@@ -51,21 +50,16 @@
     <!-- ======= Breadcrumbs ======= -->
     <section id="breadcrumbs" class="breadcrumbs" style="padding-top: 86px; padding-bottom: 0px !important;">
       <div class="container">
-
         <ol></ol>
-        <h2>{{$data["name"]}}</h2>
       </div>
     </section><!-- End Breadcrumbs -->
 
     <!-- ======= Portfolio Details Section ======= -->
     <section id="portfolio-details" class="portfolio-details">
       <div class="container">
-
         <div class="row gy-4">
-
-          <div class="col-lg-8">
-            <div class="portfolio-details-slider swiper">
-              <div class="swiper-wrapper align-items-center">
+          <div class="col-lg-8" style="width: 50%; display: flex;" >
+            <div class="" style="margin: auto;">
 
                 @if(isset($_SESSION['done']) && ($_SESSION['done'] === "updated")  )
                   <script>
@@ -81,68 +75,99 @@
                   ?>
                 @endif
 
-                  <img style="width: 60% !important;" src="../storage/product_img/{{ $data["image"] }}" alt="">
+                  <img style="width: 85% !important;" src="../storage/product_img/{{ $data["image"] }}" alt="">
 
               </div>
-              <div class="swiper-pagination"></div>
-            </div>
           </div>
 
-          <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px;">
-            
-            
-            
-            
-            
+          <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; height: 75vh; display: flex; flex-direction: column;">
             <div class="portfolio-info container" style="padding-bottom: 10px;" >
-              
-              
+                
               @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $data["mail"]))
-                <h2>Product information <a href="{{route("product.updateform", $data['pid'])}}"> <i style="margin-left: 10%; " class="bi bi-pencil-square"></i></a></h2>
+                <h2>Product description <a href="{{route("product.updateform", $data['pid'])}}"> <i style="margin-left: 43%; " class="bi bi-pencil-square"></i></a></h2>
               @else
-                <h2>Product information</h2>
+                <h2>Product description</h2>
               @endif
                 <hr>
-              <ul>
-
-                  <li style=" word-wrap: break-word;"><strong>Category</strong>: {{ ucfirst(explode('-', $data["class"])[1]) }}</li>
-                  <li style=" word-wrap: break-word;"><strong>Seller</strong>: {{ $data['mail'] }}</li>
-                  <li style=" word-wrap: break-word;"><strong>Price</strong>: {{ $data['price'] }}$</li>
-
-                
-                <br>
-                <h3></h3>
-              </ul>
             </div>
+
             <div class="portfolio-info" style="position: relative;">
               <p class="descr">
-
                   {{ $data['descr'] }}
-
-              </p> 
-
+              </p>
             </div>
+            
             @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"]))
-            <form   class="navbar" method="post" action="{{route("cart.add")}}">  
-              @csrf      
+            <form   class="navbar formshow" method="post" action="{{route("cart.add")}}">  
+              @csrf    
               <button class="addtocart" type="submit">BUY NOW<i  style="font-weight: bold !important;" class="bi bi-cart-plus"></i></button>
               <input type="hidden"  name="id" value="{{$data['pid']}}">
             </form>
             
             @else
-            <form class="navbar" method="post" action="{{route("product.delete", $data['pid'])}}">  
-                @csrf      
+            <form class="navbar formshow" method="post" action="{{route("product.delete", $data['pid'])}}" >  
+                @csrf   
+
+
                 <input type="hidden" name="_method" value="DELETE">
                 <button  class="addtocart" type="submit">STOP SELLING<i style="font-weight: bold !important;" class="bi bi-cart-x"></i></button>
               </form>
             @endif
           
           </div>
-          
+
+          <br>
+          <hr>
+
+          <h2>Product information</h2>
+
+          <table>
+            <tr>
+              <th>Name</th>
+              <td>{{$data["name"]}}</td>
+            </tr>
+            <tr>
+              <th>Seller</th>
+              <td>@if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"])) <a href="{{route('contactuser', $data['mail'])}}">{{ $data['mail'] }}</a> @else {{ $data['mail'] }} @endif</td>
+            </tr>
+            <tr>
+              <th>Category</th>
+              <td>{{ ucfirst(explode('-', $data["class"])[1]) }}</td>
+            </tr>
+            <tr>
+              <th>Price</th>
+              <td>{{ $data['price'] }}$</td>
+            </tr>
+
+            @if($rating)
+            <tr>
+              <th>Reviews</th>
+              <td>
+                  {{$rating['real']}} 
+
+                  @for($i=0; $i<$rating['round']; $i++)
+                    <i class="bi bi-star-fill" style="color: #ffa41c;"></i>
+                  @endfor
+
+                  @for($i = $rating['round']; $i < 5; $i++)
+                      <i class="bi bi-star" style="color: #de7921;"></i>
+                  @endfor
+                  
+                  <a href="#comments"> {{$rating["rate"]}} ratings</a>
+                </td>
+              </tr>
+              @endif
+            
+          </table>
+
+
+
+            
+              
 
         </div>
-
       </div>
+
     </section><!-- End Portfolio Details Section -->
     <hr>
 
@@ -160,10 +185,11 @@
 
         
         @if($errors -> has('rating'))
-          <div class="alert alert-danger">
-            You need to give a rating !
-          </div>
+            <div class="alert alert-danger">
+              You need to give a rating !
+            </div>
         @endif
+
 
         @if(isset($_SESSION['done']) )
           <script>
@@ -174,36 +200,37 @@
               ) 
           </script>
 
-              <?php
-                unset($_SESSION['done'])
-              ?> 
+          <?php
+            unset($_SESSION['done'])
+          ?> 
         @endif
 
         <div style="display: flex">
-        <form method="post" action="{{ route("comment.add") }}" style="width:100%;">
-          @csrf
-          <textarea placeholder="Type something ..." class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
-          <input name="id" type="hidden" value="{{$data['pid']}}">
-          <br>
-          
-          <div class="rating">
-            <input type="radio" id="star5" name="rating" value="5">
-            <label for="star5"></label>
-            <input type="radio" id="star4" name="rating" value="4">
-            <label for="star4"></label>
-            <input type="radio" id="star3" name="rating" value="3">
-            <label for="star3"></label>
-            <input type="radio" id="star2" name="rating" value="2">
-            <label for="star2"></label>
-            <input type="radio" id="star1" name="rating" value="1">
-            <label for="star1"></label>
-          </div>
+          <form method="post" action="{{ route("comment.add") }}" style="width:100%;">
+            @csrf
+            <textarea placeholder="Type something ..." class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
+            <input name="id" type="hidden" value="{{$data['pid']}}">
+            <br>
+            
+            <div class="rating">
+              <input type="radio" id="star5" name="rating" value="5">
+              <label for="star5"></label>
+              <input type="radio" id="star4" name="rating" value="4">
+              <label for="star4"></label>
+              <input type="radio" id="star3" name="rating" value="3">
+              <label for="star3"></label>
+              <input type="radio" id="star2" name="rating" value="2">
+              <label for="star2"></label>
+              <input type="radio" id="star1" name="rating" value="1">
+              <label for="star1"></label>
+            </div>
 
-          <input style="border: 2px solid #cccccc !important; border-radius: 4px; padding: 4px 4px; margin-left:80%; color: #444444; background-color: #cccccc;" class="" type="submit" value="Post comment">
-          <br>
+            <input style="border: 2px solid #cccccc !important; border-radius: 4px; padding: 4px 4px; margin-left:80%; color: #444444; background-color: #cccccc;" class="" type="submit" value="Post comment">
+            <br>
 
-        </form>
+          </form>
       </div>
+
       <br><br><br><br>
 
         <hr class="margin-bottom:40px;">
@@ -216,7 +243,7 @@
                   <div id="{{ $comm["id"] }}" class="comments">
                                 
                                 
-                    <div class="profile">
+                      <div class="profile">
                         <i style="font-size:32px; color:#a8b6b7;" class="bi bi-person-circle"> </i>
                         <p class="name">
                             {{ $comm["mail"] }}
@@ -229,7 +256,7 @@
                           <i id="{{$comm['id']. 'a'}}" onclick='menu("{{$comm["id"] . "d"}}", "{{$comm["id"]. "a"}}")' class="dots bx bx-dots-vertical-rounded"></i>     
                 
                                         
-                          <button id="{{$comm['id'] . 'd'}}" onclick="window.location.href = '{{ route('comment.delete', [$data['pid'], $comm['id']] ) }}'" class="btn btn-primary menu none" style="  margin-left: -3vh;">
+                          <button id="{{$comm['id'] . 'd'}}" onclick="window.location.href = '{{ route('comment.delete', [$data['pid'], $comm['id']] ) }}'" class="btn btn-primary menu none" style="  margin-left: -3vw;">
                             DELETE 
                             <i class="bi bi-trash2-fill"></i>
                           </button>
@@ -238,11 +265,11 @@
                         </p>
 
 
-                        </div>
+                      </div>
 
                         @endif 
-                    </div>
-                    <div class=stars>
+                  </div>
+                  <div class=stars>
 
                       @for($i=0; $i<$comm["rating"]; $i++)
                           <i class="bi bi-star-fill" style="color: #ffa41c;"></i>
@@ -252,17 +279,17 @@
                           <i class="bi bi-star" style="color: #de7921;"></i>
                       @endfor
 
-                    </div>
+                  </div>
 
                   <div class="at">
                     {{ $comm["writed_at"] }}
                   </div>
+
                   <div class="comment">
                     {{ $comm["content"] }}
                   <hr>
                   </div>
                   
-                  </div>
 
               @endforeach
             @endif

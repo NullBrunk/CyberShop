@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Storage;
 function verify_if_product_is_from_current_user($pdo, $id){
     $validate = $pdo -> prepare("
     SELECT users.id as uid, 
-        product.id as pid, 
+        products.id as pid, 
         id_user, 
         price, 
         descr, 
@@ -22,10 +22,10 @@ function verify_if_product_is_from_current_user($pdo, $id){
         image,
         name 
             
-    FROM product 
+    FROM products 
         INNER JOIN users 
-        ON users.id=product.id_user 
-        WHERE product.id=:id_product
+        ON users.id=products.id_user 
+        WHERE products.id=:id_product
         AND id_user=:id_user
     ");
     $validate -> execute([
@@ -44,7 +44,7 @@ class Products extends Controller
 
         include_once __DIR__ . "/../../Database/config.php";
 
-        $search_product = $pdo -> prepare("SELECT id,image,price,class FROM product WHERE `name` LIKE CONCAT('%', :search, '%')");
+        $search_product = $pdo -> prepare("SELECT id,image,price,class FROM products WHERE `name` LIKE CONCAT('%', :search, '%')");
         $search_product -> execute([
             "search" => $search
         ]); 
@@ -67,7 +67,7 @@ class Products extends Controller
                 image,
                 price 
 
-                FROM product 
+                FROM products 
                 WHERE id=:id
             ");
         
@@ -114,7 +114,7 @@ class Products extends Controller
 
             $store_product = $pdo -> prepare("
                 INSERT INTO 
-                    product(`id_user`, `name`, `price`, `descr`, `class`, `image`)
+                    products(`id_user`, `name`, `price`, `descr`, `class`, `image`)
                 VALUES
                     (:id_user, :name, :price, :descr, :class, :image)
             ");
@@ -149,7 +149,7 @@ class Products extends Controller
         ];
 
 
-        $select_pr = $pdo -> prepare("SELECT * FROM product WHERE id=:product_id AND id_user=:id_user");
+        $select_pr = $pdo -> prepare("SELECT * FROM products WHERE id=:product_id AND id_user=:id_user");
         $select_pr -> execute($values);
         $data = $select_pr -> fetch();
 
@@ -160,7 +160,7 @@ class Products extends Controller
 
         $del_product = $pdo -> prepare("
             DELETE FROM 
-                product 
+                products 
             WHERE 
                 id=:product_id 
             AND 
@@ -205,7 +205,7 @@ class Products extends Controller
         }
 
         $update_product = $pdo -> prepare("
-            UPDATE product 
+            UPDATE products 
             SET
                 `name`=:name, 
                 `price`=:price, 
@@ -225,7 +225,42 @@ class Products extends Controller
 
         $_SESSION["done"] = "updated";
         return redirect(route("details", $id));
+    }
 
+    public function rating($id){
+
+        include_once __DIR__ . "/../../Database/config.php";
+
+
+        $rating = $pdo -> prepare("
+            SELECT SUM(rating) as rating FROM comments 
+            WHERE 
+                id_product=:id 
+            
+            UNION SELECT COUNT(*) as number FROM comments 
+            WHERE 
+                id_product=:id
+        ");
+
+        $rating -> execute([ "id" => $id, ]);
+        $data = $rating -> fetchall(\PDO::FETCH_ASSOC);
+
+
+        if(!($data[1]["rating"] === "0")){
+
+            $rating = $data[0]["rating"];
+            $number_of_rate = $data[1]["rating"];
+
+            return [
+                "round" => intdiv($rating, $number_of_rate),
+                "real" => $rating / $number_of_rate,
+                "rate" => (int)$number_of_rate,
+            ];
+        }
+
+        else {
+            return abort(404);
+        }
 
     }
 }

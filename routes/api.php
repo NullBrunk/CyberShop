@@ -21,4 +21,5 @@ Route::get('/user', function (Request $request) {
 */
 
 Route::get("/products/{search}", [ Products::class, "search" ]);
-Route::get("/comments/{id}", [ Comments::class, "get" ]) ;
+Route::get("/comments/{id}", [ Comments::class, "get" ]);
+Route::get("/rating/{id}", [Products::class, "rating"]);

@@ -34,7 +34,7 @@ CREATE TABLE users(
     PRIMARY KEY(`id`)   
 );
 
-CREATE TABLE product(
+CREATE TABLE products(
     `id` INT AUTO_INCREMENT,
     `id_user` INT NOT NULL,
     `name` VARCHAR(45) NOT NULL,

@@ -144,7 +144,7 @@ class Users extends Controller
 
         # get products that the current user is selling 
         $selling_product = $pdo -> prepare("
-            SELECT * FROM product WHERE id_user = :id
+            SELECT * FROM products WHERE id_user = :id
         "); 
 
         $selling_product -> execute([
@@ -163,7 +163,7 @@ class Users extends Controller
 
         # Delete images that are linked to the users products
         
-        $imgs = $pdo -> prepare("SELECT image FROM product WHERE id_user=:id");
+        $imgs = $pdo -> prepare("SELECT image FROM products WHERE id_user=:id");
         $imgs -> execute([
             "id" => $_SESSION["id"]
         ]); 
@@ -193,7 +193,7 @@ class Users extends Controller
         }
 
         # Delete user product 
-        $up = $pdo -> prepare("DELETE FROM product WHERE  id_user=:id");
+        $up = $pdo -> prepare("DELETE FROM products WHERE  id_user=:id");
         $up -> execute(["id" => $_SESSION["id"]]);
 
         # Delete contacts messages from the user

@@ -1111,16 +1111,22 @@ section {
 
 .addtocart {
   background-color: #293e61 !important; 
-  margin-top: 20px;
-  font-size: 18px !important;
+  font-size: 19px !important;
   font-weight: bold;
   padding: 14px 28px;
   border-radius: 50px;
   color: #fff;
   border: 2px solid #47b2e4 !important;
-  margin-left: 26%;
   transition: 0.3s;
+  text-align: center;
+
+}
+
+.formshow {
   margin-bottom:5%;
+  display: grid;
+  margin-top: auto;
+  justify-content: center;
 }
 
 .addtocart i {
@@ -1294,7 +1300,7 @@ section {
 }
 
 .trash {
-  margin-left: 88%;
+  margin-left: 85%;
   margin-top: 0vh;
   font-size: 26px; 
 }
@@ -1347,6 +1353,55 @@ section {
   font-size: 31px;
 }
 
+.sendmsg i {
+  color: #4cb4e4 !important;
+  font-size: 25px;
+}
+
 .mr-3 {
-  margin-right: 40px;
+  margin-right: 49%;
+}
+
+.contactuser {
+
+  font-size: 22px;
+
+}
+
+
+
+table {
+  font-family: "Amazon Ember", Arial, sans-serif;
+  color: #0F1111 !important;
+  border-collapse: collapse;
+  width: 60vw !important;
+}
+
+th, td {
+  border: 1px solid rgb(34, 32, 32);
+  padding: 8px;
+  text-align: left; /* Modification de l'alignement à gauche */
+}
+
+td {
+  word-wrap: break-word;
+}
+
+td a {
+  color: #007185;
+}
+
+th {
+  background-color: #324769;
+  color: white;
+}
+
+tr:nth-child(even) td {
+  background-color: white;
+}
+
+.productinfo i {
+
+  color: #000000;
+  font-size: 18px;
 }

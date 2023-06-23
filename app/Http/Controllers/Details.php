@@ -13,7 +13,7 @@ class Details extends Controller {
         # Get the user and the product details
         $details = $pdo -> prepare("
             SELECT users.id as uid, 
-            product.id as pid, 
+            products.id as pid, 
             id_user, 
             price, 
             descr, 
@@ -22,18 +22,19 @@ class Details extends Controller {
             image,
             name 
             
-            FROM product 
+            FROM products
             
             INNER JOIN users 
-            ON users.id=product.id_user 
-            WHERE product.id=:id
+            ON users.id=products.id_user 
+            WHERE products.id=:id
 
-            ORDER BY product.id DESC
+            ORDER BY products.id DESC
         ");
 
         $details -> execute( [ "id" => $product_id ] );
         $data = $details -> fetch();
-        
+
+
         if($data){
             session_start();
 
@@ -46,7 +47,17 @@ class Details extends Controller {
                 $comments = $response -> body();
             }
 
-            return view("details", ["data" => $data, "comments" => $comments]);
+
+            $rating_req = Http::get('http://127.0.0.1:8000/api/rating/'. $data['pid']);
+            if($rating_req -> notFound()){
+                $rating = null;
+            }
+            else {
+                $rating = json_decode($rating_req -> body(), 1);
+            }
+
+            
+            return view("details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
         }
         else {
             abort(404);
