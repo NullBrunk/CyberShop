@@ -236,20 +236,21 @@ class Products extends Controller
             SELECT SUM(rating) as rating FROM comments 
             WHERE 
                 id_product=:id 
-            
-            UNION SELECT COUNT(*) as number FROM comments 
-            WHERE 
-                id_product=:id
         ");
 
         $rating -> execute([ "id" => $id, ]);
-        $data = $rating -> fetchall(\PDO::FETCH_ASSOC);
+        $rating = $rating -> fetch()[0];
+
+        $number = $pdo -> prepare("
+            SELECT COUNT(*) as number FROM comments 
+            WHERE 
+                id_product=:id
+        ");
+        $number -> execute([ "id" => $id, ]);
+        $number_of_rate = $number -> fetch()[0];
 
 
-        if(!($data[1]["rating"] === "0")){
-
-            $rating = $data[0]["rating"];
-            $number_of_rate = $data[1]["rating"];
+        if(!($number_of_rate === 0)){
 
             return [
                 "round" => intdiv($rating, $number_of_rate),
