@@ -56,7 +56,7 @@
                     
                     <a href="/details/{{$p['id']}}">{{ substr($p["name"], 0, 12) }}</a>
                     
-                      <i onclick="deleteitem({{$i}}, {{$p['price']}}, {{$total}})" class="bx bx-trash-alt trash-cart"></i>
+                      <i onclick="deleteitem({{$i}}, {{$p['price']}}, {{$total}})" class="bi bi-trash2-fill trash-cart"></i>
                     
 
                     <p>
@@ -69,7 +69,7 @@
             </li>
           @endif
 
-          <a href="{{ route("profile") }}"><i style="font-size: 32px !important;" class="bx bx-user-circle"></i></a>
+          <a href="{{ route("profile") }}" style="padding-left: 1vw;" ><i style="font-size: 26px !important;" class="bi bi-person-circle"></i></a>
 
         @else
             <li><a class="nav-link scrollto" href="{{ route("signup") }}">Signup</a></li>

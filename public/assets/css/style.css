@@ -1112,20 +1112,25 @@ section {
 .addtocart {
   background-color: #293e61 !important; 
   margin-top: 20px;
-  font-size: 22px !important;
+  font-size: 18px !important;
+  font-weight: bold;
   padding: 14px 28px;
   border-radius: 50px;
   color: #fff;
   border: 2px solid #47b2e4 !important;
-  font-weight: 600;
   margin-left: 26%;
   transition: 0.3s;
   margin-bottom:5%;
 }
 
+.addtocart i {
+  margin-left: 1vw;
+  font-weight: bold;
+}
+
 .addtocart:hover{
   background-color:#47b2e4 !important;
-  transform: scale(1.1);
+  transform: scale(1.05);
 
 }
 
@@ -1159,10 +1164,10 @@ section {
 
 .trash-cart {
   margin-left: auto; 
-  margin-right: 3%; 
+  margin-right: 4%; 
   margin-top: 3%; 
   font-size:21px; 
-  color: #293e61;
+  color: #36507d;
 }
 
 .noone {

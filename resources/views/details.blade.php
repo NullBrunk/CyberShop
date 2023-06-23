@@ -89,7 +89,14 @@
           </div>
 
           <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px;">
-            <div class="portfolio-info" style="padding-bottom: 10px;" >
+            
+            
+            
+            
+            
+            <div class="portfolio-info container" style="padding-bottom: 10px;" >
+              
+              
               @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $data["mail"]))
                 <h2>Product information <a href="{{route("product.updateform", $data['pid'])}}"> <i style="margin-left: 10%; " class="bi bi-pencil-square"></i></a></h2>
               @else
@@ -98,16 +105,16 @@
                 <hr>
               <ul>
 
-                  <li><strong>Category</strong>: {{ ucfirst(explode('-', $data["class"])[1]) }}</li>
-                  <li><strong>Seller</strong>: {{ $data['mail'] }}</li>
-                  <li><strong>Price</strong>: {{ $data['price'] }}$</li>
+                  <li style=" word-wrap: break-word;"><strong>Category</strong>: {{ ucfirst(explode('-', $data["class"])[1]) }}</li>
+                  <li style=" word-wrap: break-word;"><strong>Seller</strong>: {{ $data['mail'] }}</li>
+                  <li style=" word-wrap: break-word;"><strong>Price</strong>: {{ $data['price'] }}$</li>
 
                 
                 <br>
                 <h3></h3>
               </ul>
             </div>
-            <div class="portfolio-info">
+            <div class="portfolio-info" style="position: relative;">
               <p class="descr">
 
                   {{ $data['descr'] }}
@@ -116,9 +123,9 @@
 
             </div>
             @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"]))
-            <form class="navbar" method="post" action="{{route("cart.add")}}">  
+            <form   class="navbar" method="post" action="{{route("cart.add")}}">  
               @csrf      
-              <input class="addtocart" type="submit" value="Add to cart">
+              <button class="addtocart" type="submit">BUY NOW<i  style="font-weight: bold !important;" class="bi bi-cart-plus"></i></button>
               <input type="hidden"  name="id" value="{{$data['pid']}}">
             </form>
             
@@ -126,8 +133,8 @@
             <form class="navbar" method="post" action="{{route("product.delete", $data['pid'])}}">  
                 @csrf      
                 <input type="hidden" name="_method" value="DELETE">
-                <input class="addtocart" type="submit" value="Delete product">
-            </form>
+                <button  class="addtocart" type="submit">STOP SELLING<i style="font-weight: bold !important;" class="bi bi-cart-x"></i></button>
+              </form>
             @endif
           
           </div>
