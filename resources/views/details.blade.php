@@ -25,7 +25,24 @@
 </head>
 
 <body>
+  <script>
+    function menu(id, id_dots){
 
+      const menu = document.getElementById(id);
+      const dots = document.getElementById(id_dots);
+
+      if(menu.classList[3]){
+        menu.classList.remove("none");
+        dots.classList.add("mr-3")
+      }
+      else {
+        menu.classList.add("none");
+        dots.classList.remove("mr-3")
+      }
+
+    }
+
+  </script>
   @include('../layout/header')
 
   
@@ -199,12 +216,23 @@
                         </p> 
 
                         @if(isset($_SESSION["mail"]) && $comm["mail"] === $_SESSION["mail"])
-                          <p class="trash"> 
-                            <a style="color: #af2024;" href="{{route("comment.delete", [$data['pid'], $comm["id"]] )}}">
-                              <i class='bi bi-trash2-fill'></i> 
-                            </a>
-                            </p>
+ 
                         
+                        <p class="trash"> 
+                          <i id="{{$comm['id']. 'a'}}" onclick='menu("{{$comm["id"] . "d"}}", "{{$comm["id"]. "a"}}")' class="dots bx bx-dots-vertical-rounded"></i>     
+                
+                                        
+                          <button id="{{$comm['id'] . 'd'}}" onclick="window.location.href = '{{ route('comment.delete', [$data['pid'], $comm['id']] ) }}'" class="btn btn-primary menu none" style="  margin-left: -3vh;">
+                            DELETE 
+                            <i class="bi bi-trash2-fill"></i>
+                          </button>
+                          
+
+                        </p>
+
+
+                        </div>
+
                         @endif 
                     </div>
                     <div class=stars>

@@ -1289,11 +1289,59 @@ section {
 }
 
 .trash {
-  margin-left: 90%;
+  margin-left: 88%;
   margin-top: 0vh;
   font-size: 26px; 
 }
 
 .portfolio-links {
   word-wrap: break-word;
+}
+
+
+.dots{
+  float: right;
+  font-size: 22px;
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.dots:hover {
+  background-color: #dbd7d7;
+}
+
+.menu {
+  margin-left: 90%;
+  font-weight: bold;
+  display: flex;
+  justify-content: right;
+  background-color: #dbd7d7;
+  padding: 5px;
+  margin-right: 1%;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 10px;
+  background-color: #af2024;
+  border: 1px solid #af2024;
+}
+
+.menu:hover {
+  background-color: #bd3b3f;
+}
+
+.menu i {
+  margin-left: 10px;
+}
+
+.none {
+  display: none;
+}
+
+.sendmsg {
+  padding-top: 4%;
+  font-size: 31px;
+}
+
+.mr-3 {
+  margin-right: 40px;
 }
