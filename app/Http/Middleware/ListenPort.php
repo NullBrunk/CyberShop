@@ -15,7 +15,7 @@ class ListenPort
      */
     public function handle($request, Closure $next, ...$ports)
     {
-        // I'm not sure if $ports is an array of string or integer though
+
         if (in_array($request->getPort(), $ports)) {
             return $next($request);
         }
