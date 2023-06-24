@@ -14,6 +14,14 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
-Artisan::command('inspire', function () {
-    $this->comment(Inspiring::quote());
-})->purpose('Display an inspiring quote');
+
+Artisan::command('mysql', function () {
+    print_r(shell_exec("sudo systemctl start mysql"));
+}) -> purpose('Start the MySQL database');
+
+
+Artisan::command('run', function () {
+    print_r(shell_exec("sudo make api && sudo make serv"));
+}) -> purpose('Start the Web Serv and the API');
+
+

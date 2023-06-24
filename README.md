@@ -86,10 +86,10 @@ CREATE TABLE contact(
 ```
 
 ```bash
-sudo make link
+php artisan mysql
+php artisan storage:link
 
-sudo make api
-sudo make serv
+php artisan run
 ```
 
 

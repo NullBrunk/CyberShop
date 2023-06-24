@@ -13,9 +13,8 @@ use App\Http\Controllers\Index;
 
 /*
 |---------------------------------------------
-| Render statics views 
+|  Render statics views 
 |
-
 */
 
 Route::view('/about', 'static.about') -> name("about");
@@ -25,16 +24,30 @@ Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell");
 
 /*
 |---------------------------------------------
-| Others 
+|  Others 
 |
-
 */
 
-Route::get('/', Index::class ) -> name("root");
+# Show an error
 Route::view("/todo", "static.todo");
 
+# Index page
+Route::get('/', Index::class ) -> name("root");
 
-# Login / Signup
+# SearchBar
+Route::view("/articles", "articles") -> name("articles");
+
+# Details
+Route::get('/details/{product_id}', Details::class ) -> name("details");
+
+
+
+
+/*
+|---------------------------------------------
+|  Authentication 
+|
+*/
 
 Route::view('/signup', 'login.signup') -> name("signup");
 Route::view('/login', 'login.login') -> name("login");
@@ -42,9 +55,6 @@ Route::view('/login', 'login.login') -> name("login");
 Route::post('/login',  [ Users::class, "show" ] );
 Route::post('/signup', [ Users::class, "store" ] );
 
-
-
-# Disconnect
 
 Route::get('/disconnect', function () {
 
@@ -55,19 +65,12 @@ Route::get('/disconnect', function () {
 
 
 
-# Details 
+/*
+|---------------------------------------------
+|  Cart management 
+|
+*/
 
-Route::get('/details/{product_id}', Details::class ) -> name("details");
-
-
-# Articles && SearchBar
-
-Route::view("/articles", "articles") -> name("articles");
-
-
-
-
-# Cart Managment
 Route::prefix('cart') -> group(function () {
     Route::post(
         "/add", 
@@ -78,12 +81,17 @@ Route::prefix('cart') -> group(function () {
         "/delete/{id}", 
         [ Products::class, 'deleteProductFromCart' ] 
     ) -> middleware(Logged::class) -> name('cart.remove');
+
 });
 
 
 
+/*
+|---------------------------------------------
+|  Comments management 
+|
+*/
 
-# Comments
 Route::prefix('comments') -> group(function () {
 
     Route::post(
@@ -101,8 +109,12 @@ Route::prefix('comments') -> group(function () {
 
 
 
+/*
+|---------------------------------------------
+|  Products management 
+|
+*/
 
-# Products 
 Route::prefix('product') -> group(function () {
 
     Route::post(
@@ -128,11 +140,16 @@ Route::prefix('product') -> group(function () {
         [ Products::class, "update" ]
     ) -> middleware(Logged::class) -> name("product.update");
     
-
-    
 });
 
-# Profile
+
+
+/*
+|---------------------------------------------
+|  Profile management 
+|
+*/
+
 Route::prefix('profile') -> group(function () {
 
     Route::post(
@@ -155,7 +172,12 @@ Route::prefix('profile') -> group(function () {
 });
 
 
-# Contact
+
+/*
+|---------------------------------------------
+|  Contact management 
+|
+*/
 
 Route::prefix('contact') -> group(function () {
 

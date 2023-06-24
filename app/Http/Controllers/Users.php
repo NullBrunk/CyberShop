@@ -12,36 +12,31 @@ use Exception;
 
 session_start();
 
-class Users extends Controller
-{
-    
-    /* 
-    Check if a user is in the database, 
-    
-    if he is 
-        Put his informations in the SESSION
-    else
-        Display an error
-    */
-    
+class Users extends Controller {
 
     public function show(LoginReq $request){
         
-        include_once __DIR__ . '/../../Database/config.php';
+        $pdo = config("app.pdo");
        
         if(isset($_SESSION['logged'])){
             return redirect('/');
         }
-    
         
-        $user_info = $pdo -> prepare("SELECT * FROM `users` WHERE mail=:mail AND BINARY pass=:pass");
+        $user_info = $pdo -> prepare("
+            SELECT * FROM `users` 
+            WHERE 
+                mail=:mail AND 
+            BINARY pass=:pass
+        ");
         $user_info -> execute(array(
             "mail" => $request["email"],
         	"pass" =>  hash("sha512", hash("sha512", $request["pass"]))
         ));
+
         $data = $user_info -> fetch();
 
         if($data){
+
             $_SESSION['id'] = $data['id'];
             $_SESSION['admin'] = $data['is_admin'];
             $_SESSION['logged'] = true;
@@ -51,32 +46,28 @@ class Users extends Controller
             return redirect(route("root"));
         }
         else {
-
+            # Error
             return redirect(route("login") . "?f");
         }
-
     }
 
 
-    /* 
-    Add a user in the database and redirect to the login page 
-    
-    if he is already in the DB
-        Display an error
-    */
-
     public function store(SignupReq $request){
 
-        include_once __DIR__ . '/../../Database/config.php';
+        $pdo = config("app.pdo");
         
-        $create_user = $pdo -> prepare("INSERT INTO `users`(mail, pass) VALUES (:mail, :pass)");
+        $create_user = $pdo -> prepare("
+            INSERT INTO 
+                `users`(mail, pass) 
+                VALUES (:mail, :pass)
+        ");
+
         try {
             $create_user -> execute(array(
                 "mail" => $request["email"],
                 "pass" => hash("sha512", hash("sha512", $request["pass"]))
             ));
         }
-
         catch (Exception $e) {
             return view("login.signup", ["error" => true]);
         }
@@ -87,7 +78,9 @@ class Users extends Controller
 
     public function profile(UpdateProfileReq $req){
 
-        include_once __DIR__ . '/../../Database/config.php';
+        $pdo = config("app.pdo");
+
+        # Check if the hashed given password is the good one
 
         $verify_user = $pdo -> prepare("
             SELECT * FROM users WHERE mail=:mail AND pass=:pass
@@ -97,31 +90,35 @@ class Users extends Controller
             "pass" => hash("sha512", hash("sha512", $req['oldpass']))
         ]);
 
+
+        # The user is trying to change his profile information
+        # with wrong credentials, abort
+
         if(empty($verify_user -> fetch())){
             $_SESSION["notsame"] = true;
             return redirect(route("profile"));
         }
 
-
+        # The user is authorized 
 
         $update_user = $pdo -> prepare("
-        UPDATE users SET 
+            UPDATE users SET 
         
-        mail=:newmail, 
-        pass=:newpass 
+                mail=:newmail, 
+                pass=:newpass 
         
-        WHERE 
-        
-        mail=:oldmail 
-        
+            WHERE 
+                mail=:oldmail 
         ");
        
         try {
+
             $update_user -> execute([
                 "newmail" => $req['email'],
                 "newpass" => hash("sha512", hash("sha512", $req['newpass'])),
                 "oldmail" => $_SESSION['mail'],
             ]);
+
         }
         catch (Exception $e){
             $_SESSION['nul'] = true;
@@ -130,19 +127,18 @@ class Users extends Controller
 
 
         $_SESSION['mail'] = $req['email'];
-
         $_SESSION['done'] = true;
-        return redirect(route("profile"));
 
+        return redirect(route("profile"));
     }
 
 
     public function showProfile(){
 
-        include_once __DIR__ . '/../../Database/config.php';
+        $pdo = config("app.pdo");
 
 
-        # get products that the current user is selling 
+        # Get all the selled products of the current user 
         $selling_product = $pdo -> prepare("
             SELECT * FROM products WHERE id_user = :id
         "); 
@@ -151,15 +147,14 @@ class Users extends Controller
             "id" => $_SESSION["id"]
         ]);
         
-        # return the correct view with the informations
+        
         return view("user.profile", [ "data" => $selling_product -> fetchAll(\PDO::FETCH_ASSOC) ]);
     }
 
 
     public function delete(){
 
-        include_once __DIR__ . '/../../Database/config.php';
-
+        $pdo = config("app.pdo");
 
         # Delete images that are linked to the users products
         
@@ -174,7 +169,8 @@ class Users extends Controller
         }
 
 
-        # Delete comments
+        # Delete all the user comments
+
         $c = $pdo -> prepare("DELETE FROM comments WHERE id_user=:id");
         $c -> execute([
             "id" => $_SESSION["id"]
@@ -182,6 +178,7 @@ class Users extends Controller
 
 
         # Delete comments under user products
+
         $c = $pdo -> prepare("SELECT * FROM product WHERE id_user=:id");
         $c -> execute([
             "id" => $_SESSION["id"]
@@ -192,11 +189,13 @@ class Users extends Controller
             $delete -> execute(["id" => $product["id"]]);
         }
 
-        # Delete user product 
+        # Delete user products 
+
         $up = $pdo -> prepare("DELETE FROM products WHERE  id_user=:id");
         $up -> execute(["id" => $_SESSION["id"]]);
 
         # Delete contacts messages from the user
+
         $c = $pdo -> prepare("
             DELETE FROM contact WHERE id_contactor=:id OR id_contacted=:id"
         );
@@ -204,11 +203,11 @@ class Users extends Controller
 
 
         # Delete the user itself
+        # finally ... phew
 
         $user_del = $pdo -> prepare("DELETE FROM users WHERE id=:id");
         $user_del -> execute(["id" => $_SESSION["id"]]); 
 
         return redirect(route("disconnect"));
-    
     }
 }

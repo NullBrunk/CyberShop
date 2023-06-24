@@ -8,25 +8,21 @@ class Details extends Controller {
     
     public function __invoke($product_id){
         
-        include_once __DIR__ . '/../../Database/config.php';
+        $pdo = config("app.pdo");
             
         # Get the user and the product details
         $details = $pdo -> prepare("
-            SELECT users.id as uid, 
-            products.id as pid, 
-            id_user, 
-            price, 
-            descr, 
-            class, 
-            mail, 
-            image,
-            name 
-            
+            SELECT 
+                users.id as uid, products.id as pid, 
+                id_user, price, descr, class, mail, 
+                image, name 
             FROM products
             
             INNER JOIN users 
-            ON users.id=products.id_user 
-            WHERE products.id=:id
+            ON 
+                users.id=products.id_user 
+            WHERE 
+                products.id=:id
 
             ORDER BY products.id DESC
         ");
@@ -36,19 +32,21 @@ class Details extends Controller {
 
 
         if($data){
+
             session_start();
 
-            $response = Http::get('http://127.0.0.1:8000/api/comments/'. $data['pid']);
-            
-            if($response -> notFound()){
+            $comment_req = Http::get('http://127.0.0.1:8000/api/comments/'. $data['pid']);
+
+            if($comment_req -> notFound()){
                 $comments = [];
             }
             else {
-                $comments = $response -> body();
+                $comments = $comment_req -> body();
             }
 
 
             $rating_req = Http::get('http://127.0.0.1:8000/api/rating/'. $data['pid']);
+            
             if($rating_req -> notFound()){
                 $rating = null;
             }
@@ -56,12 +54,11 @@ class Details extends Controller {
                 $rating = json_decode($rating_req -> body(), 1);
             }
 
-            
             return view("details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
         }
+
         else {
             abort(404);
         }       
     }
-
 }

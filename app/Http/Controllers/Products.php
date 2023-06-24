@@ -11,28 +11,31 @@ use Illuminate\Support\Facades\Storage;
 
 
 function verify_if_product_is_from_current_user($pdo, $id){
+
     $validate = $pdo -> prepare("
-    SELECT users.id as uid, 
-        products.id as pid, 
-        id_user, 
-        price, 
-        descr, 
-        class, 
-        mail, 
-        image,
-        name 
-            
-    FROM products 
+        SELECT 
+            users.id as uid, products.id as pid, 
+            id_user, price, descr, class, mail, image,
+            name 
+                
+        FROM products 
         INNER JOIN users 
-        ON users.id=products.id_user 
-        WHERE products.id=:id_product
-        AND id_user=:id_user
+        ON 
+            users.id=products.id_user 
+        WHERE 
+            products.id=:id_product
+        AND 
+            id_user=:id_user
     ");
+
     $validate -> execute([
         "id_user" => $_SESSION['id'],
         "id_product" => $id 
     ]);
+
+
     return $validate -> fetchAll(\PDO::FETCH_ASSOC);
+
 }
 
 class Products extends Controller
@@ -42,33 +45,38 @@ class Products extends Controller
     public function search(string $search) : array
     {
 
-        include_once __DIR__ . "/../../Database/config.php";
+        $pdo = config("app.pdo");
 
-        $search_product = $pdo -> prepare("SELECT id,image,price,class FROM products WHERE `name` LIKE CONCAT('%', :search, '%')");
+        $search_product = $pdo -> prepare("
+            SELECT id,image,price,class 
+            FROM products 
+            WHERE 
+                `name` LIKE CONCAT('%', :search, '%')
+        ");
         $search_product -> execute([
             "search" => $search
         ]); 
 
         $data = $search_product -> fetchAll(\PDO::FETCH_ASSOC);
         
+
         return($data);
     }
 
+
     public function addProductToCart(Request $req){
         
-        include_once __DIR__ . "/../../Database/config.php";
+        $pdo = config("app.pdo");
 
-        $product_id = $req -> input('id');
+
+        $product_id = $req["id"];
+
         if($product_id){
             $to_add = $pdo -> prepare("
-                SELECT 
-                id,
-                name,
-                image,
-                price 
-
+                SELECT id, name, image, price 
                 FROM products 
-                WHERE id=:id
+                WHERE 
+                    id=:id
             ");
         
             $to_add -> execute([
@@ -77,10 +85,14 @@ class Products extends Controller
             $data = ($to_add -> fetchAll(\PDO::FETCH_ASSOC))[0];
             
             array_push($_SESSION['cart'], $data); 
+            
             return redirect(route("root"));
+        
         }
+        
         return abort(403);
     }
+
 
     public function deleteProductFromCart($id){
 
@@ -92,9 +104,10 @@ class Products extends Controller
         return abort(403);
     }
 
+
     public function store(StoreReq $req){      
 
-        include_once __DIR__ . "/../../Database/config.php";
+        $pdo = config("app.pdo");
 
         if(!in_array($req["category"], [ 
             "filter-laptop", 
@@ -118,6 +131,7 @@ class Products extends Controller
                 VALUES
                     (:id_user, :name, :price, :descr, :class, :image)
             ");
+
             $store_product -> execute([
                 "id_user" => $_SESSION["id"],
                 "name" => $req["name"],
@@ -128,35 +142,56 @@ class Products extends Controller
             ]);
 
         }
+
         else {
             $_SESSION["error"] = true;
             return view("sell");
         }
 
+
         $_SESSION["done"] = true;
         return view("sell");
-
     }
     
+
     public function delete($id){
         
-        include_once __DIR__ . "/../../Database/config.php"; 
+        $pdo = config("app.pdo"); 
 
-
-        $values = [
+        # Check if the product exists and is selled by the current user
+        $select_products = $pdo -> prepare("
+            SELECT * FROM products 
+            WHERE 
+                id=:product_id 
+            AND 
+                id_user=:id_user
+        "); 
+        $select_products -> execute([
             "product_id" => $id,
             "id_user" => $_SESSION["id"],
-        ];
-
-
-        $select_pr = $pdo -> prepare("SELECT * FROM products WHERE id=:product_id AND id_user=:id_user");
-        $select_pr -> execute($values);
-        $data = $select_pr -> fetch();
-
+        ]);
+        
+        $data = $select_products -> fetch();
+        
+    
         if(empty($data)){
             return abort(403);
         }
+
+        # Delete the image associated with the product
         Storage::disk("public") -> delete("product_img/" . $data['image']);
+
+
+        # Delete comments attached to the product
+        $delete_comments = $pdo -> prepare("
+            DELETE FROM comments WHERE id_product=:id
+        ");
+        $delete_comments -> execute(
+            ["id" => $id]
+        );
+
+
+        # Delete the product itself
 
         $del_product = $pdo -> prepare("
             DELETE FROM 
@@ -167,14 +202,18 @@ class Products extends Controller
                 id_user=:id_user
         ");
 
-        $del_product -> execute($values);
+        $del_product -> execute([
+            "product_id" => $id,
+            "id_user" => $_SESSION["id"],
+        ]);
 
         return redirect("/");
     }
 
+
     public function show_update_form($id){
 
-        include_once __DIR__ . "/../../Database/config.php";
+        $pdo = config("app.pdo");
 
         $data = verify_if_product_is_from_current_user($pdo, $id);
         if(!$data){
@@ -184,12 +223,12 @@ class Products extends Controller
         return view("updateform", ["data" => $data[0]]);
     }
 
+
     public function update($id, UpdateProductReq $req){
 
-        include_once __DIR__ . "/../../Database/config.php";
+        $pdo = config("app.pdo");
         
         $data = verify_if_product_is_from_current_user($pdo, $id);
-
         if(!$data){
             return abort(403);
         }
@@ -224,14 +263,16 @@ class Products extends Controller
         ]);
 
         $_SESSION["done"] = "updated";
+
         return redirect(route("details", $id));
     }
 
+
     public function rating($id){
 
-        include_once __DIR__ . "/../../Database/config.php";
+        $pdo = config("app.pdo");
 
-
+        # Get the sum of all the rates
         $rating = $pdo -> prepare("
             SELECT SUM(rating) as rating FROM comments 
             WHERE 
@@ -241,6 +282,8 @@ class Products extends Controller
         $rating -> execute([ "id" => $id, ]);
         $rating = $rating -> fetch()[0];
 
+
+        # Get the number of person ho gave a rate
         $number = $pdo -> prepare("
             SELECT COUNT(*) as number FROM comments 
             WHERE 
@@ -257,11 +300,10 @@ class Products extends Controller
                 "real" => $rating / $number_of_rate,
                 "rate" => (int)$number_of_rate,
             ];
-        }
 
+        }
         else {
             return abort(404);
         }
-
     }
 }

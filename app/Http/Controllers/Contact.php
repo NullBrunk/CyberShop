@@ -7,7 +7,7 @@ use App\Http\Requests\ContactReq;
 
 function getmsgs($mail){
     
-    include_once __DIR__ . '/../../Database/config.php';
+    $pdo = config("app.pdo");
 
     $convs = $pdo -> prepare("
             SELECT * FROM
@@ -28,11 +28,14 @@ function getmsgs($mail){
                     ON 
                         contact.id_contactor = users.id
                 ) as contactor
+
             ON contacted.id = contactor.id 
+
             WHERE 
                 contacted.mail_contacted = :mail 
             OR 
                 contactor.mail_contactor = :mail
+
             ORDER BY contacted.id
         ");
 
@@ -45,37 +48,36 @@ function getmsgs($mail){
 }
 
 
-class Contact extends Controller
-{
+class Contact extends Controller {
+
     public function show($slug = false){
         
-
         $exploitable_data = [];
 
         foreach(getmsgs($_SESSION["mail"]) as $data){
+
+            # Then the contactor is the current user
             if($data["mail_contacted"] === $_SESSION["mail"]){
 
-                // Mail of the other person
                 $mail = $data["mail_contactor"];
                 $toput = [ $data['content'], "me" => false, "id" => $data["id"]];
             } 
+
+            # Then the contactor is the other user
             else {
-                
-                // Mail of the other person
+
                 $mail = $data["mail_contacted"];
                 $toput = [ $data['content'], "me" => true, "id" => $data["id"] ];
-
             }
+
 
             if(isset($exploitable_data[$mail])){
                 array_push($exploitable_data[$mail], $toput);
             }
             else {
                 $exploitable_data[$mail] = [ $toput ];
-
             }
         }
-
 
         
         if($slug){
@@ -85,17 +87,19 @@ class Contact extends Controller
                 return redirect(route("contact"));  
             }
 
-
             return view("user.contact", [ "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
+
         }   
+
         else {
             return view("user.contact", [ "noone" => true, "data" => $exploitable_data ]);
         }
     }
 
+
     public function send(ContactReq $req){
 
-        include_once __DIR__ . '/../../Database/config.php';
+        $pdo = config("app.pdo");
 
         $url = explode("/contact/", url() -> previous());
         
@@ -104,6 +108,7 @@ class Contact extends Controller
         }
         $mail = $url[1];
         
+
         $id = $pdo -> prepare("SELECT id FROM users WHERE mail=:mail");
         $id -> execute(["mail" => $mail]);
         $id = $id -> fetch();
@@ -114,13 +119,13 @@ class Contact extends Controller
         }
 
         $send_msg = $pdo -> prepare("
-        INSERT INTO 
-            contact(
-                readed, id_contactor, id_contacted, content
-            ) 
-        VALUES  (
-                FALSE, :id_contactor, :id_contacted, :content 
-            )
+            INSERT INTO 
+                contact(
+                    readed, id_contactor, id_contacted, content
+                ) 
+            VALUES (
+                    FALSE, :id_contactor, :id_contacted, :content 
+                )
         ");
         $send_msg -> execute([
             "id_contactor" => $_SESSION["id"],
@@ -129,20 +134,25 @@ class Contact extends Controller
         ]);
 
         return redirect(route("contactuser", $mail));
-        
     }
+
 
     public function delete($slug){
 
-        include_once __DIR__ . '/../../Database/config.php';
+        $pdo = config("app.pdo");
 
-        $del = $pdo -> prepare("DELETE FROM contact WHERE id=:slug AND id_contactor=:user");
+        $del = $pdo -> prepare("
+            DELETE FROM contact 
+            WHERE 
+                id=:slug 
+            AND 
+                id_contactor=:user
+        ");
         $del -> execute([
             "slug" => $slug,
             "user" => $_SESSION["id"]
         ]);
 
         return redirect(url() -> previous());
-
     }
 }

@@ -24,7 +24,7 @@ class SignupReq extends FormRequest
         return [
             'email' => 'required|email|max:50',
             'pass' => 'required',
-            'repass' => 'same:pass|required',
+            'repass' => 'required|same:pass',
         ];
     }
 }
