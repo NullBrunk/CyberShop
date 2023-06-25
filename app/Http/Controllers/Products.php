@@ -35,7 +35,6 @@ function verify_if_product_is_from_current_user($pdo, $id){
 
 
     return $validate -> fetchAll(\PDO::FETCH_ASSOC);
-
 }
 
 class Products extends Controller
@@ -62,48 +61,6 @@ class Products extends Controller
 
         return($data);
     }
-
-
-    public function addProductToCart(Request $req){
-        
-        $pdo = config("app.pdo");
-
-
-        $product_id = $req["id"];
-
-        if($product_id){
-            $to_add = $pdo -> prepare("
-                SELECT id, name, image, price 
-                FROM products 
-                WHERE 
-                    id=:id
-            ");
-        
-            $to_add -> execute([
-                "id" => $product_id
-            ]); 
-            $data = ($to_add -> fetchAll(\PDO::FETCH_ASSOC))[0];
-            
-            array_push($_SESSION['cart'], $data); 
-            
-            return redirect(route("root"));
-        
-        }
-        
-        return abort(403);
-    }
-
-
-    public function deleteProductFromCart($id){
-
-        if(isset($_SESSION['cart'][$id])){
-            array_splice($_SESSION['cart'], $id, 1);
-            return redirect(route("root"));
-        }
-
-        return abort(403);
-    }
-
 
     public function store(StoreReq $req){      
 

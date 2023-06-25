@@ -34,6 +34,16 @@ CREATE TABLE users(
     PRIMARY KEY(`id`)   
 );
 
+CREATE TABLE cart(
+    `id` INT AUTO_INCREMENT,
+    `id_user` INT NOT NULL,
+    `id_product` INT NOT NULL,
+
+    PRIMARY KEY(`id`),
+    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
+    FOREIGN KEY(`id_product`) REFERENCES products(`id`)
+);
+
 CREATE TABLE products(
     `id` INT AUTO_INCREMENT,
     `id_user` INT NOT NULL,
@@ -86,10 +96,17 @@ CREATE TABLE contact(
 ```
 
 ```bash
+# Start the MySQL service
 php artisan mysql
+
+# Link the storage directory to public/storage/
 php artisan storage:link
 
-php artisan run
+# Start the WebApp on port 80
+sudo php artisan serve --port=80 --host=0.0.0.0&
+
+# Start the API on port 8000
+sudo php artisan serve --port=8000 --host=0.0.0.0&
 ```
 
 

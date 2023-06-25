@@ -20,8 +20,5 @@ Artisan::command('mysql', function () {
 }) -> purpose('Start the MySQL database');
 
 
-Artisan::command('run', function () {
-    print_r(shell_exec("sudo make api && sudo make serv"));
-}) -> purpose('Start the Web Serv and the API');
 
 

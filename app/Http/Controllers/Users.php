@@ -41,9 +41,8 @@ class Users extends Controller {
             $_SESSION['admin'] = $data['is_admin'];
             $_SESSION['logged'] = true;
             $_SESSION['mail'] = $data['mail'];
-            $_SESSION['cart'] = [];
 
-            return redirect(route("root"));
+            return redirect(route("cart.initialize"));
         }
         else {
             # Error

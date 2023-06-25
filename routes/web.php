@@ -9,7 +9,7 @@ use App\Http\Controllers\Details;
 use App\Http\Controllers\Contact;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Index;
-
+use App\Http\Controllers\Cart;
 
 /*
 |---------------------------------------------
@@ -72,14 +72,19 @@ Route::get('/disconnect', function () {
 */
 
 Route::prefix('cart') -> group(function () {
+    Route::get(
+        "",
+        [ Cart::class, 'initialize' ]
+    ) -> middleware(Logged::class) -> name("cart.initialize");
+
     Route::post(
         "/add", 
-        [ Products::class, 'addProductToCart' ] 
+        [ Cart::class, 'add' ] 
     ) -> middleware(Logged::class) -> name('cart.add');
 
     Route::get(
         "/delete/{id}", 
-        [ Products::class, 'deleteProductFromCart' ] 
+        [ Cart::class, 'remove' ] 
     ) -> middleware(Logged::class) -> name('cart.remove');
 
 });
@@ -204,4 +209,10 @@ Route::prefix('contact') -> group(function () {
         [ Contact::class, "delete"]
     ) -> middleware(Logged::class) -> name("delete");
 
+});
+
+
+Route::get("/dump", function (){
+    session_start();
+    dd($_SESSION);
 });
