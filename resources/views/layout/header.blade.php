@@ -15,27 +15,50 @@
           
             
             @if(isset($_SESSION['logged']))
-              <li ><a class="nav-link scrollto" href="{{ route("sell") }}">Sell</a></li>            
+                <li ><a class="nav-link scrollto" href="{{ route("sell") }}">Sell</a></li>            
               
-              <script>
-                async function deleteitem(id) {
-                  url = "/cart/delete/"+id
-                  let resp = await fetch(url);
-                  
-                  let elem = document.getElementById(id)
-                  elem.remove()
-                };
-                
-              </script>
+                <script>
+                    async function deleteitem(id) {
+
+                        url = "/cart/delete/"+id;
+                        let resp = await fetch(url);
+
+                        const elem = document.getElementById(id);
+                        elem.remove();
+
+                        const num = document.getElementById("number");
+                        console.log(num.innerHTML)
+
+                        if(num.innerHTML == 1){
+                            console.log("allo?")
+                            const cart = document.getElementById("cart");
+                            const p = document.getElementById("padding");
+                            
+                            cart.remove()
+                            p.style.marginRight = "10px";
+                        }
+                        else {
+                            num.innerHTML = num.innerHTML - 1
+                        }
+
+                    };
+
+                </script>
 
               @if(!empty($_SESSION['cart']))
 
-                <p style="margin-right: 30px;"></p>
+                <p id="padding" style="margin-right: 30px;"></p>
                   
                   @php($total = 0)
 
-                  <li style="list-style-type: none;" class="dropdown"><a style="margin: 0px; padding: 0px;" href="#"><i style="font-size: 26px !important;" class="bi bi-cart"></i></a>
-                    <ul>
+                  <li id="cart" style="list-style-type: none;" class="dropdown">
+                    
+                    <a style="margin: 0px; padding: 0px;" href="#">
+                      <span id="number" class="badge bg-primary badge-number">{{ sizeof($_SESSION["cart"]) }}</span>
+                      <i style="font-size: 26px !important;" class="bi bi-cart">
+                      </i>
+                    </a>
+                    <ul style="overflow: scroll; max-height: 55vh;">
                     
                       @foreach($_SESSION['cart'] as $p)
                         

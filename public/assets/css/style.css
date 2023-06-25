@@ -1398,3 +1398,13 @@ tr:nth-child(even) td {
   color: #000000;
   font-size: 18px;
 }
+
+.badge-number {
+  position: absolute;
+  inset: -2px -5px auto auto;
+  font-weight: bold;
+  font-size: 10px;
+  padding: 3px 6px;
+  background-color: #47b2e4 !important;
+  color: black;
+}

@@ -36,7 +36,7 @@ class Cart extends Controller {
             $_SESSION['cart'][$d["cid"]] = $d;
         }
 
-        return redirect(route("root"));
+        return redirect(url() -> previous());
     }
    
     public function add(Request $req){

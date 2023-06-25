@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Middleware\Logged;
-
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Middleware\Logged;
+use App\Http\Middleware\Redirect;
+
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
 use App\Http\Controllers\Details;
@@ -49,12 +51,25 @@ Route::get('/details/{product_id}', Details::class ) -> name("details");
 |
 */
 
-Route::view('/signup', 'login.signup') -> name("signup");
-Route::view('/login', 'login.login') -> name("login");
+Route::view(
+    '/signup', 
+    'login.signup'
+) -> middleware(Redirect::class) -> name("signup");
 
-Route::post('/login',  [ Users::class, "show" ] );
-Route::post('/signup', [ Users::class, "store" ] );
+Route::view(
+    '/login', 
+    'login.login'
+) -> middleware(Redirect::class) -> name("login");
 
+Route::post(
+    '/login', 
+    [ Users::class, "show" ] 
+) -> middleware(Redirect::class);
+
+Route::post(
+    '/signup', 
+    [ Users::class, "store" ] 
+) -> middleware(Redirect::class);
 
 Route::get('/disconnect', function () {
 
@@ -211,8 +226,3 @@ Route::prefix('contact') -> group(function () {
 
 });
 
-
-Route::get("/dump", function (){
-    session_start();
-    dd($_SESSION);
-});
