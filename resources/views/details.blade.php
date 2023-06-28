@@ -127,7 +127,14 @@
 
                             <tr>
                                 <th>Seller</th>
-                                <td>@if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"])) <a href="{{route('contactuser', $data['mail'])}}">{{ $data['mail'] }}</a> @else {{ $data['mail'] }} @endif</td>
+                                <td>
+                                    @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"])) 
+                                        <a href="{{route('contactuser', $data['mail'])}}">{{ $data['mail'] }}</a> 
+                                    @else 
+                                        {{ $data['mail'] }} 
+                                    
+                                    @endif
+                                </td>
                             </tr>
 
                             <tr>

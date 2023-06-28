@@ -43,8 +43,6 @@ Route::view("/articles", "articles") -> name("articles");
 Route::get('/details/{product_id}', Details::class ) -> name("details");
 
 
-
-
 /*
 |---------------------------------------------
 |  Authentication 
@@ -87,6 +85,8 @@ Route::get('/disconnect', function () {
 */
 
 Route::prefix('cart') -> group(function () {
+    Route::view("show", "user.cart") -> middleware(Logged::class) -> name("cart.display");
+
     Route::get(
         "",
         [ Cart::class, 'initialize' ]

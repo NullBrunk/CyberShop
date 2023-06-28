@@ -1362,7 +1362,6 @@ section {
 }
 
 
-
 table {
   font-family: "Amazon Ember", Arial, sans-serif;
   color: #0F1111 !important;
@@ -1370,7 +1369,7 @@ table {
   width: 60vw !important;
 }
 
-th, td {
+table th, td {
   border: 1px solid rgb(34, 32, 32);
   padding: 8px;
   text-align: left; /* Modification de l'alignement à gauche */
@@ -1380,11 +1379,11 @@ td {
   word-wrap: break-word;
 }
 
-td a {
+table td a {
   color: #007185;
 }
 
-th {
+table th {
   background-color: #324769;
   color: white;
 }
@@ -1407,4 +1406,70 @@ tr:nth-child(even) td {
   padding: 3px 6px;
   background-color: #47b2e4 !important;
   color: black;
+}
+
+.showcart {
+  background-color: #293e61;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  border-radius: 20px;
+}
+
+.productcart {
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.imgcart {
+  height: 25vh;
+  width: 25vw;
+  display: flex;
+}
+
+.imgcart img {
+  height: 80%;
+  margin: auto;
+}
+
+.price {
+  overflow: scroll;
+  color: white;
+  width: 5vw;
+  text-align: center;
+  padding-top: 12vh;
+}
+
+.link {
+  overflow: scroll;
+
+  margin-left: 15%;
+  padding-top: 12vh;
+
+}
+
+.buttoncart {
+  color: white;
+  background-color: #121212;
+  border: 1px solid var(--neutral-300);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  height: 8vh;
+  font-weight: bold;
+  font-size: 19px !important;
+}
+
+.totalprice {
+  margin-top: 10px;
+  color: white;
+  font-weight: 600;
+  text-align: center;;
+}
+
+.valuetotalprice {
+  font-weight: 900;
+  font-size: 32px;
+  color: #73c5eb;
+  padding-left: 10px;
 }

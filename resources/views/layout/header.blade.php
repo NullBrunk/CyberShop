@@ -30,7 +30,6 @@
                         console.log(num.innerHTML)
 
                         if(num.innerHTML == 1){
-                            console.log("allo?")
                             const cart = document.getElementById("cart");
                             const p = document.getElementById("padding");
                             
@@ -79,7 +78,7 @@
 
                       @endforeach
 
-                      <li><a id="price" class="button" href="/todo">Buy</a></li>
+                      <li><a id="price" class="button" href="{{route("cart.display")}}">Buy</a></li>
                     </ul>
                   </li>
               @else 

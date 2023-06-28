@@ -92,8 +92,7 @@
                     <div style="background: white; height: 1px;">_</div>
                 
                         <?php 
-                            $na
-                            mes = array_keys($data);  
+                            $names = array_keys($data);  
                         ?>
 
                         @foreach($names as $n)
