@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>E-Commerce</title>
+        <title id="title">Search a product </title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -89,6 +89,8 @@
 
             async function(event) {
                 let content = event.target.value;
+
+                document.getElementById("title").innerText = "Search  ·  " + content; 
                 let resp = await fetch("http://localhost:8000/api/products/"+content);
                 
                 if(resp.status !==  404){

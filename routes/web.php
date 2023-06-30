@@ -19,7 +19,6 @@ use App\Http\Controllers\Cart;
 |
 */
 
-Route::view('/about', 'static.about') -> name("about");
 Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell"); 
 
 

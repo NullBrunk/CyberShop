@@ -30,11 +30,9 @@
 
             if(menu.classList[3]){
                 menu.classList.remove("none");
-                dots.classList.add("mr-3")
             }
             else {
                 menu.classList.add("none");
-                dots.classList.remove("mr-3")
             }
             }
         </script>
@@ -263,7 +261,7 @@
                                             <i id="{{$comm['id']. 'a'}}" onclick='menu("{{$comm["id"] . "d"}}", "{{$comm["id"]. "a"}}")' class="dots bx bx-dots-vertical-rounded"></i>     
                                     
                                                             
-                                            <button id="{{$comm['id'] . 'd'}}" onclick="window.location.href = '{{ route('comment.delete', [$data['pid'], $comm['id']] ) }}'" class="btn btn-primary menu none" style="  margin-left: -3vw;">
+                                            <button id="{{$comm['id'] . 'd'}}" onclick="window.location.href = '{{ route('comment.delete', [$data['pid'], $comm['id']] ) }}'" class="btn btn-primary menu none" style="  margin-left: 0px;">
                                                 DELETE 
                                                 <i class="bi bi-trash2-fill"></i>
                                             </button>

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>E-Commerce</title>
+        <title>Cart </title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -40,7 +40,7 @@
                 <div class="productcart">
                             
                         <div class="imgcart">
-                            <img src="../storage/product_img/{{ $p["image"] }}">
+                            <img data-src="../storage/product_img/{{ $p["image"] }}">
                         </div>
 
                         <div class="price">
@@ -75,7 +75,16 @@
         
         
         <script src="../assets/js/main.js"></script>
-        
+        <script>window.addEventListener('load', function() {
+            var images = document.getElementsByTagName('img');
+            for (var i = 0; i < images.length; i++) {
+              var img = images[i];
+              if (img.getAttribute('data-src')) {
+                img.setAttribute('src', img.getAttribute('data-src'));
+              }
+            }
+          }
+          );</script>
     </body>
    
 

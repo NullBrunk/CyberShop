@@ -5,7 +5,7 @@
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
     <div class="container d-flex align-items-center">
-      <h1 class="logo me-auto"><a href="/">CyberShop</a></h1>
+      <h1 class="logo me-auto"><a href="/">Cybershop</a></h1>
         <nav id="navbar" class="navbar">
         
           <ul>
@@ -58,10 +58,10 @@
                     
                     <a style="margin: 0px; padding: 0px;" href="#">
                       <span id="number" class="badge bg-primary badge-number">{{ sizeof($_SESSION["cart"]) }}</span>
-                      <i style="font-size: 26px !important;" class="bi bi-cart">
+                      <i style="font-size: 26px !important;" class="bi bi-cart carti">
                       </i>
                     </a>
-                    <ul style="overflow: scroll; max-height: 55vh;">
+                    <ul  class="cartn" style="overflow: scroll; max-height: 55vh; margin-left: -350%;">
                     
                       @foreach($_SESSION['cart'] as $p)
                         
@@ -74,8 +74,8 @@
                           
                           <a href="/details/{{ $p['pid'] }}">{{ substr($p["name"], 0, 12) }}</a>
                           
-                            <i onclick="deleteitem({{$p['cid']}})" class="bi bi-trash2-fill trash-cart"></i>
-                          
+                            <i onclick="deleteitem({{$p['cid']}})" style="cursor: pointer" class="bi bi-trash2-fill trash-cart"></i>
+                            
 
                           <p>
                         </li>
@@ -90,7 +90,7 @@
               @endif
 
 
-              <a href="{{ route("profile") }}" style="padding-left: 1vw;" ><i style="font-size: 26px !important;" class="bi bi-person-circle"></i></a>
+              <a href="{{ route("profile") }}" class="pdlp" ><i style="font-size: 26px !important;" class="bi bi-person-circle"></i></a>
 
             @else
               <li><a class="nav-link scrollto" href="{{ route("signup") }}">Signup</a></li>

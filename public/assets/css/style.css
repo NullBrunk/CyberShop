@@ -249,6 +249,40 @@ h6 {
   }
 }
 
+.pdlp {
+  padding-left: 1vw !important;
+}
+
+.cartn {
+  margin-top: 15% !important;
+}
+
+
+@media (max-width: 991px) {
+  .cartn {
+    margin-left: 2vw !important;
+    margin-top: 7px !important;
+  }
+
+  .carti {
+    padding-left: 11px;
+  }
+
+  a {
+    padding-left: 0px;
+  }
+
+  .pdlp {
+    padding-left: 12px !important;
+  }
+
+  .badge-number {
+    inset: inherit !important;
+    margin-left: 30px;
+    margin-bottom: 15px;
+  }
+}
+
 .navbar-mobile {
   position: fixed;
   overflow: hidden;
@@ -1255,7 +1289,7 @@ section {
 }
 
 .trash {
-  margin-left: 85%;
+  margin-left: auto;
   margin-top: 0vh;
   font-size: 26px; 
 }
