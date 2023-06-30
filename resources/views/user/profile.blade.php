@@ -23,7 +23,7 @@
     
 
 
-    <body style="background-color: #37517e;">
+    <body style="background-color: #37517e;" >
 
         @include('layout/header')
 
@@ -49,13 +49,14 @@
                             <div class="card-header bg-white border-0">
                                 <div class="row align-items-center">
                                     <div class="col-8">
-                                        <h3 class="mb-0" style="width: 157%;">My account
+                                        <h3 class="mb-0" style="width: 152%; display: flex; ">
+                                            
+                                            <p class="block">My account</p>
                         
                                             <button 
-                                            onclick="window.location.href = '/disconnect'" 
-                                            class="btn btn-primary" 
-                                            style="margin-left: 80%; border: 1px solid #af2024; background-color: #af2024;">
-                                                Disconnect
+                                                onclick="window.location.href = '/disconnect'" 
+                                                class="btn btn-primary logout">
+                                                    Disconnect
                                             </button>
 
                                         </h3>
@@ -67,7 +68,7 @@
                 
                             <div class="card-body" style="background-color: white;">
 
-                                <p style="color: #6c757d !important; font-size: 1rem; font-weight: 500; line-height 1,2; font-family: 'Jost', sans-serif; white-space: nowrap;" class="heading-small text-muted mb-4">
+                                <p class="uinfo heading-small text-muted mb-4">
                                     
                                     User information  
                                     

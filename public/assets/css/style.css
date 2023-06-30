@@ -26,44 +26,6 @@ h6 {
 }
 
 /*--------------------------------------------------------------
-# Preloader
---------------------------------------------------------------*/
-#preloader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 9999;
-  overflow: hidden;
-  background: #37517e;
-}
-
-#preloader:before {
-  content: "";
-  position: fixed;
-  top: calc(50% - 30px);
-  left: calc(50% - 30px);
-  border: 6px solid #37517e;
-  border-top-color: #fff;
-  border-bottom-color: #fff;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: animate-preloader 1s linear infinite;
-}
-
-@keyframes animate-preloader {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-/*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
 .back-to-top {
@@ -1244,7 +1206,7 @@ section {
 }
 
 .btn-profile{
-  margin-left: 87%;
+  margin-left: auto;
   font-weight: 300;
   font-family: 'Jost', sans-serif;
   color: #525f7f;
@@ -1458,6 +1420,17 @@ tr:nth-child(even) td {
   height: 8vh;
   font-weight: bold;
   font-size: 19px !important;
+}
+
+.logout {
+  height: 100%; 
+  margin-left: auto; 
+  border: 1px solid #af2024; 
+  background-color: #af2024;
+}
+
+.block {
+  display: inline-block;
 }
 
 .totalprice {

@@ -42,7 +42,7 @@
         @include('../layout/header')
 
     
-        <main id="main">
+        <main id="main" >
 
             <!-- ======= Breadcrumbs ======= -->
             <section id="breadcrumbs" class="breadcrumbs" style="padding-top: 86px; padding-bottom: 0px !important;">
@@ -72,12 +72,12 @@
                                     ?>
                                 @endif
 
-                            <img style="width: 85% !important;" src="../storage/product_img/{{ $data["image"] }}" alt="">
+                            <img data-aos="fade-right" style="width: 85% !important;" src="../storage/product_img/{{ $data["image"] }}" alt="">
 
                             </div>
                         </div>
 
-                        <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; height: 75vh; display: flex; flex-direction: column; overflow: scroll;">
+                        <div data-aos="fade-left" class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; height: 75vh; display: flex; flex-direction: column; overflow: scroll;">
                             <div class="portfolio-info container" style="padding-bottom: 10px;" >
                             
                                 @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $data["mail"]))
@@ -117,58 +117,60 @@
                         <br>
                         <hr>
 
+                        <div id="info" data-aos="fade-right">
                         <h2>Product information</h2>
 
-                        <table>
-                            <tr>
-                                <th>Name</th>
-                                <td>{{$data["name"]}}</td>
-                            </tr>
-
-                            <tr>
-                                <th>Seller</th>
-                                <td>
-                                    @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"])) 
-                                        <a href="{{route('contactuser', $data['mail'])}}">{{ $data['mail'] }}</a> 
-                                    @else 
-                                        {{ $data['mail'] }} 
-                                    
-                                    @endif
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th>Category</th>
-                                <td>{{ ucfirst(explode('-', $data["class"])[1]) }}</td>
-                            </tr>
-
-                            <tr>
-                                <th>Price</th>
-                                <td>{{ $data['price'] }}$</td>
-                            </tr>
-
-                            @if($rating)
+                            <table>
                                 <tr>
-                                <th>Reviews</th>
+                                    <th>Name</th>
+                                    <td>{{$data["name"]}}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Seller</th>
                                     <td>
-
-                                        {{$rating['real']}} 
-
-                                        @for($i=0; $i<$rating['round']; $i++)
-                                            <i class="bi bi-star-fill" style="color: #ffa41c;"></i>
-                                        @endfor
-
-                                        @for($i = $rating['round']; $i < 5; $i++)
-                                            <i class="bi bi-star" style="color: #de7921;"></i>
-                                        @endfor
+                                        @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"])) 
+                                            <a href="{{route('contactuser', $data['mail'])}}">{{ $data['mail'] }}</a> 
+                                        @else 
+                                            {{ $data['mail'] }} 
                                         
-                                        <a href="#comments"> {{$rating["rate"]}} ratings</a>
-
+                                        @endif
                                     </td>
                                 </tr>
-                            @endif
-                            
-                        </table>
+
+                                <tr>
+                                    <th>Category</th>
+                                    <td>{{ ucfirst(explode('-', $data["class"])[1]) }}</td>
+                                </tr>
+
+                                <tr>
+                                    <th>Price</th>
+                                    <td>{{ $data['price'] }}$</td>
+                                </tr>
+
+                                @if($rating)
+                                    <tr>
+                                    <th>Reviews</th>
+                                        <td>
+
+                                            {{$rating['real']}} 
+
+                                            @for($i=0; $i<$rating['round']; $i++)
+                                                <i class="bi bi-star-fill" style="color: #ffa41c;"></i>
+                                            @endfor
+
+                                            @for($i = $rating['round']; $i < 5; $i++)
+                                                <i class="bi bi-star" style="color: #de7921;"></i>
+                                            @endfor
+                                            
+                                            <a href="#comments"> {{$rating["rate"]}} ratings</a>
+
+                                        </td>
+                                    </tr>
+                                @endif
+                                
+                            </table>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -176,7 +178,7 @@
             <hr>
 
             <section id="breadcrumbs" style="padding-top: 1%;" class="breadcrumbs">
-                <div class="container">
+                <div class="container" data-aos="fade-top-right">
 
                     <ol></ol>
                     <h2>Comments</h2>
@@ -198,7 +200,7 @@
                     @if(isset($_SESSION['done']) )
                         <script>
                             Swal.fire(
-                                'Updated !',
+                                'Commented !',
                                 'Your comment has been posted.',
                                 'success'
                             ) 
@@ -209,7 +211,7 @@
                         ?> 
                     @endif
 
-                    <div style="display: flex">
+                    <div style="display: flex" >
 
                         <form method="post" action="{{ route("comment.add") }}" style="width:100%;">
                             @csrf

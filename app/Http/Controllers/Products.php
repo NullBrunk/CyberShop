@@ -70,7 +70,7 @@ class Products extends Controller
             "filter-laptop", 
             "filter-dresses",
             "filter-gaming",
-            "filter-health",
+            "filter-food",
             "filter-beauty"
         ])){
             return abort(403);
@@ -194,7 +194,7 @@ class Products extends Controller
             "filter-laptop", 
             "filter-dresses",
             "filter-gaming",
-            "filter-health",
+            "filter-food",
             "filter-beauty"
         ])){
             return abort(403);
