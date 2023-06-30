@@ -12,7 +12,6 @@
             <li><a class="nav-link scrollto" href="{{ route("root") }}">Home</a></li>            
             <li><a class="nav-link scrollto" href="{{ route("articles") }}">Search</a></li>            
             
-
             
             @if(isset($_SESSION['logged']))
             <li><a class="nav-link scrollto" href="{{ route("contact") }}">Contact</a></li>
@@ -70,7 +69,7 @@
                           src="../storage/product_img/{{ $p["image"] }}">
                           
                           
-                          <a href="/details/{{ $p['pid'] }}">{{ substr($p["name"], 0, 12) }}</a>
+                          <a href="/details/{{ $p['pid'] }}">{{ explode(' ', $p["name"])[0] . ' ...' }}</a>
                           
                             <i onclick="deleteitem({{$p['cid']}})" style="cursor: pointer" class="bi bi-trash2-fill trash-cart"></i>
                             
