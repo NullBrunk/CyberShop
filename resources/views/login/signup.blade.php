@@ -16,7 +16,7 @@
         <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
         <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-        <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+        <link href="assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
 
 
         <link href="assets/css/style.css" rel="stylesheet">
@@ -25,14 +25,14 @@
 
     @include('../layout/header')
 
-    <body style="background-color: #e1e1e1 !important;">
+    <body style="background-color: #e1e1e1 !important; overflow: hidden;">
 	    <br>
-        <section class="ftco-section" >
+        <section style="padding-top: 5%;" >
       
             <div class="container">
                 <div class="row justify-content-center" style="padding-top: 2rem !important;">
                     <div class="col-md-7 col-lg-5">
-                        <div class="login-wrap p-4 p-md-5" style="padding-bottom: 1rem !important;">
+                        <div data-aos="zoom-in" class="login-wrap p-4 p-md-5" style="padding-bottom: 1rem !important;">
                             <div class="icon d-flex align-items-center justify-content-center">
                                 <span class="bx bx-user-plus" style="font-size: 45px; "></span>
                             </div>
@@ -104,9 +104,8 @@
 
         <script src="assets/vendor/aos/aos.js"></script>
         <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+        <script src="assets/vendor/glightbox/js/glightbox.js"></script>
         <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-        <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
 
 
         <script src="assets/js/main.js"></script>

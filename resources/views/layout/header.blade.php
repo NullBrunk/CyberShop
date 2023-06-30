@@ -9,12 +9,16 @@
         <nav id="navbar" class="navbar">
         
           <ul>
-            <li><a class="nav-link scrollto" href="{{ route("articles") }}">Articles</a></li>            
-            <li><a class="nav-link scrollto" href="{{ route("about") }}">About</a></li>
-            <li><a class="nav-link scrollto" href="{{ route("contact") }}">Contact</a></li>
-          
+            <li><a class="nav-link scrollto" href="{{ route("root") }}">Home</a></li>            
+            <li><a class="nav-link scrollto" href="{{ route("articles") }}">Search</a></li>            
+            
+            @if(!isset($_SESSION['logged']))
+              <li><a class="nav-link scrollto" href="{{ route("about") }}">About</a></li>
+            @endif
             
             @if(isset($_SESSION['logged']))
+            <li><a class="nav-link scrollto" href="{{ route("contact") }}">Contact</a></li>
+
                 <li ><a class="nav-link scrollto" href="{{ route("sell") }}">Sell</a></li>            
               
                 <script>
