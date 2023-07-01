@@ -104,8 +104,8 @@
                                 <ul>
                             
 
-                                    <li><strong>Name    : <input class="input-beautify" type="text" name="name" value="{{old("name")}}"></strong></li>
-                                    <li><strong>Price    : <input style="margin-left: 13% !important;" class="input-beautify" type="text" name="price" value="{{old("price")}}"></strong></li>
+                                    <li><strong>Name    : <input placeholder="Brown Mushroom" class="input-beautify" type="text" name="name" value="{{old("name")}}" autofocus></strong></li>
+                                    <li><strong>Price    : <input placeholder="12 or 5.99 " style="margin-left: 13% !important;" class="input-beautify" type="text" name="price" value="{{old("price")}}"></strong></li>
                                     <li>
                                         <strong>Category : 
 

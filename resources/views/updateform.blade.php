@@ -88,7 +88,7 @@
                                         <hr>
                                         <ul>
                             
-                                            <li><strong>Name    : <input class="input-beautify" type="text" name="name" value="{{$data["name"]}}"></strong></li>
+                                            <li><strong>Name    : <input class="input-beautify" type="text"  name="name" value="{{$data["name"]}}"></strong></li>
                                             <li><strong>Price    : <input style="margin-left: 13% !important;" class="input-beautify" type="text" name="price" value="{{$data["price"]}}"></strong></li>
                                             
                                             <li>

@@ -8,6 +8,8 @@ class Cart extends Controller {
 
     public function initialize(){
 
+        
+
         $_SESSION['cart'] = [];
 
 
@@ -35,6 +37,8 @@ class Cart extends Controller {
         foreach($data as $d){
             $_SESSION['cart'][$d["cid"]] = $d;
         }
+
+
 
         return redirect(url() -> previous());
     }

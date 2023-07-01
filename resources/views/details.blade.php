@@ -212,52 +212,58 @@
                             unset($_SESSION['done'])
                         ?> 
                     @endif
+                    <h2>Comments</h2>
 
-                    <div style="display: flex" >
-
-                        <form method="post" action="{{ route("comment.add") }}" style="width:100%;">
-                            @csrf
-                            <div class="title" style="height: 13vh;;">
-                                Title of your comment <abbr>*</abbr>
-                                <input name="title" type="text" placeholder="Example: Nice product !" class="titlebar" maxlength="45">
-                            </div>
+                    @if(!isset($_SESSION["logged"]))
+                        <div class="alert alert-info">
+                            Login to post a comment.
+                        </div>
+                    @else
+                        <div style="display: flex; padding-top: 5vh;" >
                             
-                            <div class="contentcomment title" style="margin-top: 10px; height: 23vh;">
-                                Your comment <abbr>*</abbr>
-                                <textarea placeholder="To help you write a useful comment for our CyberShop:
+                            <form method="post" action="{{ route("comment.add") }}" style="width:100%;">
+                                @csrf
+                                <div class="title" style="height: 13vh;;">
+                                    Title of your comment <abbr>*</abbr>
+                                    <input name="title" type="text" placeholder="Example: Nice product !" class="titlebar" maxlength="45">
+                                </div>
+                                
+                                <div class="contentcomment title" style="margin-top: 10px; height: 23vh;">
+                                    Your comment <abbr>*</abbr>
+                                    <textarea placeholder="To help you write a useful comment for our CyberShop:
 
-- Explain to us why you chose this note?
-- What did you like best about this product?
-- Who would you recommend it to?"
-                                class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
-                            </div>
+    - Explain to us why you chose this note?
+    - What did you like best about this product?
+    - Who would you recommend it to?"
+                                    class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
+                                </div>
 
-                            <input name="id" type="hidden" value="{{$data['pid']}}">
-                            
-                            <br>
-                            <p class="title" style="margin-bottom: 0; margin-top: 10px; ">Rating <abbr>*</abbr></p>
-                            <div class="rating">
-                                <input type="radio" id="star5" name="rating" value="5">
-                                <label for="star5"></label>
-                                <input type="radio" id="star4" name="rating" value="4">
-                                <label for="star4"></label>
-                                <input type="radio" id="star3" name="rating" value="3">
-                                <label for="star3"></label>
-                                <input type="radio" id="star2" name="rating" value="2">
-                                <label for="star2"></label>
-                                <input type="radio" id="star1" name="rating" value="1">
-                                <label for="star1"></label>
-                            </div> 
-                            <br>
-                            <input class="commbutton" type="submit" value="Post comment">
-                            <br>
+                                <input name="id" type="hidden" value="{{$data['pid']}}">
+                                
+                                <br>
+                                <p class="title" style="margin-bottom: 0; margin-top: 10px; ">Rating <abbr>*</abbr></p>
+                                <div class="rating">
+                                    <input type="radio" id="star5" name="rating" value="5">
+                                    <label for="star5"></label>
+                                    <input type="radio" id="star4" name="rating" value="4">
+                                    <label for="star4"></label>
+                                    <input type="radio" id="star3" name="rating" value="3">
+                                    <label for="star3"></label>
+                                    <input type="radio" id="star2" name="rating" value="2">
+                                    <label for="star2"></label>
+                                    <input type="radio" id="star1" name="rating" value="1">
+                                    <label for="star1"></label>
+                                </div> 
+                                <br>
+                                <input class="commbutton" type="submit" value="Post comment">
+                                <br>
 
-                        </form>
-                    </div>
+                            </form>
+                        </div>
 
-                    <br><br><br><br>
 
-                    <hr style="margin-bottom:20px;">
+                        <p style="margin-bottom: 15vh;">
+                    @endif
 
                     <div id="comments">
 
