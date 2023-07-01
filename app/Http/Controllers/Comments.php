@@ -13,15 +13,16 @@ class Comments extends Controller {
 
         $add_comment = $pdo -> prepare("
             INSERT INTO comments
-                (`id_product`, `id_user`, `content`, `writed_at`, `rating`)
+                (`id_product`, `id_user`, `title`, `content`, `writed_at`, `rating`)
             VALUES
-                (:id_product, :id_user, :comment, :writed_at, :rating)
+                (:id_product, :id_user, :title, :comment, :writed_at, :rating)
         ");
 
         $add_comment -> execute([
             "id_product" => $req["id"], 
             "writed_at" => date('Y-m-d H:i:s'),
             "id_user" => $_SESSION['id'],
+            "title" => $req['title'],
             "comment" => $req["comment"],
             "rating" => $req["rating"],
         ]);
@@ -40,7 +41,7 @@ class Comments extends Controller {
         $get_comments = $pdo -> prepare("
             SELECT 
                 comments.id, rating, id_product,
-                content, writed_at, mail
+                content, writed_at, mail, title
 
             FROM comments
             INNER JOIN users 

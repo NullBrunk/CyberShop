@@ -69,7 +69,7 @@
                           src="../storage/product_img/{{ $p["image"] }}">
                           
                           
-                          <a href="/details/{{ $p['pid'] }}">{{ explode(' ', $p["name"])[0] . ' ...' }}</a>
+                          <a href="/details/{{ $p['pid'] }}">{{ substr($p["name"], 0, 11) }}</a>
                           
                             <i onclick="deleteitem({{$p['cid']}})" style="cursor: pointer" class="bi bi-trash2-fill trash-cart"></i>
                             

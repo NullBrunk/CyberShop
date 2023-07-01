@@ -28,15 +28,14 @@
     
         <br>
 
-        #### CENTER LOGIN & INPUT ##### 
 
-        <section class="ftco-section">
+        <section>
 
             <div class="container" >
-                <div class="row justify-content-center">
+                <div class="row justify-content-center logincenter">
                     <div class="col-md-7 col-lg-5">
                         <div data-aos="zoom-in" class="login-wrap p-4 p-md-5" style="padding-bottom: 1rem !important;">
-                            <div class="icon d-flex align-items-center justify-content-center">
+                            <div class="icon d-flex align-items-center justify-content-center" >
                                 <span class="bx bx-user" style="font-size: 45px; "></span>
                             </div>
 

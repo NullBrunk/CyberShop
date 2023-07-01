@@ -27,10 +27,10 @@
 
     <body style="background-color: #e1e1e1 !important; overflow: hidden;">
 	    <br>
-        <section style="padding-top: 5%;" >
+        <section class="signupform">
       
             <div class="container">
-                <div class="row justify-content-center" style="padding-top: 2rem !important;">
+                <div class="row justify-content-center" class="logincenter">
                     <div class="col-md-7 col-lg-5">
                         <div data-aos="zoom-in" class="login-wrap p-4 p-md-5" style="padding-bottom: 1rem !important;">
                             <div class="icon d-flex align-items-center justify-content-center">

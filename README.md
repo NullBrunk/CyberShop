@@ -61,6 +61,7 @@ CREATE TABLE comments(
     `id` INT AUTO_INCREMENT,
     `id_product` INT NOT NULL, 
     `id_user` INT NOT NULL,
+    `title` VARCHAR(45) NOT NULL,
     `content` TEXT NOT NULL,
     `writed_at` DATETIME NOT NULL,
 
@@ -69,17 +70,6 @@ CREATE TABLE comments(
     FOREIGN KEY(`id_product`) REFERENCES product(`id`)
 );
 
-CREATE TABLE contact(
-    `id` INT AUTO_INCREMENT,
-    `readed` BOOL,
-    `mail_contactor` VARCHAR(50) NOT NULL,
-    `mail_contacted` VARCHAR(50) NOT NULL,
-    `content` TEXT NOT NULL,
-
-    PRIMARY KEY(`id`)
-);
-
-DROP TABLE contact;
 CREATE TABLE contact(
     `id` INT AUTO_INCREMENT,
     `readed` BOOL,

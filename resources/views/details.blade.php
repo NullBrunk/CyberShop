@@ -50,7 +50,7 @@
             </section><!-- End Breadcrumbs -->
 
             <!-- ======= Portfolio Details Section ======= -->
-            <section id="portfolio-details" class="portfolio-details">
+            <section id="portfolio-details" class="portfolio-details" style="padding-bottom: 0px;">
                 <div class="container">
                     <div class="row gy-4">
                         <div class="col-lg-8" style="width: 50%; display: flex;" >
@@ -88,6 +88,7 @@
 
                             <div class="portfolio-info" style="position: relative;">
                                 <p class="descr">
+
                                     {{ $data['descr'] }}
                                 </p>
                             </div>
@@ -98,7 +99,6 @@
 
                                     <button class="addtocart" type="submit">BUY NOW<i  style="font-weight: bold !important;" class="bi bi-cart-plus"></i></button>
                                     <input type="hidden"  name="id" value="{{$data['pid']}}">
-                                </form>
                         
                             @else
                                 <form class="navbar formshow" method="post" action="{{route("product.delete", $data['pid'])}}" >  
@@ -106,9 +106,10 @@
 
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button  class="addtocart" type="submit">STOP SELLING<i style="font-weight: bold !important;" class="bi bi-cart-x"></i></button>
-                                </form>
 
                             @endif
+                            </form>
+
                     
                         </div>
 
@@ -168,18 +169,21 @@
                                 @endif
                                 
                             </table>
+                            <p style="margin-top: 10vh;">
+                            <hr>
+
                         </div>
                     </div>
                 </div>
+
             </section>
 
-            <hr>
+           
 
             <section id="breadcrumbs" style="padding-top: 1%;" class="breadcrumbs">
                 <div class="container" data-aos="fade-top-right">
 
                     <ol></ol>
-                    <h2>Comments</h2>
 
                     @if($errors->has('comment') or $errors->has('id'))
                         <div class="alert alert-danger">
@@ -213,11 +217,25 @@
 
                         <form method="post" action="{{ route("comment.add") }}" style="width:100%;">
                             @csrf
-
-                            <textarea placeholder="Type something ..." class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
-                            <input name="id" type="hidden" value="{{$data['pid']}}">
-                            <br>
+                            <div class="title" style="height: 13vh;;">
+                                Title of your comment <abbr>*</abbr>
+                                <input name="title" type="text" placeholder="Example: Nice product !" class="titlebar" maxlength="45">
+                            </div>
                             
+                            <div class="contentcomment title" style="margin-top: 10px; height: 23vh;">
+                                Your comment <abbr>*</abbr>
+                                <textarea placeholder="To help you write a useful comment for our CyberShop:
+
+- Explain to us why you chose this note?
+- What did you like best about this product?
+- Who would you recommend it to?"
+                                class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
+                            </div>
+
+                            <input name="id" type="hidden" value="{{$data['pid']}}">
+                            
+                            <br>
+                            <p class="title" style="margin-bottom: 0; margin-top: 10px; ">Rating <abbr>*</abbr></p>
                             <div class="rating">
                                 <input type="radio" id="star5" name="rating" value="5">
                                 <label for="star5"></label>
@@ -229,9 +247,9 @@
                                 <label for="star2"></label>
                                 <input type="radio" id="star1" name="rating" value="1">
                                 <label for="star1"></label>
-                            </div>
-
-                            <input style="border: 2px solid #cccccc !important; border-radius: 4px; padding: 4px 4px; margin-left:80%; color: #444444; background-color: #cccccc;" class="" type="submit" value="Post comment">
+                            </div> 
+                            <br>
+                            <input class="commbutton" type="submit" value="Post comment">
                             <br>
 
                         </form>
@@ -239,7 +257,7 @@
 
                     <br><br><br><br>
 
-                    <hr class="margin-bottom:40px;">
+                    <hr style="margin-bottom:20px;">
 
                     <div id="comments">
 
@@ -249,10 +267,12 @@
                                 <div id="{{ $comm["id"] }}" class="comments">    
                                                 
                                     <div class="profile">
-                                        <i style="font-size:32px; color:#a8b6b7;" class="bi bi-person-circle"> </i>
-                                        <p class="name">
-                                            {{ $comm["mail"] }}
-                                        </p> 
+                                        
+                                        <p class="profile">
+                                            <i style="font-size:32px; color:#096ec8;" class="bi bi-person-circle"> </i>
+                                            <p class="name">
+                                                {{ $comm["mail"] }}
+                                            </p> 
 
                                         @if(isset($_SESSION["mail"]) && $comm["mail"] === $_SESSION["mail"])
                 
@@ -273,6 +293,7 @@
                                         @endif 
                                     </div>
                                 </div>
+                                <span class="titlecomm">{{ $comm["title"] }}</span>
 
                                 <div class=stars>
 
@@ -283,12 +304,12 @@
                                     @for($i = $comm["rating"]; $i < 5; $i++)
                                         <i class="bi bi-star" style="color: #de7921;"></i>
                                     @endfor
-
+                                    <span class="at">
+                                        {{ $comm["writed_at"] }}
+                                    </span>
                                 </div>
 
-                                <div class="at">
-                                    {{ $comm["writed_at"] }}
-                                </div>
+                                
 
                                 <div class="comment">
                                     {{ $comm["content"] }}
