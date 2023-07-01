@@ -25,16 +25,33 @@
         <script>
             function menu(id, id_dots){
 
-            const menu = document.getElementById(id);
-            const dots = document.getElementById(id_dots);
+                const menu = document.getElementById(id);
+                const dots = document.getElementById(id_dots);
 
-            if(menu.classList[3]){
-                menu.classList.remove("none");
+                menu.classList.toggle("none")
+               
             }
-            else {
-                menu.classList.add("none");
+
+            function showcomm(){
+
+
+                const form = document.getElementById("formcomm");
+                const chevron = document.getElementById("chevron");
+                const span = document.getElementById("commcontent");
+
+                form.classList.toggle("none");
+                chevron.classList.toggle("bx-chevron-right");
+                chevron.classList.toggle("bx-chevron-down");
+
+                if(span.innerText==="Click here to close this menu"){
+                    span.innerText = "Click here to post a comment "
+                }
+                else {
+                    span.innerText = "Click here to close this menu"
+                }
+                
             }
-            }
+
         </script>
 
         @include('../layout/header')
@@ -119,7 +136,7 @@
                         <div id="info" data-aos="fade-right">
                         <h2>Product information</h2>
 
-                            <table>
+                            <table >
                                 <tr>
                                     <th>Name</th>
                                     <td>{{$data["name"]}}</td>
@@ -219,22 +236,24 @@
                             Login to post a comment.
                         </div>
                     @else
-                        <div style="display: flex; padding-top: 5vh;" >
+                    <p class="commentlink" onclick="showcomm()"><span class="amazonpolice" id="commcontent">Click here to post a comment</span> <i id="chevron" class="bx bx-chevron-right"></i></p>
+
+                        <div id="formcomm" class="commentsbox none" >
                             
                             <form method="post" action="{{ route("comment.add") }}" style="width:100%;">
                                 @csrf
                                 <div class="title" style="height: 13vh;;">
                                     Title of your comment <abbr>*</abbr>
-                                    <input name="title" type="text" placeholder="Example: Nice product !" class="titlebar" maxlength="45">
+                                    <input name="title" type="text" value="{{old("title")}}" placeholder="Example: Nice product !" class="titlebar" maxlength="45">
                                 </div>
                                 
                                 <div class="contentcomment title" style="margin-top: 10px; height: 23vh;">
                                     Your comment <abbr>*</abbr>
                                     <textarea placeholder="To help you write a useful comment for our CyberShop:
 
-    - Explain to us why you chose this note?
-    - What did you like best about this product?
-    - Who would you recommend it to?"
+- Explain to us why you chose this note?
+- What did you like best about this product?
+- Who would you recommend it to?"
                                     class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
                                 </div>
 
@@ -259,14 +278,15 @@
                                 <br>
 
                             </form>
+                            <p style="margin-bottom: 12vh;">
                         </div>
 
 
-                        <p style="margin-bottom: 15vh;">
-                    @endif
+                        
+                        @endif
+                        <p style="margin-bottom: 3vh;">
 
                     <div id="comments">
-
                         @if($comments)
                             @foreach(json_decode($comments, true) as $comm)
 
@@ -275,7 +295,7 @@
                                     <div class="profile">
                                         
                                         <p class="profile">
-                                            <i style="font-size:32px; color:#096ec8;" class="bi bi-person-circle"> </i>
+                                            <i style="font-size:32px; color:#007185;" class="bi bi-person-circle"> </i>
                                             <p class="name">
                                                 {{ $comm["mail"] }}
                                             </p> 
@@ -318,7 +338,8 @@
                                 
 
                                 <div class="comment">
-                                    {{ $comm["content"] }}
+
+                                    {!! nl2br($comm["content"]) !!}
                                     <hr>
                                 </div>
                                 

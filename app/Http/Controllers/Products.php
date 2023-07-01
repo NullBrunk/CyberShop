@@ -147,6 +147,14 @@ class Products extends Controller
             ["id" => $id]
         );
 
+        # Delete all the cart where product exists
+        $delete_comments = $pdo -> prepare("
+            DELETE FROM cart WHERE id_product=:id
+        ");
+        $delete_comments -> execute(
+            ["id" => $id]
+        );
+
 
         # Delete the product itself
 

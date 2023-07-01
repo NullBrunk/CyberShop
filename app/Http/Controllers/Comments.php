@@ -23,10 +23,9 @@ class Comments extends Controller {
             "writed_at" => date('Y-m-d H:i:s'),
             "id_user" => $_SESSION['id'],
             "title" => $req['title'],
-            "comment" => $req["comment"],
+            "comment" => htmlspecialchars($req["comment"]),
             "rating" => $req["rating"],
         ]);
-
 
         $_SESSION['done'] = true;
 

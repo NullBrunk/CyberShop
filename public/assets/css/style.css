@@ -932,7 +932,7 @@ section {
   padding: 14px 28px;
   border-radius: 50px;
   color: #fff;
-  border: 2px solid #096ec8 !important;
+  border: 2px solid #007185 !important;
   transition: 0.3s;
   margin-left: auto;
   margin-right: auto;
@@ -963,7 +963,7 @@ section {
 }
 
 .addtocart:hover{
-  background-color:#096ec8 !important;
+  background-color:#007185 !important;
   transform: scale(1.05);
 
 }
@@ -1002,7 +1002,7 @@ section {
   margin-right: 4%; 
   margin-top: 3%; 
   font-size:21px; 
-  color: #096ec8;
+  color: #007185;
 }
 
 .noone {
@@ -1041,6 +1041,7 @@ section {
 }
 
 .profile{
+  
   display:flex;
 }
 
@@ -1048,7 +1049,7 @@ section {
   font-family: Hind Madurai, Hind-fallback, Arial, sans-serif;
   margin-left: 10px;
   margin-top: 14px;
-  color: #096ec8;
+  color: #007185;
 }
 
 
@@ -1115,7 +1116,7 @@ abbr {
 }
 
 .commbutton {
-  border-radius: 4px;
+  border-radius: 8px;
   outline: none;
   text-align: center;
   text-decoration: none;
@@ -1123,10 +1124,10 @@ abbr {
   margin-top: 4vh;
   height: 32px;
   border: 1px solid;;
-  border-color: #096ec8;
-  color: #096ec8;
+  border-color: #007185;
+  color: #fff !important;
   background-color: rgba(0, 0, 0, 0);
-  background-color: #fff;
+  background-color: #293e61 !important;
   padding-left: 18px;
   padding-right: 18px;
   transition: all 0.4s;;
@@ -1139,7 +1140,7 @@ abbr {
 }
 
 .commbutton:hover {
-  background-color: #096ec8 !important;
+  background-color: #007185 !important;
   color: white;
 }
 
@@ -1164,7 +1165,7 @@ abbr {
   font-size: 18px; 
   padding-left: 4px; 
   width: 70%;
-  border: 1px solid #d7d9e4;
+  border: 1px solid #717279;
   border-radius: 5px; 
   background-color: #293e61; 
   color: white;
@@ -1181,7 +1182,7 @@ abbr {
   font-size: 18px; 
   padding-left: 4px; 
   width: 70%;
-  border: 1px solid #d7d9e4;
+  border: 1px solid #717279;
   border-radius: 5px; 
   background-color: #293e61;
   color: white;
@@ -1197,7 +1198,7 @@ abbr {
   padding-left: 4px; 
   padding-top: 8px; 
   border-radius: 5px; 
-  border: 1px solid #d7d9e4;
+  border: 1px solid #717279;
  
   width: 100%; 
   height: 15vh; 
@@ -1247,6 +1248,14 @@ abbr {
 
 .menu:hover {
   background-color: #bd3b3f;
+  border: 1px solid #af2024 !important;
+
+}
+
+.menu:active {
+  background-color: #bd3b3f !important;
+  border: 1px solid #af2024 !important;
+
 }
 
 .menu i {
@@ -1254,7 +1263,7 @@ abbr {
 }
 
 .none {
-  display: none;
+  display: none !important;
 }
 
 .sendmsg {
@@ -1293,7 +1302,45 @@ table th, td {
 
 td {
   word-wrap: break-word;
+  width: 100%;
+  overflow: hidden;
+
 }
+
+.commentsbox {
+  border-radius: 10px;
+  background-color: #f5f5f5;
+  display: flex;
+  border: 1px solid #f5f5f5;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-bottom: 15px;
+}
+
+.amazonpolice{
+  font-family: "Amazon Ember", Arial, sans-serif !important;
+}
+
+.commentlink {
+  color: #007185;
+  cursor: pointer; 
+  width: 50%;
+}
+
+.commentlink:hover {
+  color: #73c5eb; 
+}
+
+.commentsbox input {
+  color: #162938;
+  background-color: #f5f5f5;
+}
+.commentsbox textarea {
+  color: #162938;
+  background-color: #f5f5f5;
+}
+
 
 table td a {
   color: #007185;
@@ -1320,7 +1367,7 @@ tr:nth-child(even) td {
   font-weight: bold;
   font-size: 10px;
   padding: 3px 6px;
-  background-color: #096ec8 !important;
+  background-color: #007185 !important;
   color: white;
 }
 
@@ -1386,8 +1433,12 @@ tr:nth-child(even) td {
 .logout:hover{
   background-color: #bd3b3f;
   border: 1px solid #bd3b3f; 
+}
 
 
+.logout:active{
+  background-color: #bd3b3f !important;
+  border: 1px solid #bd3b3f !important; 
 }
 
 .block {

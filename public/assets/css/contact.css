@@ -63,6 +63,10 @@ body {
     padding-bottom: 1px;
 }
 
+.textbar input:focus {
+    outline: none;
+}
+
 .textbar button {
     width: 9%;
     height: 6vh;

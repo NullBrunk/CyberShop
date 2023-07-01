@@ -105,7 +105,7 @@
                             
 
                                     <li><strong>Name    : <input placeholder="Brown Mushroom" class="input-beautify" type="text" name="name" value="{{old("name")}}" autofocus></strong></li>
-                                    <li><strong>Price    : <input placeholder="12 or 5.99 " style="margin-left: 13% !important;" class="input-beautify" type="text" name="price" value="{{old("price")}}"></strong></li>
+                                    <li><strong>Price    : <input placeholder="From 0.00 to 999md " style="margin-left: 13% !important;" class="input-beautify" type="text" name="price" value="{{old("price")}}"></strong></li>
                                     <li>
                                         <strong>Category : 
 
