@@ -1225,6 +1225,7 @@ abbr {
   font-size: 22px;
   border-radius: 20px;
   padding: 4px;
+  height: 31px;
 }
 
 .dots:hover {
@@ -1236,7 +1237,6 @@ abbr {
   font-weight: bold;
   display: flex;
   justify-content: right;
-  background-color: #dbd7d7;
   padding: 5px;
   margin-right: 1%;
   padding-left: 10px;
@@ -1246,15 +1246,32 @@ abbr {
   border: 1px solid #af2024;
 }
 
+
 .menu:hover {
   background-color: #bd3b3f;
   border: 1px solid #af2024 !important;
-
 }
 
 .menu:active {
   background-color: #bd3b3f !important;
   border: 1px solid #af2024 !important;
+}
+
+.update:hover {
+  background-color: #007185 !important;
+  border: 1px solid #32325d !important;
+
+}
+
+.update:active {
+  background-color: #007185 !important;
+  border: 1px solid #32325d !important;
+
+}
+
+.update {
+  background-color: #32325d;
+  border: 1px solid #007185;
 
 }
 
@@ -1325,7 +1342,6 @@ td {
 .commentlink {
   color: #007185;
   cursor: pointer; 
-  width: 50%;
 }
 
 .commentlink:hover {

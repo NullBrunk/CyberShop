@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreReq;
-use App\Http\Requests\UpdateProductReq;
+use App\Http\Requests\UpdateProduct;
 
 use Illuminate\Support\Facades\Storage;
 
@@ -189,7 +188,7 @@ class Products extends Controller
     }
 
 
-    public function update($id, UpdateProductReq $req){
+    public function update($id, UpdateProduct $req){
 
         $pdo = config("app.pdo");
         

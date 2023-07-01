@@ -16,18 +16,18 @@
         <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
         <link href="../assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
         <script src="../assets/js/sweetalert2.js"></script>
-
+        <script src="https://unpkg.com/htmx.org@1.9.2" integrity="sha384-L6OqL9pRWyyFU3+/bjdSri+iIphTN/bvYyM37tICVyOJkWZLpP2vGn6VUEXgzg6h" crossorigin="anonymous"></script>
         <link href="../assets/css/style.css" rel="stylesheet">
+
+
 
     </head>
 
     <body>
         <script>
-            function menu(id, id_dots){
+            function menu(id){
 
                 const menu = document.getElementById(id);
-                const dots = document.getElementById(id_dots);
-
                 menu.classList.toggle("none")
                
             }
@@ -201,19 +201,23 @@
                 <div class="container" data-aos="fade-top-right">
 
                     <ol></ol>
-
-                    @if($errors->has('comment') or $errors->has('id'))
-                        <div class="alert alert-danger">
-                            An error has occured !
-                        </div>
-                    @endif
-
-                    
-                    @if($errors -> has('rating'))
-                        <div class="alert alert-danger">
-                        You need to give a rating !
-                        </div>
-                    @endif
+                @if($errors -> has('title'))
+                    <div class="alert alert-danger">
+                        Title is required !
+                    </div>
+                @endif
+                @if($errors->has('comment') or $errors->has('id'))
+                    <div class="alert alert-danger">
+                        A comment is required !
+                    </div>
+                @endif
+        
+                
+                @if($errors -> has('rating'))
+                    <div class="alert alert-danger">
+                    You need to give a rating !
+                    </div>
+                @endif
 
 
                     @if(isset($_SESSION['done']) )
@@ -227,6 +231,20 @@
 
                         <?php
                             unset($_SESSION['done'])
+                        ?> 
+                    @endif
+
+                    @if(isset($_SESSION['updated']) )
+                        <script>
+                            Swal.fire(
+                                'Updated !',
+                                'Your comment has been updated.',
+                                'success'
+                            ) 
+                        </script>
+
+                        <?php
+                            unset($_SESSION['updated'])
                         ?> 
                     @endif
                     <h2>Comments</h2>
@@ -284,67 +302,89 @@
 
                         
                         @endif
-                        <p style="margin-bottom: 3vh;">
+                        <p style="margin-bottom: 7vh;">
 
                     <div id="comments">
-                        @if($comments)
-                            @foreach(json_decode($comments, true) as $comm)
 
-                                <div id="{{ $comm["id"] }}" class="comments">    
-                                                
-                                    <div class="profile">
-                                        
-                                        <p class="profile">
-                                            <i style="font-size:32px; color:#007185;" class="bi bi-person-circle"> </i>
-                                            <p class="name">
-                                                {{ $comm["mail"] }}
-                                            </p> 
+@if($comments)
 
-                                        @if(isset($_SESSION["mail"]) && $comm["mail"] === $_SESSION["mail"])
+    @foreach(json_decode($comments, true) as $comm)
+
+        <div id="{{ "div" . $comm["id"] }}" class="comments">          
+            <div class="profile">
                 
-                                            
-                                            <p class="trash"> 
-                                            <i id="{{$comm['id']. 'a'}}" onclick='menu("{{$comm["id"] . "d"}}", "{{$comm["id"]. "a"}}")' class="dots bx bx-dots-vertical-rounded"></i>     
-                                    
-                                                            
-                                            <button id="{{$comm['id'] . 'd'}}" onclick="window.location.href = '{{ route('comment.delete', [$data['pid'], $comm['id']] ) }}'" class="btn btn-primary menu none" style="  margin-left: 0px;">
-                                                DELETE 
-                                                <i class="bi bi-trash2-fill"></i>
-                                            </button>
-                                            
-
-                                            </p>
-
-
-                                        @endif 
-                                    </div>
-                                </div>
-                                <span class="titlecomm">{{ $comm["title"] }}</span>
-
-                                <div class=stars>
-
-                                    @for($i=0; $i<$comm["rating"]; $i++)
-                                        <i class="bi bi-star-fill" style="color: #ffa41c;"></i>
-                                    @endfor
-
-                                    @for($i = $comm["rating"]; $i < 5; $i++)
-                                        <i class="bi bi-star" style="color: #de7921;"></i>
-                                    @endfor
-                                    <span class="at">
-                                        {{ $comm["writed_at"] }}
-                                    </span>
-                                </div>
-
-                                
-
-                                <div class="comment">
-
-                                    {!! nl2br($comm["content"]) !!}
-                                    <hr>
-                                </div>
-                                
-                            @endforeach
+                <p class="profile">
+                    <i style="font-size:32px; color:#007185;" class="bi bi-person-circle"> </i>
+                    <p class="name">
+                        @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $data["mail"]))
+                            {{ $comm["mail"] }}
+                        @else
+                            <a style="color: #007185" href="{{ route("contactuser", $comm["mail"]) }}">{{$comm["mail"]}}</a>
                         @endif
+
+                    </p> 
+
+                    @if(isset($_SESSION["mail"]) && $comm["mail"] === $_SESSION["mail"])
+
+                        
+                    <p class="trash"> 
+
+                        
+                        
+                        <i id="" onclick='menu("{{$comm["id"]}}")' style="margin-top: 16px;" class="dots bx bx-dots-vertical-rounded"></i>     
+                    </p>
+                    
+                                            
+                            
+                    @endif 
+                    </div>
+                </div>
+                <div id="{{$comm['id']}}" class="none">
+                
+                 
+
+                    <a 
+                     href="{{route("comment.update_form", $comm["id"])}}" 
+                     
+                     id="{{$comm['id'] . 'updatebutton'}}" class="btn btn-primary menu update" style="width: 39px; margin-left: auto !important;">
+                         
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+
+                    <button id="{{$comm['id'] . 'deletebutton'}}" onclick="window.location.href = '{{ route('comment.delete', [$data['pid'], $comm['id']] ) }}'" class="btn btn-primary menu" style="margin-top: 4px; width: 39px; margin-left: auto;">
+                         
+                        <i class="bi bi-trash2-fill"></i>
+                    </button>
+
+                </div>
+                <span class="titlecomm">{{ $comm["title"] }}</span>
+
+                <div class=stars>
+
+                    @for($i=0; $i<$comm["rating"]; $i++)
+                        <i class="bi bi-star-fill" style="color: #ffa41c;"></i>
+                    @endfor
+
+                    @for($i = $comm["rating"]; $i < 5; $i++)
+                        <i class="bi bi-star" style="color: #de7921;"></i>
+                    @endfor
+                    <span class="at">
+                        {{ $comm["writed_at"] }}
+                    </span>
+                </div>
+
+                                
+
+                <div class="comment">
+
+                    {!! nl2br($comm["content"]) !!}
+                    <hr>
+                </div>
+                                
+    @endforeach
+@endif
+
+
                     </div>
                 </div>
             </section>

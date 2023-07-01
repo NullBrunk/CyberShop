@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\SignupReq;
-use App\Http\Requests\LoginReq;
-use App\Http\Requests\UpdateProfileReq;
+use App\Http\Requests\Signup;
+use App\Http\Requests\Login;
+use App\Http\Requests\UpdateProfile;
 use Illuminate\Support\Facades\Storage;
 
 use Exception;
@@ -14,7 +14,7 @@ session_start();
 
 class Users extends Controller {
 
-    public function show(LoginReq $request){
+    public function show(Login $request){
         
         $pdo = config("app.pdo");
        
@@ -45,13 +45,13 @@ class Users extends Controller {
             return redirect(route("cart.initialize"));
         }
         else {
-            # Error
+            # ErrorUpdateProfileReq
             return redirect(route("login") . "?f");
         }
     }
 
 
-    public function store(SignupReq $request){
+    public function store(Signup $request){
 
         $pdo = config("app.pdo");
         
@@ -75,7 +75,7 @@ class Users extends Controller {
     }
 
 
-    public function profile(UpdateProfileReq $req){
+    public function profile(UpdateProfile $req){
 
         $pdo = config("app.pdo");
 

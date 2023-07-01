@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CommentsReq;
-
+use App\Http\Requests\StoreComments;
+use App\Http\Requests\UpdateComment;
 
 class Comments extends Controller {
 
-    public function store(CommentsReq $req){
+    public function store(StoreComments $req){
         
         $pdo = config("app.pdo");
 
@@ -86,5 +86,66 @@ class Comments extends Controller {
         ]);
 
         return redirect(route("details", $article));
+    }
+
+
+    public function get_update_form($slug){
+        $pdo = config("app.pdo");
+        
+        $get_comment = $pdo -> prepare("
+            SELECT * FROM comments 
+            WHERE 
+                id_user=:id_user
+            AND 
+                id=:id 
+        ");
+
+        $get_comment -> execute([
+            "id_user" => $_SESSION["id"],
+            "id" => $slug
+        ]);
+
+        $data = $get_comment -> fetch(\PDO::FETCH_ASSOC);
+
+        if(empty($data)){
+            return abort(403);
+        }
+        else {
+            return view("user.updatecomment", [ "data" => $data ]);
+        }
+    }
+
+
+    public function update(UpdateComment $req){
+
+        $pdo = config("app.pdo");
+
+        $update_comment = $pdo -> prepare("
+            UPDATE comments
+            SET 
+                `title` = :title , 
+                `content` = :comment, 
+                `writed_at` = :writed_at, 
+                `rating` = :rating
+
+            WHERE
+                `id_user` = :id_user          
+            AND 
+                `id` = :id
+        ");
+
+        $update_comment -> execute([
+            "id" => $req["id"], 
+            "writed_at" => date('Y-m-d H:i:s'),
+            "id_user" => $_SESSION['id'],
+            "title" => $req['title'],
+            "comment" => htmlspecialchars($req["comment"]),
+            "rating" => $req["rating"],
+        ]);
+
+        $_SESSION['updated'] = true;
+
+        return redirect(route("details", $req["id_product"]));
+
     }
 }

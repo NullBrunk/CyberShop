@@ -66,8 +66,11 @@
                         <li id="{{$p['cid']}}">
                           <p class="show_cart">
                           <img style="padding-left: 3%; width: 22%;" 
-                          src="../storage/product_img/{{ $p["image"] }}">
-                          
+                          @if(isset($dotdotslash))
+                            src="../../storage/product_img/{{ $p["image"] }}">
+                          @else
+                            src="../storage/product_img/{{ $p["image"] }}">
+                          @endif
                           
                           <a href="/details/{{ $p['pid'] }}">{{ substr($p["name"], 0, 11) }}</a>
                           

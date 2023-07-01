@@ -123,6 +123,16 @@ Route::prefix('comments') -> group(function () {
         "/delete/{article}/{id}",
         [ Comments::class, "delete" ]
     ) -> middleware(Logged::class) -> name("comment.delete");
+
+    Route::get(
+        "/update/{slug}",
+        [ Comments::class, "get_update_form" ]
+    ) -> middleware(Logged::class) -> name("comment.update_form");
+
+    Route::post(
+        "/update",
+        [ Comments::class, "update" ]
+    ) -> middleware(Logged::class) -> name("comment.update");
     
 });
 
