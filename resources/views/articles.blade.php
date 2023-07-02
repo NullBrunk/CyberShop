@@ -28,8 +28,12 @@
         <section class="margintop d-flex align-items-center">
 
             <form>
-                <input id="input" type="text" placeholder="Search something ...">
+                <input id="input" type="text" placeholder="Search something ..." autofocus>
+                <i class="bx bx-search-alt" ></i>
+
             </form>
+
+            
 
 
         </section>
@@ -91,7 +95,8 @@
                 let content = event.target.value;
 
                 document.getElementById("title").innerText = "Search  ·  " + content; 
-                let resp = await fetch("http://localhost:8000/api/products/"+content);
+                let url = "http://"+ window.location.hostname + ":8000/api/products/"+ content
+                let resp = await fetch(url);
                 
                 if(resp.status !==  404){
                     const data = await resp.json();

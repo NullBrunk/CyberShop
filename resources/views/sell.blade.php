@@ -114,7 +114,7 @@
                                                 <option value="filter-dresses">Dresses</option>
                                                 <option value="filter-gaming" >Gaming</option>
                                                 <option value="filter-food" >Food</option>
-                                                <option value="filter-beauty" >Beauty</option>
+                                                <option value="filter-other" >Other</option>
 
                                             </select>
 

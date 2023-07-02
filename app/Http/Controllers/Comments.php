@@ -118,6 +118,9 @@ class Comments extends Controller {
 
     public function update(UpdateComment $req){
 
+        if($req["abort"] === "Abort"){
+            return redirect(route("details", $req["id_product"]));
+        }
         $pdo = config("app.pdo");
 
         $update_comment = $pdo -> prepare("

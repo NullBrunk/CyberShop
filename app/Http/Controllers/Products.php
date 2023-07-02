@@ -70,7 +70,7 @@ class Products extends Controller
             "filter-dresses",
             "filter-gaming",
             "filter-food",
-            "filter-beauty"
+            "filter-other"
         ])){
             return abort(403);
         }
@@ -189,7 +189,11 @@ class Products extends Controller
 
 
     public function update($id, UpdateProduct $req){
-
+        if($req["submit"] === "delete"){
+            self::delete($id);
+            $_SESSION["deletedproduct"] = true;
+            return redirect(route("root"));
+        }
         $pdo = config("app.pdo");
         
         $data = verify_if_product_is_from_current_user($pdo, $id);
@@ -202,7 +206,7 @@ class Products extends Controller
             "filter-dresses",
             "filter-gaming",
             "filter-food",
-            "filter-beauty"
+            "filter-other"
         ])){
             return abort(403);
         }

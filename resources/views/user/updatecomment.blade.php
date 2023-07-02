@@ -28,6 +28,7 @@
 
         <section style="margin-top: 12vh; padding: 2.5%;">
 
+        <h2 style="margin-bottom: 2%">Update comment </h2>
         @if($errors -> has('title'))
             <div class="alert alert-danger">
                 Title is required !
@@ -64,7 +65,7 @@
 - Explain to us why you chose this note?
 - What did you like best about this product?
 - Who would you recommend it to?"
-                        class="commentbar" name="comment" type="text">{{ $data["content"] }}</textarea>
+                        class="commentbar" name="comment" type="text">{{ htmlspecialchars_decode($data["content"]) }}</textarea>
                     </div>
 
                     <input name="id" type="hidden" value="{{$data['id']}}">
@@ -85,6 +86,8 @@
                     </div>
                     <br>
                     <input class="commbutton" type="submit" value="Update comment">
+                    <input name="abort" value="Abort" class="commbutton red" type="submit">
+
                     <br>
 
                 </form>

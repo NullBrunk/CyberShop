@@ -152,12 +152,6 @@ Route::prefix('product') -> group(function () {
     ) -> middleware(Logged::class) -> name("product.sell");
 
 
-    Route::delete(
-        "/delete/{slug}",
-        [ Products::class, "delete" ]
-    ) -> middleware(Logged::class) -> name("product.delete");
-
-
     Route::get(
         "/update/{id}",
         [ Products::class, "show_update_form" ]
@@ -234,4 +228,3 @@ Route::prefix('contact') -> group(function () {
     ) -> middleware(Logged::class) -> name("delete");
 
 });
-

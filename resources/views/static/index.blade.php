@@ -12,6 +12,7 @@
         <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
         <link href="assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
+        <script src="../assets/js/sweetalert2.js"></script>
 
 
         <link href="assets/css/style.css" rel="stylesheet">
@@ -22,6 +23,19 @@
 
     @include('layout/header')
 
+    @if(isset($_SESSION) && isset($_SESSION["deletedproduct"]))
+        <script>
+            Swal.fire(
+                'Deleted !',
+                'The product has been deleted successfully.',
+                'success'
+            ) 
+        </script>
+
+        <?php
+            unset($_SESSION["deletedproduct"])
+        ?>
+    @endif
 
         <section id="hero" class="d-flex align-items-center">
 
@@ -52,7 +66,7 @@
                             <li data-filter=".filter-gaming">Gaming accessories</li>
                             <li data-filter=".filter-food">Food</li>
                             <li data-filter=".filter-dresses">Dresses</li>
-                            <li data-filter=".filter-beauty">Beauty picks</li>      
+                            <li data-filter=".filter-other">Other picks</li>      
                         </ul>
                     </div>
                 </div>

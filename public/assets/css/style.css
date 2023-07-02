@@ -1140,7 +1140,7 @@ abbr {
 }
 
 .commbutton:hover {
-  background-color: #007185 !important;
+  background-color: #007185;
   color: white;
 }
 
@@ -1437,6 +1437,42 @@ tr:nth-child(even) td {
   height: 8vh;
   font-weight: bold;
   font-size: 19px !important;
+}
+
+.deleteprod {
+    font-size: 19px !important;
+    font-weight: bold;
+    padding: 14px 28px;
+    border-radius: 50px;
+    transition: 0.3s;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #af2024 !important;
+    border: 1px solid #bd3b3f !important;  
+    color: white;
+}
+
+.deleteprod i {
+  margin-left: 1vw;
+}
+
+.deleteprod:hover{
+  background-color: #bd3b3f !important;
+  border: 1px solid #af2024 !important; 
+
+  transform: scale(1.05);
+}
+
+.red {
+  color: white;
+  background-color: #af2024 !important;
+  border: 1px solid #bd3b3f !important;  
+}
+.red:hover .red:focus {
+  background-color: #bd3b3f !important;
+  border: 1px solid #af2024 !important; 
+  
+ 
 }
 
 .logout {

@@ -97,7 +97,7 @@
                                                         <option value="filter-dresses">Dresses</option>
                                                         <option value="filter-gaming" >Gaming</option>
                                                         <option value="filter-food" >Food</option>
-                                                        <option value="filter-beauty" >Beauty</option>
+                                                        <option value="filter-other" >Other</option>
                                                     </select>
 
                                                 </strong>
@@ -113,7 +113,9 @@
                                     </div>
                                 
                                     @csrf      
-                                    <input class="addtocart" style="margin-left: 33%; margin-top:0px; margin-bottom: 3%;" name="submit" type="submit" value="Update !">
+                                    <button class="addtocart" style="margin-left: 6%; margin-top:0px; margin-bottom: 3%;" name="submit" value="update">UPDATE<i class="bi bi-check"></i></button>
+                                    <button class="deleteprod" style="margin-top:0px; margin-left: 3%; margin-bottom: 3%;"  name="submit" value="delete">DELETE <i class="bi bi-x"></i></button>
+
                                 </div>
                             </div>
                         </div>

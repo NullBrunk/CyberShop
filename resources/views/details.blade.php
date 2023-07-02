@@ -96,7 +96,7 @@
                             <div class="portfolio-info container" style="padding-bottom: 10px;" >
                             
                                 @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $data["mail"]))
-                                    <h2>Product description <a href="{{route("product.updateform", $data['pid'])}}"> <i style="margin-left: 43%; " class="bi bi-pencil-square"></i></a></h2>
+                                    <h2>Product description </h2>
                                 @else
                                     <h2>Product description</h2>
                                 @endif
@@ -118,11 +118,9 @@
                                     <input type="hidden"  name="id" value="{{$data['pid']}}">
                         
                             @else
-                                <form class="navbar formshow" method="post" action="{{route("product.delete", $data['pid'])}}" >  
+                                <form class="navbar formshow" method="get" action="{{route("product.updateform", $data['pid'])}}" >  
                                     @csrf   
-
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button  class="addtocart" type="submit">STOP SELLING<i style="font-weight: bold !important;" class="bi bi-cart-x"></i></button>
+                                    <button  class="addtocart" type="submit">EDIT PRODUCT<i style="font-weight: bold !important;" class="bi bi-cart-check"></i></button>
 
                             @endif
                             </form>
