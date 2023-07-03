@@ -3,8 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
-use App\Http\Controllers\Notifs;
-use App\Http\Middleware\Logged;
 
 
 
