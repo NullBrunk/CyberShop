@@ -9,10 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 use Exception;
 
-
 session_start();
 
 class Users extends Controller {
+
+    
+
 
     public function show(Login $request){
         
@@ -25,8 +27,9 @@ class Users extends Controller {
         $user_info = $pdo -> prepare("
             SELECT * FROM `users` 
             WHERE 
-                mail=:mail AND 
-            BINARY pass=:pass
+                mail=:mail 
+            AND 
+                BINARY pass=:pass
         ");
         $user_info -> execute(array(
             "mail" => $request["email"],

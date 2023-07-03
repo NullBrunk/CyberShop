@@ -10,6 +10,9 @@ class Index extends Controller {
         
         $products = $pdo -> query("SELECT * FROM `products` ORDER BY id DESC");
         $data = $products -> fetchAll();
+
+        
+            
         return view("static.index", ["data" => $data]);
 
     }

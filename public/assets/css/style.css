@@ -114,7 +114,6 @@ h6 {
 
 .navbar a,
 .navbar a:focus {
-  display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 10px 0 10px 30px;
@@ -271,6 +270,10 @@ h6 {
 .cartn {
   margin-top: 15% !important;
 }
+
+.notif {
+  width: 260px;
+} 
 
 
 @media (max-width: 991px) {
@@ -1509,4 +1512,40 @@ tr:nth-child(even) td {
   font-size: 32px;
   color: #73c5eb;
   padding-left: 10px;
+}
+
+.hoverblue {
+  background-color: #007185;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  padding: 15px 10px;
+  transition: 0.3s;
+}
+
+
+.notification-item h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.notification-item p {
+  font-size: 13px;
+  margin-bottom: 3px;
+  color: #919191;
+}
+
+.notification-item a {
+  padding: 0 !important;
+  font-size: 13px !important;
+  margin: 0px;
+  margin-bottom: 3px;
+
+  color: #007185 !important;
+}
+.notification-item:hover {
+  background-color: #f6f9ff;
 }

@@ -2,8 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Middleware\Logged;
 use App\Http\Middleware\Redirect;
+use App\Http\Middleware\Logged;
 
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
@@ -228,3 +228,4 @@ Route::prefix('contact') -> group(function () {
     ) -> middleware(Logged::class) -> name("delete");
 
 });
+

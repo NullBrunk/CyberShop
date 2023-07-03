@@ -71,7 +71,8 @@
         <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="../assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
         <script src="../assets/vendor/waypoints/noframework.waypoints.js"></script>
-        
+                <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+
         
         <script src="../assets/js/main.js"></script>
         <script>window.addEventListener('load', function() {

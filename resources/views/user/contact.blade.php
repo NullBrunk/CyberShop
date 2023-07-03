@@ -15,7 +15,7 @@
         <link href="../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
         <link href="../assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
         <link href="../assets/vendor/aos/aos.css" rel="stylesheet">
-z
+
         
         <script src="../assets/js/sweetalert2.js"></script>
 
@@ -101,7 +101,7 @@ z
                         @foreach($names as $n)
 
                             @if(isset($user) && $user === $n)
-                                <a class="profile-box red" href="{{route("contactuser", $n)}}"> {{ $n }}</a> 
+                                <a class="profile-box hoverblue" href="{{route("contactuser", $n)}}"> {{ $n }}</a> 
                             @else
                                 <a class="profile-box" href="{{route("contactuser", $n)}}"> {{ $n }}</a> 
                             @endif

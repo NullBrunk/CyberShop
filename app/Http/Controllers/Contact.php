@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactReq;
-
+use Illuminate\Support\Facades\Http;
 
 function getmsgs($mail){
     
@@ -36,7 +36,7 @@ function getmsgs($mail){
             OR 
                 contactor.mail_contactor = :mail
 
-            ORDER BY contacted.id
+            ORDER BY contacted.id DESC
         ");
 
 
@@ -49,6 +49,41 @@ function getmsgs($mail){
 
 
 class Contact extends Controller {
+
+
+    public function id2mail($mail){
+
+        $pdo = config("app.pdo");
+
+        $id = $pdo -> prepare("SELECT id FROM users WHERE mail=:mail");
+        $id -> execute([ "mail" => $mail ]);
+
+        return $id -> fetch(\PDO::FETCH_ASSOC);
+    }
+
+    public function mark_readed($id){
+
+        $pdo = config("app.pdo");
+
+
+        $mark = $pdo -> prepare("
+            UPDATE contact 
+            SET 
+                readed = 1 
+            WHERE 
+                id_contacted = :me 
+            AND
+                id_contactor = :he
+            AND 
+                readed = 0
+        ");
+
+        $mark -> execute([
+            "me" => $_SESSION["id"],
+            "he" => $id,
+        ]);
+    }
+
 
     public function show($slug = false){
         
@@ -86,6 +121,15 @@ class Contact extends Controller {
                 $_SESSION["contact_yourself"] = true;
                 return redirect(route("contact"));  
             }
+
+            $id = Contact::id2mail($slug);
+
+            if(!$id)
+                return abort(404);
+            else 
+                $id = $id["id"];
+
+            Contact::mark_readed($id);
 
             return view("user.contact", [ "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
 

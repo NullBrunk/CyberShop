@@ -45,6 +45,9 @@
 
                 </script>
 
+
+
+
               @if(!empty($_SESSION['cart']))
 
                 <p id="padding" style="margin-right: 30px;"></p>
@@ -60,6 +63,7 @@
                     </a>
                     <ul  class="cartn" style="overflow: scroll; max-height: 55vh; margin-left: -350%;">
                     
+
                       @foreach($_SESSION['cart'] as $p)
                         
                         @php($total += $p['price']) 
@@ -90,6 +94,49 @@
               @endif
 
 
+              
+<?php
+    include_once __DIR__ . "/../../../app/Http/Controllers/notifs.php";
+    $notifs = show();
+?>
+
+              @if(!empty($notifs))
+                <p id="padding" style="margin-right: 15px;"></p>
+                  
+                  <li id="cart" style="list-style-type: none;" class="dropdown ">
+                    
+                    <a style="margin: 0px; padding: 0px;" href="#">
+                      <span id="number" class="badge bg-primary badge-number">{{ sizeof($notifs) }}</span>
+                      <i style="font-size: 26px !important;" class="bi bi-bell carti">
+                      </i>
+                    </a>
+                    <ul  class="cartn notif" style="overflow: scroll; max-height: 55vh; margin-left: -350%;">
+                    
+                      @foreach($notifs as $n)
+                        
+                        <li >
+                          <p class="show_cart">
+                            <li class="notification-item">
+                              <i style="color:#19526f; font-size: 24px ;margin: 0 20px 0 10px;" class="{{ $n['icon'] }}"></i>
+                              <div>
+                                <h4>{{ $n["title"] }} </h4>
+                                <p>{{ $n["content"] }} </p>
+                                <a href="{{ $n["more"] }}">See more <i class="bx bx-chevrons-right" ></i></a>
+                              </div>
+                            </li>
+                      
+
+                          <p>
+                        </li>
+
+                      @endforeach
+
+                    </ul>
+                  </li>
+
+              @endif
+
+
               <a href="{{ route("profile") }}" class="pdlp" ><i style="font-size: 26px !important;" class="bi bi-person-circle"></i></a>
 
             @else
@@ -102,4 +149,3 @@
         </nav>
     </div>
 </header>
-
