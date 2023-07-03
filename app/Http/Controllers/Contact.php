@@ -36,7 +36,7 @@ function getmsgs($mail){
             OR 
                 contactor.mail_contactor = :mail
 
-            ORDER BY contacted.id DESC
+            ORDER BY contacted.id 
         ");
 
 

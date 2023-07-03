@@ -98,15 +98,14 @@
                             $names = array_keys($data);  
                         ?>
 
-                        @foreach($names as $n)
-
-                            @if(isset($user) && $user === $n)
-                                <a class="profile-box hoverblue" href="{{route("contactuser", $n)}}"> {{ $n }}</a> 
+                        @for($i = sizeof($names) - 1; $i >= 0; $i--)
+                            @if(isset($user) && $user === $names[$i])
+                                <a class="profile-box hoverblue" href="{{route("contactuser", $names[$i])}}"> {{ $names[$i] }}</a> 
                             @else
-                                <a class="profile-box" href="{{route("contactuser", $n)}}"> {{ $n }}</a> 
+                                <a class="profile-box" href="{{route("contactuser", $names[$i])}}"> {{ $names[$i] }}</a> 
                             @endif
                             <hr>
-                        @endforeach
+                        @endfor
             
                     </div>
 
