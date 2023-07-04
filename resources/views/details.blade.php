@@ -167,13 +167,19 @@
                                     <th>Reviews</th>
                                         <td>
 
-                                            {{$rating['real']}} 
+                                            {{ $rating['real'] }} 
 
                                             @for($i=0; $i<$rating['round']; $i++)
-                                                <i class="bi bi-star-fill" style="color: #ffa41c;"></i>
+                                                <i class="bi bi-star-fill" style="color: #de7921;"></i>
                                             @endfor
 
-                                            @for($i = $rating['round']; $i < 5; $i++)
+                                            @if($rating["real"] >= $rating["round"] + 0.5)
+                                                <i style="color: #de7921;" class="bi bi-star-half"></i>
+                                            @elseif($rating["real"] != 5.0)
+                                                <i class="bi bi-star" style="color: #de7921;"></i>
+                                            @endif
+
+                                            @for($i = $rating['round'] + 1; $i < 5; $i++)
                                                 <i class="bi bi-star" style="color: #de7921;"></i>
                                             @endfor
                                             
@@ -360,7 +366,7 @@
                 <div class=stars>
 
                     @for($i=0; $i<$comm["rating"]; $i++)
-                        <i class="bi bi-star-fill" style="color: #ffa41c;"></i>
+                        <i class="bi bi-star-fill" style="color: #de7921;"></i>
                     @endfor
 
                     @for($i = $comm["rating"]; $i < 5; $i++)

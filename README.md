@@ -75,6 +75,7 @@ CREATE TABLE contact(
     `id_contactor` INT NOT NULL,
     `id_contacted` INT NOT NULL,
     `content` TEXT NOT NULL,
+    `time` DATETIME NOT NULL,s
 
     FOREIGN KEY(`id_contactor`) REFERENCES users(id),
     FOREIGN KEY(`id_contacted`) REFERENCES users(id),

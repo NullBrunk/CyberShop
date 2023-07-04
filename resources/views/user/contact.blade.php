@@ -88,7 +88,7 @@
             <div class="content">
 
                 <div class="left">
-                    <div onclick="sendmsg()" class="sendmsg profile-box">
+                    <div onclick="sendmsg()" class="sendmsg profile-box" style="cursor: pointer;">
                         <i class="bx bx-mail-send"></i> 
                     </div>
                     
@@ -117,37 +117,69 @@
                                 
                                 @if(isset($data[$user]))
                                     
-                                    @foreach($data[$user] as $d)
 
-                                        @if(!$d['me'])
+                                    @for($i=0; $i < sizeof($data[$user]); $i++)
+
+
+                                        @if(!isset($old) or !($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === false))
+                                            
+                                            @if($i !== 0)
+                                                <p class="close" style="background-color: #d1eaf9"></p>
+                                            @endif
+                                            
+                                            <div class="profilemsg time" style="background-color: #dbd7d7"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                        
+                                        @elseif(!isset($old) or !($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === true))
+                                           
+                                            @if($i !== 0)
+                                                <p class="close"></p>
+                                            @endif
+                                            
+                                            <div class="profilemsg time" style="background-color: #d1eaf9"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                        
+                                        @endif
+
+
+                                        @if(!$data[$user][$i]['me'])
+
 
                                             <div class="message">
-                                                {{$d[0]}}
+                                                {{ $data[$user][$i][0] }}
                                             </div>
 
                                         @else 
-                                            <div class="message from-me">
-                                                {{$d[0]}} 
+                                            <div class="message from-me ">
 
-                                                <i 
-                                                    onclick="menu({{$d['id']}})" 
-                                                    class="dots bx bx-dots-vertical-rounded"
-                                                ></i>
-                                                                        
+                                                {{ $data[$user][$i][0] }} 
+                                                <i onclick="menu({{$data[$user][$i]['id']}})" class="dots bx bx-dots-vertical-rounded"></i>
+
                                             </div>
 
-                                            <button onclick="
-                                                window.location.href = '{{ route('delete', $d['id']) }}'
-                                                "
-                                                id="{{$d["id"]}}"  
-                                                class="btn btn-primary menu none">
 
+                                            <button onclick="window.location.href = '{{ route('delete', $data[$user][$i]['id']) }}'"
+                                                id="{{$data[$user][$i]["id"]}}"  
+                                                class="btn btn-primary menu none">
                                                 DELETE <i class="bi bi-trash2-fill"></i>
                                             </button>
 
                                         @endif
                                     
-                                    @endforeach
+
+                                        @php($old = $data[$user][$i]['me'])
+
+
+                                    @endfor
+
+
+                                    @if($old)
+                                        <p class="close" style="background-color: #d1eaf9"></p>
+                                    @else
+                                        <p class="close"></p>
+                                    @endif
+
+                                    <?php
+                                        unset($old)
+                                    ?>
                                 
                                 @endif
                             </div>

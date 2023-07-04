@@ -275,6 +275,9 @@ h6 {
   width: 260px;
 } 
 
+.msgs p {
+  font-size: 10px;
+}
 
 @media (max-width: 991px) {
   .cartn {
@@ -817,6 +820,7 @@ section {
 .contact .php-email-form .error-message br+br {
   margin-top: 25px;
 }
+
 
 .contact .php-email-form .sent-message {
   display: none;

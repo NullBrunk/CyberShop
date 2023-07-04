@@ -13,14 +13,6 @@ use App\Http\Controllers\Users;
 use App\Http\Controllers\Index;
 use App\Http\Controllers\Cart;
 
-/*
-|---------------------------------------------
-|  Render statics views 
-|
-*/
-
-Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell"); 
-
 
 
 /*
@@ -36,7 +28,7 @@ Route::view("/todo", "static.todo");
 Route::get('/', Index::class ) -> name("root");
 
 # SearchBar
-Route::view("/articles", "articles") -> name("articles");
+Route::view("/search", "search") -> name("articles");
 
 # Details
 Route::get('/details/{product_id}', Details::class ) -> name("details");
@@ -146,6 +138,8 @@ Route::prefix('comments') -> group(function () {
 
 Route::prefix('product') -> group(function () {
 
+    Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell");
+
     Route::post(
         "/sell",
         [ Products::class, "store" ]
@@ -218,7 +212,7 @@ Route::prefix('contact') -> group(function () {
 
     Route::post(
         "",
-        [ Contact::class, "send"]
+        [ Contact::class, "store"]
     ) -> middleware(Logged::class);
 
     

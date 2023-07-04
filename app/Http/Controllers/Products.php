@@ -265,7 +265,7 @@ class Products extends Controller
 
             return [
                 "round" => intdiv($rating, $number_of_rate),
-                "real" => $rating / $number_of_rate,
+                "real" => round($rating / $number_of_rate, 1),
                 "rate" => (int)$number_of_rate,
             ];
 

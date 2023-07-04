@@ -12,7 +12,7 @@ function getmsgs($mail){
     $convs = $pdo -> prepare("
             SELECT * FROM
                 (
-                    SELECT contact.id ,readed,content,id_contacted,users.mail as mail_contacted 
+                    SELECT contact.id,readed,content,id_contacted,users.mail as mail_contacted 
                     FROM contact 
                     INNER JOIN 
                         users 
@@ -21,7 +21,7 @@ function getmsgs($mail){
                 ) as contacted
             INNER JOIN
                 (
-                    SELECT contact.id ,readed,content,id_contactor,users.mail as mail_contactor 
+                    SELECT contact.id,readed,content,id_contactor,users.mail as mail_contactor,time 
                     FROM contact 
                     INNER JOIN 
                         users 
@@ -91,18 +91,31 @@ class Contact extends Controller {
 
         foreach(getmsgs($_SESSION["mail"]) as $data){
 
+            # Create time at hand 
+            $time = explode("-", explode(" ", $data["time"])[0])[2] . " " . strtolower(date('F', mktime(0, 0, 0, explode("-", $data["time"])[1], 10))) . ", " . implode(":", array_slice(explode(":", explode(" ", $data["time"])[1]), 0, 2));
+
             # Then the contactor is the current user
             if($data["mail_contacted"] === $_SESSION["mail"]){
 
+                                
                 $mail = $data["mail_contactor"];
-                $toput = [ $data['content'], "me" => false, "id" => $data["id"]];
+                $toput = [ 
+                    $data['content'], 
+                    "me" => false, 
+                    "id" => $data["id"],
+                    "time" => $time
+                ];
             } 
 
             # Then the contactor is the other user
             else {
-
                 $mail = $data["mail_contacted"];
-                $toput = [ $data['content'], "me" => true, "id" => $data["id"] ];
+                $toput = [ 
+                    $data['content'], 
+                    "me" => true, 
+                    "id" => $data["id"],
+                    "time" => $time
+                ];
             }
 
 
@@ -141,7 +154,7 @@ class Contact extends Controller {
     }
 
 
-    public function send(ContactReq $req){
+    public function store(ContactReq $req){
 
         $pdo = config("app.pdo");
 
@@ -165,16 +178,17 @@ class Contact extends Controller {
         $send_msg = $pdo -> prepare("
             INSERT INTO 
                 contact(
-                    readed, id_contactor, id_contacted, content
+                    readed, id_contactor, id_contacted, content, time
                 ) 
             VALUES (
-                    FALSE, :id_contactor, :id_contacted, :content 
+                    FALSE, :id_contactor, :id_contacted, :content, :time
                 )
         ");
         $send_msg -> execute([
             "id_contactor" => $_SESSION["id"],
             "id_contacted" => $id['id'],
-            "content" => $req["content"]
+            "content" => $req["content"],
+            "time" => date('Y-m-d H:i:s')
         ]);
 
         return redirect(route("contactuser", $mail));
