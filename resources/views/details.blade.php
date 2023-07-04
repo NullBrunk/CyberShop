@@ -69,9 +69,9 @@
             <!-- ======= Portfolio Details Section ======= -->
             <section id="portfolio-details" class="portfolio-details" style="padding-bottom: 0px;">
                 <div class="container">
-                    <div class="row gy-4">
-                        <div class="col-lg-8" style="width: 50%; display: flex;" >
-                            <div class="" style="margin: auto;">
+                    <div class="row gy-4 whenigrowibecomeablock">
+                        <div class="col-lg-8 takefull" style="width: 50%; display: flex;" >
+                            <div style="margin: auto;">
 
                                 @if(isset($_SESSION['done']) && ($_SESSION['done'] === "updated")  )
                                     <script>
@@ -92,7 +92,7 @@
                             </div>
                         </div>
 
-                        <div data-aos="fade-left" class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; height: 75vh; display: flex; flex-direction: column; overflow: scroll;">
+                        <div data-aos="fade-left" class="col-lg-4 marginlr"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; height: 75vh; display: flex; flex-direction: column; overflow: scroll;">
                             <div class="portfolio-info container" style="padding-bottom: 10px;" >
                             
                                 @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $data["mail"]))

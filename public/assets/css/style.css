@@ -280,6 +280,21 @@ h6 {
 }
 
 @media (max-width: 991px) {
+  .whenigrowibecomeablock {
+    display: block;
+  }
+
+  .takefull {
+    width: 100% !important;
+  }
+
+  .marginlr {
+    width: 94% !important;
+    margin-left: 3%;
+    margin-right: 3%;
+  }
+
+
   .cartn {
     margin-left: 2vw !important;
     margin-top: 7px !important;
