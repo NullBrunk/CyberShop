@@ -94,12 +94,7 @@
 
                         <div data-aos="fade-left" class="col-lg-4 marginlr"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; height: 75vh; display: flex; flex-direction: column; overflow: scroll;">
                             <div class="portfolio-info container" style="padding-bottom: 10px;" >
-                            
-                                @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $data["mail"]))
-                                    <h2>Product description </h2>
-                                @else
-                                    <h2>Product description</h2>
-                                @endif
+                                <h2>{{$data["name"]}}</h2>
                                 <hr>
                             </div>
 
