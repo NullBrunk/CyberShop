@@ -62,7 +62,6 @@ class Comments extends Controller {
     
     public function delete(Query $sql, $article, $id){
 
-
         $sql -> query("
             DELETE FROM comments 
             WHERE 
