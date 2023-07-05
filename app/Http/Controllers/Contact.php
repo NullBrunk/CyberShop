@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactReq;
-use App\Http\Query;
+use App\Http\Sql;
 
-function getmsgs(Query $sql, $mail){
+function getmsgs($mail){
     
-    $convs = $sql -> query("
+    $convs = Sql::query("
             SELECT * FROM
                 (
                     SELECT contact.id,readed,content,id_contacted,users.mail as mail_contacted 
@@ -46,9 +46,9 @@ function getmsgs(Query $sql, $mail){
 class Contact extends Controller {
 
 
-    public function id2mail(Query $sql, $mail){
+    public function id2mail($mail){
 
-        $id = $sql -> query(
+        $id = Sql::query(
             "SELECT id FROM users WHERE mail=:mail",
             [ "mail" => $mail ]
         );
@@ -56,9 +56,9 @@ class Contact extends Controller {
         return $id;
     }
 
-    public function mark_readed(Query $sql, $id){
+    public function mark_readed($id){
 
-        $sql -> query("
+        Sql::query("
             UPDATE contact 
             SET 
                 readed = 1 
@@ -76,11 +76,11 @@ class Contact extends Controller {
     }
 
 
-    public function show(Query $sql, $slug = false){
+    public function show($slug = false){
         
         $exploitable_data = [];
 
-        foreach(getmsgs($sql, $_SESSION["mail"]) as $data){
+        foreach(getmsgs($_SESSION["mail"]) as $data){
 
             # Create time at hand 
             $time = explode("-", explode(" ", $data["time"])[0])[2] . " " . strtolower(date('F', mktime(0, 0, 0, explode("-", $data["time"])[1], 10))) . ", " . implode(":", array_slice(explode(":", explode(" ", $data["time"])[1]), 0, 2));
@@ -126,14 +126,14 @@ class Contact extends Controller {
                 return redirect(route("contact"));  
             }
 
-            $id = Contact::id2mail($sql, $slug);
+            $id = Contact::id2mail($slug);
 
             if(empty($id))
                 return abort(404);
             else 
                 $id = $id[0]["id"];
 
-            Contact::mark_readed($sql, $id);
+            Contact::mark_readed($id);
 
             return view("user.contact", [ "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
 
@@ -145,7 +145,7 @@ class Contact extends Controller {
     }
 
 
-    public function store(Query $sql, ContactReq $req){
+    public function store(ContactReq $req){
 
         $url = explode("/contact/", url() -> previous());
         
@@ -155,7 +155,7 @@ class Contact extends Controller {
         $mail = $url[1];
         
 
-        $id = $sql -> query(
+        $id = Sql::query(
             "SELECT id FROM users WHERE mail=:mail",
             ["mail" => $mail]
         );
@@ -165,7 +165,7 @@ class Contact extends Controller {
             return redirect("/contact");
         }
 
-        $sql -> query("
+        Sql::query("
             INSERT INTO 
                 contact(
                     readed, id_contactor, id_contacted, content, time
@@ -184,9 +184,9 @@ class Contact extends Controller {
     }
 
 
-    public function delete(Query $sql, $slug){
+    public function delete($slug){
 
-        $sql -> query("
+        Sql::query("
             DELETE FROM contact 
             WHERE 
                 id=:slug 

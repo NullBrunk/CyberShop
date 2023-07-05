@@ -3,16 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Query;
+use App\Http\Sql;
 
 
 class Cart extends Controller {
 
-    public function initialize(Query $sql){
+    public function initialize(){
 
         $_SESSION['cart'] = [];
 
-        $data = $sql -> query("
+        $data = Sql::query("
             SELECT 
                 cart.id as cid,
                 cart.id_user as cidu,
@@ -37,21 +37,21 @@ class Cart extends Controller {
         return redirect(url() -> previous());
     }
    
-    public function add(Query $sql, Request $req){
+    public function add(Request $req){
         
 
         $product_id = $req["id"];
 
         if($product_id){
             
-            $data = $sql -> query(
+            $data = Sql::query(
                 "SELECT id as pid, name, image, price FROM products WHERE id=:id",
                 [ "id" => $product_id ]
             )[0]; 
 
 
             if($data){
-                $sql -> query("
+                Sql::query("
                     INSERT INTO cart(id_user, id_product)
                     VALUES
                         (:uid, :pid)
@@ -73,11 +73,11 @@ class Cart extends Controller {
     }
 
 
-    public function remove(Query $sql, $id){
+    public function remove($id){
 
         if(isset($_SESSION["cart"][$id])){
 
-            $sql -> query("
+            Sql::query("
                 DELETE FROM cart 
                 WHERE 
                     id=:id

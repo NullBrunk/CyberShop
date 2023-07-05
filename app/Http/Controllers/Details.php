@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
-use App\Http\Query;
+use App\Http\Sql;
 
 class Details extends Controller {
     
-    public function __invoke(Query $sql, $product_id){
+    public function __invoke($product_id){
                     
         # Get the user and the product details
-        $data = $sql -> query("
+        $data = Sql::query("
             SELECT 
                 users.id as uid, products.id as pid, 
                 id_user, price, descr, class, mail, 

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Query;
+use App\Http\Sql;
 
 class Index extends Controller {
 
-    public function __invoke(Query $sql){
+    public function __invoke(){
         
-        $data = $sql -> query(
+        $data = Sql::query(
             "SELECT * FROM `products` ORDER BY id DESC"
         );
             

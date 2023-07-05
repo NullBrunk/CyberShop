@@ -6,7 +6,7 @@ use App\Http\Requests\Signup;
 use App\Http\Requests\Login;
 use App\Http\Requests\UpdateProfile;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Query;
+use App\Http\Sql;
 
 use Exception;
 
@@ -14,13 +14,13 @@ session_start();
 
 class Users extends Controller {
 
-    public function show(Query $sql, Login $request){
+    public function show(Login $request){
                
         if(isset($_SESSION['logged'])){
             return redirect('/');
         }
         
-        $data = $sql -> query("
+        $data = Sql::query("
             SELECT * FROM `users` 
             WHERE 
                 mail=:mail 
@@ -50,11 +50,11 @@ class Users extends Controller {
     }
 
 
-    public function store(Query $sql, Signup $request){
+    public function store(Signup $request){
 
         
         try {
-            $sql -> query("
+            Sql::query("
                 INSERT INTO 
                     users (mail, pass) 
                 VALUES 
@@ -73,11 +73,11 @@ class Users extends Controller {
     }
 
 
-    public function profile(Query $sql, UpdateProfile $req){
+    public function profile(UpdateProfile $req){
 
         # Check if the hashed given password is the good one
 
-        $verify_user = $sql -> query("
+        $verify_user = Sql::query("
             SELECT * FROM users WHERE mail=:mail AND pass=:pass
         ", [
             "mail" => $_SESSION['mail'],
@@ -95,7 +95,7 @@ class Users extends Controller {
         # The user is authorized     
        
         try {
-            $sql -> query("
+            Sql::query("
             
                 UPDATE users SET 
                     mail=:newmail, 
@@ -122,11 +122,11 @@ class Users extends Controller {
     }
 
 
-    public function showProfile(Query $sql){
+    public function showProfile(){
 
 
         # Get all the selled products of the current user 
-        $data = $sql -> query("
+        $data = Sql::query("
             SELECT * FROM products WHERE id_user = :id
         ", [
             "id" => $_SESSION["id"]
@@ -136,12 +136,12 @@ class Users extends Controller {
     }
 
 
-    public function delete(Query $sql){
+    public function delete(){
 
 
         # Delete images that are linked to the users products
         
-        $imgs = $sql -> query(
+        $imgs = Sql::query(
             "SELECT image FROM products WHERE id_user=:id",
             [ "id" => $_SESSION["id"] ]
         );
@@ -152,20 +152,20 @@ class Users extends Controller {
 
         # Delete all the user comments
 
-        $sql -> query(
+        Sql::query(
             "DELETE FROM comments WHERE id_user=:id",
             [ "id" => $_SESSION["id"] ]
         );
             
         # Delete comments under user products
 
-        $c = $sql -> query(
+        $c = Sql::query(
             "SELECT * FROM products WHERE id_user=:id",
             [ "id" => $_SESSION["id"] ]
         );
 
         foreach($c as $product){
-            $sql -> query(
+            Sql::query(
                 "DELETE FROM comments WHERE id_product=:id",
                 [ "id" => $product["id"] ]
             );
@@ -173,14 +173,14 @@ class Users extends Controller {
 
         # Delete user products 
 
-        $sql -> query(
+        Sql::query(
             "DELETE FROM products WHERE  id_user=:id",
             [ "id" => $_SESSION["id"] ]
         );
 
         # Delete contacts messages from the user
 
-        $sql -> query("
+        Sql::query("
             DELETE FROM contact WHERE id_contactor=:id OR id_contacted=:id",
             [ "id" => $_SESSION["id"] ]
         );
@@ -189,7 +189,7 @@ class Users extends Controller {
         # Delete the user itself
         # finally ... phew
 
-        $sql -> query("
+        Sql::query("
             DELETE FROM users WHERE id=:id",
             [ "id" => $_SESSION["id"] ]
         );

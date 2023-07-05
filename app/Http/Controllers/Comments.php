@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreComments;
 use App\Http\Requests\UpdateComment;
-use App\Http\Query;
+use App\Http\Sql;
 
 
 class Comments extends Controller {
 
-    public function store(Query $sql, StoreComments $req){
+    public function store(StoreComments $req){
         
-        $sql -> query("
+        Sql::query("
             INSERT INTO comments
                 (`id_product`, `id_user`, `title`, `content`, `writed_at`, `rating`)
             VALUES
@@ -31,9 +31,9 @@ class Comments extends Controller {
     }
 
 
-    public function get(Query $sql, $id){
+    public function get($id){
         
-        $data = $sql -> query("
+        $data = Sql::query("
             SELECT 
                 comments.id, rating, id_product,
                 content, writed_at, mail, title
@@ -60,9 +60,9 @@ class Comments extends Controller {
     }
 
     
-    public function delete(Query $sql, $article, $id){
+    public function delete($article, $id){
 
-        $sql -> query("
+        Sql::query("
             DELETE FROM comments 
             WHERE 
                 id=:id 
@@ -77,9 +77,9 @@ class Comments extends Controller {
     }
 
 
-    public function get_update_form(Query $sql, $slug){
+    public function get_update_form($slug){
         
-        $data = $sql -> query("
+        $data = Sql::query("
             SELECT * FROM comments 
             WHERE 
                 id_user=:id_user
@@ -100,13 +100,13 @@ class Comments extends Controller {
     }
 
 
-    public function update(Query $sql, UpdateComment $req){
+    public function update(UpdateComment $req){
 
         if($req["abort"] === "Abort"){
             return redirect(route("details", $req["id_product"]));
         }
 
-        $sql -> query("
+        Sql::query("
             UPDATE comments
             SET 
                 `title` = :title , 

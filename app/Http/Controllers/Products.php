@@ -6,12 +6,12 @@ use App\Http\Requests\StoreReq;
 use App\Http\Requests\UpdateProduct;
 
 use Illuminate\Support\Facades\Storage;
-use App\Http\Query;
+use App\Http\Sql;
 
 
-function is_from_user(Query $sql, $id){
+function is_from_user($id){
 
-    $validate = $sql -> query("
+    $validate = Sql::query("
         SELECT 
             users.id as uid, products.id as pid, 
             id_user, price, descr, class, mail, image,
@@ -38,10 +38,10 @@ class Products extends Controller
 {
 
     // Search a given string in the name of the products using LIKE
-    public function search(Query $sql, string $search) : array
+    public function search(string $search) : array
     {
 
-        $data = $sql -> query("
+        $data = Sql::query("
             SELECT id,image,price,class 
             FROM products 
             WHERE 
@@ -52,7 +52,7 @@ class Products extends Controller
         return ($data);
     }
 
-    public function store(Query $sql, StoreReq $req){      
+    public function store(StoreReq $req){      
 
         if(!in_array($req["category"], [ 
             "filter-laptop", 
@@ -70,7 +70,7 @@ class Products extends Controller
 
             $imgPath = $req["product_img"] -> store("product_img", "public");
 
-            $sql -> query("
+            Sql::query("
                 INSERT INTO 
                     products(`id_user`, `name`, `price`, `descr`, `class`, `image`)
                 VALUES
@@ -96,10 +96,10 @@ class Products extends Controller
     }
     
 
-    public function delete(Query $sql, $id){
+    public function delete($id){
 
         # Check if the product exists and is selled by the current user
-        $data = $sql -> query("
+        $data = Sql::query("
             SELECT * FROM products 
             WHERE 
                 id=:product_id 
@@ -118,20 +118,20 @@ class Products extends Controller
 
 
         # Delete comments attached to the product
-        $sql -> query("
+        Sql::query("
             DELETE FROM comments WHERE id_product=:id
         ", ["id" => $id]
         );
 
 
         # Delete all the cart where product exists
-        $sql -> query("
+        Sql::query("
             DELETE FROM cart WHERE id_product=:id
         ", ["id" => $id]);
 
 
         # Delete the product itself
-        $sql -> query("
+        Sql::query("
             DELETE FROM 
                 products 
             WHERE 
@@ -147,9 +147,9 @@ class Products extends Controller
     }
 
 
-    public function show_update_form(Query $sql, $id){
+    public function show_update_form($id){
 
-        $data = is_from_user($sql, $id);
+        $data = is_from_user($id);
         if(!$data){
             return abort(403);
         }
@@ -158,15 +158,15 @@ class Products extends Controller
     }
 
 
-    public function update(Query $sql, $id, UpdateProduct $req){
+    public function update($id, UpdateProduct $req){
 
         if($req["submit"] === "delete"){
-            self::delete($sql, $id);
+            self::delete($id);
             $_SESSION["deletedproduct"] = true;
             return redirect(route("root"));
         }
         
-        $data = is_from_user($sql, $id);
+        $data = is_from_user($id);
         if(!$data){
             return abort(403);
         }
@@ -181,7 +181,7 @@ class Products extends Controller
             return abort(403);
         }
 
-        $sql -> query("
+        Sql::query("
             UPDATE products 
             SET
                 `name`=:name, 
@@ -206,10 +206,10 @@ class Products extends Controller
     }
 
 
-    public function rating(Query $sql, $id){
+    public function rating($id){
 
         # Get the sum of all the rates
-        $rating = $sql -> query("
+        $rating = Sql::query("
             SELECT SUM(rating) as rating FROM comments 
             WHERE 
                 id_product=:id 
@@ -219,7 +219,7 @@ class Products extends Controller
 
 
         # Get the number of person ho gave a rate
-        $number = $sql -> query("
+        $number = Sql::query("
             SELECT COUNT(*) as number FROM comments 
             WHERE 
                 id_product=:id
