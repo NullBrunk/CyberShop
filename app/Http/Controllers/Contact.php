@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactReq;
-use Illuminate\Support\Facades\Http;
+use App\Http\Query;
 
 function getmsgs($mail){
     
@@ -51,22 +51,21 @@ function getmsgs($mail){
 class Contact extends Controller {
 
 
-    public function id2mail($mail){
+    public function id2mail(Query $sql, $mail){
 
         $pdo = config("app.pdo");
 
-        $id = $pdo -> prepare("SELECT id FROM users WHERE mail=:mail");
-        $id -> execute([ "mail" => $mail ]);
+        $id = $sql -> query(
+            "SELECT id FROM users WHERE mail=:mail",
+            [ "mail" => $mail ]
+        );
 
-        return $id -> fetch(\PDO::FETCH_ASSOC);
+        return $id;
     }
 
-    public function mark_readed($id){
+    public function mark_readed(Query $sql, $id){
 
-        $pdo = config("app.pdo");
-
-
-        $mark = $pdo -> prepare("
+        $sql -> query("
             UPDATE contact 
             SET 
                 readed = 1 
@@ -76,16 +75,15 @@ class Contact extends Controller {
                 id_contactor = :he
             AND 
                 readed = 0
-        ");
-
-        $mark -> execute([
+        ", [
             "me" => $_SESSION["id"],
             "he" => $id,
         ]);
+
     }
 
 
-    public function show($slug = false){
+    public function show(Query $sql, $slug = false){
         
         $exploitable_data = [];
 
@@ -135,14 +133,14 @@ class Contact extends Controller {
                 return redirect(route("contact"));  
             }
 
-            $id = Contact::id2mail($slug);
+            $id = Contact::id2mail($sql, $slug);
 
-            if(!$id)
+            if(empty($id))
                 return abort(404);
             else 
-                $id = $id["id"];
+                $id = $id[0]["id"];
 
-            Contact::mark_readed($id);
+            Contact::mark_readed($sql, $id);
 
             return view("user.contact", [ "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
 
@@ -154,9 +152,7 @@ class Contact extends Controller {
     }
 
 
-    public function store(ContactReq $req){
-
-        $pdo = config("app.pdo");
+    public function store(Query $sql, ContactReq $req){
 
         $url = explode("/contact/", url() -> previous());
         
@@ -166,16 +162,17 @@ class Contact extends Controller {
         $mail = $url[1];
         
 
-        $id = $pdo -> prepare("SELECT id FROM users WHERE mail=:mail");
-        $id -> execute(["mail" => $mail]);
-        $id = $id -> fetch();
+        $id = $sql -> query(
+            "SELECT id FROM users WHERE mail=:mail",
+            ["mail" => $mail]
+        );
         
         if(empty($id)){
             $_SESSION["contact_no_one"] = true;
             return redirect("/contact");
         }
 
-        $send_msg = $pdo -> prepare("
+        $sql -> query("
             INSERT INTO 
                 contact(
                     readed, id_contactor, id_contacted, content, time
@@ -183,10 +180,9 @@ class Contact extends Controller {
             VALUES (
                     FALSE, :id_contactor, :id_contacted, :content, :time
                 )
-        ");
-        $send_msg -> execute([
+        ", [
             "id_contactor" => $_SESSION["id"],
-            "id_contacted" => $id['id'],
+            "id_contacted" => $id[0]['id'],
             "content" => $req["content"],
             "time" => date('Y-m-d H:i:s')
         ]);
@@ -195,18 +191,15 @@ class Contact extends Controller {
     }
 
 
-    public function delete($slug){
+    public function delete(Query $sql, $slug){
 
-        $pdo = config("app.pdo");
-
-        $del = $pdo -> prepare("
+        $sql -> query("
             DELETE FROM contact 
             WHERE 
                 id=:slug 
             AND 
                 id_contactor=:user
-        ");
-        $del -> execute([
+        ", [
             "slug" => $slug,
             "user" => $_SESSION["id"]
         ]);

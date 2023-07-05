@@ -6,6 +6,7 @@ use App\Http\Requests\Signup;
 use App\Http\Requests\Login;
 use App\Http\Requests\UpdateProfile;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Query;
 
 use Exception;
 
@@ -13,32 +14,27 @@ session_start();
 
 class Users extends Controller {
 
-    
-
-
-    public function show(Login $request){
-        
-        $pdo = config("app.pdo");
-       
+    public function show(Query $sql, Login $request){
+               
         if(isset($_SESSION['logged'])){
             return redirect('/');
         }
         
-        $user_info = $pdo -> prepare("
+        $data = $sql -> query("
             SELECT * FROM `users` 
             WHERE 
                 mail=:mail 
             AND 
                 BINARY pass=:pass
-        ");
-        $user_info -> execute(array(
+        ", [ 
             "mail" => $request["email"],
-        	"pass" =>  hash("sha512", hash("sha512", $request["pass"]))
-        ));
+            "pass" =>  hash("sha512", hash("sha512", $request["pass"]))
+        ]);
 
-        $data = $user_info -> fetch();
 
         if($data){
+
+            $data = $data[0];
 
             $_SESSION['id'] = $data['id'];
             $_SESSION['admin'] = $data['is_admin'];
@@ -48,27 +44,26 @@ class Users extends Controller {
             return redirect(route("cart.initialize"));
         }
         else {
-            # ErrorUpdateProfileReq
+
             return redirect(route("login") . "?f");
         }
     }
 
 
-    public function store(Signup $request){
+    public function store(Query $sql, Signup $request){
 
-        $pdo = config("app.pdo");
         
-        $create_user = $pdo -> prepare("
-            INSERT INTO 
-                `users`(mail, pass) 
-                VALUES (:mail, :pass)
-        ");
-
         try {
-            $create_user -> execute(array(
+            $sql -> query("
+                INSERT INTO 
+                    users (mail, pass) 
+                VALUES 
+                    (:mail, :pass)
+            ", [
                 "mail" => $request["email"],
                 "pass" => hash("sha512", hash("sha512", $request["pass"]))
-            ));
+            ]);
+
         }
         catch (Exception $e) {
             return view("login.signup", ["error" => true]);
@@ -78,44 +73,36 @@ class Users extends Controller {
     }
 
 
-    public function profile(UpdateProfile $req){
-
-        $pdo = config("app.pdo");
+    public function profile(Query $sql, UpdateProfile $req){
 
         # Check if the hashed given password is the good one
 
-        $verify_user = $pdo -> prepare("
+        $verify_user = $sql -> query("
             SELECT * FROM users WHERE mail=:mail AND pass=:pass
-        ");
-        $verify_user -> execute([
+        ", [
             "mail" => $_SESSION['mail'],
             "pass" => hash("sha512", hash("sha512", $req['oldpass']))
         ]);
 
-
         # The user is trying to change his profile information
         # with wrong credentials, abort
 
-        if(empty($verify_user -> fetch())){
+        if(empty($verify_user)){
             $_SESSION["notsame"] = true;
             return redirect(route("profile"));
         }
 
-        # The user is authorized 
-
-        $update_user = $pdo -> prepare("
-            UPDATE users SET 
-        
-                mail=:newmail, 
-                pass=:newpass 
-        
-            WHERE 
-                mail=:oldmail 
-        ");
+        # The user is authorized     
        
         try {
-
-            $update_user -> execute([
+            $sql -> query("
+            
+                UPDATE users SET 
+                    mail=:newmail, 
+                    pass=:newpass 
+                WHERE 
+                    mail=:oldmail 
+            ", [
                 "newmail" => $req['email'],
                 "newpass" => hash("sha512", hash("sha512", $req['newpass'])),
                 "oldmail" => $_SESSION['mail'],
@@ -135,80 +122,77 @@ class Users extends Controller {
     }
 
 
-    public function showProfile(){
-
-        $pdo = config("app.pdo");
+    public function showProfile(Query $sql){
 
 
         # Get all the selled products of the current user 
-        $selling_product = $pdo -> prepare("
+        $data = $sql -> query("
             SELECT * FROM products WHERE id_user = :id
-        "); 
-
-        $selling_product -> execute([
+        ", [
             "id" => $_SESSION["id"]
-        ]);
+        ]);         
         
-        
-        return view("user.profile", [ "data" => $selling_product -> fetchAll(\PDO::FETCH_ASSOC) ]);
+        return view("user.profile", [ "data" => $data ]);
     }
 
 
-    public function delete(){
+    public function delete(Query $sql){
 
-        $pdo = config("app.pdo");
 
         # Delete images that are linked to the users products
         
-        $imgs = $pdo -> prepare("SELECT image FROM products WHERE id_user=:id");
-        $imgs -> execute([
-            "id" => $_SESSION["id"]
-        ]); 
-        $imgs = $imgs -> fetchAll(\PDO::FETCH_ASSOC);
+        $imgs = $sql -> query(
+            "SELECT image FROM products WHERE id_user=:id",
+            [ "id" => $_SESSION["id"] ]
+        );
 
         foreach($imgs as $img){
             Storage::disk("public") -> delete("product_img/" . $img["image"]);
         }
 
-
         # Delete all the user comments
 
-        $c = $pdo -> prepare("DELETE FROM comments WHERE id_user=:id");
-        $c -> execute([
-            "id" => $_SESSION["id"]
-        ]); 
-
-
+        $sql -> query(
+            "DELETE FROM comments WHERE id_user=:id",
+            [ "id" => $_SESSION["id"] ]
+        );
+            
         # Delete comments under user products
 
-        $c = $pdo -> prepare("SELECT * FROM product WHERE id_user=:id");
-        $c -> execute([
-            "id" => $_SESSION["id"]
-        ]);   
+        $c = $sql -> query(
+            "SELECT * FROM products WHERE id_user=:id",
+            [ "id" => $_SESSION["id"] ]
+        );
 
-        foreach($c -> fetchAll(\PDO::FETCH_ASSOC) as $product){
-            $delete = $pdo -> prepare("DELETE FROM comments WHERE id_product=:id");
-            $delete -> execute(["id" => $product["id"]]);
+        foreach($c as $product){
+            $sql -> query(
+                "DELETE FROM comments WHERE id_product=:id",
+                [ "id" => $product["id"] ]
+            );
         }
 
         # Delete user products 
 
-        $up = $pdo -> prepare("DELETE FROM products WHERE  id_user=:id");
-        $up -> execute(["id" => $_SESSION["id"]]);
+        $sql -> query(
+            "DELETE FROM products WHERE  id_user=:id",
+            [ "id" => $_SESSION["id"] ]
+        );
 
         # Delete contacts messages from the user
 
-        $c = $pdo -> prepare("
-            DELETE FROM contact WHERE id_contactor=:id OR id_contacted=:id"
+        $sql -> query("
+            DELETE FROM contact WHERE id_contactor=:id OR id_contacted=:id",
+            [ "id" => $_SESSION["id"] ]
         );
-        $c -> execute(["id" => $_SESSION["id"]]);
 
 
         # Delete the user itself
         # finally ... phew
 
-        $user_del = $pdo -> prepare("DELETE FROM users WHERE id=:id");
-        $user_del -> execute(["id" => $_SESSION["id"]]); 
+        $sql -> query("
+            DELETE FROM users WHERE id=:id",
+            [ "id" => $_SESSION["id"] ]
+        );
 
         return redirect(route("disconnect"));
     }

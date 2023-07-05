@@ -121,19 +121,21 @@
                                     @for($i=0; $i < sizeof($data[$user]); $i++)
 
 
-                                        @if(!isset($old) or !($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === false))
-                                            
-                                            @if($i !== 0)
-                                                <p class="close" style="background-color: #d1eaf9"></p>
+                                        @if(!isset($old))
+                                            @if($data[$user][$i]['me'] === false)
+                                                <div class="profilemsg time" style="background-color: #dbd7d7"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                            @else
+                                                <div class="profilemsg time" style="background-color: #d1eaf9"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                             @endif
+                                        @elseif((!($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === false)))
+                                            
+                                            <p class="close" style="background-color: #d1eaf9"></p>
                                             
                                             <div class="profilemsg time" style="background-color: #dbd7d7"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                         
-                                        @elseif(!isset($old) or !($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === true))
+                                        @elseif((!($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === true)))
                                            
-                                            @if($i !== 0)
-                                                <p class="close"></p>
-                                            @endif
+                                            <p class="close"></p>
                                             
                                             <div class="profilemsg time" style="background-color: #d1eaf9"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                         
@@ -158,7 +160,7 @@
 
                                             <button onclick="window.location.href = '{{ route('delete', $data[$user][$i]['id']) }}'"
                                                 id="{{$data[$user][$i]["id"]}}"  
-                                                class="btn btn-primary menu none">
+                                                class="btn btn-primary menu none ">
                                                 DELETE <i class="bi bi-trash2-fill"></i>
                                             </button>
 

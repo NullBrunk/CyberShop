@@ -4,21 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreComments;
 use App\Http\Requests\UpdateComment;
+use App\Http\Query;
+
 
 class Comments extends Controller {
 
-    public function store(StoreComments $req){
+    public function store(Query $sql, StoreComments $req){
         
-        $pdo = config("app.pdo");
-
-        $add_comment = $pdo -> prepare("
+        $sql -> query("
             INSERT INTO comments
                 (`id_product`, `id_user`, `title`, `content`, `writed_at`, `rating`)
             VALUES
                 (:id_product, :id_user, :title, :comment, :writed_at, :rating)
-        ");
-
-        $add_comment -> execute([
+        ", [
             "id_product" => $req["id"], 
             "writed_at" => date('Y-m-d H:i:s'),
             "id_user" => $_SESSION['id'],
@@ -33,11 +31,9 @@ class Comments extends Controller {
     }
 
 
-    public function get($id){
+    public function get(Query $sql, $id){
         
-        $pdo = config("app.pdo");
-
-        $get_comments = $pdo -> prepare("
+        $data = $sql -> query("
             SELECT 
                 comments.id, rating, id_product,
                 content, writed_at, mail, title
@@ -51,14 +47,10 @@ class Comments extends Controller {
                 id_product=:id
         
             ORDER BY writed_at DESC
-        ");
-        
-        $get_comments -> execute([
+        ", [
             "id" => $id
         ]);
-
-
-        $data = $get_comments -> fetchAll(\PDO::FETCH_ASSOC);
+        
 
         if(empty($data)){
             return abort(404);
@@ -68,19 +60,16 @@ class Comments extends Controller {
     }
 
     
-    public function delete($article, $id){
+    public function delete(Query $sql, $article, $id){
 
-        $pdo = config("app.pdo");
 
-        $delete_comment = $pdo -> prepare("
+        $sql -> query("
             DELETE FROM comments 
             WHERE 
                 id=:id 
             AND 
                 id_user=:id_user
-        ");
-        
-        $delete_comment -> execute([
+        ", [
             "id_user" => $_SESSION["id"],
             "id" => $id
         ]);
@@ -89,41 +78,36 @@ class Comments extends Controller {
     }
 
 
-    public function get_update_form($slug){
-        $pdo = config("app.pdo");
+    public function get_update_form(Query $sql, $slug){
         
-        $get_comment = $pdo -> prepare("
+        $data = $sql -> query("
             SELECT * FROM comments 
             WHERE 
                 id_user=:id_user
             AND 
                 id=:id 
-        ");
-
-        $get_comment -> execute([
+        ", [
             "id_user" => $_SESSION["id"],
             "id" => $slug
         ]);
 
-        $data = $get_comment -> fetch(\PDO::FETCH_ASSOC);
 
         if(empty($data)){
             return abort(403);
         }
         else {
-            return view("user.updatecomment", [ "data" => $data ]);
+            return view("user.updatecomment", [ "data" => $data[0] ]);
         }
     }
 
 
-    public function update(UpdateComment $req){
+    public function update(Query $sql, UpdateComment $req){
 
         if($req["abort"] === "Abort"){
             return redirect(route("details", $req["id_product"]));
         }
-        $pdo = config("app.pdo");
 
-        $update_comment = $pdo -> prepare("
+        $sql -> query("
             UPDATE comments
             SET 
                 `title` = :title , 
@@ -135,9 +119,7 @@ class Comments extends Controller {
                 `id_user` = :id_user          
             AND 
                 `id` = :id
-        ");
-
-        $update_comment -> execute([
+        ", [
             "id" => $req["id"], 
             "writed_at" => date('Y-m-d H:i:s'),
             "id_user" => $_SESSION['id'],

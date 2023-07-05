@@ -6,10 +6,12 @@ use App\Http\Requests\StoreReq;
 use App\Http\Requests\UpdateProduct;
 
 use Illuminate\Support\Facades\Storage;
+use App\Http\Query;
 
 
+function verify_if_product_is_from_current_user($id){
 
-function verify_if_product_is_from_current_user($pdo, $id){
+    $pdo = config("app.pdo");
 
     $validate = $pdo -> prepare("
         SELECT 
@@ -40,30 +42,21 @@ class Products extends Controller
 {
 
     // Search a given string in the name of the products using LIKE
-    public function search(string $search) : array
+    public function search(Query $sql, string $search) : array
     {
 
-        $pdo = config("app.pdo");
-
-        $search_product = $pdo -> prepare("
+        $data = $sql -> query("
             SELECT id,image,price,class 
             FROM products 
             WHERE 
                 `name` LIKE CONCAT('%', :search, '%')
-        ");
-        $search_product -> execute([
-            "search" => $search
-        ]); 
+        ", [ "search" => $search ]);
 
-        $data = $search_product -> fetchAll(\PDO::FETCH_ASSOC);
-        
 
-        return($data);
+        return ($data);
     }
 
-    public function store(StoreReq $req){      
-
-        $pdo = config("app.pdo");
+    public function store(Query $sql, StoreReq $req){      
 
         if(!in_array($req["category"], [ 
             "filter-laptop", 
@@ -81,14 +74,12 @@ class Products extends Controller
 
             $imgPath = $req["product_img"] -> store("product_img", "public");
 
-            $store_product = $pdo -> prepare("
+            $sql -> query("
                 INSERT INTO 
                     products(`id_user`, `name`, `price`, `descr`, `class`, `image`)
                 VALUES
                     (:id_user, :name, :price, :descr, :class, :image)
-            ");
-
-            $store_product -> execute([
+            ", [
                 "id_user" => $_SESSION["id"],
                 "name" => $req["name"],
                 "price" => $req["price"],
@@ -96,7 +87,6 @@ class Products extends Controller
                 "class" => $req["category"],
                 "image" => substr($imgPath, 12),
             ]);
-
         }
 
         else {
@@ -110,63 +100,49 @@ class Products extends Controller
     }
     
 
-    public function delete($id){
-        
-        $pdo = config("app.pdo"); 
+    public function delete(Query $sql, $id){
 
         # Check if the product exists and is selled by the current user
-        $select_products = $pdo -> prepare("
+        $data = $sql -> query("
             SELECT * FROM products 
             WHERE 
                 id=:product_id 
             AND 
                 id_user=:id_user
-        "); 
-        $select_products -> execute([
+        ", [
             "product_id" => $id,
             "id_user" => $_SESSION["id"],
-        ]);
-        
-        $data = $select_products -> fetch();
-        
+        ]); 
     
         if(empty($data)){
             return abort(403);
         }
-
         # Delete the image associated with the product
-        Storage::disk("public") -> delete("product_img/" . $data['image']);
+        Storage::disk("public") -> delete("product_img/" . $data[0]['image']);
 
 
         # Delete comments attached to the product
-        $delete_comments = $pdo -> prepare("
+        $sql -> query("
             DELETE FROM comments WHERE id_product=:id
-        ");
-        $delete_comments -> execute(
-            ["id" => $id]
+        ", ["id" => $id]
         );
 
+
         # Delete all the cart where product exists
-        $delete_comments = $pdo -> prepare("
+        $sql -> query("
             DELETE FROM cart WHERE id_product=:id
-        ");
-        $delete_comments -> execute(
-            ["id" => $id]
-        );
+        ", ["id" => $id]);
 
 
         # Delete the product itself
-
-        $del_product = $pdo -> prepare("
+        $sql -> query("
             DELETE FROM 
                 products 
             WHERE 
                 id=:product_id 
             AND 
                 id_user=:id_user
-        ");
-
-        $del_product -> execute([
+        ", [
             "product_id" => $id,
             "id_user" => $_SESSION["id"],
         ]);
@@ -177,9 +153,7 @@ class Products extends Controller
 
     public function show_update_form($id){
 
-        $pdo = config("app.pdo");
-
-        $data = verify_if_product_is_from_current_user($pdo, $id);
+        $data = verify_if_product_is_from_current_user($id);
         if(!$data){
             return abort(403);
         }
@@ -188,15 +162,15 @@ class Products extends Controller
     }
 
 
-    public function update($id, UpdateProduct $req){
+    public function update(Query $sql, $id, UpdateProduct $req){
+
         if($req["submit"] === "delete"){
-            self::delete($id);
+            self::delete($sql, $id);
             $_SESSION["deletedproduct"] = true;
             return redirect(route("root"));
         }
-        $pdo = config("app.pdo");
         
-        $data = verify_if_product_is_from_current_user($pdo, $id);
+        $data = verify_if_product_is_from_current_user($id);
         if(!$data){
             return abort(403);
         }
@@ -211,7 +185,7 @@ class Products extends Controller
             return abort(403);
         }
 
-        $update_product = $pdo -> prepare("
+        $sql -> query("
             UPDATE products 
             SET
                 `name`=:name, 
@@ -220,15 +194,15 @@ class Products extends Controller
                 `descr`=:descr
             WHERE
                 id=:product_id
-            ");
+            ",
+            [
+                "name" => $req["name"],
+                "price" => $req["price"],
+                "descr" => $req["description"],
+                "class" => $req["category"],
+                "product_id" => $id
+            ]);
             
-        $update_product -> execute([
-            "name" => $req["name"],
-            "price" => $req["price"],
-            "descr" => $req["description"],
-            "class" => $req["category"],
-            "product_id" => $id
-        ]);
 
         $_SESSION["done"] = "updated";
 
@@ -236,40 +210,37 @@ class Products extends Controller
     }
 
 
-    public function rating($id){
-
-        $pdo = config("app.pdo");
+    public function rating(Query $sql, $id){
 
         # Get the sum of all the rates
-        $rating = $pdo -> prepare("
+        $rating = $sql -> query("
             SELECT SUM(rating) as rating FROM comments 
             WHERE 
                 id_product=:id 
-        ");
+        ", [ "id" => $id, ]);
 
-        $rating -> execute([ "id" => $id, ]);
-        $rating = $rating -> fetch()[0];
+        $rating = $rating[0]["rating"];
 
 
         # Get the number of person ho gave a rate
-        $number = $pdo -> prepare("
+        $number = $sql -> query("
             SELECT COUNT(*) as number FROM comments 
             WHERE 
                 id_product=:id
-        ");
-        $number -> execute([ "id" => $id, ]);
-        $number_of_rate = $number -> fetch()[0];
+        ", [ "id" => $id, ]);
+        $number = $number[0]["number"];
 
 
-        if(!($number_of_rate === 0)){
+        if(!($number === 0)){
 
             return [
-                "round" => intdiv($rating, $number_of_rate),
-                "real" => round($rating / $number_of_rate, 1),
-                "rate" => (int)$number_of_rate,
+                "round" => intdiv($rating, $number),
+                "real" => round($rating / $number, 1),
+                "rate" => (int)$number,
             ];
 
         }
+        
         else {
             return abort(404);
         }

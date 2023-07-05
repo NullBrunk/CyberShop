@@ -3,15 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
+use App\Http\Query;
 
 class Details extends Controller {
     
-    public function __invoke($product_id){
-        
-        $pdo = config("app.pdo");
-            
+    public function __invoke(Query $sql, $product_id){
+                    
         # Get the user and the product details
-        $details = $pdo -> prepare("
+        $data = $sql -> query("
             SELECT 
                 users.id as uid, products.id as pid, 
                 id_user, price, descr, class, mail, 
@@ -25,13 +24,11 @@ class Details extends Controller {
                 products.id=:id
 
             ORDER BY products.id DESC
-        ");
+        ", [ "id" => $product_id ] );
 
-        $details -> execute( [ "id" => $product_id ] );
-        $data = $details -> fetch();
+        if(!empty($data)){
 
-
-        if($data){
+            $data = $data[0];
 
             session_start();
 

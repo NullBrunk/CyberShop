@@ -3,19 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Query;
+
 
 class Cart extends Controller {
 
-    public function initialize(){
-
-        
+    public function initialize(Query $sql){
 
         $_SESSION['cart'] = [];
 
-
-        $pdo = config("app.pdo");
-
-        $get_cart = $pdo -> prepare("
+        $data = $sql -> query("
             SELECT 
                 cart.id as cid,
                 cart.id_user as cidu,
@@ -28,44 +25,37 @@ class Cart extends Controller {
                 products.id = cart.id_product
             AND
                 cart.id_user = :id
-        ");
-        $get_cart -> execute([ "id" => $_SESSION["id"] ]);
+        ", [ 
+            "id" => $_SESSION["id"] 
+        ]);
 
         
-        $data = $get_cart -> fetchall(\PDO::FETCH_ASSOC);
-
         foreach($data as $d){
             $_SESSION['cart'][$d["cid"]] = $d;
         }
 
-
-
         return redirect(url() -> previous());
     }
    
-    public function add(Request $req){
+    public function add(Query $sql, Request $req){
         
-        $pdo = config("app.pdo");
-
 
         $product_id = $req["id"];
 
         if($product_id){
             
-            $get_product = $pdo -> prepare("SELECT id as pid, name, image, price FROM products WHERE id=:id");
-            $get_product -> execute([ "id" => $product_id ]); 
+            $data = $sql -> query(
+                "SELECT id as pid, name, image, price FROM products WHERE id=:id",
+                [ "id" => $product_id ]
+            )[0]; 
 
-            $data = ($get_product -> fetchAll(\PDO::FETCH_ASSOC))[0];
-            
 
             if($data){
-                $add_to_cart = $pdo -> prepare("
-                INSERT INTO cart(id_user, id_product)
-                VALUES
-                    (:uid, :pid)
-                ");
-
-                $add_to_cart -> execute([
+                $sql -> query("
+                    INSERT INTO cart(id_user, id_product)
+                    VALUES
+                        (:uid, :pid)
+                ", [
                     "uid" => $_SESSION["id"],
                     "pid" => $product_id
                 ]);
@@ -83,20 +73,17 @@ class Cart extends Controller {
     }
 
 
-    public function remove($id){
+    public function remove(Query $sql, $id){
 
-        $pdo = config("app.pdo");        
-        
         if(isset($_SESSION["cart"][$id])){
 
-            $remove = $pdo -> prepare("
+            $sql -> query("
                 DELETE FROM cart 
                 WHERE 
                     id=:id
                 AND
                     id_user=:uid
-            ");
-            $remove -> execute([
+            ", [
                 "id" => $id,
                 "uid" => $_SESSION["id"]
             ]);

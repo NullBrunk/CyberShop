@@ -86,7 +86,7 @@
 
                       @endforeach
 
-                      <li><a id="price" class="button" href="{{route("cart.display")}}">Buy</a></li>
+                      <li><a id="price" style="width: 90%; display: block;" class="button" href="{{route("cart.display")}}">Buy</a></li>
                     </ul>
                   </li>
               @else 
@@ -96,7 +96,7 @@
 
               
 <?php
-    include_once __DIR__ . "/../../../app/Http/Controllers/notifs.php";
+    include_once __DIR__ . "/../../../app/Http/Utils/Notifs.php";
     $notifs = show();
 ?>
 

@@ -340,7 +340,25 @@
                 </div>
                 <div id="{{$comm['id']}}" class="none">
                 
-                 
+                    <script>
+                        function deletecomm(){
+
+                            Swal.fire({
+                                title: 'Are you sure?',
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#293e61',
+                                cancelButtonColor: '#af2024',
+                                confirmButtonText: 'Yes, delete it!'
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = '{{ route('comment.delete', [$data['pid'], $comm['id']] ) }}'
+                                }
+                            })
+                        
+    
+                        }
+                    </script>
 
                     <a 
                      href="{{route("comment.update_form", $comm["id"])}}" 
@@ -350,7 +368,7 @@
                         <i class="bi bi-pencil-square"></i>
                     </a>
 
-                    <button id="{{$comm['id'] . 'deletebutton'}}" onclick="window.location.href = '{{ route('comment.delete', [$data['pid'], $comm['id']] ) }}'" class="btn btn-primary menu" style="margin-top: 4px; width: 39px; margin-left: auto;">
+                    <button id="{{$comm['id'] . 'deletebutton'}}" onclick="deletecomm()" class="btn btn-primary menu" style="margin-top: 4px; width: 39px; margin-left: auto;">
                          
                         <i class="bi bi-trash2-fill"></i>
                     </button>
