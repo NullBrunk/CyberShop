@@ -9,11 +9,9 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Query;
 
 
-function verify_if_product_is_from_current_user($id){
+function is_from_user(Query $sql, $id){
 
-    $pdo = config("app.pdo");
-
-    $validate = $pdo -> prepare("
+    $validate = $sql -> query("
         SELECT 
             users.id as uid, products.id as pid, 
             id_user, price, descr, class, mail, image,
@@ -27,15 +25,13 @@ function verify_if_product_is_from_current_user($id){
             products.id=:id_product
         AND 
             id_user=:id_user
-    ");
-
-    $validate -> execute([
+    ", [
         "id_user" => $_SESSION['id'],
         "id_product" => $id 
     ]);
 
 
-    return $validate -> fetchAll(\PDO::FETCH_ASSOC);
+    return $validate;
 }
 
 class Products extends Controller
@@ -151,9 +147,9 @@ class Products extends Controller
     }
 
 
-    public function show_update_form($id){
+    public function show_update_form(Query $sql, $id){
 
-        $data = verify_if_product_is_from_current_user($id);
+        $data = is_from_user($sql, $id);
         if(!$data){
             return abort(403);
         }
@@ -170,7 +166,7 @@ class Products extends Controller
             return redirect(route("root"));
         }
         
-        $data = verify_if_product_is_from_current_user($id);
+        $data = is_from_user($sql, $id);
         if(!$data){
             return abort(403);
         }

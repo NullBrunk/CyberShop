@@ -2,16 +2,24 @@
     
 function mail_from_id($id){
 
-    $pdo = config("app.pdo");
+    $pdo = new \PDO(
+        "mysql:host=localhost;dbname=" . env("DB_DATABASE"), 
+        env("DB_USERNAME"), 
+        env("DB_PASSWORD")
+    );
 
     $mail = $pdo -> prepare("SELECT mail FROM users WHERE id=:id");
     $mail -> execute([ "id" => $id ]);
 
-    return $mail -> fetch(\PDO::FETCH_ASSOC);
+    return $mail -> fetch(PDO::FETCH_ASSOC);
 }
 
 function show(){
-    $pdo = config("app.pdo");
+    $pdo = new PDO(
+        "mysql:host=localhost;dbname=" . env("DB_DATABASE"), 
+        env("DB_USERNAME"), 
+        env("DB_PASSWORD")
+    );
 
     $notifs = $pdo -> prepare("
         SELECT * FROM contact

@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactReq;
 use App\Http\Query;
 
-function getmsgs($mail){
+function getmsgs(Query $sql, $mail){
     
-    $pdo = config("app.pdo");
-
-    $convs = $pdo -> prepare("
+    $convs = $sql -> query("
             SELECT * FROM
                 (
                     SELECT contact.id,readed,content,id_contacted,users.mail as mail_contacted 
@@ -37,14 +35,11 @@ function getmsgs($mail){
                 contactor.mail_contactor = :mail
 
             ORDER BY contacted.id 
-        ");
-
-
-        $convs -> execute([
+        ", [
             "mail" => $mail
         ]);
 
-        return $convs -> fetchall(\PDO::FETCH_ASSOC);
+        return $convs;
 }
 
 
@@ -52,8 +47,6 @@ class Contact extends Controller {
 
 
     public function id2mail(Query $sql, $mail){
-
-        $pdo = config("app.pdo");
 
         $id = $sql -> query(
             "SELECT id FROM users WHERE mail=:mail",
@@ -87,7 +80,7 @@ class Contact extends Controller {
         
         $exploitable_data = [];
 
-        foreach(getmsgs($_SESSION["mail"]) as $data){
+        foreach(getmsgs($sql, $_SESSION["mail"]) as $data){
 
             # Create time at hand 
             $time = explode("-", explode(" ", $data["time"])[0])[2] . " " . strtolower(date('F', mktime(0, 0, 0, explode("-", $data["time"])[1], 10))) . ", " . implode(":", array_slice(explode(":", explode(" ", $data["time"])[1]), 0, 2));
