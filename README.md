@@ -101,10 +101,57 @@ sudo php artisan serve --port=8000 --host=0.0.0.0
 
 # Serve on Apache
 
-First of all we need to serv the API on the port 8000, so go into /etc/apache2/ports.conf and add 
+First of all we need to serv the web serv on port 80 and the API on the port 8000, so go into /etc/apache2/ports.conf and add 
 ```
 Listen 8000
 ```
 Under the `Listen 80` line.
 
-then, you need to 
+You'll also need to sudo nano /etc/apache2/sites-enabled/000-default.conf and change the port 8000 like this :
+<br>
+Replace
+```
+<VirtualHost *:80>
+```
+By 
+```
+<VirtualHost *:80 *:8000>
+```
+<br>
+<br>
+
+Then clone the repository, and give all perm's to the www-data user :
+<br>
+```
+cd /var/www/html
+git clone https://github.com/NullBrunk/E-Commerce/
+sudo chown www-data:www-data -R * .*
+```
+<br>
+With all this done, let's point to the right directory : you'll need to edit the /etc/apache2/sites-enabled/000-default.conf file. Change the 
+```
+DocumentRoot /var/www/html
+``` 
+
+to
+
+``` 
+DocumentRoot /var/www/html/E-Commerce/public
+```
+<br>
+Now, you'll need to enable apache rewriting module AND set AllowOverride to All.
+To allow mod_rewrite, type
+```
+sudo a2enmod rewrite 
+```
+<br>
+Now you need to `sudo nano /etc/apache2/apache2.conf` and search for <Directory /var/www/>.
+Replace the "AllowOverride None" by an "AllowOverride All".
+
+<br>
+Ggs, You can finally start restart apache and see the result :
+
+```
+sudo systemctl restart apache2
+```
+And open http://127.0.0.1 on your browser
