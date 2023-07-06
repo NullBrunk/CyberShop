@@ -19,7 +19,9 @@ The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 
 
 # Installation
+First of all, install Apache, PHP and Mysql.
 
+In MySql commande line type :
 ```sql
 CREATE DATABASE ecommerce;
 use ecommerce;
@@ -31,16 +33,6 @@ CREATE TABLE users(
     `is_admin` SMALLINT DEFAULT 0,
 
     PRIMARY KEY(`id`)   
-);
-
-CREATE TABLE cart(
-    `id` INT AUTO_INCREMENT,
-    `id_user` INT NOT NULL,
-    `id_product` INT NOT NULL,
-
-    PRIMARY KEY(`id`),
-    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
-    FOREIGN KEY(`id_product`) REFERENCES products(`id`)
 );
 
 CREATE TABLE products(
@@ -56,6 +48,16 @@ CREATE TABLE products(
     PRIMARY KEY(`id`)
 );
 
+CREATE TABLE cart(
+    `id` INT AUTO_INCREMENT,
+    `id_user` INT NOT NULL,
+    `id_product` INT NOT NULL,
+
+    PRIMARY KEY(`id`),
+    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
+    FOREIGN KEY(`id_product`) REFERENCES products(`id`)
+);
+
 CREATE TABLE comments(
     `id` INT AUTO_INCREMENT,
     `id_product` INT NOT NULL, 
@@ -66,7 +68,7 @@ CREATE TABLE comments(
 
     PRIMARY KEY(`id`),
     FOREIGN KEY(`id_user`) REFERENCES users(`id`),
-    FOREIGN KEY(`id_product`) REFERENCES product(`id`)
+    FOREIGN KEY(`id_product`) REFERENCES products(`id`)
 );
 
 CREATE TABLE contact(
@@ -75,7 +77,7 @@ CREATE TABLE contact(
     `id_contactor` INT NOT NULL,
     `id_contacted` INT NOT NULL,
     `content` TEXT NOT NULL,
-    `time` DATETIME NOT NULL,s
+    `time` DATETIME NOT NULL,
 
     FOREIGN KEY(`id_contactor`) REFERENCES users(id),
     FOREIGN KEY(`id_contacted`) REFERENCES users(id),
@@ -85,15 +87,17 @@ CREATE TABLE contact(
 
 ```
 
-```bash
-# Start the MySQL service
-php artisan mysql
+Then start the mysql service
 
-# Link the storage directory to public/storage/
+```bash
+php artisan mysql
+```
+
+And link the storage directory to public/storage/
+```
 php artisan storage:link
 ```
 
-# Serve on Apache
 
 First of all we need to serv the web serv on port 80 and the API on the port 8000, so go into /etc/apache2/ports.conf and add 
 ```
