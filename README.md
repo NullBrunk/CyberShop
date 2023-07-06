@@ -91,12 +91,6 @@ php artisan mysql
 
 # Link the storage directory to public/storage/
 php artisan storage:link
-
-# Start the WebApp in a terminal
-sudo php artisan serve --port=80 --host=0.0.0.0
-
-# Start the API on port 8000 on another terminal
-sudo php artisan serve --port=8000 --host=0.0.0.0
 ```
 
 # Serve on Apache
