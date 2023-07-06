@@ -99,4 +99,12 @@ sudo php artisan serve --port=80 --host=0.0.0.0
 sudo php artisan serve --port=8000 --host=0.0.0.0
 ```
 
+# Serve on Apache
 
+First of all we need to serv the API on the port 8000, so go into /etc/apache2/ports.conf and add 
+```
+Listen 8000
+```
+Under the `Listen 80` line.
+
+then, you need to 

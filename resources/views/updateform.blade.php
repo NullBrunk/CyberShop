@@ -22,7 +22,7 @@
 
     <body>
 
-        @include('../layout/header')
+        @include('../layout/header', [ "dotdotslash" => "../"])
 
             <main id="main">
 
@@ -93,15 +93,18 @@
                                             
                                             <li>
                                                 <strong>Category : 
-                                                    <select class="select-beautify" name="category">
+                                                    <select class="select-beautify" id="select" name="category">
                                                         <option value="filter-laptop" >Informatics</option>
                                                         <option value="filter-dresses">Dresses</option>
                                                         <option value="filter-gaming" >Gaming</option>
                                                         <option value="filter-food" >Food</option>
                                                         <option value="filter-other" >Other</option>
                                                     </select>
-
+                                                    
                                                 </strong>
+                                                <script>
+                                                    document.getElementById("select").value = "{{ $data['class']}}" 
+                                                </script>
                                             </li>                
                                             <br>
                                             <h3></h3>
