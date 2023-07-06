@@ -123,6 +123,7 @@ sudo chown www-data:www-data -R * .*
 ```
 <br>
 With all this done, let's point to the right directory : you'll need to edit the /etc/apache2/sites-enabled/000-default.conf file. Change the 
+<br>
 ```
 DocumentRoot /var/www/html
 ``` 
