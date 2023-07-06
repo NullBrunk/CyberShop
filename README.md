@@ -21,7 +21,8 @@ The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 # Installation
 First of all, install Apache, PHP and Mysql.
 
-In MySql commande line type :
+In MySQL commande line type :
+
 ```sql
 CREATE DATABASE ecommerce;
 use ecommerce;
@@ -87,19 +88,21 @@ CREATE TABLE contact(
 
 ```
 
-Then start the mysql service
+Then start the MySQL service
 
 ```bash
 php artisan mysql
 ```
 
 And link the storage directory to public/storage/
+
 ```
 php artisan storage:link
 ```
 
 
-First of all we need to serv the web serv on port 80 and the API on the port 8000, so go into /etc/apache2/ports.conf and add 
+We now need to serv the web serv on port 80 and the API on the port 8000, so go into /etc/apache2/ports.conf and add 
+
 ```
 Listen 8000
 ```
@@ -149,9 +152,10 @@ Now you need to `sudo nano /etc/apache2/apache2.conf` and search for <Directory 
 Replace the "AllowOverride None" by an "AllowOverride All".
 
 <br>
-Ggs, You can finally start restart apache and see the result :
+Ggs, You can finally start the apache and see the result :
 
 ```
-sudo systemctl restart apache2
+sudo systemctl start apache2
 ```
-And open http://127.0.0.1 on your browser
+
+And open http://127.0.0.1 or http://localhost on your browser
