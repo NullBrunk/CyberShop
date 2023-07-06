@@ -135,6 +135,7 @@ DocumentRoot /var/www/html/E-Commerce/public
 <br>
 Now, you'll need to enable apache rewriting module AND set AllowOverride to All.
 To allow mod_rewrite, type
+
 ```
 sudo a2enmod rewrite 
 ```
