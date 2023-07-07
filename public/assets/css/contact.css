@@ -31,7 +31,7 @@ body {
 }
 
 .profile-box {
-    display: block;
+    display: flex;
     height: 10%;
     width: 100%;
     font-size: 17px;
@@ -134,4 +134,17 @@ hr {
     margin: 0;
     padding: 0;
     color: #f7f7f7;
+}
+
+.notifs-unreaded-message { 
+  margin-left: auto;
+  background-color: #007185;
+  padding-left: 7px;
+  padding-right: 7px;
+  padding-bottom: 22px;
+  padding-top: 0px;
+  border-radius: 19px;
+  font-weight: bold;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  font-size: 14px;
 }

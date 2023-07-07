@@ -99,10 +99,22 @@
                         ?>
 
                         @for($i = sizeof($names) - 1; $i >= 0; $i--)
+
+                            @php($value = 0)
+
+                            @php($keys = array_keys($data[$names[$i]]))
+                            @php($last_key = end($keys))
+
+                            @while($last_key >= 0 && $data[$names[$i]][$last_key]["readed"] !== 1 )
+                                @php($value++)
+                                @php($last_key--)
+                            @endwhile
+
+
                             @if(isset($user) && $user === $names[$i])
                                 <a class="profile-box hoverblue" href="{{route("contactuser", $names[$i])}}"> {{ $names[$i] }}</a> 
                             @else
-                                <a class="profile-box" href="{{route("contactuser", $names[$i])}}"> {{ $names[$i] }}</a> 
+                                <a class="profile-box" href="{{route("contactuser", $names[$i])}}"> {{ $names[$i] }} @if(end($data[$names[$i]])["readed"] === 0 and end($data[$names[$i]])["me"] === false) <span class="notifs-unreaded-message"> {{ $value }} </span> @endif</a> 
                             @endif
                             <hr>
                         @endfor

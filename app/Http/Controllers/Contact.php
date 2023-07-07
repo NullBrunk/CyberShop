@@ -134,7 +134,9 @@ class Contact extends Controller {
                     $data['content'], 
                     "me" => false, 
                     "id" => $data["id"],
-                    "time" => $time
+                    "time" => $time,
+                    "readed" => $data["readed"]
+
                 ];
             } 
 
@@ -145,7 +147,8 @@ class Contact extends Controller {
                     $data['content'], 
                     "me" => true, 
                     "id" => $data["id"],
-                    "time" => $time
+                    "time" => $time,
+                    "readed" => $data["readed"]
                 ];
             }
 

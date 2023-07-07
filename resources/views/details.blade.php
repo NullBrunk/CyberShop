@@ -324,7 +324,6 @@
                             @if($comments)
 
                                 @foreach(json_decode($comments, true) as $comm)
-
                                     <div id="{{ "div" . $comm["id"] }}" class="comments">          
                                         <div class="profile">
                                             
