@@ -1,5 +1,12 @@
 <?php
     
+/**
+ * Get a mail from a user id
+ *
+ * @param int $id  the id of the user.
+ * 
+ * @return array  An array with the result.
+ */
 function mail_from_id($id){
 
     $pdo = new \PDO(
@@ -14,6 +21,12 @@ function mail_from_id($id){
     return $mail -> fetch(PDO::FETCH_ASSOC);
 }
 
+
+/**
+ * Put all the notifications in an Array with all the valuable information
+ *
+ * @return array  The notifications.
+ */
 function show(){
     $pdo = new PDO(
         "mysql:host=localhost;dbname=" . env("DB_DATABASE"), 
@@ -21,6 +34,7 @@ function show(){
         env("DB_PASSWORD")
     );
 
+    // We order by id DESC to get latest notification in first
     $notifs = $pdo -> prepare("
         SELECT * FROM contact
         WHERE 
@@ -32,11 +46,13 @@ function show(){
     ");
     $notifs -> execute([ "id" => $_SESSION["id"] ]);
 
+    // We build and array with all the notifications in it
     $to_push = [];
     $data = $notifs -> fetchall(\PDO::FETCH_ASSOC);
 
     foreach($data as $d){
 
+        // Cause we desplay the mail of the contactor on the notification
         if($d["id_contactor"] === $_SESSION["id"]){
             $mail = mail_from_id($d["id_contacted"])["mail"];
         }

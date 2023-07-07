@@ -65,6 +65,7 @@ CREATE TABLE comments(
     `id_user` INT NOT NULL,
     `title` VARCHAR(45) NOT NULL,
     `content` TEXT NOT NULL,
+    `rating` INT NOT NULL,
     `writed_at` DATETIME NOT NULL,
 
     PRIMARY KEY(`id`),

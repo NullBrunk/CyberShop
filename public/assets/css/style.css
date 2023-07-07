@@ -996,11 +996,11 @@ section {
   color: white !important;
 }
 
-
 .descr {
-  font-size:20px;
+  font-size: 18px;
+  overflow-y: scroll !important;
   word-wrap: break-word;
-  overflow: scroll;
+  height: 100%;
 }
 
 .show_cart  {
@@ -1197,10 +1197,17 @@ abbr {
   outline: none;
 }
 
+.w-50 {
+  width: 50% !important;
+}
+
+
+
+
 .select-beautify {
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
   height: 7vh; 
-  margin-left: 5%; 
+  margin-left: 7%; 
   font-size: 18px; 
   padding-left: 4px; 
   width: 70%;
@@ -1209,6 +1216,13 @@ abbr {
   background-color: #293e61;
   color: white;
 }
+
+.buttonupdate {
+  margin-left: 22%;
+  margin-top: 0px;
+  margin-bottom: 3%;
+}
+
 .select-beautify:focus{
   outline: none;
 }
@@ -1567,4 +1581,21 @@ tr:nth-child(even) td {
 }
 .notification-item:hover {
   background-color: #f6f9ff;
+}
+
+
+@media (max-width: 991px) {
+
+  .w-50 {
+    width: 100% !important;
+  }
+
+  .buttonupdate {
+    margin-left: 26% !important;
+  }
+
+  .deleteprod {
+    margin-left: 26% !important;
+  }
+
 }

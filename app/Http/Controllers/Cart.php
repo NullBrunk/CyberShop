@@ -8,6 +8,13 @@ use App\Http\Sql;
 
 class Cart extends Controller {
 
+    /**
+     * Initialize a cart by putting all the in database
+     * information into a SESSION variable
+     *
+     * @return redirect  Redirection to the page that call this function.
+     */
+
     public function initialize(){
 
         $_SESSION['cart'] = [];
@@ -37,6 +44,17 @@ class Cart extends Controller {
         return redirect(url() -> previous());
     }
    
+    
+
+    /**
+     * Add a product to the cart and call the inititialize function
+     * to change the content of the session
+     *
+     * @param Request $req  The infotmations of the commended product.
+     * 
+     * @return redirect  Redirection to the cart or toa 403 page if the user is not authorize
+     */
+
     public function add(Request $req){
         
 
@@ -72,6 +90,16 @@ class Cart extends Controller {
         return abort(403);
     }
 
+
+
+    /**
+     * Remove a product from teh SESSION cart and from the Database
+     *
+     * @param int $id  The id of the product in the cart table.
+     * 
+     * @return redirect  Redirection a redirection, but this method is always
+     *                   called from js in a fetch(), so no matter what it returns
+     */
 
     public function remove($id){
 

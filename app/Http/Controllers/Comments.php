@@ -9,6 +9,14 @@ use App\Http\Sql;
 
 class Comments extends Controller {
 
+    /**
+     * Store a comment in the database
+     *
+     * @param StoreComments $req  The informations of the comments.
+     * 
+     * @return redirect  Redirection to the page where the user commented.
+     */
+
     public function store(StoreComments $req){
         
         Sql::query("
@@ -30,6 +38,15 @@ class Comments extends Controller {
         return redirect(route("details", $req["id"]));
     }
 
+
+
+    /**
+     * Get all the comment of a given product
+     *
+     * @param StoreComments $id  The id of the product.
+     * 
+     * @return array  A hashmap with all the comments of the product.
+     */
 
     public function get($id){
         
@@ -59,9 +76,21 @@ class Comments extends Controller {
         return ($data);
     }
 
-    
+
+
+    /**
+     * Delete a comment from the database
+     *
+     * @param int $article  The id of the commented product
+     * @param int $id   The id of the comment
+     * 
+     * @return redirect  Redirection to the page where the user commented 
+     *                   (thanks to the $article variable).
+     */
+
     public function delete($article, $id){
 
+        dd($article);
         Sql::query("
             DELETE FROM comments 
             WHERE 
@@ -77,6 +106,15 @@ class Comments extends Controller {
     }
 
 
+
+    /**
+     * Get a view of an update form to update a given comment
+     *
+     * @param int $slug     The id of the comment
+     * 
+     * @return view  A view with a form to edit the comment
+     */
+
     public function get_update_form($slug){
         
         $data = Sql::query("
@@ -90,7 +128,7 @@ class Comments extends Controller {
             "id" => $slug
         ]);
 
-
+        // If there is no such comment OR the comment is not from the current user
         if(empty($data)){
             return abort(403);
         }
@@ -100,8 +138,19 @@ class Comments extends Controller {
     }
 
 
+
+    /**
+     * Update a comment into the database
+     *
+     * @param UpdateComment $req     The new informations to put in the comment
+     * 
+     * @return redirect  Redirection to the location where the comment 
+     *                   has been posted.
+     */
+
     public function update(UpdateComment $req){
 
+        // If the user clicked the abort button
         if($req["abort"] === "Abort"){
             return redirect(route("details", $req["id_product"]));
         }
@@ -130,6 +179,6 @@ class Comments extends Controller {
         $_SESSION['updated'] = true;
 
         return redirect(route("details", $req["id_product"]));
-
+        
     }
 }

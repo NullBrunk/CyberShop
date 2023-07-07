@@ -2,6 +2,11 @@
 
 namespace App\Http;
 
+
+# With this you can do directly :
+#   $data = Sql::query("SELECT * FROM table WHERE a=:i", ["i" => "Hello"])
+
+
 class Sql {
 
     public static function query(string $query, array $params = []) : array

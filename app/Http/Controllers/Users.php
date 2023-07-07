@@ -14,12 +14,25 @@ session_start();
 
 class Users extends Controller {
 
+
+    /**
+     * Log the user if he gave the good username and password
+     *
+     * @param Login $request   The request with the username & password
+     *  
+     * @return redirect     / if he is logged /login if he isn't
+     * 
+     */
+    
     public function show(Login $request){
                
+        # If the user is already logged 
+
         if(isset($_SESSION['logged'])){
             return redirect('/');
         }
         
+
         $data = Sql::query("
             SELECT * FROM `users` 
             WHERE 
@@ -50,6 +63,17 @@ class Users extends Controller {
     }
 
 
+
+    /**
+     * Signup a user
+     *
+     * @param Signup $request   The informations to store a new user in the database
+     *  
+     * @return redirect | view    Redirect / if he is allowed to create the user
+     *                            view of /signup if he isn't
+     * 
+     */
+    
     public function store(Signup $request){
 
         
@@ -73,6 +97,16 @@ class Users extends Controller {
     }
 
 
+
+    /**
+     * Update the profile of a given user if he is allowed to 
+     *
+     * @param UpdateProfile $req   The request with all the valuable informations 
+     *      *  
+     * @return redirect    Redirect to the profile page in all the cases
+     * 
+     */
+    
     public function profile(UpdateProfile $req){
 
         # Check if the hashed given password is the good one
@@ -122,6 +156,14 @@ class Users extends Controller {
     }
 
 
+
+    /**
+     * Show the profile page of the current user
+     *
+     * @return view     The profile page
+     * 
+     */
+    
     public function showProfile(){
 
 
@@ -136,10 +178,17 @@ class Users extends Controller {
     }
 
 
+
+    /**
+     * Delete a user if he is allowed to
+     *
+     * @return redirect    Redirect to the / page
+     * 
+     */
+
     public function delete(){
 
-
-        # Delete images that are linked to the users products
+        # Delete images linked to the users products
         
         $imgs = Sql::query(
             "SELECT image FROM products WHERE id_user=:id",
@@ -150,6 +199,7 @@ class Users extends Controller {
             Storage::disk("public") -> delete("product_img/" . $img["image"]);
         }
 
+
         # Delete all the user comments
 
         Sql::query(
@@ -157,6 +207,7 @@ class Users extends Controller {
             [ "id" => $_SESSION["id"] ]
         );
             
+        
         # Delete comments under user products
 
         $c = Sql::query(
@@ -171,12 +222,14 @@ class Users extends Controller {
             );
         }
 
+
         # Delete user products 
 
         Sql::query(
             "DELETE FROM products WHERE  id_user=:id",
             [ "id" => $_SESSION["id"] ]
         );
+
 
         # Delete contacts messages from the user
 
@@ -194,6 +247,7 @@ class Users extends Controller {
             [ "id" => $_SESSION["id"] ]
         );
 
+        
         return redirect(route("disconnect"));
     }
 }

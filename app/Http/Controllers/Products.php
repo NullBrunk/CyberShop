@@ -8,6 +8,14 @@ use App\Http\Requests\UpdateProduct;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Sql;
 
+/**
+ * Test if a product is from a given user
+ *
+ * @param int $id   The id of the product
+ *  
+ * @return array $validate     An empty array if not, a fill array if yes
+ * 
+ */
 
 function is_from_user($id){
 
@@ -30,14 +38,20 @@ function is_from_user($id){
         "id_product" => $id 
     ]);
 
-
     return $validate;
 }
 
 class Products extends Controller
-{
-
-    // Search a given string in the name of the products using LIKE
+{ 
+ 
+    /**
+     * Search threw all the product with a LIKE operator
+     *
+     * @param string $search    The product to search
+     *  
+     * @return array $data     The products that matched the like
+     * 
+     */
     public function search(string $search) : array
     {
 
@@ -52,7 +66,20 @@ class Products extends Controller
         return ($data);
     }
 
-    public function store(StoreReq $req){      
+
+
+    /**
+     * Store a product from the /sell page.
+     *
+     * @param StoreReq $req   The request with all the informations
+     *  
+     * @return view     Return the view of /sell (will change)
+     * 
+     */
+
+     public function store(StoreReq $req){      
+
+        # If te user category is a valid category 
 
         if(!in_array($req["category"], [ 
             "filter-laptop", 
@@ -64,11 +91,18 @@ class Products extends Controller
             return abort(403);
         }
 
+        # Test the image 
+
         $img = $req["product_img"];
 
         if($img !== null && !$img -> getError()){
 
+            # Store the image 
+
             $imgPath = $req["product_img"] -> store("product_img", "public");
+
+
+            # Store the product 
 
             Sql::query("
                 INSERT INTO 
@@ -94,11 +128,23 @@ class Products extends Controller
         $_SESSION["done"] = true;
         return view("sell");
     }
+   
     
+
+    /**
+     * Delete a given product if the user is allowed to 
+     *
+     * @param int $id   The id of the product
+     *  
+     * @return redirect      Redirection to / if success, or to a 403
+     *                       page if not.
+     * 
+     */
 
     public function delete($id){
 
         # Check if the product exists and is selled by the current user
+
         $data = Sql::query("
             SELECT * FROM products 
             WHERE 
@@ -113,6 +159,8 @@ class Products extends Controller
         if(empty($data)){
             return abort(403);
         }
+
+
         # Delete the image associated with the product
         Storage::disk("public") -> delete("product_img/" . $data[0]['image']);
 
@@ -147,6 +195,17 @@ class Products extends Controller
     }
 
 
+
+    /**
+     * Show an update form to update a product if the user is allowed to 
+     * 
+     * @param int $id   The id of the product
+     *  
+     * @return abort | view     a 403 page if he is not allowed
+     *                          a view if he is.
+     * 
+     */
+
     public function show_update_form($id){
 
         $data = is_from_user($id);
@@ -158,7 +217,22 @@ class Products extends Controller
     }
 
 
+
+    /**
+     * Update a product if the user is allowed to
+     *
+     * @param int $id   The id of the product
+     * @param UpdateProduct $req    The informations of the new product 
+     * 
+     * @return redirect     A 403 page if he is not allowed
+     *                      redirect to the page of the updated product
+     *                      if he is allowed to.
+     * 
+     */
+
     public function update($id, UpdateProduct $req){
+
+        # If the user clicked on the delete button 
 
         if($req["submit"] === "delete"){
             self::delete($id);
@@ -171,6 +245,9 @@ class Products extends Controller
             return abort(403);
         }
 
+        
+        # Test if the given category is valid
+        
         if(!in_array($req["category"], [ 
             "filter-laptop", 
             "filter-dresses",
@@ -206,6 +283,17 @@ class Products extends Controller
     }
 
 
+
+    /**
+     * Calculate the different rating (rounded, real, number of rates) 
+     *
+     * @param int $id   The id of the product
+     *  
+     * @return array | redirect     An array with all the valuable informations
+     *                              A 404 page if no one rated,
+     * 
+     */
+    
     public function rating($id){
 
         # Get the sum of all the rates

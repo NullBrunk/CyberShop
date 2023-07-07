@@ -12,7 +12,7 @@
             <li><a class="nav-link scrollto" href="{{ route("root") }}">Home</a></li>            
             <li><a class="nav-link scrollto" href="{{ route("articles") }}">Search</a></li>            
             
-            
+
             @if(isset($_SESSION['logged']))
             <li><a class="nav-link scrollto" href="{{ route("contact") }}">Contact</a></li>
 
@@ -20,15 +20,22 @@
               
                 <script>
                     async function deleteitem(id) {
+                        // Supprimer un élément du panier dans la BDD 
 
                         url = "/cart/delete/"+id;
                         let resp = await fetch(url);
 
+                        // Supprimer l'élément de la div sans avoir a relloader la page
                         const elem = document.getElementById(id);
                         elem.remove();
 
+                        // On modifie le nombrz afficher en haut du panier
                         const num = document.getElementById("number");
                         console.log(num.innerHTML)
+
+                        // Si ce nombre valait 1, alors il vaut désormais 0
+                        // ce qui veut dire que le panier eest vide
+                        // on supprime donc l'icone du panier
 
                         if(num.innerHTML == 1){
                             const cart = document.getElementById("cart");
@@ -37,6 +44,7 @@
                             cart.remove()
                             p.style.marginRight = "10px";
                         }
+                        // Sinon on decrémente le nombre en question
                         else {
                             num.innerHTML = num.innerHTML - 1
                         }
@@ -47,7 +55,7 @@
 
 
 
-
+              {{-- Si le tableau représentant le cart n'est pas vide --}}  
               @if(!empty($_SESSION['cart']))
 
                 <p id="padding" style="margin-right: 30px;"></p>
@@ -70,6 +78,7 @@
                         <li id="{{$p['cid']}}">
                           <p class="show_cart">
                           <img style="padding-left: 3%; width: 22%;" 
+
                           @if(isset($dotdotslash))
                             src="../../storage/product_img/{{ $p["image"] }}">
                           @else
@@ -77,10 +86,7 @@
                           @endif
                           
                           <a href="/details/{{ $p['pid'] }}">{{ substr($p["name"], 0, 11) }}</a>
-                          
                             <i onclick="deleteitem({{$p['cid']}})" style="cursor: pointer" class="bi bi-trash2-fill trash-cart"></i>
-                            
-
                           <p>
                         </li>
 
@@ -96,9 +102,13 @@
 
               
 <?php
+    # On récupere les notifications directement depuis la base de donnée
+    # grace a cette fonction 
+
     include_once __DIR__ . "/../../../app/Http/Utils/Notifs.php";
     $notifs = show();
 ?>
+
 
               @if(!empty($notifs))
                 <p id="padding" style="margin-right: 15px;"></p>
@@ -124,8 +134,6 @@
                                 <a href="{{ $n["more"] }}">See more <i class="bx bx-chevrons-right" ></i></a>
                               </div>
                             </li>
-                      
-
                           <p>
                         </li>
 
