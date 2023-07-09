@@ -19,103 +19,33 @@ The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 
 
 # Installation
+
 First of all, install Apache, PHP and Mysql.
 
-In MySQL commande line type :
 
-```sql
-CREATE DATABASE ecommerce;
-use ecommerce;
+## Database & PHP
+Change the .env and put your SQL credentials, also choose a database name.
 
-CREATE TABLE users(
-    `id` INT AUTO_INCREMENT,
-    `mail` VARCHAR(50) UNIQUE NOT NULL,
-    `pass` VARCHAR(130) NOT NULL,
-    `is_admin` SMALLINT DEFAULT 0,
-
-    PRIMARY KEY(`id`)   
-);
-
-CREATE TABLE products(
-    `id` INT AUTO_INCREMENT,
-    `id_user` INT NOT NULL,
-    `name` VARCHAR(45) NOT NULL,
-    `price` VARCHAR(20),
-    `descr` TEXT,
-    `class` TEXT,
-    `image` VARCHAR(50) NOT NULL,
-
-    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
-    PRIMARY KEY(`id`)
-);
-
-CREATE TABLE cart(
-    `id` INT AUTO_INCREMENT,
-    `id_user` INT NOT NULL,
-    `id_product` INT NOT NULL,
-
-    PRIMARY KEY(`id`),
-    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
-    FOREIGN KEY(`id_product`) REFERENCES products(`id`)
-);
-
-CREATE TABLE comments(
-    `id` INT AUTO_INCREMENT,
-    `id_product` INT NOT NULL, 
-    `id_user` INT NOT NULL,
-    `title` VARCHAR(45) NOT NULL,
-    `content` TEXT NOT NULL,
-    `rating` INT NOT NULL,
-    `writed_at` DATETIME NOT NULL,
-
-    PRIMARY KEY(`id`),
-    FOREIGN KEY(`id_user`) REFERENCES users(`id`),
-    FOREIGN KEY(`id_product`) REFERENCES products(`id`)
-);
-
-CREATE TABLE contact(
-    `id` INT AUTO_INCREMENT,
-    `id_contactor` INT NOT NULL,
-    `id_contacted` INT NOT NULL,
-    `content` TEXT NOT NULL,
-    `readed` BOOL,
-    `time` DATETIME NOT NULL,
-    
-
-    FOREIGN KEY(`id_contactor`) REFERENCES users(id),
-    FOREIGN KEY(`id_contacted`) REFERENCES users(id),
-
-    PRIMARY KEY(`id`)
-);
-
-CREATE TABLE notifs(
-    `id` INT AUTO_INCREMENT,
-    `id_user` INT NOT NULL,
-    `icon` VARCHAR(55) NOT NULL,
-    `name` VARCHAR(55) NOT NULL,
-    `content` TEXT NOT NULL,
-    `link` TEXT NOT NULL,
-    `type` VARCHAR(10) NOT NULL,
-    `moreinfo` INT,
-
-    FOREIGN KEY(`id_user`) REFERENCES users(id),
-    PRIMARY KEY(`id`)
-);
-
-```
 
 Then start the MySQL service
 
 ```bash
-php artisan mysql
+sudo systemctl start mysql
 ```
 
-And link the storage directory to public/storage/
+And create the database & tables
+
+```bash
+php artisan migrate
+```
+
+Then you'll need to link the storage directory to public/storage/
 
 ```
 php artisan storage:link
 ```
 
+## Apache 
 
 We now need to serv the web serv on port 80 and the API on the port 8000, so go into /etc/apache2/ports.conf and add 
 

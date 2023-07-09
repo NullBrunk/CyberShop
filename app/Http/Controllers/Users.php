@@ -50,7 +50,6 @@ class Users extends Controller {
             $data = $data[0];
 
             $_SESSION['id'] = $data['id'];
-            $_SESSION['admin'] = $data['is_admin'];
             $_SESSION['logged'] = true;
             $_SESSION['mail'] = $data['mail'];
 

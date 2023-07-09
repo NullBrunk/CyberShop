@@ -104,6 +104,7 @@ class Products extends Controller
 
             # Store the product 
 
+            
             Sql::query("
                 INSERT INTO 
                     products(`id_user`, `name`, `price`, `descr`, `class`, `image`)
