@@ -37,23 +37,14 @@
                         const num = document.getElementById("number");
                         console.log(num.innerHTML)
 
-                        // Si ce nombre valait 1, alors il vaut désormais 0
-                        // ce qui veut dire que le panier eest vide
-                        // on supprime donc l'icone du panier
-
                         if(num.innerHTML == 1){
-                            const cart = document.getElementById("cart");
-                            const p = document.getElementById("padding");
-                            
-                            cart.remove()
-                            p.style.marginRight = "10px";
-                        }
-                        // Sinon on decrémente le nombre en question
+                          number = document.getElementById("number");
+                          number.remove()
+                        } 
                         else {
-                            num.innerHTML = num.innerHTML - 1
+                          num.innerHTML = num.innerHTML - 1
                         }
-
-                    };
+                      }
 
                 </script>
 
@@ -100,7 +91,18 @@
                     </ul>
                   </li>
               @else 
-                <p style="margin-right: 10px;"></p>
+              <p id="padding" style="margin-right: 30px;"></p>
+                  
+              <li id="cart" style="list-style-type: none;" class="dropdown">
+                
+                <a style="margin: 0px; padding: 0px;" href="#">
+                  <i style="font-size: 26px !important;" class="bi bi-cart carti">
+                  </i>
+                </a>
+                <ul  class="cartn" style="overflow: scroll; max-height: 55vh; margin-left: -350%;">
+
+                </ul>
+              </li>
               @endif
 
 
@@ -125,7 +127,7 @@
                     
                     <a style="margin: 0px; padding: 0px;" href="#">
 
-                      <span id="number" class="badge bg-primary badge-number">{{ $notifs_number }}</span>
+                      <span id="" class="badge bg-primary badge-number">{{ $notifs_number }}</span>
                       <i style="font-size: 26px !important;" class="bi bi-bell carti">
                       </i>
                     </a>
@@ -151,6 +153,16 @@
                     </ul>
                   </li>
 
+              @else
+                <p id="padding" style="margin-right: 15px;"></p>
+                    
+                <li id="cart" style="list-style-type: none;" class="dropdown ">
+                  <a style="margin: 0px; padding: 0px;" href="#">
+                    <i  style="font-size: 26px !important;" class="bi bi-bell carti">
+                    </i>
+                  </a>
+
+                </li>
               @endif
 
             @else
