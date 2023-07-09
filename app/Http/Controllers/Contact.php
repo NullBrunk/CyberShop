@@ -9,10 +9,10 @@ use App\Http\Sql;
 /**
  * Get all the contact messages of the current user
  *
- * @param int $mail  The mail of the current user
+ * @param int $mail     The mail of the current user
  * 
- * @return array    An array with all the messages sended to/by the
- *                  the current user
+ * @return array        An array with all the messages sended to/by the
+ *                      the current user
  */
 
 function getmsgs($mail){
@@ -56,30 +56,9 @@ function getmsgs($mail){
 class Contact extends Controller {
 
     /**
-     * Convert an id to a mail address
-     *
-     * @param string $mail  The mail of the user
-     * 
-     * @return array    An array with the id of the user or nothing
-     *                  if the user does not exists.
-     */
-
-    public function id2mail($mail){
-
-        $id = Sql::query(
-            "SELECT id FROM users WHERE mail=:mail",
-            [ "mail" => $mail ]
-        );
-
-        return $id;
-    }
-
-
-
-    /**
      * Mark a contact message as readed
      *
-     * @param string $id  The id of the message to mark
+     * @param string $id     The id of the message to mark
      * 
      * @return void   
      * 
@@ -109,9 +88,9 @@ class Contact extends Controller {
     /**
      * Get all the messages of the user and show them
      *
-     * @param string $slug  A mail to show, or nothing
+     * @param string $slug     A mail to show, or nothing
      * 
-     * @return view     Une vue avec tous les messages échangé   
+     * @return view            Une vue avec tous les messages échangés
      * 
      */
 
@@ -172,13 +151,12 @@ class Contact extends Controller {
             }
 
             # We get the mail of the reqiested user
-            $id = Contact::id2mail($slug);
+            $id = Sql::id_from_mail($slug);
 
             # If the requested user doses not exist
-            if(empty($id))
+            if(!$id)
                 return abort(404);
-            else 
-                $id = $id[0]["id"];
+
 
             # Mark the messages of the conversations as readed
             Contact::mark_readed($id);
@@ -197,9 +175,9 @@ class Contact extends Controller {
     /**
      * Store a message sended to a specific user
      *
-     * @param ContactReq $req  The request with all the informations
+     * @param ContactReq $req     The request with all the informations
      * 
-     * @return redirect     Redirect to the contact page with the right slug   
+     * @return redirect           Redirect to the contact page with the right slug   
      * 
      */
 
@@ -219,8 +197,9 @@ class Contact extends Controller {
         }
         
         # Test if the user exists
-        $id = Contact::id2mail($mail);
-        if(empty($id)){
+        $id = Sql::id_from_mail($mail);
+        
+        if(!$id){
             $_SESSION["contact_no_one"] = true;
             return redirect("/contact");
         }
@@ -236,7 +215,7 @@ class Contact extends Controller {
                 )
         ", [
             "id_contactor" => $_SESSION["id"],
-            "id_contacted" => $id[0]['id'],
+            "id_contacted" => $id,
             "content" => $req["content"],
             "time" => date('Y-m-d H:i:s')
         ]);
@@ -249,7 +228,7 @@ class Contact extends Controller {
     /**
      * Delete a message from a conversation if the user is allowed to
      *
-     * @param int $slug  The id of the message to remove
+     * @param int $slug     The id of the message to remove
      * 
      * @return redirect     Redirect to the previous url   
      * 

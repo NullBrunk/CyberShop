@@ -10,9 +10,9 @@ class Cart extends Controller {
 
     /**
      * Initialize a cart by putting all the in database
-     * information into a SESSION variable
+     * information into a SESSION variable.
      *
-     * @return redirect  Redirection to the page that call this function.
+     * @return redirect     Redirection to the page that call this function.
      */
 
     public function initialize(){
@@ -48,11 +48,13 @@ class Cart extends Controller {
 
     /**
      * Add a product to the cart and call the inititialize function
-     * to change the content of the session
+     * to change the content of the session.
      *
-     * @param Request $req  The infotmations of the commended product.
+     * @param Request $req     The infotmations of the commended product.
      * 
-     * @return redirect  Redirection to the cart or toa 403 page if the user is not authorize
+     * @return redirect        Redirection to the cart or to a 403 page if 
+     *                         the user is not authorized.
+     * 
      */
 
     public function add(Request $req){
@@ -93,12 +95,13 @@ class Cart extends Controller {
 
 
     /**
-     * Remove a product from teh SESSION cart and from the Database
+     * Remove a product from teh SESSION cart and from the Database.
      *
-     * @param int $id  The id of the product in the cart table.
+     * @param int $id      The id of the product in the cart table.
      * 
-     * @return redirect  Redirection a redirection, but this method is always
-     *                   called from js in a fetch(), so no matter what it returns
+     * @return redirect    Redirection a redirection, but this method is always
+     *                     called from js in a fetch(), so no matter what it returns
+     * 
      */
 
     public function remove($id){

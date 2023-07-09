@@ -9,23 +9,27 @@ use App\Http\Sql;
 
 class Comments extends Controller {
 
-    /**
-     * Store a comment in the database
-     *
-     * @param StoreComments $req  The informations of the comments.
-     * 
-     * @return redirect  Redirection to the page where the user commented.
-     */
-
+    
     public function getid(){
         return Sql::query(
             "SELECT * FROM comments WHERE id_user=:id ORDER BY id DESC LIMIT 1",
             ["id" => $_SESSION["id"]]
         )[0]['id'];
     }
+    
+    /**
+     * Store a comment in the database.
+     *
+     * @param StoreComments $req     The informations of the comments.
+     * 
+     * @return redirect              Redirection to the page where the user 
+     *                               commented.
+     * 
+     */
+
     public function store(StoreComments $req, $slug){
         
-        // store the comment 
+        # store the comment 
         Sql::query("
             INSERT INTO comments
                 (`id_product`, `id_user`, `title`, `content`, `writed_at`, `rating`)
@@ -67,9 +71,11 @@ class Comments extends Controller {
     /**
      * Get all the comment of a given product
      *
-     * @param StoreComments $id  The id of the product.
+     * @param StoreComments $id     The id of the product.
      * 
-     * @return array  A hashmap with all the comments of the product.
+     * @return array                A hashmap with all the comments of 
+     *                              the product.
+     * 
      */
 
     public function get($id){
@@ -105,11 +111,11 @@ class Comments extends Controller {
     /**
      * Delete a comment from the database
      *
-     * @param int $article  The id of the commented product
-     * @param int $id   The id of the comment
+     * @param int $article     The id of the commented product
+     * @param int $id          The id of the comment
      * 
-     * @return redirect  Redirection to the page where the user commented 
-     *                   (thanks to the $article variable).
+     * @return redirect        Redirection to the page where the user commented 
+     *                         (thanks to the $article variable).
      */
 
     public function delete($article, $id){
@@ -135,7 +141,7 @@ class Comments extends Controller {
      *
      * @param int $slug     The id of the comment
      * 
-     * @return view  A view with a form to edit the comment
+     * @return view         A view with a form to edit the comment
      */
 
     public function get_update_form($slug){
@@ -151,7 +157,7 @@ class Comments extends Controller {
             "id" => $slug
         ]);
 
-        // If there is no such comment OR the comment is not from the current user
+        # if there is no such comment OR the comment is not from the current user
         if(empty($data)){
             return abort(403);
         }
@@ -167,8 +173,8 @@ class Comments extends Controller {
      *
      * @param UpdateComment $req     The new informations to put in the comment
      * 
-     * @return redirect  Redirection to the location where the comment 
-     *                   has been posted.
+     * @return redirect              Redirection to the location where the comment 
+     *                               has been posted.
      */
 
     public function update(UpdateComment $req){

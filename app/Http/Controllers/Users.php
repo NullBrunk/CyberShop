@@ -18,9 +18,9 @@ class Users extends Controller {
     /**
      * Log the user if he gave the good username and password
      *
-     * @param Login $request   The request with the username & password
+     * @param Login $request     The request with the username & password
      *  
-     * @return redirect     / if he is logged /login if he isn't
+     * @return redirect          / if he is logged /login if he isn't
      * 
      */
     
@@ -67,7 +67,7 @@ class Users extends Controller {
     /**
      * Signup a user
      *
-     * @param Signup $request   The informations to store a new user in the database
+     * @param Signup $request     The informations to store a new user in the database
      *  
      * @return redirect | view    Redirect / if he is allowed to create the user
      *                            view of /signup if he isn't
@@ -101,9 +101,9 @@ class Users extends Controller {
     /**
      * Update the profile of a given user if he is allowed to 
      *
-     * @param UpdateProfile $req   The request with all the valuable informations 
+     * @param UpdateProfile $req     The request with all the valuable informations 
      *      *  
-     * @return redirect    Redirect to the profile page in all the cases
+     * @return redirect              Redirect to the profile page in all the cases
      * 
      */
     

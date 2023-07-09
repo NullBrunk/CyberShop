@@ -11,9 +11,9 @@ use App\Http\Sql;
 /**
  * Test if a product is from a given user
  *
- * @param int $id   The id of the product
+ * @param int $id     The id of the product
  *  
- * @return array $validate     An empty array if not, a fill array if yes
+ * @return array      An empty array if not, a fill array if yes
  * 
  */
 
@@ -47,9 +47,9 @@ class Products extends Controller
     /**
      * Search threw all the product with a LIKE operator
      *
-     * @param string $search    The product to search
+     * @param string $search     The product to search
      *  
-     * @return array $data     The products that matched the like
+     * @return array             The products that matched the like
      * 
      */
     public function search(string $search) : array
@@ -71,9 +71,9 @@ class Products extends Controller
     /**
      * Store a product from the /sell page.
      *
-     * @param StoreReq $req   The request with all the informations
+     * @param StoreReq $req     The request with all the informations
      *  
-     * @return view     Return the view of /sell (will change)
+     * @return view             Return the view of /sell (will change)
      * 
      */
 
@@ -134,10 +134,10 @@ class Products extends Controller
     /**
      * Delete a given product if the user is allowed to 
      *
-     * @param int $id   The id of the product
+     * @param int $id     The id of the product
      *  
-     * @return redirect      Redirection to / if success, or to a 403
-     *                       page if not.
+     * @return redirect   Redirection to / if success, or to a 403
+     *                    page if not.
      * 
      */
 
@@ -159,7 +159,7 @@ class Products extends Controller
         if(empty($data)){
             return abort(403);
         }
-
+   
 
         # Delete the image associated with the product
         Storage::disk("public") -> delete("product_img/" . $data[0]['image']);
@@ -199,10 +199,10 @@ class Products extends Controller
     /**
      * Show an update form to update a product if the user is allowed to 
      * 
-     * @param int $id   The id of the product
+     * @param int $id          The id of the product
      *  
-     * @return abort | view     a 403 page if he is not allowed
-     *                          a view if he is.
+     * @return abort | view    a 403 page if he is not allowed
+     *                         a view if he is.
      * 
      */
 
@@ -221,12 +221,12 @@ class Products extends Controller
     /**
      * Update a product if the user is allowed to
      *
-     * @param int $id   The id of the product
+     * @param int $id               The id of the product
      * @param UpdateProduct $req    The informations of the new product 
      * 
-     * @return redirect     A 403 page if he is not allowed
-     *                      redirect to the page of the updated product
-     *                      if he is allowed to.
+     * @return redirect              A 403 page if he is not allowed
+     *                               redirect to the page of the updated product
+     *                               if he is allowed to.
      * 
      */
 
@@ -287,7 +287,7 @@ class Products extends Controller
     /**
      * Calculate the different rating (rounded, real, number of rates) 
      *
-     * @param int $id   The id of the product
+     * @param int $id               The id of the product
      *  
      * @return array | redirect     An array with all the valuable informations
      *                              A 404 page if no one rated,

@@ -11,11 +11,11 @@ class Details extends Controller {
     /**
      * Get the details of a given product
      *
-     * @param int $product_id  The id of the product
+     * @param int      $product_id  The id of the product
      * 
-     * @return view     A view with all the details of
-     *                  the product, including comments
-     *                  technicals details, rating etc. 
+     * @return view    A view with all the details of
+     *                 the product, including comments
+     *                 technicals details, rating etc. 
      * 
      */
 
