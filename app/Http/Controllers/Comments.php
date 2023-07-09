@@ -17,8 +17,15 @@ class Comments extends Controller {
      * @return redirect  Redirection to the page where the user commented.
      */
 
-    public function store(StoreComments $req){
+    public function getid(){
+        return Sql::query(
+            "SELECT * FROM comments WHERE id_user=:id ORDER BY id DESC LIMIT 1",
+            ["id" => $_SESSION["id"]]
+        )[0]['id'];
+    }
+    public function store(StoreComments $req, $slug){
         
+        // store the comment 
         Sql::query("
             INSERT INTO comments
                 (`id_product`, `id_user`, `title`, `content`, `writed_at`, `rating`)
@@ -31,7 +38,24 @@ class Comments extends Controller {
             "title" => $req['title'],
             "comment" => htmlspecialchars($req["comment"]),
             "rating" => $req["rating"],
+
         ]);
+
+        
+        # generate a notifications to the seller of the product
+        Sql::query("
+            INSERT INTO notifs(id_user, icon, name, content, link, type, moreinfo)
+            VALUES (:id_user, :icon, :name, :content, :link, :type, :moreinfo)
+        ", [
+            "id_user" => $slug,
+            "icon" => "bx bx-detail",
+            "name" => "Commented product.",
+            "content" => "From " . $_SESSION["mail"] . ".",
+            "link" => route("details", $req["id"]) . "#div" . self::getid(),
+            "type" => "comment",
+            "moreinfo" => $req["id"],
+        ]);
+
 
         $_SESSION['done'] = true;
 
@@ -90,7 +114,6 @@ class Comments extends Controller {
 
     public function delete($article, $id){
 
-        dd($article);
         Sql::query("
             DELETE FROM comments 
             WHERE 

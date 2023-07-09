@@ -31,7 +31,7 @@ Route::get('/', Index::class ) -> name("root");
 Route::view("/search", "search") -> name("articles");
 
 # Details
-Route::get('/details/{product_id}', Details::class ) -> name("details");
+Route::get('/details/{product_id}', [ Details::class, "get_details" ] ) -> name("details");
 
 
 /*
@@ -106,7 +106,7 @@ Route::prefix('cart') -> group(function () {
 Route::prefix('comments') -> group(function () {
 
     Route::post(
-        "",
+        "/{slug}",
         [ Comments::class, "store" ]
     ) -> middleware(Logged::class) -> name("comment.add");
 

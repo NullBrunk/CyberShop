@@ -273,7 +273,7 @@
 
                             <div id="formcomm" class="commentsbox none" >
                                 
-                                <form method="post" action="{{ route("comment.add") }}" style="width:100%;">
+                                <form method="post" action="{{ route("comment.add", $data["id_user"]) }}" style="width:100%;">
                                     @csrf
                                     <div class="title" style="height: 13vh;;">
                                         Title of your comment <abbr>*</abbr>

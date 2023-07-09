@@ -75,15 +75,30 @@ CREATE TABLE comments(
 
 CREATE TABLE contact(
     `id` INT AUTO_INCREMENT,
-    `readed` BOOL,
     `id_contactor` INT NOT NULL,
     `id_contacted` INT NOT NULL,
     `content` TEXT NOT NULL,
+    `readed` BOOL,
     `time` DATETIME NOT NULL,
+    
 
     FOREIGN KEY(`id_contactor`) REFERENCES users(id),
     FOREIGN KEY(`id_contacted`) REFERENCES users(id),
 
+    PRIMARY KEY(`id`)
+);
+
+CREATE TABLE notifs(
+    `id` INT AUTO_INCREMENT,
+    `id_user` INT NOT NULL,
+    `icon` VARCHAR(55) NOT NULL,
+    `name` VARCHAR(55) NOT NULL,
+    `content` TEXT NOT NULL,
+    `link` TEXT NOT NULL,
+    `type` VARCHAR(10) NOT NULL,
+    `moreinfo` INT,
+
+    FOREIGN KEY(`id_user`) REFERENCES users(id),
     PRIMARY KEY(`id`)
 );
 

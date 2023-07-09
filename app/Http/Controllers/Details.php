@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Http;
 use App\Http\Sql;
 
+
 class Details extends Controller {
     
     /**
@@ -18,7 +19,7 @@ class Details extends Controller {
      * 
      */
 
-    public function __invoke($product_id){
+    public function get_details($product_id){
                     
         # Get the user that sell the product, and all the details
         $data = Sql::query("
@@ -38,12 +39,32 @@ class Details extends Controller {
         ", [ "id" => $product_id ] );
 
 
+
         # If this product exists
         if(!empty($data)){
 
             $data = $data[0];
 
+            # Delete all notifications linked to it
+            
             session_start();
+
+            if(isset($_SESSION["logged"])){
+                Sql::query("
+                    DELETE FROM notifs 
+                    WHERE 
+                        id_user=:id_user 
+                    AND 
+                        type=:type 
+                    AND moreinfo=:moreinfo
+                    ", [
+                        "id_user" => $_SESSION["id"],
+                        "type" => "comment",
+                        "moreinfo" => $product_id,
+                    ]
+                );
+
+            }
 
             # Get all the comments of the product
             $comment_req = Http::get('http://127.0.0.1:8000/api/comments/'. $data['pid']);

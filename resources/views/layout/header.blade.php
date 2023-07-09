@@ -106,7 +106,11 @@
     # grace a cette fonction 
 
     include_once __DIR__ . "/../../../app/Http/Utils/Notifs.php";
-    $notifs = show();
+    $array_info = show();
+
+    $notifs = $array_info[0];
+    $notifs_number = $array_info[1];
+
 ?>
 
 
@@ -116,7 +120,8 @@
                   <li id="cart" style="list-style-type: none;" class="dropdown ">
                     
                     <a style="margin: 0px; padding: 0px;" href="#">
-                      <span id="number" class="badge bg-primary badge-number">{{ sizeof($notifs) }}</span>
+
+                      <span id="number" class="badge bg-primary badge-number">{{ $notifs_number }}</span>
                       <i style="font-size: 26px !important;" class="bi bi-bell carti">
                       </i>
                     </a>
@@ -124,12 +129,12 @@
                     
                       @foreach($notifs as $n)
                         
-                        <li >
+                        <li>
                           <p class="show_cart">
                             <li class="notification-item">
-                              <i style="color:#19526f; font-size: 24px ;margin: 0 20px 0 10px;" class="{{ $n['icon'] }}"></i>
+                              <i style="color:#19526f; font-size: 32px ;margin: 0 20px 0 10px;" class="{{ $n['icon'] }}"></i>
                               <div>
-                                <h4>{{ $n["title"] }} </h4>
+                                <h4 style="color: rgb(68, 68, 68)">{{ $n["title"] }} </h4>
                                 <p>{{ $n["content"] }} </p>
                                 <a href="{{ $n["more"] }}">See more <i class="bx bx-chevrons-right" ></i></a>
                               </div>
