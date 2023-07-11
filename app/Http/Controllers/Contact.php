@@ -52,7 +52,6 @@ function getmsgs($mail){
         return $convs;
 }
 
-
 class Contact extends Controller {
 
     /**
@@ -98,6 +97,7 @@ class Contact extends Controller {
         
         # The array that wi'll be passed to the vue
         $exploitable_data = [];
+        $contact = [];
 
 
         foreach(getmsgs($_SESSION["mail"]) as $data){
@@ -145,8 +145,17 @@ class Contact extends Controller {
             }
         }
 
-
         
+        # Get the full array of authors
+        foreach(array_keys($exploitable_data) as $name)
+            array_push( $contact, [ $exploitable_data[$name]["time"], $name ] ); 
+    
+        # Sort it
+        usort($contact, function ($date1, $date2) {
+            return strtotime($date1[0]) - strtotime($date2[0]);
+        });
+        
+
         # If the user is requesting for the messages of another user
         if($slug){
 
@@ -167,12 +176,12 @@ class Contact extends Controller {
             # Mark the messages of the conversations as readed
             Contact::mark_readed($id);
 
-            return view("user.contact", [ "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
+            return view("user.contact", [ "contact" => $contact, "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
 
         }   
 
         else {
-            return view("user.contact", [ "noone" => true, "data" => $exploitable_data ]);
+            return view("user.contact", [ "contact" => $contact, "noone" => true, "data" => $exploitable_data ]);
         }
     }
 

@@ -93,26 +93,6 @@
                     </div>
                     
                     <div style="background: white; height: 1px;">_</div>
-                
-<?php
-    
-    function compare($date1, $date2) {
-        return strtotime($date1[0]) - strtotime($date2[0]);
-    }
-
-    $contact = [];
-
-    foreach(array_keys($data) as $name){
-        array_push( 
-            $contact, 
-            [ $data[$name]["time"], $name ] 
-        ); 
-    }
-
-    // Tri du tableau de dates afin d'obtenir les derniers messages en premier
-    usort($contact, 'compare');
-
-?>
 
                         @for($i = sizeof($contact) - 1; $i >= 0; $i--)
 
