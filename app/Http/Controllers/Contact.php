@@ -44,7 +44,7 @@ function getmsgs($mail){
             OR 
                 contactor.mail_contactor = :mail
 
-            ORDER BY contacted.id 
+            ORDER BY contacted.id
         ", [
             "mail" => $mail
         ]);
@@ -99,15 +99,14 @@ class Contact extends Controller {
         # The array that wi'll be passed to the vue
         $exploitable_data = [];
 
+
         foreach(getmsgs($_SESSION["mail"]) as $data){
 
             # Create time at hand 
             $time = explode("-", explode(" ", $data["time"])[0])[2] . " " . strtolower(date('F', mktime(0, 0, 0, explode("-", $data["time"])[1], 10))) . ", " . implode(":", array_slice(explode(":", explode(" ", $data["time"])[1]), 0, 2));
 
             # Then the contactor is the current user
-            if($data["mail_contacted"] === $_SESSION["mail"]){
-
-                                
+            if($data["mail_contacted"] === $_SESSION["mail"]){       
                 $mail = $data["mail_contactor"];
                 $toput = [ 
                     $data['content'], 
@@ -134,11 +133,13 @@ class Contact extends Controller {
 
             if(isset($exploitable_data[$mail])){
                 array_push($exploitable_data[$mail], $toput);
+                $exploitable_data[$mail]["time"] = $data["time"];
             }
             else {
-                $exploitable_data[$mail] = [ $toput ];
+                $exploitable_data[$mail] = [ "time" => $data["time"], $toput ];
             }
         }
+
 
         
         # If the user is requesting for the messages of another user

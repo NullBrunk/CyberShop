@@ -13,7 +13,7 @@
               <li><a class="nav-link scrollto" href="{{ route("root") }}">Home</a></li>            
             @endif
 
-              <li><a class="nav-link scrollto" href="{{ route("articles") }}">Search</a></li>            
+            <li><a class="nav-link scrollto" href="{{ route("articles") }}">Search</a></li>            
             
 
             @if(isset($_SESSION['logged']))

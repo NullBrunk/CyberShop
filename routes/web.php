@@ -25,7 +25,9 @@ use App\Http\Controllers\Cart;
 Route::view("/todo", "static.todo");
 
 # Index page
+
 Route::get('/', Index::class ) -> name("root");
+
 
 # SearchBar
 Route::view("/search", "search") -> name("articles");
@@ -106,7 +108,7 @@ Route::prefix('cart') -> group(function () {
 Route::prefix('comments') -> group(function () {
 
     Route::post(
-        "/{slug}",
+        "/store/{slug}",
         [ Comments::class, "store" ]
     ) -> middleware(Logged::class) -> name("comment.add");
 
@@ -222,4 +224,5 @@ Route::prefix('contact') -> group(function () {
     ) -> middleware(Logged::class) -> name("delete");
 
 });
+
 

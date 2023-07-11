@@ -47,7 +47,7 @@
 
                                 @if(isset($_GET['f']) or $errors->has('email') or $errors->has('pass'))
                                     <div class="alert alert-danger">
-                                        Wrong username or password !
+                                        Wrong mail or password !
                                     </div>
                                 @endif
                 

@@ -95,26 +95,41 @@
                     <div style="background: white; height: 1px;">_</div>
                 
                         <?php 
-                            $names = array_keys($data);  
+
+                            $names = array_keys($data); 
+                            
+                            $tableau_yassine = [];
+
+                            foreach($names as $name){
+                                array_push( $tableau_yassine, [$data[$name]["time"], $name] ); 
+                            }
+
+                            function comparerDates($date1, $date2) {
+                                return strtotime($date1[0]) - strtotime($date2[0]);
+                            }
+
+                            // Tri du tableau de dates
+                            usort($tableau_yassine, 'comparerDates');
+
                         ?>
 
-                        @for($i = sizeof($names) - 1; $i >= 0; $i--)
+                        @for($i = sizeof($tableau_yassine) - 1; $i >= 0; $i--)
 
                             @php($value = 0)
 
-                            @php($keys = array_keys($data[$names[$i]]))
+                            @php($keys = array_keys($data[$tableau_yassine[$i][1]]))
                             @php($last_key = end($keys))
 
-                            @while($last_key >= 0 && $data[$names[$i]][$last_key]["readed"] !== 1 )
+                            @while($last_key >= 0 && $data[$tableau_yassine[$i][1]][$last_key]["readed"] !== 1 )
                                 @php($value++)
                                 @php($last_key--)
                             @endwhile
 
 
-                            @if(isset($user) && $user === $names[$i])
-                                <a class="profile-box hoverblue" href="{{route("contactuser", $names[$i])}}"> {{ $names[$i] }}</a> 
+                            @if(isset($user) && $user === $tableau_yassine[$i][1])
+                                <a class="profile-box hoverblue" href="{{route("contactuser", $tableau_yassine[$i][1])}}"> {{ $tableau_yassine[$i][1] }}</a> 
                             @else
-                                <a class="profile-box" href="{{route("contactuser", $names[$i])}}"> {{ $names[$i] }} @if(end($data[$names[$i]])["readed"] === 0 and end($data[$names[$i]])["me"] === false) <span class="notifs-unreaded-message"> {{ $value }} </span> @endif</a> 
+                                <a class="profile-box" href="{{route("contactuser", $tableau_yassine[$i][1])}}"> {{ $tableau_yassine[$i][1] }} @if(end($data[$tableau_yassine[$i][1]])["readed"] === 0 and end($data[$tableau_yassine[$i][1]])["me"] === false) <span class="notifs-unreaded-message"> {{ $value }} </span> @endif</a> 
                             @endif
                             <hr>
                         @endfor
@@ -130,7 +145,9 @@
                                 @if(isset($data[$user]))
                                     
 
-                                    @for($i=0; $i < sizeof($data[$user]); $i++)
+                                    
+
+                                    @for($i=0; $i < sizeof($data[$user]) - 1; $i++)
 
 
                                         @if(!isset($old))

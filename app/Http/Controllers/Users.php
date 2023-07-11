@@ -16,11 +16,12 @@ class Users extends Controller {
 
 
     /**
-     * Log the user if he gave the good username and password
+     * Log the user if he gave the good username and password.
      *
-     * @param Login $request     The request with the username & password
+     * @param Login $request     The request with the username & password.
      *  
-     * @return redirect          / if he is logged /login if he isn't
+     * @return redirect          redirect to / if he is logged 
+     *                           redirect to /login if he isn't.
      * 
      */
     
@@ -42,12 +43,10 @@ class Users extends Controller {
         ", [ 
             "mail" => $request["email"],
             "pass" =>  hash("sha512", hash("sha512", $request["pass"]))
-        ]);
+        ], "fetch");
 
 
-        if($data){
-
-            $data = $data[0];
+        if(!empty($data)){
 
             $_SESSION['id'] = $data['id'];
             $_SESSION['logged'] = true;
@@ -86,7 +85,6 @@ class Users extends Controller {
                 "mail" => $request["email"],
                 "pass" => hash("sha512", hash("sha512", $request["pass"]))
             ]);
-
         }
         catch (Exception $e) {
             return view("login.signup", ["error" => true]);
