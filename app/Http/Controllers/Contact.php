@@ -132,10 +132,15 @@ class Contact extends Controller {
 
 
             if(isset($exploitable_data[$mail])){
+                // Push the message
                 array_push($exploitable_data[$mail], $toput);
+            
+                // Update the time of the last sended message 
                 $exploitable_data[$mail]["time"] = $data["time"];
             }
             else {
+
+                // Push the time of the message as well as the message himself
                 $exploitable_data[$mail] = [ "time" => $data["time"], $toput ];
             }
         }
