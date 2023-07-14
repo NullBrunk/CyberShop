@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactReq;
 use App\Http\Sql;
 
+use App\Models\Contact;
+use App\Models\User;
 
 /**
  * Get all the contact messages of the current user
@@ -20,21 +22,21 @@ function getmsgs($mail){
     $convs = Sql::query("
             SELECT * FROM
                 (
-                    SELECT contact.id,readed,content,id_contacted,users.mail as mail_contacted 
-                    FROM contact 
+                    SELECT contacts.id,readed,content,id_contacted,users.mail as mail_contacted 
+                    FROM contacts 
                     INNER JOIN 
                         users 
                     ON 
-                    contact.id_contacted = users.id
+                    contacts.id_contacted = users.id
                 ) as contacted
             INNER JOIN
                 (
-                    SELECT contact.id,readed,content,id_contactor,users.mail as mail_contactor,time 
-                    FROM contact 
+                    SELECT contacts.id,readed,content,id_contactor,users.mail as mail_contactor,time 
+                    FROM contacts 
                     INNER JOIN 
                         users 
                     ON 
-                        contact.id_contactor = users.id
+                        contacts.id_contactor = users.id
                 ) as contactor
 
             ON contacted.id = contactor.id 
@@ -52,48 +54,43 @@ function getmsgs($mail){
         return $convs;
 }
 
-class Contact extends Controller {
+class Contacts extends Controller {
 
     /**
      * Mark a contact message as readed
      *
-     * @param string $id     The id of the message to mark
+     * @param Contact $contact      The contact model
+     * @param string $id            The id of the message to mark
      * 
      * @return void   
      * 
      */
 
-    public function mark_readed($id){
+    public function mark_readed(Contact $comment, int $id){
 
-        Sql::query("
-            UPDATE contact 
-            SET 
-                readed = 1 
-            WHERE 
-                id_contacted = :me 
-            AND
-                id_contactor = :he
-            AND 
-                readed = 0
-        ", [
-            "me" => $_SESSION["id"],
-            "he" => $id,
+        $comment 
+        -> where("id_contacted", "=", $_SESSION["id"])
+        -> where("id_contactor", "=", $id)
+        -> where("readed", "=", 0)
+
+        -> update([ 
+          "readed" => 1,
         ]);
-
     }
-
 
 
     /**
      * Get all the messages of the user and show them
      *
+     * @param Contact $cont    Contact model
+     * @param User $user       User model
      * @param string $slug     A mail to show, or nothing
      * 
      * @return view            Une vue avec tous les messages échangés
      * 
      */
 
-    public function show($slug = false){
+    public function show(Contact $cont, User $user, $slug = false){
         
         # The array that wi'll be passed to the vue
         $exploitable_data = [];
@@ -162,22 +159,24 @@ class Contact extends Controller {
             # If the user is contacting himself
             if($slug === $_SESSION["mail"]){
                 $_SESSION["contact_yourself"] = true;
-                return redirect(route("contact"));  
+                return to_route("contact");  
             }
 
-            # We get the mail of the reqiested user
-            $id = Sql::id_from_mail($slug);
+            
+            # Get the mail of the requested user
+            $requested_user = $user -> where("mail", "=", $slug) -> get() -> toArray();
 
+            
             # If the requested user doses not exist
-            if(!$id)
+            if(empty($requested_user))
                 return abort(404);
 
 
             # Mark the messages of the conversations as readed
-            Contact::mark_readed($id);
+            self::mark_readed($cont,  $requested_user[0]["id"]);
+
 
             return view("user.contact", [ "contact" => $contact, "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
-
         }   
 
         else {
@@ -191,18 +190,21 @@ class Contact extends Controller {
      * Store a message sended to a specific user
      *
      * @param ContactReq $req     The request with all the informations
+     * @param Contact $contact    The contact model
+     * @param User $user          The user model
      * 
      * @return redirect           Redirect to the contact page with the right slug   
      * 
      */
 
-    public function store(ContactReq $req){
+    public function store(ContactReq $req, Contact $contact, User $user){
 
         # Get the slug
         $url = explode("/contact/", url() -> previous());
         
-        # If there is no slug, the user is trying to send a message to
-        # no one
+
+        # If there is no slug, the user is 
+        # trying to send a message to non existent user
 
         if(!isset($url[1])){
             return abort(403);
@@ -211,31 +213,34 @@ class Contact extends Controller {
             $mail = $url[1];
         }
         
+
         # Test if the user exists
-        $id = Sql::id_from_mail($mail);
+        $id = $user -> where("mail", "=", $mail) -> get() -> toArray();
+
         
-        if(!$id){
+        if(empty($id)){
             $_SESSION["contact_no_one"] = true;
             return redirect("/contact");
         }
+        else {
+            $id = $id[0]["id"];
+        }
+
 
         # Add the message
-        Sql::query("
-            INSERT INTO 
-                contact(
-                    readed, id_contactor, id_contacted, content, time
-                ) 
-            VALUES (
-                    FALSE, :id_contactor, :id_contacted, :content, :time
-                )
-        ", [
-            "id_contactor" => $_SESSION["id"],
-            "id_contacted" => $id,
-            "content" => $req["content"],
-            "time" => date('Y-m-d H:i:s')
-        ]);
 
-        return redirect(route("contactuser", $mail));
+        $contact -> id_contactor = $_SESSION["id"];
+        $contact -> id_contacted = $id;
+
+        $contact -> content = $req["content"];
+        
+        $contact -> time = date('Y-m-d H:i:s');
+        $contact -> readed = false;
+        
+        $contact -> save();
+
+    
+        return to_route("contactuser", $mail);
     }
 
 
@@ -243,24 +248,19 @@ class Contact extends Controller {
     /**
      * Delete a message from a conversation if the user is allowed to
      *
-     * @param int $slug     The id of the message to remove
+     * @param Contact $contact     The message to remove threw model binding
      * 
-     * @return redirect     Redirect to the previous url   
+     * @return redirect         Redirect to the previous url   
      * 
      */
 
-    public function delete($slug){
-
-        Sql::query("
-            DELETE FROM contact 
-            WHERE 
-                id=:slug 
-            AND 
-                id_contactor=:user
-        ", [
-            "slug" => $slug,
-            "user" => $_SESSION["id"]
-        ]);
+    public function delete(Contact $contact){
+        if($contact -> toArray()["id_contactor"] === $_SESSION["id"]){
+            $contact -> delete();
+        }
+        else {
+            return abort(403);
+        }
 
         return redirect(url() -> previous());
     }

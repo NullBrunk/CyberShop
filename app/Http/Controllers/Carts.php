@@ -100,6 +100,6 @@ class Carts extends Controller {
 
         unset($_SESSION["cart"][$id["id"]]);
 
-        return redirect(route("root"));
+        return to_route("root");
     }
 }

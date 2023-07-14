@@ -56,7 +56,7 @@ class Users extends Controller {
             $_SESSION['logged'] = true;
             $_SESSION['mail'] = $data['mail'];
 
-            return redirect(route("cart.initialize"));
+            return to_route("cart.initialize");
         }
         else {
 
@@ -125,7 +125,7 @@ class Users extends Controller {
 
         if(empty($verify_user)){
             $_SESSION["notsame"] = true;
-            return redirect(route("profile"));
+            return to_route("profile");
         }
 
         # The user is authorized     
@@ -141,14 +141,14 @@ class Users extends Controller {
         }
         catch (Exception $e){
             $_SESSION['nul'] = true;
-            return redirect(route("profile"));            
+            return to_route("profile");            
         }
 
 
         $_SESSION['mail'] = $req['email'];
         $_SESSION['done'] = true;
 
-        return redirect(route("profile"));
+        return to_route("profile");
     }
 
 
@@ -251,6 +251,6 @@ class Users extends Controller {
 
         $user -> where("id", "=", $_SESSION["id"]) -> delete();
 
-        return redirect(route("disconnect"));
+        return to_route("disconnect");
     }
 }

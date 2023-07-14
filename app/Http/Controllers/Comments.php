@@ -178,7 +178,7 @@ class Comments extends Controller {
 
         $_SESSION['updated'] = true;
 
-        return redirect(route("details", $req["id_product"]));
+        return to_route("details", $req["id_product"]);
         
     }
 }

@@ -33,7 +33,7 @@ function show(){
 
     // We order by id DESC to get latest notification in first
     $data = Sql::query("
-        SELECT * FROM contact
+        SELECT * FROM contacts
         WHERE 
             id_contacted = :id
         AND 

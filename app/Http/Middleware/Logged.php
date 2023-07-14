@@ -24,7 +24,7 @@ class Logged
         } 
         
         if(!isset($_SESSION['logged'])){
-            return redirect(route("login"));
+            return to_route("login");
         }
 
         return $next($request);

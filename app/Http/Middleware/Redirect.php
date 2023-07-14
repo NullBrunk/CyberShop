@@ -20,7 +20,7 @@ class Redirect
         }
 
         if(isset($_SESSION["logged"])){
-            return redirect(route("root"));
+            return to_route("root");
         }
 
         return $next($request);

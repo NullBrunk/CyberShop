@@ -238,7 +238,7 @@ class Products extends Controller
         if($req["submit"] === "delete"){
             self::delete($id);
             $_SESSION["deletedproduct"] = true;
-            return redirect(route("root"));
+            return to_route("root");
         }
         
         $data = is_from_user($id);
@@ -280,7 +280,7 @@ class Products extends Controller
 
         $_SESSION["done"] = "updated";
 
-        return redirect(route("details", $id));
+        return to_route("details", $id);
     }
 
 

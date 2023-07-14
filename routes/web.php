@@ -7,8 +7,8 @@ use App\Http\Middleware\Logged;
 
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
+use App\Http\Controllers\Contacts;
 use App\Http\Controllers\Details;
-use App\Http\Controllers\Contact;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Index;
 use App\Http\Controllers\Carts;
@@ -200,25 +200,25 @@ Route::prefix('contact') -> group(function () {
 
     Route::get(
         "",
-        [ Contact::class, "show"]
+        [ Contacts::class, "show"]
     ) -> middleware(Logged::class) -> name("contact");
 
 
     Route::get(
         "{slug}",
-        [ Contact::class, "show"]
+        [ Contacts::class, "show"]
     ) -> middleware(Logged::class) -> name("contactuser");
 
 
     Route::post(
         "",
-        [ Contact::class, "store"]
+        [ Contacts::class, "store"]
     ) -> middleware(Logged::class);
 
     
     Route::get(
-        "delete/{slug}",
-        [ Contact::class, "delete"]
+        "delete/{contact}",
+        [ Contacts::class, "delete"]
     ) -> middleware(Logged::class) -> name("delete");
 
 });

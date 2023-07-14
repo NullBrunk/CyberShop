@@ -33,31 +33,5 @@ class Sql {
             return $sql -> fetch(\PDO::FETCH_ASSOC);
         }
     }
-
-
-
-    /**
-     * Convert an id to a mail address
-     *
-     * @param string     $mail  The mail of the user
-     * 
-     * @return array     An array with the id of the user or nothing
-     *                   if the user does not exists.
-     */
-
-    public static function id_from_mail(string $mail){
-        $data = Sql::query(
-            "SELECT id FROM users WHERE mail=:mail",
-            ["mail" => $mail],
-            "fetch"
-        );
-
-        if($data) {
-            return $data["id"];
-        }
-        else {
-            return false;
-        }
-    }
 }
 
