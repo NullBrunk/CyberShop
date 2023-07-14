@@ -43,13 +43,8 @@
                             
                                 {{ csrf_field() }}
 
-                                @error("email")
-                                    <div class="alert alert-danger">
-                                        You must enter a valid mail adress
-                                    </div>
-                                @enderror
                                                                    
-                                @if(isset($error))
+                                @error("email")
                                     <div class="alert alert-danger">
                                         Error in account creation !
                                     </div>

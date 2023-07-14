@@ -60,7 +60,9 @@ class Users extends Controller {
         }
         else {
 
-            return redirect(route("login") . "?f");
+            return to_route("login") -> withErrors([
+                "email" => "Wrong mail or password !"
+            ]) -> onlyInput("email");
         }
     }
 
@@ -87,10 +89,12 @@ class Users extends Controller {
             $user -> save();
         }
         catch(Exception $e){
-            return view("login.signup", ["error" => true]);
+            return to_route("signup") -> withErrors([
+                "email" => "An error has occured"
+            ])->withInput($request->input());
         }
 
-        return redirect("/login");
+        return to_route("login");
 
     }
 

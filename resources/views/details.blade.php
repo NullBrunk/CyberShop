@@ -377,7 +377,7 @@
                                                     }).then((result) => {
                                                         // On redirige vers la page permettant de supprimer le commentaire
                                                         if (result.isConfirmed) {
-                                                            window.location.href = "/comments/delete/{{ $data['pid'] }}/" + commid 
+                                                            window.location.href = "/comments/delete/" + commid + "/{{ $data['pid'] }}"
                                                         }
                                                     })
                                                 }

@@ -25,9 +25,7 @@ use App\Http\Controllers\Carts;
 Route::view("/todo", "static.todo");
 
 # Index page
-
 Route::get('/', Index::class ) -> name("root");
-
 
 # SearchBar
 Route::view("/search", "search") -> name("articles");
@@ -114,12 +112,12 @@ Route::prefix('comments') -> group(function () {
 
 
     Route::get(
-        "/delete/{article}/{id}",
+        "/delete/{comment}/{article}",
         [ Comments::class, "delete" ]
     ) -> middleware(Logged::class) -> name("comment.delete");
 
     Route::get(
-        "/update/{slug}",
+        "/update/{comment}",
         [ Comments::class, "get_update_form" ]
     ) -> middleware(Logged::class) -> name("comment.update_form");
 

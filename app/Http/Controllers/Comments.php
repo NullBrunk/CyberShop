@@ -4,66 +4,77 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreComments;
 use App\Http\Requests\UpdateComment;
-use App\Http\Sql;
+
+
+use App\Models\Comment;
+use App\Models\Notif;
 
 
 class Comments extends Controller {
 
-    
-    public function getid(){
-        return Sql::query(
-            "SELECT * FROM comments WHERE id_user=:id ORDER BY id DESC LIMIT 1",
-            ["id" => $_SESSION["id"]]
-        )[0]['id'];
+    /**
+     * Get the id of the latest user comment
+     * 
+     * @param Comment $comment      the Comment model
+     * 
+     * @return int                  the id
+     * 
+     */
+
+    public function getid(Comment $comment){
+
+        return $comment -> where("id_user", "=", $_SESSION["id"]) 
+                        -> orderBy("id", "desc") 
+                        -> limit(1) 
+                        -> get() 
+                        -> toArray()[0]["id"];
     }
     
+
+
     /**
      * Store a comment in the database.
      *
      * @param StoreComments $req     The informations of the comments.
+     * @param Comment $comment       The comment model
+     * @param Notif $notif           The notif model
+     * @param int $slug              The id of the seller of the product (to notify it)
      * 
      * @return redirect              Redirection to the page where the user 
      *                               commented.
      * 
      */
 
-    public function store(StoreComments $req, $slug){
+    public function store(StoreComments $req, Comment $comment, Notif $notif, $slug){
         
-        # store the comment 
-        Sql::query("
-            INSERT INTO comments
-                (`id_product`, `id_user`, `title`, `content`, `writed_at`, `rating`)
-            VALUES
-                (:id_product, :id_user, :title, :comment, :writed_at, :rating)
-        ", [
-            "id_product" => $req["id"], 
-            "writed_at" => date('Y-m-d H:i:s'),
-            "id_user" => $_SESSION['id'],
-            "title" => $req['title'],
-            "comment" => htmlspecialchars($req["comment"]),
-            "rating" => $req["rating"],
+        # Store the comment in the database 
 
-        ]);
+        $comment -> id_product = $req["id"];
+        $comment -> writed_at = date('Y-m-d H:i:s');
+        $comment -> id_user = $_SESSION['id'];
+        $comment -> title = $req['title'];
+        $comment -> content = htmlspecialchars($req["comment"]);
+        $comment -> rating = $req["rating"];
 
-        
-        # generate a notifications to the seller of the product
-        Sql::query("
-            INSERT INTO notifs(id_user, icon, name, content, link, type, moreinfo)
-            VALUES (:id_user, :icon, :name, :content, :link, :type, :moreinfo)
-        ", [
-            "id_user" => $slug,
-            "icon" => "bx bx-detail",
-            "name" => "Commented product.",
-            "content" => "From " . $_SESSION["mail"] . ".",
-            "link" => route("details", $req["id"]) . "#div" . self::getid(),
-            "type" => "comment",
-            "moreinfo" => $req["id"],
-        ]);
+        $comment -> save();
 
 
+        # Generate a notifications to the seller of the product
+
+        $notif -> id_user = $slug;
+        $notif -> icon = "bx bx-detail";
+        $notif -> name = "Commented product.";
+        $notif -> content = "From " . $_SESSION["mail"] . ".";
+        $notif -> link = route("details", $req["id"]) . "#div" . self::getid($comment);
+        $notif -> type = "comment";
+        $notif -> moreinfo = $req["id"];
+
+        $notif -> save();
+
+    
         $_SESSION['done'] = true;
 
-        return redirect(route("details", $req["id"]));
+        return to_route("details", $req["id"]);
     }
 
 
@@ -71,33 +82,22 @@ class Comments extends Controller {
     /**
      * Get all the comment of a given product
      *
-     * @param StoreComments $id     The id of the product.
+     * @param Comment $comment      The comment model  
+     * @param int $id               The id of the product.
      * 
      * @return array                A hashmap with all the comments of 
      *                              the product.
      * 
      */
 
-    public function get($id){
+    public function get(Comment $comment, $id){
         
-        $data = Sql::query("
-            SELECT 
-                comments.id, rating, id_product,
-                content, writed_at, mail, title
-
-            FROM comments
-            INNER JOIN users 
-            ON 
-                users.id=comments.id_user
-    
-            WHERE 
-                id_product=:id
-        
-            ORDER BY writed_at DESC
-        ", [
-            "id" => $id
-        ]);
-        
+        $data = $comment
+                -> select('comments.id', 'rating', 'id_product', 'content', 'writed_at', 'mail', 'title')
+                -> join('users', 'users.id', '=', 'comments.id_user')
+                -> where('id_product', '=', $id )
+                -> orderBy("id", "desc")
+                -> get() -> toArray();
 
         if(empty($data)){
             return abort(404);
@@ -111,99 +111,70 @@ class Comments extends Controller {
     /**
      * Delete a comment from the database
      *
-     * @param int $article     The id of the commented product
-     * @param int $id          The id of the comment
+     * @param Comment $comment      Model binding of the comment threw his id
+     * @param int $article          The id of the commented product
      * 
-     * @return redirect        Redirection to the page where the user commented 
-     *                         (thanks to the $article variable).
+     * @return redirect             Redirection to the page where the user commented 
+     *                              (thanks to the $article variable).
      */
 
-    public function delete($article, $id){
+    public function delete(Comment $comment, $article){
 
-        Sql::query("
-            DELETE FROM comments 
-            WHERE 
-                id=:id 
-            AND 
-                id_user=:id_user
-        ", [
-            "id_user" => $_SESSION["id"],
-            "id" => $id
-        ]);
+        if($comment["id_user"] === $_SESSION["id"]){
+            $comment -> delete();
+        }
+        else {
+            return abort(403);
+        }
 
-        return redirect(route("details", $article));
+        return to_route("details", $article);
     }
-
 
 
     /**
      * Get a view of an update form to update a given comment
      *
-     * @param int $slug     The id of the comment
+     * @param int $comment     Model binding of the comment threw his id
      * 
      * @return view         A view with a form to edit the comment
      */
 
-    public function get_update_form($slug){
-        
-        $data = Sql::query("
-            SELECT * FROM comments 
-            WHERE 
-                id_user=:id_user
-            AND 
-                id=:id 
-        ", [
-            "id_user" => $_SESSION["id"],
-            "id" => $slug
-        ]);
-
-        # if there is no such comment OR the comment is not from the current user
-        if(empty($data)){
-            return abort(403);
+    public function get_update_form(Comment $comment){
+        if($comment["id_user"] === $_SESSION["id"]){
+            return view("user.updatecomment", [ "data" => $comment-> toArray() ]);
         }
         else {
-            return view("user.updatecomment", [ "data" => $data[0] ]);
+            return abort(403);
         }
     }
-
 
 
     /**
      * Update a comment into the database
      *
      * @param UpdateComment $req     The new informations to put in the comment
+     * @param Comment $comment       The comment model
      * 
      * @return redirect              Redirection to the location where the comment 
      *                               has been posted.
      */
 
-    public function update(UpdateComment $req){
+    public function update(UpdateComment $req, Comment $comment){
 
-        // If the user clicked the abort button
+        # If the user clicked on the abort button
         if($req["abort"] === "Abort"){
-            return redirect(route("details", $req["id_product"]));
+            return to_route("details", $req["id_product"]);
         }
 
-        Sql::query("
-            UPDATE comments
-            SET 
-                `title` = :title , 
-                `content` = :comment, 
-                `writed_at` = :writed_at, 
-                `rating` = :rating
-
-            WHERE
-                `id_user` = :id_user          
-            AND 
-                `id` = :id
-        ", [
-            "id" => $req["id"], 
-            "writed_at" => date('Y-m-d H:i:s'),
-            "id_user" => $_SESSION['id'],
-            "title" => $req['title'],
-            "comment" => htmlspecialchars($req["comment"]),
-            "rating" => $req["rating"],
-        ]);
+        $comment 
+            -> where("id_user", "=", $_SESSION['id'])
+            -> where("id", "=", $req["id"])
+            -> update([ 
+                "writed_at" => date('Y-m-d H:i:s'),
+                "title" => $req['title'],
+                "content" => htmlspecialchars($req["comment"]),
+                "rating" => $req["rating"], 
+            ]);
 
         $_SESSION['updated'] = true;
 
