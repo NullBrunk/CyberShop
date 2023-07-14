@@ -8,14 +8,12 @@ use App\Http\Requests\UpdateProfile;
 use App\Http\Requests\Signup;
 use App\Http\Requests\Login;
 
-
 use App\Models\Product;
 use App\Models\Comment;
+use App\Models\Contact;
 use App\Models\Notif;
 use App\Models\User;
 use App\Models\Cart;
-
-use App\Http\Sql;
 
 use Exception;
 
@@ -190,7 +188,7 @@ class Users extends Controller {
      * 
      */
 
-    public function delete(User $user, Product $product, Notif $notif, Cart $cart, Comment $comment){
+    public function delete(User $user, Product $product, Notif $notif, Cart $cart, Comment $comment, Contact $contact){
 
 
         # Delete images linked to the users products
@@ -208,15 +206,8 @@ class Users extends Controller {
         # Delete all the user comments
         $comment -> where("id", "=", $_SESSION["id"]) -> delete();
 
-                
-        # Delete comments under user products
 
-        $c = Sql::query(
-            "SELECT * FROM products WHERE id_user=:id",
-            [ "id" => $_SESSION["id"] ]
-        );
-
-        foreach($c as $pr){
+        foreach($product -> where("id", "=", $_SESSION["id"] ) -> get() -> toArray() as $pr){
             
             # Comments under user products
             $comment -> where("id_product", "=", $pr["id"]) -> delete();
@@ -239,12 +230,7 @@ class Users extends Controller {
         $cart -> where("id_user", "=", $_SESSION["id"]) -> delete();
 
         # Delete contacts messages from the user
-
-        Sql::query("
-            DELETE FROM contact WHERE id_contactor=:id OR id_contacted=:id",
-            [ "id" => $_SESSION["id"] ]
-        );
-
+        $comment -> where("id_contactor", "=", $_SESSION["id"]) -> orWhere("id_contacted", "=", $_SESSION["id"]) -> delete();
 
         # Delete the user itself
         # finally ... phew

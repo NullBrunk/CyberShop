@@ -7,8 +7,6 @@ use App\Http\Requests\ContactReq;
 use App\Models\Contact;
 use App\Models\User;
 
-use App\Http\Sql;
-
 
 /**
  * Get all the contact messages of the current user
@@ -20,40 +18,43 @@ use App\Http\Sql;
  */
 
 function getmsgs($mail){
-    
-    $convs = Sql::query("
-            SELECT * FROM
-                (
-                    SELECT contacts.id,readed,content,id_contacted,users.mail as mail_contacted 
-                    FROM contacts 
-                    INNER JOIN 
-                        users 
-                    ON 
-                    contacts.id_contacted = users.id
-                ) as contacted
-            INNER JOIN
-                (
-                    SELECT contacts.id,readed,content,id_contactor,users.mail as mail_contactor,time 
-                    FROM contacts 
-                    INNER JOIN 
-                        users 
-                    ON 
-                        contacts.id_contactor = users.id
-                ) as contactor
 
-            ON contacted.id = contactor.id 
+    $pdo = new \PDO("mysql:host=localhost;dbname=" . env("DB_DATABASE"), env("DB_USERNAME"), env("DB_PASSWORD"));
 
-            WHERE 
-                contacted.mail_contacted = :mail 
-            OR 
-                contactor.mail_contactor = :mail
+    $sql = $pdo -> prepare("
+        SELECT * FROM
+            (
+                SELECT contacts.id,readed,content,id_contacted,users.mail as mail_contacted 
+                FROM contacts 
+                INNER JOIN 
+                    users 
+                ON 
+                contacts.id_contacted = users.id
+            ) as contacted
+        INNER JOIN
+            (
+                SELECT contacts.id,readed,content,id_contactor,users.mail as mail_contactor,time 
+                FROM contacts 
+                INNER JOIN 
+                    users 
+                ON 
+                    contacts.id_contactor = users.id
+            ) as contactor
 
-            ORDER BY contacted.id
-        ", [
-            "mail" => $mail
-        ]);
+        ON contacted.id = contactor.id 
 
-        return $convs;
+        WHERE 
+            contacted.mail_contacted = :mail 
+        OR 
+            contactor.mail_contactor = :mail
+
+        ORDER BY contacted.id
+    ");
+    $sql -> execute([
+        "mail" => $mail
+    ]);
+
+    return $sql -> fetchall(\PDO::FETCH_ASSOC);
 }
 
 class Contacts extends Controller {

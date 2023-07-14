@@ -1,6 +1,9 @@
 <?php
 
-use App\Http\Sql;
+use App\Models\Contact;
+use App\Models\Notif;
+use App\Models\User;
+
 
 /**
  * Get a mail from a user id
@@ -10,17 +13,8 @@ use App\Http\Sql;
  * @return array  An array with the result.
  */
 function mail_from_id($id){
-
-    $pdo = new \PDO(
-        "mysql:host=localhost;dbname=" . env("DB_DATABASE"), 
-        env("DB_USERNAME"), 
-        env("DB_PASSWORD")
-    );
-
-    $mail = $pdo -> prepare("SELECT mail FROM users WHERE id=:id");
-    $mail -> execute([ "id" => $id ]);
-
-    return $mail -> fetch(PDO::FETCH_ASSOC);
+    $user = new User();
+    return $user -> select("mail") -> where("id", "=", $id) -> get() -> toArray();
 }
 
 
@@ -31,25 +25,27 @@ function mail_from_id($id){
  */
 function show(){
 
-    // We order by id DESC to get latest notification in first
-    $data = Sql::query("
-        SELECT * FROM contacts
-        WHERE 
-            id_contacted = :id
-        AND 
-            readed = 0
-        
-        ORDER BY id DESC;
-    ", [ "id" => $_SESSION["id"] ]);
+    # We order by id DESC to get latest notification in first
+    $contact = new Contact();
+    $notif = new Notif();
+
+    $data = $contact 
+        -> where("id_contacted", "=", $_SESSION["id"]) 
+        -> where("readed", "=", 0)
+        -> orderBy("id", "desc")
+        -> get()
+        -> toArray();
+
 
     
-    // We build and array with all the notifications in it
+    // We build an array with all the notifications in it
     
     $to_push = [];
     $notif_number = 0;
 
-    foreach(Sql::query("SELECT * FROM notifs WHERE id_user = :id AND type=:type ORDER BY id DESC;", [ "id" => $_SESSION["id"], "type" => "comment" ]) as $d) {
- 
+    
+
+    foreach($notif -> where("id_user", "=", $_SESSION["id"]) -> where("type", "=", "comment") -> orderBy("id", "desc") -> get() -> toArray() as $d) {
         $to_push["o" . $d["id"]] = 
         [  
             "icon" => $d['icon'],
@@ -66,10 +62,10 @@ function show(){
 
         // Cause we desplay the mail of the contactor on the notification
         if($d["id_contactor"] === $_SESSION["id"]){
-            $mail = mail_from_id($d["id_contacted"])["mail"];
+            $mail = mail_from_id($d["id_contacted"])[0]["mail"];
         }
         else {
-            $mail = mail_from_id($d["id_contactor"])["mail"];
+            $mail = mail_from_id($d["id_contactor"])[0]["mail"];
         }
         
         if(isset($to_push[$mail])){
