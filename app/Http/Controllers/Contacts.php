@@ -9,7 +9,7 @@ use App\Models\User;
 
 
 /**
- * Get all the contact messages of the current user
+ * Get all the contact messages of the current user using PDO
  *
  * @param int $mail     The mail of the current user
  * 
