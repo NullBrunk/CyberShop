@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ContactReq;
-use App\Http\Sql;
 
 use App\Models\Contact;
 use App\Models\User;
+
+use App\Http\Sql;
+
 
 /**
  * Get all the contact messages of the current user
