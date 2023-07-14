@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Http;
-use App\Http\Sql;
+
+
+use App\Models\Product;
+use App\Models\Notif;
 
 
 class Details extends Controller {
@@ -11,90 +14,75 @@ class Details extends Controller {
     /**
      * Get the details of a given product
      *
-     * @param int      $product_id  The id of the product
+     * @param Product $product      The product model
+     * @param Notif $notif          The notif model
+     * @param int $product_id       The id of the product
      * 
-     * @return view    A view with all the details of
-     *                 the product, including comments
-     *                 technicals details, rating etc. 
+     * @return view                 A view with all the details of
+     *                              the product, including comments
+     *                              technicals details, rating etc. 
      * 
      */
 
-    public function get_details($product_id){
+    public function get_details(Product $product, Notif $notif, $product_id){
                     
-        # Get the user that sell the product, and all the details
-        $data = Sql::query("
-            SELECT 
-                users.id as uid, products.id as pid, 
-                id_user, price, descr, class, mail, 
-                image, name 
-            FROM products
-            
-            INNER JOIN users 
-            ON 
-                users.id=products.id_user 
-            WHERE 
-                products.id=:id
-
-            ORDER BY products.id DESC
-        ", [ "id" => $product_id ] );
+        $data = $product
+            -> select("users.id as uid", "products.id as pid", "id_user", "price", "descr", "class", "mail", "image", "name")
+            -> join('users', 'users.id', '=', 'products.id_user')
+            -> where('products.id', '=', $product_id )
+            -> get()
+            -> toArray();
 
 
-
-        # If this product exists
-        if(!empty($data)){
-
+        if(empty($data)){
+            abort(404);
+        }
+        else {
             $data = $data[0];
-
-            # Delete all notifications linked to it
-            
-            session_start();
-
-            if(isset($_SESSION["logged"])){
-                Sql::query("
-                    DELETE FROM notifs 
-                    WHERE 
-                        id_user=:id_user 
-                    AND 
-                        type=:type 
-                    AND moreinfo=:moreinfo
-                    ", [
-                        "id_user" => $_SESSION["id"],
-                        "type" => "comment",
-                        "moreinfo" => $product_id,
-                    ]
-                );
-
-            }
-
-            # Get all the comments of the product
-            $comment_req = Http::get('http://127.0.0.1:8000/api/comments/'. $data['pid']);
-
-            
-            # If API returns 404, that means that there is no comments
-            if($comment_req -> notFound()){
-                $comments = [];
-            }
-            else {
-                $comments = $comment_req -> body();
-            }
-
-            # Get the rating of this product
-            $rating_req = Http::get('http://127.0.0.1:8000/api/rating/'. $data['pid']);
-            
-
-            # If API returns 404, that means that there is no rating
-            if($rating_req -> notFound()){
-                $rating = null;
-            }
-            else {
-                $rating = json_decode($rating_req -> body(), 1);
-            }
-
-            return view("details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
         }
 
+        
+        # Delete all notifications linked to it
+        
+        session_start();
+
+        if(isset($_SESSION["logged"])){
+
+            $notif 
+                -> where("id_user", "=", $_SESSION["id"]) 
+                -> where("type", "=", "comment")
+                -> where("moreinfo", "=", $product_id)
+                -> delete();
+
+        }
+
+        # Get all the comments of the product
+        $comment_req = Http::get('http://127.0.0.1:8000/api/comments/'. $data['pid']);
+
+        
+        # If API returns 404, that means that there is no comments
+        if($comment_req -> notFound()){
+            $comments = [];
+        }
         else {
-            abort(404);
-        }       
+            $comments = $comment_req -> body();
+        }
+
+        # Get the rating of this product
+        $rating_req = Http::get('http://127.0.0.1:8000/api/rating/'. $data['pid']);
+        
+
+        # If API returns 404, that means that there is no rating
+        if($rating_req -> notFound()){
+            $rating = null;
+        }
+        else {
+            $rating = json_decode($rating_req -> body(), 1);
+        }
+
+        return view("details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
+    
+
+   
     }
 }

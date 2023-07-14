@@ -6,39 +6,32 @@ use App\Http\Requests\StoreReq;
 use App\Http\Requests\UpdateProduct;
 
 use Illuminate\Support\Facades\Storage;
-use App\Http\Sql;
+
+
+use App\Models\Product;
+use App\Models\Comment;
+use App\Models\Cart;
+
 
 /**
  * Test if a product is from a given user
  *
- * @param int $id     The id of the product
+ * @param Product $product       The product model 
+ * @param int $id                The id of the product
  *  
- * @return array      An empty array if not, a fill array if yes
+ * @return array                 An empty array if not, a fill array if yes
  * 
  */
 
-function is_from_user($id){
-
-    $validate = Sql::query("
-        SELECT 
-            users.id as uid, products.id as pid, 
-            id_user, price, descr, class, mail, image,
-            name 
-                
-        FROM products 
-        INNER JOIN users 
-        ON 
-            users.id=products.id_user 
-        WHERE 
-            products.id=:id_product
-        AND 
-            id_user=:id_user
-    ", [
-        "id_user" => $_SESSION['id'],
-        "id_product" => $id 
-    ]);
-
-    return $validate;
+function is_from_user(Product $product, $id){
+    
+    return $product 
+    -> select("users.id as uid", "products.id as pid", "id_user", "price", "descr", "class", "mail", "image", "name")
+    -> join('users', 'users.id', '=', 'products.id_user')
+    -> where('products.id', '=', $id )
+    -> where('id_user', '=', $_SESSION['id'] )
+    -> get()
+    -> toArray();
 }
 
 class Products extends Controller
@@ -47,39 +40,36 @@ class Products extends Controller
     /**
      * Search threw all the product with a LIKE operator
      *
+     * @param Product $product   The product model
      * @param string $search     The product to search
      *  
      * @return array             The products that matched the like
      * 
      */
-    public function search(string $search) : array
+    public function search(Product $product, string $search) : array
     {
 
-        $data = Sql::query("
-            SELECT id,image,price,class 
-            FROM products 
-            WHERE 
-                `name` LIKE CONCAT('%', :search, '%')
-        ", [ "search" => $search ]);
-
-
-        return ($data);
+        return $product 
+            -> select("id", "image", "price", "class")
+            -> where("name", "like", "%" . $search . "%")
+            -> get()
+            -> toArray();
     }
-
 
 
     /**
      * Store a product from the /sell page.
      *
-     * @param StoreReq $req     The request with all the informations
+     * @param StoreReq $req      The request with all the informations
+     * @param Product $product   The product model
      *  
      * @return view             Return the view of /sell (will change)
      * 
      */
 
-     public function store(StoreReq $req){      
+     public function store(StoreReq $req, Product $product){      
 
-        # If te user category is a valid category 
+        # Check if te user category is a valid category 
 
         if(!in_array($req["category"], [ 
             "filter-laptop", 
@@ -90,6 +80,7 @@ class Products extends Controller
         ])){
             return abort(403);
         }
+
 
         # Test the image 
 
@@ -104,20 +95,17 @@ class Products extends Controller
 
             # Store the product 
 
-            
-            Sql::query("
-                INSERT INTO 
-                    products(`id_user`, `name`, `price`, `descr`, `class`, `image`)
-                VALUES
-                    (:id_user, :name, :price, :descr, :class, :image)
-            ", [
-                "id_user" => $_SESSION["id"],
-                "name" => $req["name"],
-                "price" => $req["price"],
-                "descr" => $req["description"],
-                "class" => $req["category"],
-                "image" => substr($imgPath, 12),
-            ]);
+            $product -> id_user = $_SESSION["id"];
+
+            $product -> name = $req["name"];
+            $product -> descr = $req["description"];
+            $product -> price = $req["price"];
+
+            $product -> class = $req["category"];
+            $product -> image = substr($imgPath, 12);
+
+            $product -> save();
+
         }
 
         else {
@@ -129,88 +117,67 @@ class Products extends Controller
         $_SESSION["done"] = true;
         return view("sell");
     }
-   
-    
+
 
     /**
      * Delete a given product if the user is allowed to 
      *
-     * @param int $id     The id of the product
+     * @param int $id               The id of the product
+     * @param Product $product      The product model
+     * @param Comment $comment      The comment model
+     * @param cart $cart            The cart model
      *  
-     * @return redirect   Redirection to / if success, or to a 403
-     *                    page if not.
+     * @return redirect             Redirection to / if success, or to a 403
+     *                              page if not.
      * 
      */
 
-    public function delete($id){
+    public function delete(Product $product, Comment $comment, Cart $cart, $id){
 
         # Check if the product exists and is selled by the current user
 
-        $data = Sql::query("
-            SELECT * FROM products 
-            WHERE 
-                id=:product_id 
-            AND 
-                id_user=:id_user
-        ", [
-            "product_id" => $id,
-            "id_user" => $_SESSION["id"],
-        ]); 
-    
-        if(empty($data)){
+        $data = $product -> findOrFail($id) -> toArray();
+        if($data["id_user"] !== $_SESSION["id"] or empty($data)){
             return abort(403);
         }
-   
+       
 
         # Delete the image associated with the product
-        Storage::disk("public") -> delete("product_img/" . $data[0]['image']);
+        Storage::disk("public") -> delete("product_img/" . $data['image']);
 
 
         # Delete comments attached to the product
-        Sql::query("
-            DELETE FROM comments WHERE id_product=:id
-        ", ["id" => $id]
-        );
+        $comment -> where("id_product", "=", $id) -> delete();
 
 
         # Delete all the cart where product exists
-        Sql::query("
-            DELETE FROM cart WHERE id_product=:id
-        ", ["id" => $id]);
+        $cart -> where("id_product", "=", $id) -> delete();
 
 
         # Delete the product itself
-        Sql::query("
-            DELETE FROM 
-                products 
-            WHERE 
-                id=:product_id 
-            AND 
-                id_user=:id_user
-        ", [
-            "product_id" => $id,
-            "id_user" => $_SESSION["id"],
-        ]);
+        $product -> where("id", "=", $id) -> delete();
 
-        return redirect("/");
+        return to_route("root");
+
     }
-
 
 
     /**
      * Show an update form to update a product if the user is allowed to 
      * 
-     * @param int $id          The id of the product
+     * @param Product $product      The product model
+     * @param int $id               The id of the product
      *  
-     * @return abort | view    a 403 page if he is not allowed
-     *                         a view if he is.
+     * @return abort | view         a 403 page if he is not allowed
+     *                              a view if he is.
      * 
      */
 
-    public function show_update_form($id){
+    public function show_update_form(Product $product, $id){
 
-        $data = is_from_user($id);
-        if(!$data){
+        $data = is_from_user($product, $id);
+        
+        if(empty($data)){
             return abort(403);
         }
 
@@ -222,8 +189,11 @@ class Products extends Controller
     /**
      * Update a product if the user is allowed to
      *
-     * @param int $id               The id of the product
-     * @param UpdateProduct $req    The informations of the new product 
+     * @param UpdateProduct $req     The informations of the new product 
+     * @param Product $product       The product model
+     * @param Comment $comment       The comment model
+     * @param Cart $cart             The cart model
+     * @param int $id                The id of the product
      * 
      * @return redirect              A 403 page if he is not allowed
      *                               redirect to the page of the updated product
@@ -231,18 +201,18 @@ class Products extends Controller
      * 
      */
 
-    public function update($id, UpdateProduct $req){
+    public function update(UpdateProduct $req, Product $product, Comment $comment, Cart $cart, $id, ){
 
         # If the user clicked on the delete button 
 
         if($req["submit"] === "delete"){
-            self::delete($id);
+            self::delete($product, $comment, $cart, $id);
             $_SESSION["deletedproduct"] = true;
             return to_route("root");
         }
         
-        $data = is_from_user($id);
-        if(!$data){
+        $data = is_from_user($product, $id);
+        if(empty($data)){
             return abort(403);
         }
 
@@ -259,24 +229,16 @@ class Products extends Controller
             return abort(403);
         }
 
-        Sql::query("
-            UPDATE products 
-            SET
-                `name`=:name, 
-                `price`=:price, 
-                `class`=:class, 
-                `descr`=:descr
-            WHERE
-                id=:product_id
-            ",
-            [
-                "name" => $req["name"],
-                "price" => $req["price"],
-                "descr" => $req["description"],
-                "class" => $req["category"],
-                "product_id" => $id
-            ]);
-            
+
+        $product 
+        -> where("id", "=", $id)
+        -> update([
+            "name" => $req["name"],
+            "price" => $req["price"],
+            "descr" => $req["description"],
+            "class" => $req["category"],
+        ]);
+
 
         $_SESSION["done"] = "updated";
 
@@ -288,6 +250,7 @@ class Products extends Controller
     /**
      * Calculate the different rating (rounded, real, number of rates) 
      *
+     * @param Comment $comment      The comments model
      * @param int $id               The id of the product
      *  
      * @return array | redirect     An array with all the valuable informations
@@ -295,37 +258,22 @@ class Products extends Controller
      * 
      */
     
-    public function rating($id){
+    public function rating(Comment $comment, $id){
 
-        # Get the sum of all the rates
-        $rating = Sql::query("
-            SELECT SUM(rating) as rating FROM comments 
-            WHERE 
-                id_product=:id 
-        ", [ "id" => $id, ]);
-
-        $rating = $rating[0]["rating"];
+        $rating = $comment 
+            -> where("id_product", "=", $id)
+            -> sum("rating") ;
 
 
-        # Get the number of person ho gave a rate
-        $number = Sql::query("
-            SELECT COUNT(*) as number FROM comments 
-            WHERE 
-                id_product=:id
-        ", [ "id" => $id, ]);
-        $number = $number[0]["number"];
-
+        $number = $comment -> where("id_product", "=", $id) -> get() -> count();
 
         if(!($number === 0)){
-
             return [
                 "round" => intdiv($rating, $number),
                 "real" => round($rating / $number, 1),
                 "rate" => (int)$number,
             ];
-
         }
-        
         else {
             return abort(404);
         }

@@ -116,7 +116,7 @@
                                                 id="textarea" class="textarea-beautify" 
                                                 type="text" name="description"
                                             >
-                                                {{$data["descr"]}}
+{{$data["descr"]}}
                                             </textarea>      
                                         </p> 
                                     </div>
