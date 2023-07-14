@@ -45,8 +45,8 @@ class Carts extends Controller {
      * to change the content of the session.
      *
      * @param Request $req         The infotmations of the commended product.
-     * @param Cart $cart           The cart model
      * @param Product $product     The product model
+     * @param Cart $cart           The cart model
      *     
      * @return redirect            Redirection to the cart or to a 403 page if 
      *                             the user is not authorized.
@@ -83,26 +83,22 @@ class Carts extends Controller {
     /**
      * Remove a product from teh SESSION cart and from the Database.
      *
-     * @param int $id       The id of the product in the cart table.
-     * @param Cart $cart    The cart model
+     * @param Cart $id      The concerned produc (threw model binding)
      * 
      * @return redirect     Redirection a redirection, but this method is always
      *                      called from js in a fetch(), so no matter what it returns
      * 
      */
 
-    public function remove(Cart $cart, $id){
+    public function remove(Cart $id){
 
-        if(!isset($_SESSION["cart"][$id])){
-            return abort(403);
+
+        if ($id["id_user"] === $_SESSION["id"]){
+            $id -> delete();
         }
+    
 
-        $cart -> where([
-            ["id", "=", $id],
-            ["id_user", "=", $_SESSION["id"]]
-        ]) -> delete();
-
-        unset($_SESSION["cart"][$id]);
+        unset($_SESSION["cart"][$id["id"]]);
 
         return redirect(route("root"));
     }
