@@ -11,7 +11,7 @@ use App\Http\Controllers\Details;
 use App\Http\Controllers\Contact;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Index;
-use App\Http\Controllers\Cart;
+use App\Http\Controllers\Carts;
 
 
 
@@ -82,17 +82,17 @@ Route::prefix('cart') -> group(function () {
 
     Route::get(
         "",
-        [ Cart::class, 'initialize' ]
+        [ Carts::class, 'initialize' ]
     ) -> middleware(Logged::class) -> name("cart.initialize");
 
     Route::post(
         "/add", 
-        [ Cart::class, 'add' ] 
+        [ Carts::class, 'add' ] 
     ) -> middleware(Logged::class) -> name('cart.add');
 
     Route::get(
         "/delete/{id}", 
-        [ Cart::class, 'remove' ] 
+        [ Carts::class, 'remove' ] 
     ) -> middleware(Logged::class) -> name('cart.remove');
 
 });

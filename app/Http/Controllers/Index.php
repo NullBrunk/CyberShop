@@ -2,26 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Sql;
+use App\Models\Product;
 
 class Index extends Controller {
     
     /**
      * Get all the selled product on the website and
-     * display them with glightbox 
+     * order by yhe latest element
      * 
-     * @return view     The index page
+     * @param Product $product     The product model
+     * 
+     * @return view                The index page
      * 
      */
 
-    public function __invoke(){
+    public function __invoke(Product $product){
         
-        # id DESC to get latest product in first
-        $data = Sql::query(
-            "SELECT * FROM `products` ORDER BY id DESC"
-        );
-            
-        return view("static.index", ["data" => $data]);
+        $data = $product -> orderBy('id', 'desc') -> get() -> toArray();
+        
+        return view("static.index", [ "data" =>  $data ]);
+
     }
 }
+
+
+
 

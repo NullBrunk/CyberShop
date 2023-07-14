@@ -2,10 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+
+use App\Http\Requests\UpdateProfile;
 use App\Http\Requests\Signup;
 use App\Http\Requests\Login;
-use App\Http\Requests\UpdateProfile;
-use Illuminate\Support\Facades\Storage;
+
+
+use App\Models\Product;
+use App\Models\Comment;
+use App\Models\Notif;
+use App\Models\User;
+use App\Models\Cart;
+
 use App\Http\Sql;
 
 use Exception;
@@ -19,34 +28,29 @@ class Users extends Controller {
      * Log the user if he gave the good username and password.
      *
      * @param Login $request     The request with the username & password.
+     * @param User  $user        The user model
      *  
      * @return redirect          redirect to / if he is logged 
      *                           redirect to /login if he isn't.
      * 
      */
     
-    public function show(Login $request){
+    public function show(Login $request, User $user){
                
         # If the user is already logged 
 
         if(isset($_SESSION['logged'])){
             return redirect('/');
         }
-        
 
-        $data = Sql::query("
-            SELECT * FROM `users` 
-            WHERE 
-                mail=:mail 
-            AND 
-                BINARY pass=:pass
-        ", [ 
-            "mail" => $request["email"],
-            "pass" =>  hash("sha512", hash("sha512", $request["pass"]))
-        ], "fetch");
-
+        $data = $user -> where([
+            [ "mail", "=",  $request["email"]],
+            [ "pass", "=", hash("sha512", hash("sha512", $request["pass"])) ],
+        ]) -> get() -> toArray();
 
         if(!empty($data)){
+
+            $data = $data[0];
 
             $_SESSION['id'] = $data['id'];
             $_SESSION['logged'] = true;
@@ -66,31 +70,28 @@ class Users extends Controller {
      * Signup a user
      *
      * @param Signup $request     The informations to store a new user in the database
-     *  
+     * @param User   $user        The user model 
+     * 
      * @return redirect | view    Redirect / if he is allowed to create the user
      *                            view of /signup if he isn't
      * 
      */
     
-    public function store(Signup $request){
+    public function store(Signup $request, User $user){
 
+        $user -> mail = $request["email"];
+        $user -> pass = hash("sha512", hash("sha512", $request["pass"]));
         
+
         try {
-            Sql::query("
-                INSERT INTO 
-                    users (mail, pass) 
-                VALUES 
-                    (:mail, :pass)
-            ", [
-                "mail" => $request["email"],
-                "pass" => hash("sha512", hash("sha512", $request["pass"]))
-            ]);
+            $user -> save();
         }
-        catch (Exception $e) {
+        catch(Exception $e){
             return view("login.signup", ["error" => true]);
         }
 
         return redirect("/login");
+
     }
 
 
@@ -99,21 +100,21 @@ class Users extends Controller {
      * Update the profile of a given user if he is allowed to 
      *
      * @param UpdateProfile $req     The request with all the valuable informations 
-     *      *  
+     * @param User          $user    The user model
+     * 
      * @return redirect              Redirect to the profile page in all the cases
      * 
      */
     
-    public function profile(UpdateProfile $req){
+    public function profile(UpdateProfile $req, User $user){
 
         # Check if the hashed given password is the good one
 
-        $verify_user = Sql::query("
-            SELECT * FROM users WHERE mail=:mail AND pass=:pass
-        ", [
-            "mail" => $_SESSION['mail'],
-            "pass" => hash("sha512", hash("sha512", $req['oldpass']))
-        ]);
+        $verify_user = $user -> where([
+            [ "mail", "=",  $_SESSION['mail']],
+            [ "pass", "=", hash("sha512", hash("sha512", $req['oldpass'])) ],
+        ]) -> get() -> toArray();
+
 
         # The user is trying to change his profile information
         # with wrong credentials, abort
@@ -126,18 +127,12 @@ class Users extends Controller {
         # The user is authorized     
        
         try {
-            Sql::query("
             
-                UPDATE users SET 
-                    mail=:newmail, 
-                    pass=:newpass 
-                WHERE 
-                    mail=:oldmail 
-            ", [
-                "newmail" => $req['email'],
-                "newpass" => hash("sha512", hash("sha512", $req['newpass'])),
-                "oldmail" => $_SESSION['mail'],
-            ]);
+            $user -> where("mail", "=", $_SESSION['mail'])
+                  -> update([ 
+                    "mail" => $req['email'],
+                    "pass" => hash("sha512", hash("sha512", $req['newpass'])), 
+                ]);
 
         }
         catch (Exception $e){
@@ -155,22 +150,23 @@ class Users extends Controller {
 
 
     /**
-     * Show the profile page of the current user
+     * Show the profile page of the current user with
+     * all the products that he is selling
+     * 
+     * @param  Product $user    The product model
      *
-     * @return view     The profile page
+     * @return view             The profile page
      * 
      */
     
-    public function showProfile(){
+    public function showProfile(Product $user){
 
 
-        # Get all the selled products of the current user 
-        $data = Sql::query("
-            SELECT * FROM products WHERE id_user = :id
-        ", [
-            "id" => $_SESSION["id"]
-        ]);         
-        
+        $data = $user 
+            -> where("id_user", "=", $_SESSION["id"]) 
+            -> get() 
+            -> toArray();
+
         return view("user.profile", [ "data" => $data ]);
     }
 
@@ -178,19 +174,27 @@ class Users extends Controller {
 
     /**
      * Delete a user if he is allowed to
+     * 
+     * @param User    $user         The user model
+     * @param Product $product      The product model
+     * @param Notif   $notif        The notification model
+     * @param Cart    $cart         The cart model
+     * @param Comment $comment      The comment model
+     * 
      *
-     * @return redirect    Redirect to the / page
+     * @return redirect             Redirect to the / page
      * 
      */
 
-    public function delete(){
+    public function delete(User $user, Product $product, Notif $notif, Cart $cart, Comment $comment){
+
 
         # Delete images linked to the users products
-        
-        $imgs = Sql::query(
-            "SELECT image FROM products WHERE id_user=:id",
-            [ "id" => $_SESSION["id"] ]
-        );
+
+        $imgs = $product -> select("image") 
+                 -> where("id_user", "=", $_SESSION["id"])
+                 -> get()
+                 -> toArray() ;
 
         foreach($imgs as $img){
             Storage::disk("public") -> delete("product_img/" . $img["image"]);
@@ -198,13 +202,9 @@ class Users extends Controller {
 
 
         # Delete all the user comments
+        $comment -> where("id", "=", $_SESSION["id"]) -> delete();
 
-        Sql::query(
-            "DELETE FROM comments WHERE id_user=:id",
-            [ "id" => $_SESSION["id"] ]
-        );
-            
-        
+                
         # Delete comments under user products
 
         $c = Sql::query(
@@ -212,21 +212,27 @@ class Users extends Controller {
             [ "id" => $_SESSION["id"] ]
         );
 
-        foreach($c as $product){
-            Sql::query(
-                "DELETE FROM comments WHERE id_product=:id",
-                [ "id" => $product["id"] ]
-            );
+        foreach($c as $pr){
+            
+            # Comments under user products
+            $comment -> where("id_product", "=", $pr["id"]) -> delete();
+
+
+            # Delete users products on other carts
+            $cart -> where("id_product", "=", $pr["id"]) -> delete();
         }
 
 
         # Delete user products 
+        $product -> where("id_user", "=", $_SESSION["id"]) -> delete();
 
-        Sql::query(
-            "DELETE FROM products WHERE  id_user=:id",
-            [ "id" => $_SESSION["id"] ]
-        );
 
+        # Delete user notifs
+        $notif -> where("id_user", "=", $_SESSION["id"]) -> delete();
+
+
+        # Delete users cart
+        $cart -> where("id_user", "=", $_SESSION["id"]) -> delete();
 
         # Delete contacts messages from the user
 
@@ -239,12 +245,8 @@ class Users extends Controller {
         # Delete the user itself
         # finally ... phew
 
-        Sql::query("
-            DELETE FROM users WHERE id=:id",
-            [ "id" => $_SESSION["id"] ]
-        );
+        $user -> where("id", "=", $_SESSION["id"]) -> delete();
 
-        
         return redirect(route("disconnect"));
     }
 }
