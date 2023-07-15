@@ -27,19 +27,17 @@
     <body>
         <script>
             function menu(id){
-            const menu = document.getElementById(id)
-            if(menu.classList[3]){
-                menu.classList.remove("none")
-            }
-            else {
-                menu.classList.add("none") 
-            }
+                const menu = document.getElementById(id)
+                if(menu.classList[3]){
+                    menu.classList.remove("none")
+                }
+                else {
+                    menu.classList.add("none") 
+                }
 
-            var chatDiv = document.getElementById("chat");
-            chatDiv.scrollTop += 40;
-
+                var chatDiv = document.getElementById("chat");
+                chatDiv.scrollTop += 40;
             }
-
         </script>
         
         @include('../layout/header')
@@ -108,9 +106,9 @@
 
 
                             @if(isset($user) && $user === $contact[$i][1])
-                                <a class="profile-box hoverblue" href="{{route("contactuser", $contact[$i][1])}}"> {{ $contact[$i][1] }}</a> 
+                                <a class="profile-box hoverblue" href="{{route("contact.user", $contact[$i][1])}}"> {{ $contact[$i][1] }}</a> 
                             @else
-                                <a class="profile-box" href="{{route("contactuser", $contact[$i][1])}}"> {{ $contact[$i][1] }} @if(end($data[$contact[$i][1]])["readed"] === 0 and end($data[$contact[$i][1]])["me"] === false) <span class="notifs-unreaded-message"> {{ $value }} </span> @endif</a> 
+                                <a class="profile-box" href="{{route("contact.user", $contact[$i][1])}}"> {{ $contact[$i][1] }} @if(end($data[$contact[$i][1]])["readed"] === 0 and end($data[$contact[$i][1]])["me"] === false) <span class="notifs-unreaded-message"> {{ $value }} </span> @endif</a> 
                             @endif
                             <hr>
                         @endfor
@@ -168,7 +166,7 @@
                                             </div>
 
 
-                                            <button onclick="window.location.href = '{{ route('delete', $data[$user][$i]['id']) }}'"
+                                            <button onclick="window.location.href = '{{ route('contact.delete', $data[$user][$i]['id']) }}'"
                                                 id="{{$data[$user][$i]["id"]}}"  
                                                 class="btn btn-primary menu none ">
                                                 DELETE <i class="bi bi-trash2-fill"></i>
@@ -198,7 +196,7 @@
 
 
                             <div class="textbar">
-                                <form method="post" action="{{route("contact")}}">
+                                <form method="post" action="{{route("contact.show")}}">
                                      <input placeholder="Send a message to {{ explode("/contact/", url() -> current())[1] }}" type="text" name="content" value="{{ old("content") }}" autofocus>
                                      @csrf
                                     <button name="submit"><i class="bx bx-send"></i></button>

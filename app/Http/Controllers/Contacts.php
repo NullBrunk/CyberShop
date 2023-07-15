@@ -162,7 +162,7 @@ class Contacts extends Controller {
             # If the user is contacting himself
             if($slug === $_SESSION["mail"]){
                 $_SESSION["contact_yourself"] = true;
-                return to_route("contact");  
+                return to_route("contact.show");  
             }
 
             
@@ -243,7 +243,7 @@ class Contacts extends Controller {
         $contact -> save();
 
     
-        return to_route("contactuser", $mail);
+        return to_route("contact.user", $mail);
     }
 
 

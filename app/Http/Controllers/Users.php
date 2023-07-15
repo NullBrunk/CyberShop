@@ -123,7 +123,7 @@ class Users extends Controller {
 
         if(empty($verify_user)){
             $_SESSION["notsame"] = true;
-            return to_route("profile");
+            return to_route("profile.profile");
         }
 
         # The user is authorized     
@@ -139,14 +139,14 @@ class Users extends Controller {
         }
         catch (Exception $e){
             $_SESSION['nul'] = true;
-            return to_route("profile");            
+            return to_route("profile.profile");            
         }
 
 
         $_SESSION['mail'] = $req['email'];
         $_SESSION['done'] = true;
 
-        return to_route("profile");
+        return to_route("profile.profile");
     }
 
 
@@ -230,7 +230,7 @@ class Users extends Controller {
         $cart -> where("id_user", "=", $_SESSION["id"]) -> delete();
 
         # Delete contacts messages from the user
-        $comment -> where("id_contactor", "=", $_SESSION["id"]) -> orWhere("id_contacted", "=", $_SESSION["id"]) -> delete();
+        $contact -> where("id_contactor", "=", $_SESSION["id"]) -> orWhere("id_contacted", "=", $_SESSION["id"]) -> delete();
 
         # Delete the user itself
         # finally ... phew

@@ -134,7 +134,7 @@ class Comments extends Controller {
     /**
      * Get a view of an update form to update a given comment
      *
-     * @param int $comment     Model binding of the comment threw his id
+     * @param Comment $comment     Model binding of the comment threw his id
      * 
      * @return view         A view with a form to edit the comment
      */

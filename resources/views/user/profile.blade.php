@@ -152,7 +152,7 @@
                                     ?>
                                 @endif
     
-                                <form action="{{ route("profile") }}" method="post">
+                                <form action="{{ route("profile.profile") }}" method="post">
 
                                     @csrf
 

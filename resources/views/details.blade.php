@@ -179,7 +179,7 @@
                                         --}}
 
                                         @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"])) 
-                                            <a href="{{route('contactuser', $data['mail'])}}">
+                                            <a href="{{route('contact.user', $data['mail'])}}">
                                                 {{ $data['mail'] }}
                                             </a> 
                                         @else 
@@ -337,7 +337,7 @@
                                                     @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $comm["mail"]))
                                                         {{ $comm["mail"] }}
                                                     @else
-                                                        <a style="color: #007185" href="{{ route("contactuser", $comm["mail"]) }}">{{$comm["mail"]}}</a>
+                                                        <a style="color: #007185" href="{{ route("contact.user", $comm["mail"]) }}">{{$comm["mail"]}}</a>
                                                     @endif
 
                                                 </p> 

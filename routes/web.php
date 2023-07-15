@@ -75,23 +75,24 @@ Route::get('/disconnect', function () {
 |
 */
 
-Route::prefix('cart') -> group(function () {
-    Route::view("show", "user.cart") -> middleware(Logged::class) -> name("cart.display");
+Route::prefix('cart') -> name("cart.") -> group(function () {
+
+    Route::view("show", "user.cart") -> middleware(Logged::class) -> name("display");
 
     Route::get(
         "",
         [ Carts::class, 'initialize' ]
-    ) -> middleware(Logged::class) -> name("cart.initialize");
+    ) -> middleware(Logged::class) -> name("initialize");
 
     Route::post(
         "/add", 
         [ Carts::class, 'add' ] 
-    ) -> middleware(Logged::class) -> name('cart.add');
+    ) -> middleware(Logged::class) -> name('add');
 
     Route::get(
         "/delete/{id}", 
         [ Carts::class, 'remove' ] 
-    ) -> middleware(Logged::class) -> name('cart.remove');
+    ) -> middleware(Logged::class) -> name('remove');
 
 });
 
@@ -103,28 +104,28 @@ Route::prefix('cart') -> group(function () {
 |
 */
 
-Route::prefix('comments') -> group(function () {
+Route::prefix('comments') -> name("comment.") -> group(function () {
 
     Route::post(
         "/store/{slug}",
         [ Comments::class, "store" ]
-    ) -> middleware(Logged::class) -> name("comment.add");
+    ) -> middleware(Logged::class) -> name("add");
 
 
     Route::get(
         "/delete/{comment}/{article}",
         [ Comments::class, "delete" ]
-    ) -> middleware(Logged::class) -> name("comment.delete");
+    ) -> middleware(Logged::class) -> name("delete");
 
     Route::get(
         "/update/{comment}",
         [ Comments::class, "get_update_form" ]
-    ) -> middleware(Logged::class) -> name("comment.update_form");
+    ) -> middleware(Logged::class) -> name("update_form");
 
     Route::post(
         "/update",
         [ Comments::class, "update" ]
-    ) -> middleware(Logged::class) -> name("comment.update");
+    ) -> middleware(Logged::class) -> name("update");
     
 });
 
@@ -136,26 +137,26 @@ Route::prefix('comments') -> group(function () {
 |
 */
 
-Route::prefix('product') -> group(function () {
+Route::prefix('product') -> name("product.") -> group(function () {
 
     Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell");
 
     Route::post(
         "/sell",
         [ Products::class, "store" ]
-    ) -> middleware(Logged::class) -> name("product.sell");
+    ) -> middleware(Logged::class) -> name("sell");
 
 
     Route::get(
         "/update/{id}",
         [ Products::class, "show_update_form" ]
-    ) -> middleware(Logged::class) -> name("product.updateform");
+    ) -> middleware(Logged::class) -> name("updateform");
 
 
     Route::post(
         "/update/{id}",
         [ Products::class, "update" ]
-    ) -> middleware(Logged::class) -> name("product.update");
+    ) -> middleware(Logged::class) -> name("update");
     
 });
 
@@ -167,7 +168,7 @@ Route::prefix('product') -> group(function () {
 |
 */
 
-Route::prefix('profile') -> group(function () {
+Route::prefix('profile') -> name("profile.") -> group(function () {
 
     Route::post(
         "",
@@ -184,7 +185,7 @@ Route::prefix('profile') -> group(function () {
     Route::get(
         "/delete", 
         [ Users::class, "delete" ] 
-    ) -> middleware(Logged::class) -> name("deleteAccount");
+    ) -> middleware(Logged::class) -> name("delete");
 
 });
 
@@ -196,18 +197,18 @@ Route::prefix('profile') -> group(function () {
 |
 */
 
-Route::prefix('contact') -> group(function () {
+Route::prefix('contact') -> name("contact.") -> group(function () {
 
     Route::get(
         "",
         [ Contacts::class, "show"]
-    ) -> middleware(Logged::class) -> name("contact");
+    ) -> middleware(Logged::class) -> name("show");
 
 
     Route::get(
         "{slug}",
         [ Contacts::class, "show"]
-    ) -> middleware(Logged::class) -> name("contactuser");
+    ) -> middleware(Logged::class) -> name("user");
 
 
     Route::post(

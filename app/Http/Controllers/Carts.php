@@ -55,7 +55,7 @@ class Carts extends Controller {
 
     public function add(Request $req, Cart $cart, Product $product){
         
-        $product_id = $req["id"];
+        $product_id = $req -> input("id");
 
         if(!$product_id){
             return abort(403);
@@ -72,10 +72,12 @@ class Carts extends Controller {
 
         $cart -> save();
 
+
         # Regenerate it
         self::initialize($cart);
 
         return redirect(url() -> previous());        
+    
     }
 
 
