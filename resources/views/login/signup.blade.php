@@ -51,7 +51,7 @@
                                 @endif
 
                                 <div class="form-group">
-                                    <input value="{{ old("email") }}" type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" required autofocus>
+                                    <input value="{{ old("email") }}" type="mail" id="mail" name="mail" class="form-control rounded-left" placeholder="E-mail" required autofocus>
                                 </div>
 
                                 @error("pass")

@@ -79,18 +79,12 @@ class Users extends Controller {
     
     public function store(Signup $request, User $user){
 
-        $user -> mail = $request["email"];
+        $user -> mail = $request["mail"];
         $user -> pass = hash("sha512", hash("sha512", $request["pass"]));
         
 
-        try {
-            $user -> save();
-        }
-        catch(Exception $e){
-            return to_route("signup") -> withErrors([
-                "email" => "An error has occured"
-            ])->withInput($request->input());
-        }
+        $user -> save();
+
 
         return to_route("login");
 
