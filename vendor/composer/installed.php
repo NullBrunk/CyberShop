@@ -5,20 +5,11 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'aabaf4f97503b1f41053ad95b2b5896ba6721d9e',
+        'reference' => '1918f87a205f0620c5b2be51928abfdd3bbcb233',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
     'versions' => array(
-        'barryvdh/laravel-debugbar' => array(
-            'pretty_version' => 'v3.8.1',
-            'version' => '3.8.1.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../barryvdh/laravel-debugbar',
-            'aliases' => array(),
-            'reference' => 'aff3235fecb4104203b1e62c32239c56530eee32',
-            'dev_requirement' => true,
-        ),
         'brick/math' => array(
             'pretty_version' => '0.11.0',
             'version' => '0.11.0.0',
@@ -385,7 +376,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'aabaf4f97503b1f41053ad95b2b5896ba6721d9e',
+            'reference' => '1918f87a205f0620c5b2be51928abfdd3bbcb233',
             'dev_requirement' => false,
         ),
         'laravel/pint' => array(
@@ -468,15 +459,6 @@
             'aliases' => array(),
             'reference' => 'ff6248ea87a9f116e78edd6002e39e5128a0d4dd',
             'dev_requirement' => false,
-        ),
-        'maximebf/debugbar' => array(
-            'pretty_version' => 'v1.18.2',
-            'version' => '1.18.2.0',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../maximebf/debugbar',
-            'aliases' => array(),
-            'reference' => '17dcf3f6ed112bb85a37cf13538fd8de49f5c274',
-            'dev_requirement' => true,
         ),
         'mockery/mockery' => array(
             'pretty_version' => '1.5.1',
