@@ -134,20 +134,20 @@
     ?>     
 @endif               
 
-@if($errors -> has("name"))
+@error("name")
     <script>
-        alert("The name is required and must be smaller than 45 characters !")
+        alert("{{$message}}")
     </script>
-@endif
+@enderror
 
-@if($errors -> has("price"))
+@error("price")
     <script>
-        alert("The price is required and must be an integer !")
+        alert("{{$message}}")
     </script>
-@endif
+@enderror
 
-@if($errors -> has("description"))
+@error("description")
     <script>
-        alert("A description is required !")
+        alert("{{$message}}")
     </script>
-@endif
+@enderror

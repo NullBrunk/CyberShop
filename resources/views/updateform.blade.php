@@ -158,23 +158,24 @@
 </html>
 
 {{-- Gestion des erreurs --}}
-@if($errors -> has("name"))
-    <script>
-        alert("The name is required and must be smaller than 45 characters !")
-    </script>
-@endif
 
-@if($errors -> has("price"))
+@error("name")
     <script>
-        alert("The price is required and must be an integer !")
+        alert("{{$message}}")
     </script>
-@endif
+@enderror
 
-@if($errors -> has("description"))
+@error("price")
     <script>
-        alert("A description is required !")
+        alert("{{$message}}")
     </script>
-@endif
+@enderror
+
+@error("description")
+    <script>
+        alert("{{$message}}")
+    </script>
+@enderror
 
 
 {{-- Message de succès --}}

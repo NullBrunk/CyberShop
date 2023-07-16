@@ -24,41 +24,33 @@
         @include('layout/header', ["dotdotslash" => "../"] )
 
 
-
-
-
         <section style="margin-top: 12vh; padding: 2.5%;">
 
         <h2 style="margin-bottom: 2%">Update comment </h2>
-        @if($errors -> has('title'))
-            <div class="alert alert-danger">
-                Title is required !
-            </div>
-        @endif
-        @if($errors->has('comment') or $errors->has('id'))
-            <div class="alert alert-danger">
-                A comment is required !
-            </div>
-        @endif
 
-        
-        @if($errors -> has('rating'))
-            <div class="alert alert-danger">
-            You need to give a rating !
-            </div>
-        @endif
+
             <div id="formcomm" class="commentsbox" >
 
                 
 
                 <form method="post" action="{{ route("comment.update")  }}" style="width:100%;">
                     @csrf
+
+                    @error("title")
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <div class="title" style="height: 13vh;;">
                         Title of your comment <abbr>*</abbr>
                         <input name="title" type="text" value="{{$data["title"]}}" placeholder="Example: Nice product !" class="titlebar" maxlength="45">
                     </div>
                     <input name="id_product" type="hidden" value="{{$data["id_product"]}}">
-                    
+                    @error("comment")
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <div class="contentcomment title" style="margin-top: 10px; height: 23vh;">
                         Your comment <abbr>*</abbr>
                         <textarea placeholder="To help you write a useful comment for our CyberShop:
@@ -72,6 +64,11 @@
                     <input name="id" type="hidden" value="{{$data['id']}}">
                     
                     <br>
+                    @error("rating")
+                        <div class="alert alert-danger">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <p class="title" style="margin-bottom: 0; margin-top: 10px; ">Rating <abbr>*</abbr></p>
                     <div class="rating">
                         <input type="radio" id="star5" name="rating" value="5">

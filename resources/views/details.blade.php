@@ -452,25 +452,27 @@
 </html>
 
 
-
 {{-- Gestion des erreurs --}}
-@if($errors -> has('rating'))
+
+@error("rating")
     <script>
         alert_and_scroll("You need to give a rating !")
     </script>
-@endif
+@enderror
 
-@if($errors -> has('title'))
+
+@error("title")
     <script>
-        alert_and_scroll("Title is required !")
+        alert_and_scroll("{{$message}}")
     </script>
-@endif
+@enderror
+
+@error("comment")
+    <script>
+        alert_and_scroll("{{$message}}")
+    </script>
+@enderror
                 
-@if($errors->has('comment') or $errors->has('id'))
-    <script>
-        alert_and_scroll("A comment is required !")
-    </script>
-@endif
 
 {{-- Gestion des messages de succès --}}
 @if(isset($_SESSION['done']) && ($_SESSION['done'] === "updated")  )

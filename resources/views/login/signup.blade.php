@@ -44,11 +44,11 @@
                                 {{ csrf_field() }}
 
                                                                    
-                                @error("email")
+                                @error("mail")
                                     <div class="alert alert-danger">
-                                        Error in account creation !
+                                        {{ $message }}
                                     </div>
-                                @endif
+                                @enderror
 
                                 <div class="form-group">
                                     <input value="{{ old("email") }}" type="mail" id="mail" name="mail" class="form-control rounded-left" placeholder="E-mail" required autofocus>
@@ -56,7 +56,7 @@
 
                                 @error("pass")
                                     <div class="alert alert-danger">
-                                        Password is required !
+                                        {{$message}}
                                     </div>
                                 @enderror
 
@@ -67,7 +67,7 @@
                                 
                                 @error("repass")
                                     <div class="alert alert-danger">
-                                        Password are not same !
+                                        {{$message}}
                                     </div>
                                 @enderror
 

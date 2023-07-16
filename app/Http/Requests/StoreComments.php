@@ -24,7 +24,7 @@ class StoreComments extends FormRequest
         return [
             'id' => 'required|integer',
             'title' => 'required|string|max:45',
-            'comment' => 'required|string',
+            'comment' => 'required|string|min:15',
             'rating' => 'required|integer|max:5|min:1'
         ];
     }
