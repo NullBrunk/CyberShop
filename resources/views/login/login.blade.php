@@ -23,7 +23,7 @@
 
     </head>
 
-    @include('../layout/header')
+    @include('layout.header')
 
     <body style="background-color: #e1e1e1 !important; overflow: hidden;" >
     

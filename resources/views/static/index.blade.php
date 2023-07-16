@@ -1,32 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+@extends("static.base")
 
-        <title>Cybershop</title>
+@section("title", "Cybershop")
 
-        {{-- Google font --}}
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+@include('layout.header')
 
-        {{-- CSS --}}
-        <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-        <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-        <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-        <link href="assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
-        <link href="assets/css/style.css" rel="stylesheet">
-        
-        {{-- JS --}}
-        <script src="../assets/js/sweetalert2.js"></script>
-
-
-    </head>
-
+@section("content")
     <body>
-
-    @include('layout/header')
-
         <section id="hero" class="d-flex align-items-center">
 
         <div class="container">
@@ -90,37 +69,27 @@
 
             </div>
         </section>
+@endsection
 
-        <div id="preloader"></div>
-        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-        
-        <script src="assets/vendor/aos/aos.js"></script>
-        <script src="assets/vendor/glightbox/js/glightbox.js"></script>
-        <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-        
-        
-        <script src="assets/js/main.js"></script>
-        
-        {{-- 
-            Load les images uniquement lorsque la page
-            a fini de se charger.
-            Permet de gagner énormement de temps
-        --}}
 
-        <script>
-            window.addEventListener('load', function() {
-                var images = document.getElementsByTagName('img');
-                for (var i = 0; i < images.length; i++) {
-                var img = images[i];
-                if (img.getAttribute('data-src')) {
-                    img.setAttribute('src', img.getAttribute('data-src'));
-                }
-                }
-            });
-          </script>
-    </body>
-</html>
+{{-- 
+    Load les images uniquement lorsque la page
+    a fini de se charger.
+    Permet de gagner énormement de temps
+--}}
 
+<script>
+    window.addEventListener('load', function() {
+        var images = document.getElementsByTagName('img');
+        for (var i = 0; i < images.length; i++) {
+        var img = images[i];
+        if (img.getAttribute('data-src')) {
+            img.setAttribute('src', img.getAttribute('data-src'));
+        }
+        }
+    });
+</script>
+   
 @if(isset($_SESSION) && isset($_SESSION["deletedproduct"]))
     <script>
         Swal.fire(

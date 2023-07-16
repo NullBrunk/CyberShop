@@ -25,7 +25,7 @@
 
     <body style="background-color: #37517e;" >
 
-        @include('layout/header')
+        @include('layout.header')
 
         <div style="padding-top: 350px;">
         </div>

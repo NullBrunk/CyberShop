@@ -74,11 +74,8 @@
                           <p class="show_cart">
                           <img style="padding-left: 3%; width: 22%;" 
 
-                          @if(isset($dotdotslash))
-                            src="../../storage/product_img/{{ $p["image"] }}">
-                          @else
-                            src="../storage/product_img/{{ $p["image"] }}">
-                          @endif
+                            src="/storage/product_img/{{ $p["image"] }}">
+
                           
                           <a href="/details/{{ $p['pid'] }}">{{ substr($p["name"], 0, 11) }}</a>
                             <i onclick="deleteitem({{$p['cid']}})" style="cursor: pointer" class="bi bi-trash2-fill trash-cart"></i>

@@ -1,32 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+@extends("static.base")
 
-        <title id="title">Update comment </title>
-        <meta content="" name="description">
-        <meta content="" name="keywords">
+@section("title", "Update comment")
 
 
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-        <link href="../../assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-        <link href="../../assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-
-        <link href="../../assets/css/style.css" rel="stylesheet">
-    </head>
-
+@section("content")
 
     <body>
 
-        @include('layout/header', ["dotdotslash" => "../"] )
+        @include('layout.header')
 
-
-        <section style="margin-top: 12vh; padding: 2.5%;">
-
-        <h2 style="margin-bottom: 2%">Update comment </h2>
+        <section style="margin-top: 14vh; padding: 2.5%;">
 
 
             <div id="formcomm" class="commentsbox" >
@@ -93,16 +76,9 @@
             </div>
         </section>
                                 
-
-        <div id="preloader"></div>
-        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-        <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="../../assets/vendor/waypoints/noframework.waypoints.js"></script>
         <script>
             const stars = document.getElementById("{{  "star" . (string)$data['rating'] }}")
             stars.checked = "checked" 
         </script>
-
-    </body>
-</html>
+        
+@endsection
