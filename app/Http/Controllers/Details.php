@@ -82,7 +82,5 @@ class Details extends Controller {
 
         return view("details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
     
-
-   
     }
 }

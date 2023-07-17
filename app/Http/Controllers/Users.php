@@ -35,6 +35,8 @@ class Users extends Controller {
     
     public function show(Login $request, User $user){
                
+        $req = $request -> validated();
+
         # If the user is already logged 
 
         if(isset($_SESSION['logged'])){
@@ -42,8 +44,8 @@ class Users extends Controller {
         }
 
         $data = $user -> where([
-            [ "mail", "=",  $request["email"]],
-            [ "pass", "=", hash("sha512", hash("sha512", $request["pass"])) ],
+            [ "mail", "=",  $req["email"]],
+            [ "pass", "=", hash("sha512", hash("sha512", $req["pass"])) ],
         ]) -> get() -> toArray();
 
         if(!empty($data)){
@@ -56,6 +58,7 @@ class Users extends Controller {
 
             return to_route("cart.initialize");
         }
+
         else {
 
             return to_route("login") -> withErrors([
@@ -72,17 +75,18 @@ class Users extends Controller {
      * @param Signup $request     The informations to store a new user in the database
      * @param User   $user        The user model 
      * 
-     * @return redirect | view    Redirect / if he is allowed to create the user
-     *                            view of /signup if he isn't
+     * @return redirect           Redirect / when he signed up
      * 
      */
     
     public function store(Signup $request, User $user){
 
-        $user -> mail = $request["mail"];
-        $user -> pass = hash("sha512", hash("sha512", $request["pass"]));
-        
+        $req = $request -> validated();
 
+        
+        $user -> mail = $req["mail"];
+        $user -> pass = hash("sha512", hash("sha512", $req["pass"]));
+        
         $user -> save();
 
 
@@ -95,14 +99,16 @@ class Users extends Controller {
     /**
      * Update the profile of a given user if he is allowed to 
      *
-     * @param UpdateProfile $req     The request with all the valuable informations 
-     * @param User          $user    The user model
+     * @param UpdateProfile $request     The request with all the valuable informations 
+     * @param User          $user        The user model
      * 
-     * @return redirect              Redirect to the profile page in all the cases
+     * @return redirect                  Redirect to the profile page in all the cases
      * 
      */
     
-    public function profile(UpdateProfile $req, User $user){
+    public function profile(UpdateProfile $request, User $user){
+
+        $req = $request -> validated();
 
         # Check if the hashed given password is the good one
 
@@ -168,14 +174,14 @@ class Users extends Controller {
     /**
      * Delete a user if he is allowed to
      * 
-     * @param User    $user         The user model
-     * @param Product $product      The product model
-     * @param Notif   $notif        The notification model
-     * @param Cart    $cart         The cart model
-     * @param Comment $comment      The comment model
-     * 
+     * @param User    $user          The user model
+     * @param Product $product       The product model
+     * @param Notif   $notif         The notification model
+     * @param Cart    $cart          The cart model
+     * @param Comment $comment       The comment model
+     *  
      *
-     * @return redirect             Redirect to the / page
+     * @return redirect              Redirect to the / page
      * 
      */
 
@@ -220,12 +226,11 @@ class Users extends Controller {
         # Delete users cart
         $cart -> where("id_user", "=", $_SESSION["id"]) -> delete();
 
+
         # Delete contacts messages from the user
         $contact -> where("id_contactor", "=", $_SESSION["id"]) -> orWhere("id_contacted", "=", $_SESSION["id"]) -> delete();
 
         # Delete the user itself
-        # finally ... phew
-
         $user -> where("id", "=", $_SESSION["id"]) -> delete();
 
         return to_route("disconnect");

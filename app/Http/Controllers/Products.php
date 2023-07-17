@@ -14,7 +14,8 @@ use App\Models\Cart;
 
 
 /**
- * Test if a product is from a given user
+ * Test if a product is from a given user, if he is return product informations
+ * and users information.
  *
  * @param Product $product       The product model 
  * @param int $id                The id of the product
@@ -33,6 +34,8 @@ function is_from_user(Product $product, $id){
     -> get()
     -> toArray();
 }
+
+
 
 class Products extends Controller
 { 
@@ -57,17 +60,20 @@ class Products extends Controller
     }
 
 
+
     /**
      * Store a product from the /sell page.
      *
-     * @param StoreReq $req      The request with all the informations
-     * @param Product $product   The product model
+     * @param StoreReq $request      The request with all the informations
+     * @param Product $product       The product model
      *  
-     * @return view             Return the view of /sell (will change)
+     * @return view                  Return the view of /sell (will change)
      * 
      */
 
-     public function store(StoreReq $req, Product $product){      
+     public function store(StoreReq $request, Product $product){      
+
+        $req = $request -> validated();
 
         # Check if te user category is a valid category 
 
@@ -114,6 +120,7 @@ class Products extends Controller
 
         return to_route("product.sell") -> with("selled", "The product has been succesfully selled !");
     }
+
 
 
     /**
@@ -186,15 +193,15 @@ class Products extends Controller
     /**
      * Update a product if the user is allowed to
      *
-     * @param UpdateProduct $req     The informations of the new product 
-     * @param Product $product       The product model
-     * @param Comment $comment       The comment model
-     * @param Cart $cart             The cart model
-     * @param int $id                The id of the product
-     * 
-     * @return redirect              A 403 page if he is not allowed
-     *                               redirect to the page of the updated product
-     *                               if he is allowed to.
+     * @param UpdateProduct $request     The informations of the new product 
+     * @param Product $product           The product model
+     * @param Comment $comment           The comment model
+     * @param Cart $cart                 The cart model
+     * @param int $id                    The id of the product
+     *  
+     * @return redirect                  A 403 page if he is not allowed
+     *                                   redirect to the page of the updated product
+     *                                   if he is allowed to.
      * 
      */
 

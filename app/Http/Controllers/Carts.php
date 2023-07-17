@@ -44,18 +44,18 @@ class Carts extends Controller {
      * Add a product to the cart and call the inititialize function
      * to change the content of the session.
      *
-     * @param Request $req         The infotmations of the commended product.
-     * @param Product $product     The product model
-     * @param Cart $cart           The cart model
+     * @param Request $reques       The infotmations of the commended product.
+     * @param Product $product      The product model
+     * @param Cart $cart            The cart model
      *     
-     * @return redirect            Redirection to the cart or to a 403 page if 
-     *                             the user is not authorized.
+     * @return redirect             Redirection to the cart or to a 403 page if 
+     *                              the user is not authorized.
      * 
      */
 
-    public function add(Request $req, Cart $cart, Product $product){
+    public function add(Request $request, Cart $cart, Product $product){
         
-        $product_id = $req -> input("id");
+        $product_id = $request -> input("id");
 
         if(!$product_id){
             return abort(403);

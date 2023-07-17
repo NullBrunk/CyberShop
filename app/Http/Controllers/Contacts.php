@@ -57,6 +57,7 @@ function getmsgs($mail){
     return $sql -> fetchall(\PDO::FETCH_ASSOC);
 }
 
+
 class Contacts extends Controller {
 
     /**
@@ -191,15 +192,17 @@ class Contacts extends Controller {
     /**
      * Store a message sended to a specific user
      *
-     * @param ContactReq $req     The request with all the informations
-     * @param Contact $contact    The contact model
-     * @param User $user          The user model
+     * @param ContactReq $request      The request with all the informations
+     * @param Contact $contact         The contact model
+     * @param User $user               The user model
      * 
-     * @return redirect           Redirect to the contact page with the right slug   
+     * @return redirect                Redirect to the contact page with the right slug   
      * 
      */
 
-    public function store(ContactReq $req, Contact $contact, User $user){
+    public function store(ContactReq $request, Contact $contact, User $user){
+
+        $req = $request -> validated();
 
         # Get the slug
         $url = explode("/contact/", url() -> previous());
@@ -251,7 +254,7 @@ class Contacts extends Controller {
      *
      * @param Contact $contact     The message to remove threw model binding
      * 
-     * @return redirect         Redirect to the previous url   
+     * @return redirect            Redirect to the previous url   
      * 
      */
 

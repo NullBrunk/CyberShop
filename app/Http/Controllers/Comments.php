@@ -35,18 +35,20 @@ class Comments extends Controller {
     /**
      * Store a comment in the database.
      *
-     * @param StoreComments $req     The informations of the comments.
-     * @param Comment $comment       The comment model
-     * @param Notif $notif           The notif model
-     * @param int $slug              The id of the seller of the product (to notify it)
+     * @param StoreComments $request      The informations of the comments.
+     * @param Comment $comment            The comment model
+     * @param Notif $notif                The notif model
+     * @param int $slug                   The id of the seller of the product (to notify it)
      * 
-     * @return redirect              Redirection to the page where the user 
-     *                               commented.
+     * @return redirect                   Redirection to the page where the user 
+     *                                    commented.
      * 
      */
 
-    public function store(StoreComments $req, Comment $comment, Notif $notif, $slug){
+    public function store(StoreComments $request, Comment $comment, Notif $notif, $slug){
         
+        $req = $request -> validated();
+
         # Store the comment in the database 
 
         $comment -> id_product = $req["id"];
@@ -96,10 +98,10 @@ class Comments extends Controller {
                 -> orderBy("id", "desc")
                 -> get() -> toArray();
 
+
         if(empty($data)){
             return abort(404);
         }
-
         return ($data);
     }
 
@@ -128,6 +130,7 @@ class Comments extends Controller {
     }
 
 
+
     /**
      * Get a view of an update form to update a given comment
      *
@@ -138,7 +141,7 @@ class Comments extends Controller {
 
     public function get_update_form(Comment $comment){
         if($comment["id_user"] === $_SESSION["id"]){
-            return view("user.updatecomment", [ "data" => $comment-> toArray() ]);
+            return view("user.updatecomment", [ "data" => $comment -> toArray() ]);
         }
         else {
             return abort(403);
@@ -149,19 +152,21 @@ class Comments extends Controller {
     /**
      * Update a comment into the database
      *
-     * @param UpdateComment $req     The new informations to put in the comment
-     * @param Comment $comment       The comment model
+     * @param UpdateComment $request     The new informations to put in the comment
+     * @param Comment $comment           The comment model
      * 
-     * @return redirect              Redirection to the location where the comment 
-     *                               has been posted.
+     * @return redirect                  Redirection to the location where the 
+     *                                   comment has been posted.
      */
 
-    public function update(UpdateComment $req, Comment $comment){
+    public function update(UpdateComment $request, Comment $comment){
 
         # If the user clicked on the abort button
-        if($req["abort"] === "Abort"){
-            return to_route("details", $req["id_product"]);
+        if($request["abort"] === "Abort"){
+            return to_route("details", $request["id_product"]);
         }
+
+        $req = $request -> validated();
 
         $comment 
             -> where("id_user", "=", $_SESSION['id'])
