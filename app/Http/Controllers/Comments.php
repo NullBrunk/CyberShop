@@ -71,10 +71,7 @@ class Comments extends Controller {
 
         $notif -> save();
 
-    
-        $_SESSION['done'] = true;
-
-        return to_route("details", $req["id"]);
+        return to_route("details", $req["id"]) -> with('posted', "Your comment has been posted !");
     }
 
 
@@ -176,9 +173,8 @@ class Comments extends Controller {
                 "rating" => $req["rating"], 
             ]);
 
-        $_SESSION['updated'] = true;
 
-        return to_route("details", $req["id_product"]);
+        return to_route("details", $req["id_product"]) -> with("updatedcomm", "Your comment has been updated !");
         
     }
 }

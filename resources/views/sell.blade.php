@@ -76,44 +76,40 @@
             <hr>
         </main><!-- End #main -->
 
+
+
+    {{-- Gestion des erreurs --}}
+
+    @error("imgerror")
+            <script>alert("{{$message}}")</script>
+    @enderror
+
+    @error("name")
+        <script>
+            alert("{{$message}}")
+        </script>
+    @enderror
+
+    @error("price")
+        <script>
+            alert("{{$message}}")
+        </script>
+    @enderror
+
+    @error("description")
+        <script>
+            alert("{{$message}}")
+        </script>
+    @enderror
+
+
+    {{-- Gestion des messages de succès --}}
+
+    @if(session("selled"))
+        <script>
+            success("{{ session('selled') }}", "Selled")
+        </script>
+    @endif   
+
 @endsection
 
-{{-- Gestion des erreurs --}}
-
-@if($errors -> has("product_img") or isset($_SESSION["error"]))
-    <script>
-        alert("Must be an image, and smaller than 2MO !")
-    </script>
-
-    <?php
-        unset($_SESSION["error"]);
-    ?>
-
-@elseif(isset($_SESSION["done"]))
-
-    <script>
-        success("Succesfully added your product !", "Added")
-    </script>
-
-    <?php
-        unset($_SESSION["done"]);
-    ?>     
-@endif               
-
-@error("name")
-    <script>
-        alert("{{$message}}")
-    </script>
-@enderror
-
-@error("price")
-    <script>
-        alert("{{$message}}")
-    </script>
-@enderror
-
-@error("description")
-    <script>
-        alert("{{$message}}")
-    </script>
-@enderror

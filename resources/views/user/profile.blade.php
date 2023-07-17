@@ -19,6 +19,7 @@
 
             <link href="assets/css/style.css" rel="stylesheet">
             <script src="assets/js/sweetalert2.js"></script>
+            <script src="/assets/js/alert.js"></script>
     </head>
     
 
@@ -81,77 +82,37 @@
                                 </p>    
 
 
-                                @if(isset($_SESSION['done']))
-                                    <script>
-                                        Swal.fire(
-                                            'Updated !',
-                                            'Your information has been updated.',
-                                            'success'
-                                            ) 
-                                    </script>
-
-                                    <?php
-                                        unset($_SESSION['done']);
-                                    ?>
+                                {{-- Gestion des messages de succès --}}
+                                @if(session("done"))
+                                    <script>success("{{session('done')}}")</script>
                                 @endif
 
 
+                                {{-- Gestion des erreurs --}}
+                                @error("email")
+                                    <script>alert("{{$message}}")</script>
+                                @enderror
 
-                                @if($errors -> has("email") or isset($_SESSION['nul']))
-                                    <script>
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Error !',
-                                            text: 'The entered mail is invalid.',
-                                            })
-                                    </script> 
+                                @error("alreadytaken")
+                                    <script>alert("{{$message}}")</script>
+                                @enderror
 
-                                    <?php
-                                        unset($_SESSION['nul']);
-                                    ?>
+                                @error("oldpass")
+                                   <script>alert("Old password cannot be empty.")</script>
+                                @enderror 
 
-                                @elseif($errors -> has("oldpass"))
-                                    <script>
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Error !',
-                                            text: 'Old password cannot be empty.',
-                                            })
-                                    </script>
-                                @elseif($errors -> has("newpass"))
-                                    <script>
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Error !',
-                                            text: 'You must enter a valid new password',
-                                            })
-                                    </script>
-                
-                                @elseif($errors -> has("renewpass"))
-                                    <script>
-                                    Swal.fire({
-                                        icon: 'error',
-                                        title: 'Error !',
-                                        text: 'New passwords are not same',
-                                        })
-                                    </script>
-                                @endif
+                                @error("newpass")
+                                    <script>alert("New password cannot be empty.")</script>
+                                @enderror
+
+                                @error("renewpass")
+                                    <script>alert("The two entered passwords are not same.")</script>
+                                @enderror
             
-            
-                                @if(isset($_SESSION["notsame"]))
-                                    <script>
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Error !',
-                                            text: 'The entered password does not match your actual password',
-                                        })
-                                    </script>
-
-                                    <?php
-                                        unset($_SESSION["notsame"]);
-                                    ?>
-                                @endif
-    
+                                @error("wrong_password")
+                                    <script>alert("{{$message}}")</script>
+                                @enderror
+                                
                                 <form action="{{ route("profile.profile") }}" method="post">
 
                                     @csrf

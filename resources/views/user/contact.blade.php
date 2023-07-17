@@ -48,22 +48,13 @@
                 
             </script>
             
-            
-            @if(isset($_SESSION["contact_no_one"]) or isset($_SESSION["contact_yourself"]))
-                <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error !',
-                        text: "You can't contact this user !",
-                        })
-                </script> 
-                
-                <?php
-                    unset($_SESSION["contact_no_one"]);
-                    unset($_SESSION["contact_yourself"]);
-                ?>
-                
-            @endif
+            @error("contact_yourself")
+                <script>alert("{{$message}}")</script>
+            @enderror
+
+            @error("contact_no_one")
+                <script>alert("{{$message}}")</script>
+            @enderror
 
             <div class="content">
 

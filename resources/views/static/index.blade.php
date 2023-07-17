@@ -69,8 +69,15 @@
 
             </div>
         </section>
-@endsection
 
+    
+    @if(session("deletedproduct"))
+            <script>
+                success("{{ session('deletedproduct') }}", "Deleted")
+            </script>
+    @endif
+
+@endsection
 
 {{-- 
     Load les images uniquement lorsque la page
@@ -89,17 +96,4 @@
         }
     });
 </script>
-   
-@if(isset($_SESSION) && isset($_SESSION["deletedproduct"]))
-    <script>
-        Swal.fire(
-            'Deleted !',
-            'The product has been deleted successfully.',
-            'success'
-        ) 
-    </script>
 
-    <?php
-        unset($_SESSION["deletedproduct"])
-    ?>
-@endif

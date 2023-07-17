@@ -414,58 +414,48 @@
             </section>
         </main>
 
+
+    {{-- Gestion des erreurs --}}
+
+    @error("rating")
+        <script>
+            alert_and_scroll("You need to give a rating !")
+        </script>
+    @enderror
+
+    @error("title")
+        <script>
+            alert_and_scroll("{{$message}}")
+        </script>
+    @enderror
+
+    @error("comment")
+        <script>
+            alert_and_scroll("{{$message}}")
+        </script>
+    @enderror
+                
+
+    {{-- Gestion des messages de succès --}}
+
+    @if(session("updated"))
+        <script>
+            success("{{session('updated')}}")
+        </script>
+    @endif
+
+    @if(session("posted"))
+        <script>
+            success("{{ session('posted') }}", "Posted")
+        </script>
+    @endif
+
+    @if(session("updatedcomm"))
+        <script>
+            success("{{ session('updatedcomm') }}", "Updated")
+        </script>
+    @endif
+
 @endsection
 
 
-{{-- Gestion des erreurs --}}
-
-@error("rating")
-    <script>
-        alert_and_scroll("You need to give a rating !")
-    </script>
-@enderror
-
-
-@error("title")
-    <script>
-        alert_and_scroll("{{$message}}")
-    </script>
-@enderror
-
-@error("comment")
-    <script>
-        alert_and_scroll("{{$message}}")
-    </script>
-@enderror
-                
-
-{{-- Gestion des messages de succès --}}
-@if(isset($_SESSION['done']) && ($_SESSION['done'] === "updated")  )
-    <script>
-        success("Product updated successfully.")
-    </script>
-
-    <?php
-        unset($_SESSION['done'])
-    ?>
-@endif
-
-@if(isset($_SESSION['done']) )
-    <script>
-        success("Your comment has been posted !", "Posted")
-    </script>
-
-    <?php
-        unset($_SESSION['done'])
-    ?> 
-@endif
-
-@if(isset($_SESSION['updated']) )
-    <script>
-        success("Your comment has been updated !")
-    </script>
-
-    <?php
-        unset($_SESSION['updated'])
-    ?> 
-@endif

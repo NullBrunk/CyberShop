@@ -516,6 +516,7 @@ class ComposerStaticInit3b597f19e5a01640377a5ecd11d50332
         'App\\Http\\Controllers\\Products' => __DIR__ . '/../..' . '/app/Http/Controllers/Products.php',
         'App\\Http\\Controllers\\Users' => __DIR__ . '/../..' . '/app/Http/Controllers/Users.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
+        'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\EncryptCookies' => __DIR__ . '/../..' . '/app/Http/Middleware/EncryptCookies.php',
         'App\\Http\\Middleware\\ListenPort' => __DIR__ . '/../..' . '/app/Http/Middleware/ListenPort.php',
         'App\\Http\\Middleware\\Logged' => __DIR__ . '/../..' . '/app/Http/Middleware/Logged.php',

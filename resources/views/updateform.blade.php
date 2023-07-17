@@ -141,16 +141,3 @@
         alert("{{$message}}")
     </script>
 @enderror
-
-
-{{-- Message de succès --}}
-
-@if(isset($_SESSION["done"]))
-    <script>
-        success("Successfully added the product !", "Added !")
-    </script>
-
-    <?php
-    unset($_SESSION["done"]);
-    ?>     
-@endif               

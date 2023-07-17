@@ -116,8 +116,7 @@ class Users extends Controller {
         # with wrong credentials, abort
 
         if(empty($verify_user)){
-            $_SESSION["notsame"] = true;
-            return to_route("profile.profile");
+            return to_route("profile.profile") -> withErrors(["wrong_password" => "The entered password does not match your actual password."]);
         }
 
         # The user is authorized     
@@ -132,15 +131,13 @@ class Users extends Controller {
 
         }
         catch (Exception $e){
-            $_SESSION['nul'] = true;
-            return to_route("profile.profile");            
+            return to_route("profile.profile") -> withErrors(["alreadytaken" => "Mail is already taken."]);            
         }
 
 
         $_SESSION['mail'] = $req['email'];
-        $_SESSION['done'] = true;
 
-        return to_route("profile.profile");
+        return to_route("profile.profile") -> with("done", "Your information has been updated.");
     }
 
 

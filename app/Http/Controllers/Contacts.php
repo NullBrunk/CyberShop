@@ -161,8 +161,7 @@ class Contacts extends Controller {
 
             # If the user is contacting himself
             if($slug === $_SESSION["mail"]){
-                $_SESSION["contact_yourself"] = true;
-                return to_route("contact.show");  
+                return to_route("contact.show") -> withErrors(["contact_yourself" => "You cant contact yourself"]);  
             }
 
             
@@ -222,8 +221,7 @@ class Contacts extends Controller {
 
         
         if(empty($id)){
-            $_SESSION["contact_no_one"] = true;
-            return redirect("/contact");
+            return redirect("/contact") -> withErrors(["contact_no_one" => "You cant contact this user !"]);
         }
         else {
             $id = $id[0]["id"];

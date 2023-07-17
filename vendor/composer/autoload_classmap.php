@@ -17,6 +17,7 @@ return array(
     'App\\Http\\Controllers\\Products' => $baseDir . '/app/Http/Controllers/Products.php',
     'App\\Http\\Controllers\\Users' => $baseDir . '/app/Http/Controllers/Users.php',
     'App\\Http\\Kernel' => $baseDir . '/app/Http/Kernel.php',
+    'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\EncryptCookies' => $baseDir . '/app/Http/Middleware/EncryptCookies.php',
     'App\\Http\\Middleware\\ListenPort' => $baseDir . '/app/Http/Middleware/ListenPort.php',
     'App\\Http\\Middleware\\Logged' => $baseDir . '/app/Http/Middleware/Logged.php',

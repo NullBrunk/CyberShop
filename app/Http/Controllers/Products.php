@@ -109,13 +109,10 @@ class Products extends Controller
         }
 
         else {
-            $_SESSION["error"] = true;
-            return view("sell");
+            return to_route("product.sell") -> withErrors(["imgerror" => "Invalid image"]) ;
         }
 
-
-        $_SESSION["done"] = true;
-        return view("sell");
+        return to_route("product.sell") -> with("selled", "The product has been succesfully selled !");
     }
 
 
@@ -207,8 +204,8 @@ class Products extends Controller
 
         if($req["submit"] === "delete"){
             self::delete($product, $comment, $cart, $id);
-            $_SESSION["deletedproduct"] = true;
-            return to_route("root");
+
+            return to_route("root") -> with("deletedproduct", "The product has been deleted successfully.");
         }
         
         $data = is_from_user($product, $id);
@@ -239,10 +236,7 @@ class Products extends Controller
             "class" => $req["category"],
         ]);
 
-
-        $_SESSION["done"] = "updated";
-
-        return to_route("details", $id);
+        return to_route("details", $id) -> with("updated", "Product updated successfully.");
     }
 
 
