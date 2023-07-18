@@ -175,7 +175,7 @@
 
 
                             <div class="textbar">
-                                <form method="post" action="{{route("contact.show")}}">
+                                <form method="post" action="{{route("contact.store")}}">
                                         <input placeholder="Send a message to {{ explode("/contact/", url() -> current())[1] }}" type="text" name="content" value="{{ old("content") }}"  class="emoji-picker" autofocus>
                                         @csrf
                                     <button name="submit"><i class="bx bx-send"></i></button>

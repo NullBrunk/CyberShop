@@ -17,7 +17,7 @@
             
 
             @if(isset($_SESSION['logged']))
-            <li ><a class="nav-link scrollto" href="{{ route("product.sell") }}">Market</a></li>            
+            <li ><a class="nav-link scrollto" href="{{ route("product.store") }}">Market</a></li>            
             <li><a class="nav-link scrollto" href="{{ route("contact.show") }}">Contact</a></li>
             <li><a class="nav-link scrollto" href="{{ route("profile.profile") }}">Profile</a></li>            
 

@@ -14,7 +14,6 @@ use App\Http\Controllers\Index;
 use App\Http\Controllers\Carts;
 
 
-
 /*
 |---------------------------------------------
 |  Others 
@@ -27,7 +26,7 @@ Route::view("/todo", "static.todo");
 # Index page
 Route::get('/', Index::class ) -> name("root");
 
-# SearchBar
+# Searchbar
 Route::view("/search", "product.search") -> name("articles");
 
 # Details
@@ -39,6 +38,11 @@ Route::get('/details/{product_id}', [ Details::class, "get_details" ] ) -> name(
 |  Authentication 
 |
 */
+
+Route::get('/disconnect', function () {
+    session_destroy();
+    return redirect('/');
+}) -> name("disconnect") -> middleware(Logged::class);
 
 Route::view(
     '/signup', 
@@ -60,13 +64,6 @@ Route::post(
     [ Users::class, "store" ] 
 ) -> middleware(Redirect::class);
 
-Route::get('/disconnect', function () {
-
-    session_destroy();
-    return redirect('/');
-
-}) -> name("disconnect") -> middleware(Logged::class);
-
 
 
 /*
@@ -79,20 +76,21 @@ Route::prefix('cart') -> name("cart.") -> group(function () {
 
     Route::view("show", "user.cart") -> middleware(Logged::class) -> name("display");
 
+
     Route::get(
         "",
         [ Carts::class, 'initialize' ]
     ) -> middleware(Logged::class) -> name("initialize");
 
-    Route::post(
-        "/add", 
-        [ Carts::class, 'add' ] 
-    ) -> middleware(Logged::class) -> name('add');
-
     Route::get(
         "/delete/{id}", 
         [ Carts::class, 'remove' ] 
     ) -> middleware(Logged::class) -> name('remove');
+
+    Route::post(
+        "/add", 
+        [ Carts::class, 'add' ] 
+    ) -> middleware(Logged::class) -> name('add');
 
 });
 
@@ -105,27 +103,26 @@ Route::prefix('cart') -> name("cart.") -> group(function () {
 */
 
 Route::prefix('comments') -> name("comment.") -> group(function () {
-
-    Route::post(
-        "/store/{slug}",
-        [ Comments::class, "store" ]
-    ) -> middleware(Logged::class) -> name("add");
-
+    
+    Route::get(
+        "/update/{comment}",
+        [ Comments::class, "update_form" ]
+    ) -> middleware(Logged::class) -> name("update_form");
 
     Route::get(
         "/delete/{comment}/{article}",
         [ Comments::class, "delete" ]
     ) -> middleware(Logged::class) -> name("delete");
 
-    Route::get(
-        "/update/{comment}",
-        [ Comments::class, "get_update_form" ]
-    ) -> middleware(Logged::class) -> name("update_form");
-
     Route::post(
-        "/update",
-        [ Comments::class, "update" ]
-    ) -> middleware(Logged::class) -> name("update");
+        "/store/{slug}",
+        [ Comments::class, "store" ]
+    ) -> middleware(Logged::class) -> name("store");
+
+    Route::patch(
+        "/edit",
+        [ Comments::class, "edit" ]
+    ) -> middleware(Logged::class) -> name("edit");
     
 });
 
@@ -141,22 +138,20 @@ Route::prefix('product') -> name("product.") -> group(function () {
 
     Route::view("/market", "product.market") -> middleware(Logged::class) -> name("sell");
 
-    Route::post(
-        "/market",
-        [ Products::class, "store" ]
-    ) -> middleware(Logged::class) -> name("sell");
-
-
     Route::get(
         "/update/{id}",
         [ Products::class, "edit_form" ]
     ) -> middleware(Logged::class) -> name("edit_form");
 
+    Route::post(
+        "/market",
+        [ Products::class, "store" ]
+    ) -> middleware(Logged::class) -> name("store");
 
     Route::post(
         "/update/{id}",
         [ Products::class, "edit" ]
-    ) -> middleware(Logged::class) -> name("update");
+    ) -> middleware(Logged::class) -> name("edit");
     
 });
 
@@ -174,19 +169,17 @@ Route::prefix('profile') -> name("profile.") -> group(function () {
         "",
         [ Users::class, "profile"]
     ) -> middleware(Logged::class) -> name("profile");
-    
-
+        
+    Route::get(
+        "/delete", 
+        [ Users::class, "delete" ] 
+        ) -> middleware(Logged::class) -> name("delete");
+        
     Route::get(
         "",
         [Users::class, "show_profile"]
     ) -> middleware(Logged::class);
     
-
-    Route::get(
-        "/delete", 
-        [ Users::class, "delete" ] 
-    ) -> middleware(Logged::class) -> name("delete");
-
 });
 
 
@@ -200,34 +193,29 @@ Route::prefix('profile') -> name("profile.") -> group(function () {
 Route::prefix('contact') -> name("contact.") -> group(function () {
 
     Route::get(
-        "",
-        [ Contacts::class, "show"]
-    ) -> middleware(Logged::class) -> name("show");
+        "edit/{contact}",
+        [ Contacts::class, "show_form"]
+    ) -> middleware(Logged::class) -> name("edit_form");
 
-
-    Route::get(
-        "{slug}",
-        [ Contacts::class, "show"]
-    ) -> middleware(Logged::class) -> name("user");
-
-
-    Route::post(
-        "",
-        [ Contacts::class, "store"]
-    ) -> middleware(Logged::class);
-
-    
     Route::get(
         "delete/{contact}",
         [ Contacts::class, "delete"]
     ) -> middleware(Logged::class) -> name("delete");
 
+    Route::post(
+        "",
+        [ Contacts::class, "store"]
+    ) -> middleware(Logged::class) -> name("store");
 
     Route::get(
-        "edit/{contact}",
-        [ Contacts::class, "show_form"]
-    ) -> middleware(Logged::class) -> name("edit_form");
+        "",
+        [ Contacts::class, "show"]
+    ) -> middleware(Logged::class) -> name("show");
 
+    Route::get(
+        "{slug}",
+        [ Contacts::class, "show"]
+    ) -> middleware(Logged::class) -> name("user");
 
     Route::patch(
         "edit/{contact}",

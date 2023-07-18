@@ -21,7 +21,7 @@
 
                 <section id="portfolio-details" class="portfolio-details">
                     
-                    <form method="post" action="{{ route("product.update", $data['pid']) }}" enctype="multipart/form-data">  
+                    <form method="post" action="{{ route("product.edit", $data['pid']) }}" enctype="multipart/form-data">  
 
                         <div class="container">
                             <div class="row gy-4">

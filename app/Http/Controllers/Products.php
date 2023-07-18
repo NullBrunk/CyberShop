@@ -115,7 +115,7 @@ class Products extends Controller
         }
 
         else {
-            return to_route("product.sell") -> withErrors(["imgerror" => "Invalid image"]) ;
+            return to_route("product.store") -> withErrors(["imgerror" => "Invalid image"]) ;
         }
 
         return to_route("details", $product -> id) -> with("selled", "The product has been succesfully selled !");

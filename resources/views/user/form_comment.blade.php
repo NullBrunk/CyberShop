@@ -16,8 +16,9 @@
 
                 
 
-                <form method="post" action="{{ route("comment.update")  }}" style="width:100%;">
+                <form method="post" action="{{ route("comment.edit")  }}" style="width:100%;">
                     @csrf
+                    @method("patch")
 
                     @error("title")
                         <div class="alert alert-danger">

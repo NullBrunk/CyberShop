@@ -18,7 +18,7 @@
 
                 <section id="portfolio-details" class="portfolio-details">
                 
-                    <form method="post" action="{{ route("product.sell") }}" enctype="multipart/form-data">  
+                    <form method="post" action="{{ route("product.store") }}" enctype="multipart/form-data">  
                         <div class="container">
                             <div class="row gy-4">
                                 <div class="col-lg-8">

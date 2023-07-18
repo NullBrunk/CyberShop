@@ -139,7 +139,7 @@ class Comments extends Controller {
      * @return view         A view with a form to edit the comment
      */
 
-    public function get_update_form(Comment $comment){
+    public function update_form(Comment $comment){
         if($comment["id_user"] === $_SESSION["id"]){
             return view("user.form_comment", [ "data" => $comment -> toArray() ]);
         }
@@ -149,8 +149,9 @@ class Comments extends Controller {
     }
 
 
+    
     /**
-     * Update a comment into the database
+     * Edit a comment if the user is allowed to
      *
      * @param UpdateComment $request     The new informations to put in the comment
      * @param Comment $comment           The comment model
@@ -159,7 +160,7 @@ class Comments extends Controller {
      *                                   comment has been posted.
      */
 
-    public function update(UpdateComment $request, Comment $comment){
+    public function edit(UpdateComment $request, Comment $comment){
 
         # If the user clicked on the abort button
         if($request["abort"] === "Abort"){
