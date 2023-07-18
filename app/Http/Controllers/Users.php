@@ -158,7 +158,7 @@ class Users extends Controller {
      * 
      */
     
-    public function showProfile(Product $user){
+    public function show_profile(Product $user){
 
 
         $data = $user 

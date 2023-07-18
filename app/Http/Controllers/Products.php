@@ -167,7 +167,7 @@ class Products extends Controller
 
 
     /**
-     * Show an update form to update a product if the user is allowed to 
+     * Show an edition form to update a product if the user is allowed to 
      * 
      * @param Product $product      The product model
      * @param int $id               The id of the product
@@ -177,7 +177,7 @@ class Products extends Controller
      * 
      */
 
-    public function show_update_form(Product $product, $id){
+    public function edit_form(Product $product, $id){
 
         $data = is_from_user($product, $id);
         
@@ -185,13 +185,13 @@ class Products extends Controller
             return abort(403);
         }
 
-        return view("updateform", ["data" => $data[0]]);
+        return view("product.form_product", ["data" => $data[0]]);
     }
 
 
 
     /**
-     * Update a product if the user is allowed to
+     * Edit a product if the user is allowed to
      *
      * @param UpdateProduct $request     The informations of the new product 
      * @param Product $product           The product model
@@ -205,7 +205,7 @@ class Products extends Controller
      * 
      */
 
-    public function update(UpdateProduct $req, Product $product, Comment $comment, Cart $cart, $id, ){
+    public function edit(UpdateProduct $req, Product $product, Comment $comment, Cart $cart, $id, ){
 
         # If the user clicked on the delete button 
 

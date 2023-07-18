@@ -28,7 +28,7 @@ Route::view("/todo", "static.todo");
 Route::get('/', Index::class ) -> name("root");
 
 # SearchBar
-Route::view("/search", "search") -> name("articles");
+Route::view("/search", "product.search") -> name("articles");
 
 # Details
 Route::get('/details/{product_id}', [ Details::class, "get_details" ] ) -> name("details");
@@ -139,23 +139,23 @@ Route::prefix('comments') -> name("comment.") -> group(function () {
 
 Route::prefix('product') -> name("product.") -> group(function () {
 
-    Route::view("/sell", "sell") -> middleware(Logged::class) -> name("sell");
+    Route::view("/market", "product.market") -> middleware(Logged::class) -> name("sell");
 
     Route::post(
-        "/sell",
+        "/market",
         [ Products::class, "store" ]
     ) -> middleware(Logged::class) -> name("sell");
 
 
     Route::get(
         "/update/{id}",
-        [ Products::class, "show_update_form" ]
-    ) -> middleware(Logged::class) -> name("updateform");
+        [ Products::class, "edit_form" ]
+    ) -> middleware(Logged::class) -> name("edit_form");
 
 
     Route::post(
         "/update/{id}",
-        [ Products::class, "update" ]
+        [ Products::class, "edit" ]
     ) -> middleware(Logged::class) -> name("update");
     
 });
@@ -178,7 +178,7 @@ Route::prefix('profile') -> name("profile.") -> group(function () {
 
     Route::get(
         "",
-        [Users::class, "showProfile"]
+        [Users::class, "show_profile"]
     ) -> middleware(Logged::class);
     
 

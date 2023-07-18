@@ -124,7 +124,7 @@
                             {{-- Nous sommes le vendeur --}}
                             @else
 
-                                <form class="navbar formshow" method="get" action="{{route("product.updateform", $data['pid'])}}" >  
+                                <form class="navbar formshow" method="get" action="{{route("product.edit_form", $data['pid'])}}" >  
                                     @csrf   
                                     <button  class="addtocart" type="submit">EDIT PRODUCT<i style="font-weight: bold !important;" class="bi bi-cart-check"></i></button>
                                 </form>
