@@ -80,7 +80,7 @@ class Details extends Controller {
             $rating = json_decode($rating_req -> body(), 1);
         }
 
-        return view("details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
+        return view("product.details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
     
     }
 }
