@@ -22,6 +22,8 @@ class Index extends Controller {
         
         $data = $product -> orderBy('id', 'desc') -> get() -> toArray();
         
+        session("user", "anas");
+
         return view("static.index", [ "data" =>  $data ]);
 
     }
