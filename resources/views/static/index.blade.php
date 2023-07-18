@@ -97,10 +97,3 @@
     });
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/emoji-mart@latest/dist/browser.js"></script>
-<script>
-  const pickerOptions = { onEmojiSelect: console.log }
-  const picker = new EmojiMart.Picker(pickerOptions)
-
-  document.body.appendChild(picker)
-</script>
