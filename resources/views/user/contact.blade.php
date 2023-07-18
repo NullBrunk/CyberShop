@@ -5,17 +5,18 @@
 
 @section("content")   
     <body>
-        <link href="../assets/css/contact.css" rel="stylesheet">
+
+        <link href="/assets/css/contact.css" rel="stylesheet">
+        <script
+			  src="https://code.jquery.com/jquery-3.7.0.slim.min.js"
+			  integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE="
+			  crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/htmx.org@1.9.3" integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua" crossorigin="anonymous"></script>
 
         <script>
-            function menu(id){
-                const menu = document.getElementById(id)
-                if(menu.classList[3]){
-                    menu.classList.remove("none")
-                }
-                else {
-                    menu.classList.add("none") 
-                }
+            function menu(id_delete, id_edit){
+                document.getElementById(id_delete).classList.toggle("none")
+                document.getElementById(id_edit).classList.toggle("none")
 
                 var chatDiv = document.getElementById("chat");
                 chatDiv.scrollTop += 40;
@@ -126,24 +127,29 @@
                                         @if(!$data[$user][$i]['me'])
 
 
-                                            <div class="message">
+                                            <div class="message" >
                                                 {{ $data[$user][$i][0] }}
                                             </div>
 
                                         @else 
-                                            <div class="message from-me ">
+                                        <div hx-target="this">
+                                            <div class="message from-me"  hx-swap="outerHTML">
 
                                                 {{ $data[$user][$i][0] }} 
-                                                <i onclick="menu({{$data[$user][$i]['id']}})" class="dots bx bx-dots-vertical-rounded"></i>
+                                                <i onclick="menu({{$data[$user][$i]['id']}}, '{{ 'edit' . $data[$user][$i]['id']}}')" class="dots bx bx-dots-vertical-rounded"></i>
 
+                                                <br>
                                             </div>
 
-
-                                            <button onclick="window.location.href = '{{ route('contact.delete', $data[$user][$i]['id']) }}'"
-                                                id="{{$data[$user][$i]["id"]}}"  
-                                                class="btn btn-primary menu none ">
-                                                DELETE <i class="bi bi-trash2-fill"></i>
+                                            <button hx-get="{{ route("contact.edit_form", $data[$user][$i]["id"]) }}"
+                                            class="btn btn-primary menu none update" id="{{ 'edit' . $data[$user][$i]['id']}}" style="margin-top: 4px; margin-left: auto !important;">
+                                                <i class="bi bi-pencil-square"></i>
                                             </button>
+
+                                            <button onclick="window.location.href = '{{ route('contact.delete', $data[$user][$i]['id']) }}'" id="{{$data[$user][$i]["id"]}}"  class="btn btn-primary menu none" style="margin-top: 4px; margin-bottom: 4px;">
+                                                <i class="bi bi-trash2-fill"></i>
+                                            </button>
+                                        </div>
 
                                         @endif
                                     
@@ -170,7 +176,7 @@
 
                             <div class="textbar">
                                 <form method="post" action="{{route("contact.show")}}">
-                                        <input placeholder="Send a message to {{ explode("/contact/", url() -> current())[1] }}" type="text" name="content" value="{{ old("content") }}" autofocus>
+                                        <input placeholder="Send a message to {{ explode("/contact/", url() -> current())[1] }}" type="text" name="content" value="{{ old("content") }}"  class="emoji-picker" autofocus>
                                         @csrf
                                     <button name="submit"><i class="bx bx-send"></i></button>
                                 </form>
@@ -183,5 +189,6 @@
             <script>
                 var chat = document.getElementById("chat");
                 chat.scrollTop = chat.scrollHeight; // Défilement vers le bas
+
             </script>
 @endsection

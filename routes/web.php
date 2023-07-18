@@ -222,6 +222,18 @@ Route::prefix('contact') -> name("contact.") -> group(function () {
         [ Contacts::class, "delete"]
     ) -> middleware(Logged::class) -> name("delete");
 
+
+    Route::get(
+        "edit/{contact}",
+        [ Contacts::class, "show_form"]
+    ) -> middleware(Logged::class) -> name("edit_form");
+
+
+    Route::patch(
+        "edit/{contact}",
+        [ Contacts::class, "edit"]
+    ) -> middleware(Logged::class) -> name("edit");
+
 });
 
 

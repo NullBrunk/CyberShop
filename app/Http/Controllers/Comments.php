@@ -141,7 +141,7 @@ class Comments extends Controller {
 
     public function get_update_form(Comment $comment){
         if($comment["id_user"] === $_SESSION["id"]){
-            return view("user.updatecomment", [ "data" => $comment -> toArray() ]);
+            return view("user.form_comment", [ "data" => $comment -> toArray() ]);
         }
         else {
             return abort(403);

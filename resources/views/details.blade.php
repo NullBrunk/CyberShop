@@ -365,14 +365,14 @@
                                                 formulaire de modification de commentaires
                                             --}}
                                             <a href="{{route("comment.update_form", $comm["id"])}}" 
-                                                id="{{$comm['id'] . 'updatebutton'}}" class="btn btn-primary menu update" style="width: 39px; margin-left: auto !important;">
+                                                id="{{$comm['id'] . 'updatebutton'}}" class="btn btn-primary menu update" style="width: 43px; margin-left: auto !important;">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
 
                                             {{--
                                                 Button qui appelle la fonction de confirmation de suppression
                                             --}}
-                                            <button id="{{$comm['id'] . 'deletebutton'}}" onclick="deletecomm({{ $comm['id']}})" class="btn btn-primary menu" style="margin-top: 4px; width: 39px; margin-left: auto;">
+                                            <button id="{{$comm['id'] . 'deletebutton'}}" onclick="deletecomm({{ $comm['id']}})" class="btn btn-primary menu" style="margin-top: 4px; margin-left: auto;">
                                                 <i class="bi bi-trash2-fill"></i>
                                             </button>
 
@@ -455,6 +455,12 @@
             success("{{ session('updatedcomm') }}", "Updated")
         </script>
     @endif
+
+    @if(session("selled"))
+        <script>
+            success("{{ session('selled') }}", "Selled")
+        </script>
+    @endif   
 
 @endsection
 

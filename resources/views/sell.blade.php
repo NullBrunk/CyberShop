@@ -102,14 +102,5 @@
         </script>
     @enderror
 
-
-    {{-- Gestion des messages de succès --}}
-
-    @if(session("selled"))
-        <script>
-            success("{{ session('selled') }}", "Selled")
-        </script>
-    @endif   
-
 @endsection
 

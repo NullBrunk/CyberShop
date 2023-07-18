@@ -268,4 +268,54 @@ class Contacts extends Controller {
 
         return redirect(url() -> previous());
     }
+
+
+
+    /**
+     * Show the view of the contact form to update a message or a 403 page if user
+     * is not allowed to edit this contact message.
+     *
+     * @param Contact $contact     The message to remove threw model binding
+     * 
+     * @return view | redirect           
+     * 
+     */
+    
+    public function show_form(Contact $contact){
+
+        $contact_message = $contact -> toArray();
+
+        if($contact_message["id_contactor"] === $_SESSION["id"]){
+            return view("user.form_contact", [ "message" => $contact_message]);
+        }
+        else {
+            return abort(403);
+        }
+    }
+
+
+
+    /**
+     * Update the message if the user is allowed to, else return 403 
+     *
+     * @param ContactReq $request       The request with all the valuable information
+     * @param Contact $contact          The message to update threw model binding
+     * 
+     * @return view | redirect           
+     * 
+     */
+
+    public function edit(ContactReq $request, Contact $contact){
+        
+        if($contact["id_contactor"] === $_SESSION["id"]){
+
+            $contact -> content = $request["content"];
+            $contact -> save();
+
+            return redirect(url() -> previous());
+        }
+        else {
+            return abort(403);
+        }
+    }
 }

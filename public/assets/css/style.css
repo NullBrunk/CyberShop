@@ -1269,14 +1269,12 @@ abbr {
 }
 
 .menu {
-  margin-left: 90%;
+  margin-left: auto;
+  margin-right: 2%;
   font-weight: bold;
   display: flex;
   justify-content: right;
-  padding: 5px;
   margin-right: 1%;
-  padding-left: 10px;
-  padding-right: 10px;
   border-radius: 10px;
   background-color: #af2024;
   border: 1px solid #af2024;
@@ -1311,9 +1309,7 @@ abbr {
 
 }
 
-.menu i {
-  margin-left: 10px;
-}
+
 
 .none {
   display: none !important;
