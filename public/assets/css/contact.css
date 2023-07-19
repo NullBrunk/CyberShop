@@ -3,11 +3,13 @@ body {
 }
 
 .main {
-    margin-top: 3%;
+    margin-top: 9vh;
     padding: 3% 2%;
-    height: 91vh;
+    height: 87vh;
     background-color: #37517e;
 }
+
+
 
 .content {
     display: flex;
@@ -19,15 +21,17 @@ body {
     width: 80%;
     border: 1px solid #e3e3e3;
     background-color: #f7f7f7;
-    height: 84vh;
+    height: 80vh;
 }
+
+
 
 .left {
     justify-content: left;
     width: 20%;
     background-color: #293e61;
     overflow: scroll;
-    height: 84vh;
+    height: 80vh;
 }
 
 .profile-box {
@@ -68,15 +72,18 @@ body {
     outline: none;
 }
 
+.textbar form {
+    display: flex;
+}
 .textbar button {
     width: 6%;
     height: 6vh;
     border-radius: 5px;;
-    margin-top: 5px !important;
     background-color: #293e61;
     border: 1px #293e61;
     color: white;
     font-size: 18px;
+    margin-left: 5px;
 }
 
 .textbar label {
@@ -85,9 +92,10 @@ body {
     background-color: #293e61;
     width: 6%;
     height: 6vh;
-    margin-top: 5px;
     padding-top: 8px;
     font-size: 18px;
+    margin-left: 10px;
+
 }
 
 .textbar label i {
@@ -191,4 +199,36 @@ hr {
 
 .file-upload label i {
     margin-right: 5px;
+}
+
+.contactimg {
+    width: 30%
+}
+
+@media (max-width: 991px) {
+    .main {
+        margin-top: 10vh;
+    }
+    .contactimg {
+        width: 100%;
+    }
+
+    .textbar input[type=text] {
+        width: 70%;
+        font-size: 18px;
+        padding-bottom: 1px;
+    }
+
+    .textbar button {
+        width: 12%;
+    }
+    .textbar label {
+        width: 12%;
+        margin-bottom: 100px;
+    }
+
+    .textbar label i {
+        margin-left: 25%;
+    }
+    
 }

@@ -130,7 +130,7 @@
                                                         {{ $data[$user][$i][0] }}
                                                     
                                                 @else
-                                                    <img style="width: 30%"  src="../storage/{{ $data[$user][$i][0] }}">
+                                                    <img class="contactimg  "  src="../storage/{{ $data[$user][$i][0] }}">
                                                 @endif
                                             </div>
 
@@ -141,7 +141,7 @@
                                                     @if($data[$user][$i]["type"] === "text")
                                                         {{ $data[$user][$i][0] }} 
                                                     @else
-                                                        <img style="width: 30%" src="../storage/{{ $data[$user][$i][0] }}">
+                                                        <img class="contactimg" src="../storage/{{ $data[$user][$i][0] }}">
                                                     @endif
                                                     <i onclick="menu({{$data[$user][$i]['id']}}, '{{ 'edit' . $data[$user][$i]['id']}}')" class="dots bx bx-dots-vertical-rounded"></i>
 

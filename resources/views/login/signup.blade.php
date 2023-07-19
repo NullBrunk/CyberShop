@@ -25,7 +25,7 @@
 
     @include('layout.header')
 
-    <body style="background-color: #e1e1e1 !important; overflow: hidden;">
+    <body style="background-color: #e1e1e1 !important;">
 	    <br>
         <section class="signupform">
       
