@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Storage;
+
 use App\Http\Requests\ContactReq;
+use Illuminate\Http\Request;
 
 use App\Models\Contact;
 use App\Models\User;
@@ -24,7 +27,7 @@ function getmsgs($mail){
     $sql = $pdo -> prepare("
         SELECT * FROM
             (
-                SELECT contacts.id,readed,content,id_contacted,users.mail as mail_contacted 
+                SELECT contacts.id,readed,type,content,id_contacted,users.mail as mail_contacted 
                 FROM contacts 
                 INNER JOIN 
                     users 
@@ -106,11 +109,12 @@ class Contacts extends Controller {
             # Create time at hand 
             $time = explode("-", explode(" ", $data["time"])[0])[2] . " " . strtolower(date('F', mktime(0, 0, 0, explode("-", $data["time"])[1], 10))) . ", " . implode(":", array_slice(explode(":", explode(" ", $data["time"])[1]), 0, 2));
 
-            # Then the contactor is the current user
+            # Then the contactor is the other user
             if($data["mail_contacted"] === $_SESSION["mail"]){       
                 $mail = $data["mail_contactor"];
                 $toput = [ 
                     $data['content'], 
+                    "type" => $data["type"],
                     "me" => false, 
                     "id" => $data["id"],
                     "time" => $time,
@@ -119,11 +123,12 @@ class Contacts extends Controller {
                 ];
             } 
 
-            # Then the contactor is the other user
+            # Then the contactor is us
             else {
                 $mail = $data["mail_contacted"];
                 $toput = [ 
-                    $data['content'], 
+                    $data['content'],
+                    "type" => $data["type"], 
                     "me" => true, 
                     "id" => $data["id"],
                     "time" => $time,
@@ -192,7 +197,7 @@ class Contacts extends Controller {
     /**
      * Store a message sended to a specific user
      *
-     * @param ContactReq $request      The request with all the informations
+     * @param Request $request      The request with all the informations
      * @param Contact $contact         The contact model
      * @param User $user               The user model
      * 
@@ -200,14 +205,11 @@ class Contacts extends Controller {
      * 
      */
 
-    public function store(ContactReq $request, Contact $contact, User $user){
-
-        $req = $request -> validated();
+    public function store(Request $request, Contact $contact, User $user){
 
         # Get the slug
         $url = explode("/contact/", url() -> previous());
         
-
         # If there is no slug, the user is 
         # trying to send a message to non existent user
 
@@ -230,18 +232,55 @@ class Contacts extends Controller {
             $id = $id[0]["id"];
         }
 
-
-        # Add the message
-
-        $contact -> id_contactor = $_SESSION["id"];
-        $contact -> id_contacted = $id;
-
-        $contact -> content = $req["content"];
+        # The users want to send an image 
+        if(isset($request["img"])){
+            $req = $request -> validate([
+                "img" => "required|image|max:2000"
+            ]);
+            
+            $img = $req["img"];
+            
+            if($img !== null && !$img -> getError()){
+                
+                # Store the image 
+                $img_path = $req["img"] -> store("contact_img", "public");            
+                
+                
+                # Add the img to the contact messages
+                $contact -> id_contactor = $_SESSION["id"];
+                $contact -> id_contacted = $id;
         
-        $contact -> time = date('Y-m-d H:i:s');
-        $contact -> readed = false;
-        
-        $contact -> save();
+                $contact -> content = $img_path;
+                
+                $contact -> type = "img";
+                $contact -> time = date('Y-m-d H:i:s');
+                $contact -> readed = false;
+                
+                $contact -> save();
+            
+            }
+        }
+        else {
+            
+            # Else try to store basic text content
+
+            $req = $request -> validate([
+                'content' => 'required',
+            ]);
+    
+            # Add the message
+    
+            $contact -> id_contactor = $_SESSION["id"];
+            $contact -> id_contacted = $id;
+    
+            $contact -> content = $req["content"];
+            
+            $contact -> time = date('Y-m-d H:i:s');
+            $contact -> readed = false;
+            
+            $contact -> save();
+
+        }
 
     
         return to_route("contact.user", $mail);
@@ -259,7 +298,15 @@ class Contacts extends Controller {
      */
 
     public function delete(Contact $contact){
-        if($contact -> toArray()["id_contactor"] === $_SESSION["id"]){
+        
+        $data = $contact -> toArray();
+        
+        if($data["id_contactor"] === $_SESSION["id"]){
+            
+            if($data["type"] === "img"){
+                Storage::disk("public") -> delete($data['content']);
+            }
+
             $contact -> delete();
         }
         else {
@@ -285,7 +332,7 @@ class Contacts extends Controller {
 
         $contact_message = $contact -> toArray();
 
-        if($contact_message["id_contactor"] === $_SESSION["id"]){
+        if($contact_message["id_contactor"] === $_SESSION["id"] and $contact_message["type"] === "text"){
             return view("user.form_contact", [ "message" => $contact_message]);
         }
         else {
@@ -307,7 +354,7 @@ class Contacts extends Controller {
 
     public function edit(ContactReq $request, Contact $contact){
         
-        if($contact["id_contactor"] === $_SESSION["id"]){
+        if($contact["id_contactor"] === $_SESSION["id"] and $contact["type"] === "text"){
 
             $contact -> content = $request["content"];
             $contact -> save();

@@ -67,7 +67,6 @@
                     <div style="background: white; height: 1px;">_</div>
 
                         @for($i = sizeof($contact) - 1; $i >= 0; $i--)
-
                             @php($value = 0)
 
                             @php($keys = array_keys($data[$contact[$i][1]]))
@@ -126,25 +125,35 @@
 
                                         @if(!$data[$user][$i]['me'])
 
-
-                                            <div class="message" >
-                                                {{ $data[$user][$i][0] }}
-                                            </div>
+                                            @if($data[$user][$i]["type"] === "text")
+                                                <div class="message" >
+                                                    {{ $data[$user][$i][0] }}
+                                                </div>
+                                            @else
+                                                <img style="width: 30%"  src="../storage/{{ $data[$user][$i][0] }}">
+                                            @endif
 
                                         @else 
-                                        <div hx-target="this">
-                                            <div class="message from-me"  hx-swap="outerHTML">
+                                            <div hx-target="this">
+                                                <div class="message from-me"  hx-swap="outerHTML">
 
-                                                {{ $data[$user][$i][0] }} 
-                                                <i onclick="menu({{$data[$user][$i]['id']}}, '{{ 'edit' . $data[$user][$i]['id']}}')" class="dots bx bx-dots-vertical-rounded"></i>
+                                                    @if($data[$user][$i]["type"] === "text")
+                                                        {{ $data[$user][$i][0] }} 
+                                                    @else
+                                                        <img style="width: 30%" src="../storage/{{ $data[$user][$i][0] }}">
+                                                    @endif
+                                                    <i onclick="menu({{$data[$user][$i]['id']}}, '{{ 'edit' . $data[$user][$i]['id']}}')" class="dots bx bx-dots-vertical-rounded"></i>
 
                                                 <br>
                                             </div>
 
-                                            <button hx-get="{{ route("contact.edit_form", $data[$user][$i]["id"]) }}"
-                                            class="btn btn-primary menu none update" id="{{ 'edit' . $data[$user][$i]['id']}}" style="margin-top: 4px; margin-left: auto !important;">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </button>
+                                            {{-- If the message is an image you cannot edit it --}}
+                                            @if($data[$user][$i]["type"] === "text")
+                                                <button hx-get="{{ route("contact.edit_form", $data[$user][$i]["id"]) }}"
+                                                class="btn btn-primary menu none update" id="{{ 'edit' . $data[$user][$i]['id']}}" style="margin-top: 4px; margin-left: auto !important;">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </button>
+                                            @endif
 
                                             <button onclick="window.location.href = '{{ route('contact.delete', $data[$user][$i]['id']) }}'" id="{{$data[$user][$i]["id"]}}"  class="btn btn-primary menu none" style="margin-top: 4px; margin-bottom: 4px;">
                                                 <i class="bi bi-trash2-fill"></i>
@@ -173,12 +182,16 @@
                                 @endif
                             </div>
 
-
+                            
                             <div class="textbar">
-                                <form method="post" action="{{route("contact.store")}}">
-                                        <input placeholder="Send a message to {{ explode("/contact/", url() -> current())[1] }}" type="text" name="content" value="{{ old("content") }}"  class="emoji-picker" autofocus>
-                                        @csrf
-                                    <button name="submit"><i class="bx bx-send"></i></button>
+                                <form method="post" id="formchat" action="{{route("contact.store")}}" enctype="multipart/form-data">
+                                    <input placeholder="Send a message to {{ explode("/contact/", url() -> current())[1] }}" type="text" name="content" value="{{ old("content") }}" autofocus>
+                                    @csrf
+                                    <input type="file" id="file-input" name="img" style="width: 0;">
+                                    <label for="file-input">
+                                        <i class="bx bx-image"></i>
+                                      </label>
+                                    <button name="submita"><i class="bx bx-send"></i></button>
                                 </form>
                             </div>
                         @endif
@@ -190,5 +203,13 @@
                 var chat = document.getElementById("chat");
                 chat.scrollTop = chat.scrollHeight; // Défilement vers le bas
 
+
+
+                var fileInput = document.getElementById('file-input');
+                var form = document.getElementById('formchat');
+
+                fileInput.addEventListener('change', function() {
+                    form.submit();
+                });
             </script>
 @endsection
