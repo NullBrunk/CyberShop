@@ -18,6 +18,7 @@ return new class extends Migration
             $table -> foreign('id_contacted')->references('id')->on('users');
             
             
+            $table -> string('type', '5') -> default("text");
             $table -> longText('content');
             $table -> boolean('readed');
             $table -> dateTime('time');
