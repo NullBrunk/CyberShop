@@ -124,14 +124,15 @@
 
 
                                         @if(!$data[$user][$i]['me'])
-
-                                            @if($data[$user][$i]["type"] === "text")
-                                                <div class="message" >
-                                                    {{ $data[$user][$i][0] }}
-                                                </div>
-                                            @else
-                                                <img style="width: 30%"  src="../storage/{{ $data[$user][$i][0] }}">
-                                            @endif
+                                            <div class="message" >
+                                                @if($data[$user][$i]["type"] === "text")
+                                                    
+                                                        {{ $data[$user][$i][0] }}
+                                                    
+                                                @else
+                                                    <img style="width: 30%"  src="../storage/{{ $data[$user][$i][0] }}">
+                                                @endif
+                                            </div>
 
                                         @else 
                                             <div hx-target="this">
@@ -200,16 +201,19 @@
             </div>
 
             <script>
-                var chat = document.getElementById("chat");
-                chat.scrollTop = chat.scrollHeight; // Défilement vers le bas
-
-
-
                 var fileInput = document.getElementById('file-input');
                 var form = document.getElementById('formchat');
 
                 fileInput.addEventListener('change', function() {
                     form.submit();
                 });
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    var chat = document.getElementById("chat");
+                    chat.scrollTop = chat.scrollHeight; // Défilement vers le bas
+                });
             </script>
+
+
 @endsection
+
