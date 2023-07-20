@@ -4,7 +4,8 @@
 
 
 @section("content")   
-    <body>
+
+    <body style="background-color: #324769 !important;">
 
         <link href="/assets/css/contact.css" rel="stylesheet">
         <script
@@ -20,6 +21,22 @@
 
                 var chatDiv = document.getElementById("chat");
                 chatDiv.scrollTop += 40;
+            }
+            
+            function confirm_delete(url){
+            Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#293e61',
+                    cancelButtonColor: '#af2024',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+                        window.location.href = url;
+                    }
+                })
             }
         </script>
 
@@ -60,11 +77,9 @@
             <div class="content">
 
                 <div class="left">
-                    <div onclick="sendmsg()" class="sendmsg profile-box" style="cursor: pointer;">
+                    <div onclick="sendmsg()" class="sendmsg profile-box" style="cursor: pointer; height: 22% !important;">
                         <i class="bx bx-mail-send"></i> 
                     </div>
-                    
-                    <div style="background: white; height: 1px;">_</div>
 
                         @for($i = sizeof($contact) - 1; $i >= 0; $i--)
                             @php($value = 0)
@@ -79,11 +94,10 @@
 
 
                             @if(isset($user) && $user === $contact[$i][1])
-                                <a class="profile-box hoverblue" href="{{route("contact.user", $contact[$i][1])}}"> {{ $contact[$i][1] }}</a> 
+                                <a class="profile-box changecolor" href="{{route("contact.user", $contact[$i][1])}}"> {{ $contact[$i][1] }}</a> 
                             @else
                                 <a class="profile-box" href="{{route("contact.user", $contact[$i][1])}}"> {{ $contact[$i][1] }} @if(end($data[$contact[$i][1]])["readed"] === 0 and end($data[$contact[$i][1]])["me"] === false) <span class="notifs-unreaded-message"> {{ $value }} </span> @endif</a> 
                             @endif
-                            <hr>
                         @endfor
             
                     </div>
@@ -104,21 +118,21 @@
 
                                         @if(!isset($old))
                                             @if($data[$user][$i]['me'] === false)
-                                                <div class="profilemsg time" style="background-color: #dbd7d7"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                                <div class="profilemsg time" style="background-color: #dbd7d7; margin-left: 42%;"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                             @else
-                                                <div class="profilemsg time" style="background-color: #d1eaf9"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                                <div class="profilemsg time" style="background-color: #ddeffd; margin-right: 42%;"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                             @endif
                                         @elseif((!($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === false)))
                                             
-                                            <p class="close" style="background-color: #d1eaf9"></p>
+                                            <p class="close" style="background-color: #ddeffd; margin-right: 42% !important;"></p>
                                             
-                                            <div class="profilemsg time" style="background-color: #dbd7d7"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                            <div class="profilemsg time" style="background-color: #dbd7d7; margin-left: 42%;"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                         
                                         @elseif((!($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === true)))
                                             
-                                            <p class="close"></p>
+                                            <p class="close" style="margin-left: 42% !important;"></p>
                                             
-                                            <div class="profilemsg time" style="background-color: #d1eaf9"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                            <div class="profilemsg time" style="background-color: #ddeffd; margin-right: 42%;"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                         
                                         @endif
 
@@ -135,7 +149,7 @@
                                             </div>
 
                                         @else 
-                                            <div hx-target="this">
+                                            <div hx-target="this" style="background-color: #ddeffd; margin-left: 1%; width: 57%;">
                                                 <div class="message from-me"  hx-swap="outerHTML">
 
                                                     @if($data[$user][$i]["type"] === "text")
@@ -156,7 +170,7 @@
                                                 </button>
                                             @endif
 
-                                            <button onclick="window.location.href = '{{ route('contact.delete', $data[$user][$i]['id']) }}'" id="{{$data[$user][$i]["id"]}}"  class="btn btn-primary menu none" style="margin-top: 4px; margin-bottom: 4px;">
+                                            <button onclick='confirm_delete( "{{ route("contact.delete", $data[$user][$i]["id"]) }}" )' id="{{$data[$user][$i]["id"]}}"  class="btn btn-primary menu none" style="margin-top: 4px;">
                                                 <i class="bi bi-trash2-fill"></i>
                                             </button>
                                         </div>
@@ -171,9 +185,9 @@
 
 
                                     @if($old)
-                                        <p class="close" style="background-color: #d1eaf9"></p>
+                                        <p class="close" style="background-color: #ddeffd; margin-right: 42% !important;"></p>
                                     @else
-                                        <p class="close"></p>
+                                        <p class="close" style="margin-left: 42% !important;"></p>
                                     @endif
 
                                     <?php
