@@ -40,7 +40,6 @@
             }
         </script>
 
-        @include('layout.header')
 
 
         <div class="main" >

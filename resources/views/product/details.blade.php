@@ -37,8 +37,6 @@
             }
         </script>
 
-        @include('layout.header')
-
     
         <main id="main" >
 

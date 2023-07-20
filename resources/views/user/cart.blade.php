@@ -7,7 +7,6 @@
     <body>
         <div style="display: flex; padding-top: 15vh; padding-bottom: 15vh;">
 
-        @include('layout.header')
 
 
             @php($total = 0)

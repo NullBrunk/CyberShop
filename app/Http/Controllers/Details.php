@@ -43,17 +43,20 @@ class Details extends Controller {
 
         
         # Delete all notifications linked to it
-        
         session_start();
 
         if(isset($_SESSION["logged"])){
 
-            $notif 
+            # If i m the seller of this product
+            if($_SESSION["id"] === $data["uid"]){
+
+                # Delete all notifs linked to it
+                $notif 
                 -> where("id_user", "=", $_SESSION["id"]) 
                 -> where("type", "=", "comment")
                 -> where("moreinfo", "=", $product_id)
                 -> delete();
-
+            }
         }
 
         # Get all the comments of the product

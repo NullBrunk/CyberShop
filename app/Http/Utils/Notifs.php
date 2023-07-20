@@ -29,6 +29,14 @@ function show(){
     $contact = new Contact();
     $notif = new Notif();
 
+
+    // We build an array with all the notifications in it
+    $to_push = [];
+    $notif_number = 0;
+
+
+    # We get all the contact notifications
+
     $data = $contact 
         -> where("id_contacted", "=", $_SESSION["id"]) 
         -> where("readed", "=", 0)
@@ -36,14 +44,39 @@ function show(){
         -> get()
         -> toArray();
 
+    foreach($data as $d){
 
-    
-    // We build an array with all the notifications in it
-    
-    $to_push = [];
-    $notif_number = 0;
+        if($d["id_contactor"] === $_SESSION["id"]){
+            $id_to_use = $d["id_contacted"];
+        }
+        else {
+            $id_to_use = $d["id_contactor"];
+        }
+        
+        if(isset($to_push[$id_to_use])){
+            $d = explode(" m", $to_push[$id_to_use]["title"]);
+            $to_push[$id_to_use]['title'] = (int)$d[0] + 1 . " messages received.";
+        }
+        else {
 
+            # Get the mail
+            $mail = mail_from_id($id_to_use)[0]["mail"];
+
+            $to_push[$id_to_use] = 
+            [  
+                "icon" => "bx bx-chat",
+                "title" => "1 message received.",
+                "content" => "From " . $mail . ".",
+                "more" => "/contact/" . $mail,
+                "type" => "message"
+            ];
+        }
+        $notif_number++;
+        
+    }
     
+ 
+    # We get all the notifs from the notif table
 
     foreach($notif -> where("id_user", "=", $_SESSION["id"]) -> where("type", "=", "comment") -> orderBy("id", "desc") -> get() -> toArray() as $d) {
         $to_push["o" . $d["id"]] = 
@@ -58,34 +91,6 @@ function show(){
         $notif_number++;
     }
 
-    foreach($data as $d){
-
-        // Cause we desplay the mail of the contactor on the notification
-        if($d["id_contactor"] === $_SESSION["id"]){
-            $mail = mail_from_id($d["id_contacted"])[0]["mail"];
-        }
-        else {
-            $mail = mail_from_id($d["id_contactor"])[0]["mail"];
-        }
-        
-        if(isset($to_push[$mail])){
-            $d = explode(" m", $to_push[$mail]["title"]);
-            $to_push[$mail]['title'] = (int)$d[0] + 1 . " messages received.";
-        }
-        else {
-            $to_push[$mail] = 
-            [  
-                "icon" => "bx bx-chat",
-                "title" => "1 message received.",
-                "content" => "From " . $mail . ".",
-                "more" => "/contact/" . $mail,
-                "type" => "message"
-            ];
-        }
-        $notif_number++;
-        
-    }
-
-  
+   
     return ( [ $to_push, $notif_number ] );
 }

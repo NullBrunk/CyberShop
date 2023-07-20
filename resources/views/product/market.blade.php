@@ -6,7 +6,6 @@
 @section("content")
     <body>
 
-        @include('layout.header')
             <main id="main">
 
                 <section id="breadcrumbs" class="breadcrumbs" style="padding-top: 86px; padding-bottom: 0px !important;">

@@ -2,8 +2,6 @@
 
 @section("title", "Cybershop")
 
-@include('layout.header')
-
 @section("content")
     <body>
         <section id="hero" class="d-flex align-items-center">

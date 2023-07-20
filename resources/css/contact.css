@@ -22,6 +22,7 @@
     width: 20%;
     background-color: #324769;
     overflow: scroll;
+    overflow-x: hidden;
     height: calc(92vh - 10px);
 }
 
@@ -42,6 +43,7 @@
     height: 87%;
     margin-top: 1%;
     overflow: scroll;
+    overflow-x: hidden;
     background-color: #ffffff;
 }
 

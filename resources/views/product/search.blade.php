@@ -7,7 +7,6 @@
     <link href="assets/css/searchbar.css" rel="stylesheet">
     <body>
 
-        @include('layout.header')
 
         <section class="margintop d-flex align-items-center">
 

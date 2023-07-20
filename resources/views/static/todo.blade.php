@@ -5,7 +5,6 @@
 
 @section("content")
     <body>
-        @include("layout.header")
         
         <script>
             Swal.fire({

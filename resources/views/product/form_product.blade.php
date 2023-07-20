@@ -6,8 +6,6 @@
 @section("content")
     <body>
 
-        @include('layout.header')
-
             <main id="main">
 
                 {{-- On se positionne en bas de la navbar --}}

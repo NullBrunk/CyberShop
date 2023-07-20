@@ -7,8 +7,6 @@
 
     <body>
 
-        @include('layout.header')
-
         <section style="margin-top: 14vh; padding: 2.5%;">
 
 
