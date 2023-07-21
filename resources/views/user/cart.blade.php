@@ -7,8 +7,6 @@
     <body>
         <div style="display: flex; padding-top: 15vh; padding-bottom: 15vh;">
 
-
-
             @php($total = 0)
             <div class="showcart" style="margin: auto;">
                 <div class="totalprice">

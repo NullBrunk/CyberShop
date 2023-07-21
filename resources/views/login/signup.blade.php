@@ -28,7 +28,7 @@
     <body style="background-color: #e1e1e1 !important;">
 	    <br>
         <section class="signupform">
-      
+            
             <div class="container">
                 <div class="row justify-content-center" class="logincenter">
                     <div class="col-md-7 col-lg-5">
@@ -51,7 +51,7 @@
                                 @enderror
 
                                 <div class="form-group">
-                                    <input value="{{ old("email") }}" type="mail" id="mail" name="mail" class="form-control rounded-left" placeholder="E-mail" required autofocus>
+                                    <input value="{{ old("mail") }}" type="mail" id="mail" name="mail" class="form-control rounded-left" placeholder="E-mail" required autofocus>
                                 </div>
 
                                 @error("pass")
@@ -75,6 +75,17 @@
                                     <input value="{{ old("repass") }}"type="password" id="pass" name="repass" class="form-control rounded-left" placeholder="Re Password" required>
                                 </div>
                     
+
+                                @error("captcha")
+                                    <div class="alert alert-danger">
+                                        {{$message}}
+                                    </div>
+                                @enderror
+                                <div class="form-group">
+                                    <input type="number" id="captcha" name="captcha" class="form-control rounded-left" placeholder="Result of {{$firstnum . " + " . $secondnum}}" required>
+                                </div>
+            
+
                                 <div class="form-group">
                                     <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign-Up</button>
                                 </div>

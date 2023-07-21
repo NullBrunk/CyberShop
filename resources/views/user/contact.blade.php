@@ -159,6 +159,7 @@
                                                 <br>
                                             </div>
 
+                                            
                                             {{-- If the message is an image you cannot edit it --}}
                                             @if($data[$user][$i]["type"] === "text")
                                                 <button hx-get="{{ route("contact.edit_form", $data[$user][$i]["id"]) }}"

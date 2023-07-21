@@ -44,9 +44,8 @@ Route::get('/disconnect', function () {
     return redirect('/');
 }) -> name("disconnect") -> middleware(Logged::class);
 
-Route::view(
-    '/signup', 
-    'login.signup'
+Route::get(
+    '/signup', [ Users::class, "show_signup" ],
 ) -> middleware(Redirect::class) -> name("signup");
 
 Route::view(
