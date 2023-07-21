@@ -13,7 +13,6 @@
 			  integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE="
 			  crossorigin="anonymous"></script>
         <script src="https://unpkg.com/htmx.org@1.9.3" integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua" crossorigin="anonymous"></script>
-
         <script>
             function menu(id_delete, id_edit){
                 document.getElementById(id_delete).classList.toggle("none")

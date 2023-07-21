@@ -42,7 +42,6 @@
                             <form method="post" class="login-form">
                             
                                 {{ csrf_field() }}
-
                                                                    
                                 @error("mail")
                                     <div class="alert alert-danger">

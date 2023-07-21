@@ -44,19 +44,23 @@ Route::get('/disconnect', function () {
     return redirect('/');
 }) -> name("disconnect") -> middleware(Logged::class);
 
+
 Route::get(
     '/signup', [ Users::class, "show_signup" ],
 ) -> middleware(Redirect::class) -> name("signup");
+
 
 Route::view(
     '/login', 
     'login.login'
 ) -> middleware(Redirect::class) -> name("login");
 
+
 Route::post(
     '/login', 
     [ Users::class, "show" ] 
 ) -> middleware(Redirect::class);
+
 
 Route::post(
     '/signup', 

@@ -45,15 +45,16 @@
             </div>
             
             <script src="../assets/js/main.js"></script>
+
             <script>
-            window.addEventListener('load', function() {
-                var images = document.getElementsByTagName('img');
-                for (var i = 0; i < images.length; i++) {
-                    var img = images[i];
-                    if (img.getAttribute('data-src')) {
-                        img.setAttribute('src', img.getAttribute('data-src'));
+                window.addEventListener('load', function() {
+                    var images = document.getElementsByTagName('img');
+                    for (var i = 0; i < images.length; i++) {
+                        var img = images[i];
+                        if (img.getAttribute('data-src')) {
+                            img.setAttribute('src', img.getAttribute('data-src'));
+                        }
                     }
-                }
-            });
+                });
         </script>
 @endsection
