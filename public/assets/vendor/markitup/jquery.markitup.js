@@ -141,7 +141,7 @@
 
 				}
 
-				nameSpace = 'style="height:100%; width:86%;"';
+				nameSpace = 'style="height:100%;"';
 
 				$$.wrap('<div '+nameSpace+'></div>');
 				$$.wrap('<div '+id+' class="markItUp"></div>');
