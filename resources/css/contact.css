@@ -51,6 +51,9 @@
     height: 10%;
 }
 
+form div {
+    width: 100%;
+}
 .textarea {
     padding-left: 10px;
     margin-left: 1%;
