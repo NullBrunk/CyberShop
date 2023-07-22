@@ -8,10 +8,14 @@
     <body style="background-color: #324769 !important;">
 
         <link href="/assets/css/contact.css" rel="stylesheet">
-        <script
-			  src="https://code.jquery.com/jquery-3.7.0.slim.min.js"
-			  integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE="
-			  crossorigin="anonymous"></script>
+        
+        <script type="text/javascript">
+            
+            $(function() {
+                $('#textarea').markItUp(mySettings);
+            })        
+        </script>
+
         <script src="https://unpkg.com/htmx.org@1.9.3" integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua" crossorigin="anonymous"></script>
         <script>
             function menu(id_delete, id_edit){
@@ -137,7 +141,7 @@
                                             <div class="message" >
                                                 @if($data[$user][$i]["type"] === "text")
                                                     
-                                                        {{ $data[$user][$i][0] }}
+                                                        {!! $data[$user][$i][0] !!}
                                                     
                                                 @else
                                                     <img class="contactimg  "  src="../storage/{{ $data[$user][$i][0] }}">
@@ -149,7 +153,7 @@
                                                 <div class="message from-me"  hx-swap="outerHTML">
 
                                                     @if($data[$user][$i]["type"] === "text")
-                                                       {{ $data[$user][$i][0] }}
+                                                       {!! $data[$user][$i][0] !!}
                                                     @else
                                                         <img class="contactimg" src="../storage/{{ $data[$user][$i][0] }}">
                                                     @endif
@@ -197,7 +201,8 @@
                             
                             <div class="textbar">
                                 <form method="post" id="formchat" action="{{route("contact.store")}}" enctype="multipart/form-data">
-                                    <input placeholder="Send a message to {{ explode("/contact/", url() -> current())[1] }}" type="text" name="content" value="{{ old("content") }}" autofocus>
+
+<input placeholder="Send a message to {{explode("/contact/", url() -> current())[1]}}" id="textarea" name="content" class="textarea" autofocus>
                                     @csrf
                                     <input type="file" id="file-input" name="img" style="width: 0;">
                                     <label for="file-input">

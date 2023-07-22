@@ -81,7 +81,7 @@
                                     </div>
                                 @enderror
                                 <div class="form-group">
-                                    <input type="number" id="captcha" name="captcha" class="form-control rounded-left" placeholder="Result of {{$firstnum . " + " . $secondnum}}" required>
+                                    <input type="number" id="captcha" name="captcha" class="form-control rounded-left" placeholder="Result of {{ $firstnum . " + " . $secondnum }}" required>
                                 </div>
             
 

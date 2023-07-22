@@ -25,6 +25,20 @@
         <script src="/assets/js/sweetalert2.js"></script>
         <script src="/assets/js/alert.js"></script>
 
+        {{-- MarkeIt Up --}}
+
+        <link rel="stylesheet" type="text/css" href="/assets/vendor/markitup/skins/simple/style.css">
+        <link rel="stylesheet" type="text/css" href="/assets/vendor/markitup/sets/default/style.css">
+
+        <script
+        src="https://code.jquery.com/jquery-3.7.0.slim.min.js"
+        integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE="
+        crossorigin="anonymous"></script>
+        
+        <script type="text/javascript" src="/assets/vendor/markitup/jquery.markitup.js"></script>
+        <script type="text/javascript" src="/assets/vendor/markitup/sets/default/set.js"></script>
+ 
+
     </head>
 
         @include('layout.header')

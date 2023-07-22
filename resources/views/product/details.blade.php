@@ -37,7 +37,14 @@
             }
         </script>
 
-    
+
+        <script type="text/javascript">
+            
+            $(function() {
+                $('#commentTextBar').markItUp(mySettings);
+            })        
+        </script>
+
         <main id="main" >
 
             {{-- On se positionne en dessous de la navbar --}}
@@ -75,28 +82,8 @@
                             <div class="portfolio-info" style="position: relative;   padding-top: 0px !important;  height: 65%;">
                                 <p class="descr">
 
-                                    {{-- 
-                                        Génerer des sortes de listes a puces.
-                                        - a
-                                        - b 
-
-                                        Deviendra 
-                                        · a
-                                        · b 
-                                    --}}
-                                    <?php
-
-                                        $text = str_replace(
-                                            "\r\n-", 
-                                            "\r\n<i class='bi bi-dot'></i>", 
-                                            htmlspecialchars($data['descr'])
-                                        );
-
-                                        $text = nl2br($text);
                                     
-                                    ?>
-                                    
-                                    {!! $text !!}
+                                    {!! $data["descr"] !!}
 
                                 </p>
                             </div>
@@ -257,7 +244,7 @@
                                     
                                     <div class="contentcomment title" style="margin-top: 10px; height: 23vh;">
                                         Your comment <abbr>*</abbr>
-                                        <textarea placeholder="To help you write a useful comment for our CyberShop:
+                                        <textarea id="commentTextBar" placeholder="To help you write a useful comment for our CyberShop:
 
     - Explain to us why you chose this note?
     - What did you like best about this product?
@@ -268,7 +255,7 @@
                                     <input name="id" type="hidden" value="{{$data['pid']}}">
                                     
                                     <br>
-                                    <p class="title" style="margin-bottom: 0; margin-top: 10px; ">Rating <abbr>*</abbr></p>
+                                    <p class="title" style="margin-bottom: 0; margin-top: 60px; ">Rating <abbr>*</abbr></p>
                                     <div class="rating">
                                         <input type="radio" id="star5" name="rating" value="5">
                                         <label for="star5"></label>
@@ -400,7 +387,7 @@
                                                         
 
                                         <div class="comment">
-                                            {!! nl2br($comm["content"]) !!}
+                                            {!! $comm["content"] !!}
                                             <hr>
                                         </div>
                                                             

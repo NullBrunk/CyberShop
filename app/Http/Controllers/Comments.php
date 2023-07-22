@@ -102,7 +102,17 @@ class Comments extends Controller {
         if(empty($data)){
             return abort(404);
         }
+        
+        
+        # Beautify our text
+        include_once __DIR__ . "/../Utils/Style.php";
+        
+        for($i=0; $i < sizeof($data); $i++){
+            $data[$i]["content"] = style($data[$i]["content"]);
+        }
+
         return ($data);
+
     }
 
 

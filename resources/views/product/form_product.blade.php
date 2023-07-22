@@ -6,6 +6,13 @@
 @section("content")
     <body>
 
+        <script type="text/javascript">
+            
+            $(function() {
+                $('#textarea').markItUp(mySettings);
+            })        
+        </script>
+        
             <main id="main">
 
                 {{-- On se positionne en bas de la navbar --}}
@@ -47,7 +54,7 @@
                                             {{-- On préremplit tous les champs --}}
 
                                             <li>
-                                                <strong>Name    : 
+                                                <strong style="display: flex">Name    : 
                                                     <input class="input-beautify" 
                                                     type="text" name="name" 
                                                     value="{{$data["name"]}}">
@@ -55,15 +62,15 @@
                                             </li>
 
                                             <li>
-                                                <strong>Price    : 
-                                                    <input style="margin-left: 12% !important;" 
+                                                <strong style="display: flex; margin-top: 8px;">Price    : 
+                                                    <input 
                                                     class="input-beautify" type="text" 
                                                     name="price" value="{{$data["price"]}}">
                                                 </strong>
                                             </li>
                                             
                                             <li>
-                                                <strong>Category : 
+                                                <strong style="display: flex;  margin-top: 8px;">Category : 
                                                     <select class="select-beautify" id="select" name="category">
                                                         <option value="filter-laptop" >Informatics</option>
                                                         <option value="filter-dresses">Dresses</option>
@@ -80,20 +87,18 @@
 
                                             </li>
 
-                                            <br>
-                                            <h3></h3>
                                         
                                         </ul>
                                     </div>
 
                                     <div class="portfolio-info">
-                                        <p class="descr">
-                                            <textarea 
+                                        <p  style="background: #fff;">
+                                            <textarea  
                                                 placeholder="Description of the product" 
                                                 id="textarea" class="textarea-beautify" 
                                                 type="text" name="description"
                                             >
-{{$data["descr"]}}
+{{ htmlspecialchars_decode($data["descr"])}}
                                             </textarea>      
                                         </p> 
                                     </div>
@@ -115,6 +120,11 @@
                     </form>
                     
                 </section>
+
+
+            <script>
+                document.getElementById("textarea").style.height = "14vh" 
+            </script>
             <hr>
         </main>
 

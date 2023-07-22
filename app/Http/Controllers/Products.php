@@ -104,7 +104,7 @@ class Products extends Controller
             $product -> id_user = $_SESSION["id"];
 
             $product -> name = $req["name"];
-            $product -> descr = $req["description"];
+            $product -> descr = htmlspecialchars($req["description"]);
             $product -> price = $req["price"];
 
             $product -> class = $req["category"];
@@ -239,7 +239,7 @@ class Products extends Controller
         -> update([
             "name" => $req["name"],
             "price" => $req["price"],
-            "descr" => $req["description"],
+            "descr" => htmlspecialchars($req["description"]),
             "class" => $req["category"],
         ]);
 

@@ -25,7 +25,10 @@ class Details extends Controller {
      */
 
     public function get_details(Product $product, Notif $notif, $product_id){
-                    
+                  
+        include_once __DIR__ . "/../Utils/Style.php";
+
+
         $data = $product
             -> select("users.id as uid", "products.id as pid", "id_user", "price", "descr", "class", "mail", "image", "name")
             -> join('users', 'users.id', '=', 'products.id_user')
@@ -82,6 +85,9 @@ class Details extends Controller {
         else {
             $rating = json_decode($rating_req -> body(), 1);
         }
+
+        # Bueatify our text
+        $data["descr"] = style($data["descr"]);
 
         return view("product.details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
     

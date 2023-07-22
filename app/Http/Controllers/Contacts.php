@@ -99,6 +99,8 @@ class Contacts extends Controller {
 
     public function show(Contact $cont, User $user, $slug = false){
         
+        include_once __DIR__ . "/../Utils/Style.php";
+
         # The array that wi'll be passed to the vue
         $exploitable_data = [];
         $contact = [];
@@ -112,8 +114,9 @@ class Contacts extends Controller {
             # Then the contactor is the other user
             if($data["mail_contacted"] === $_SESSION["mail"]){       
                 $mail = $data["mail_contactor"];
+                
                 $toput = [ 
-                    $data['content'], 
+                    style($data['content']), 
                     "type" => $data["type"],
                     "me" => false, 
                     "id" => $data["id"],
@@ -127,7 +130,7 @@ class Contacts extends Controller {
             else {
                 $mail = $data["mail_contacted"];
                 $toput = [ 
-                    $data['content'],
+                    style($data['content']),
                     "type" => $data["type"], 
                     "me" => true, 
                     "id" => $data["id"],
@@ -273,7 +276,7 @@ class Contacts extends Controller {
             $contact -> id_contactor = $_SESSION["id"];
             $contact -> id_contacted = $id;
     
-            $contact -> content = $req["content"];
+            $contact -> content = htmlspecialchars($req["content"]);
             
             $contact -> time = date('Y-m-d H:i:s');
             $contact -> readed = false;
@@ -356,7 +359,7 @@ class Contacts extends Controller {
         
         if($contact["id_contactor"] === $_SESSION["id"] and $contact["type"] === "text"){
 
-            $contact -> content = $request["content"];
+            $contact -> content = htmlspecialchars($request["content"]);
             $contact -> save();
 
             return redirect(url() -> previous());

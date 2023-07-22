@@ -7,6 +7,12 @@
 
     <body>
 
+        <script>
+            $(function() {        
+                $('#commentTextBar').markItUp(mySettings);
+            }) 
+        </script>
+
         <section style="margin-top: 14vh; padding: 2.5%;">
 
 
@@ -40,7 +46,7 @@
 - Explain to us why you chose this note?
 - What did you like best about this product?
 - Who would you recommend it to?"
-                        class="commentbar" name="comment" type="text">{{ htmlspecialchars_decode($data["content"]) }}</textarea>
+                        class="commentbar" name="comment" id="commentTextBar" type="text">{{ htmlspecialchars_decode($data["content"]) }}</textarea>
                     </div>
 
                     <input name="id" type="hidden" value="{{$data['id']}}">
@@ -51,7 +57,7 @@
                             {{ $message }}
                         </div>
                     @enderror
-                    <p class="title" style="margin-bottom: 0; margin-top: 10px; ">Rating <abbr>*</abbr></p>
+                    <p class="title" style="margin-bottom: 0; margin-top: 60px; ">Rating <abbr>*</abbr></p>
                     <div class="rating">
                         <input type="radio" id="star5" name="rating" value="5">
                         <label for="star5"></label>

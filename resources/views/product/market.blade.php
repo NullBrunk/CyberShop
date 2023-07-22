@@ -6,6 +6,14 @@
 @section("content")
     <body>
 
+        <script>
+            $(function() {        
+                $('#textbar').markItUp(
+                    mySettings
+                );
+            }) 
+        </script>
+
             <main id="main">
 
                 <section id="breadcrumbs" class="breadcrumbs" style="padding-top: 86px; padding-bottom: 0px !important;">
@@ -15,33 +23,23 @@
                     </div>
                 </section>
 
-                <section id="portfolio-details" class="portfolio-details">
+                <section id="portfolio-details" class="portfolio-details" style="padding: 0px;">
                 
                     <form method="post" action="{{ route("product.store") }}" enctype="multipart/form-data">  
-                        <div class="container">
-                            <div class="row gy-4">
-                                <div class="col-lg-8">
-                                    <div class="portfolio-details-slider swiper">
-                                        <div class="swiper-wrapper align-items-center">                
-                                            <input type="file" name="product_img" {{ old("product_img") }}>       
-                                            <br><br><br><br>
-                                        </div>
-                                    <div class="swiper-pagination"></div>
-                                </div>
-                            </div>
+                           
 
-                            <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px;">
+                            <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; margin: auto;">
                                 <div class="portfolio-info" style="padding-bottom: 10px;" >
                                     <h2>Product information</h2>
                                     <hr>
                                     <ul>
+                                        <li class="li"><strong style="display: flex;">Image: <input  type="file" class="input-beautify" style="border: none; background-color: inherit;" name="product_img" {{ old("product_img") }}></strong></li>
+                                        <li class="li"><strong style="display: flex; ">Name:  <input  placeholder="Brown Mushroom" class="input-beautify" type="text" name="name" value="{{old("name")}}" autofocus></strong></li>
+                                        <li class="li"><strong style="display: flex; ">Price: <input  placeholder="From 0.00 to 999md " class="input-beautify" type="text" name="price" value="{{old("price")}}"></strong></li>
+                                        <li class="li">
+                                            <strong style="display: flex; ">Category: 
 
-                                        <li><strong>Name    : <input placeholder="Brown Mushroom" class="input-beautify" type="text" name="name" value="{{old("name")}}" autofocus></strong></li>
-                                        <li><strong>Price    : <input placeholder="From 0.00 to 999md " style="margin-left: 13% !important;" class="input-beautify" type="text" name="price" value="{{old("price")}}"></strong></li>
-                                        <li>
-                                            <strong>Category : 
-
-                                                <select class="select-beautify" name="category">
+                                                <select  class="select-beautify" name="category">
                                                     <option value="filter-laptop" >Informatics</option>
                                                     <option value="filter-dresses">Dresses</option>
                                                     <option value="filter-gaming" >Gaming</option>
@@ -51,28 +49,27 @@
 
                                             </strong>
                                         </li>                
-                                        <br>
-
-                                        <h3></h3>
 
                                     </ul>
                                 </div>
 
                                 <div class="portfolio-info">
-                                    <p class="descr">
-                                        <textarea placeholder="Description of the product" class="textarea-beautify" type="text" name="description">{{old("description")}}</textarea>      
+                                    <p  style="background: #fff;">
+                                        <textarea id="textbar" placeholder="Description of the product" class="textarea-beautify" type="text" name="description">{{old("description")}}</textarea>      
                                     </p> 
                                 </div>
                             
                                 @csrf      
-                                <input class="addtocart" style="margin-left: 33%; margin-top:0px; margin-bottom: 3%;" name="submit" type="submit" value="Sell !">
+                                <input class="addtocart" style="margin-left: 42%; margin-top:0px; margin-bottom: 3%;" name="submit" type="submit" value="Sell !">
                             </div>
                         </form>
-                    </div>
                 </div>
             
-            </section><!-- End Portfolio Details Section -->
-            <hr>
+            </section>
+
+            <script>
+                document.getElementById("textbar").style.height = "14vh" 
+            </script>
         </main><!-- End #main -->
 
 

@@ -4,8 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,4 +24,3 @@ Route::get('/user', function (Request $request) {
 Route::get("/products/{search}", [ Products::class, "search" ]);
 Route::get("/comments/{id}", [ Comments::class, "get" ]);
 Route::get("/rating/{id}", [Products::class, "rating"]);
-

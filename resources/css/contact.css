@@ -40,7 +40,7 @@
 }
 
 .msgs {
-    height: 87%;
+    height: 85%;
     margin-top: 1%;
     overflow: scroll;
     overflow-x: hidden;
@@ -49,19 +49,19 @@
 
 .textbar {
     height: 10%;
-    background-color: 20%;
 }
 
-.textbar input[type=text] {
+.textarea {
     padding-left: 10px;
-    height: 6vh;
     margin-left: 1%;
-    width: 85%;
+    width: 99% !important;
     font-size: 18px;
     padding-bottom: 1px;
     background-color: #ffffff;
     border: 1px solid #a39d9d ;
+    height: 70%;
 }
+
 
 .textbar input:focus {
     outline: none;
@@ -69,9 +69,13 @@
 
 .textbar form {
     display: flex;
-    margin-top: 1%;
+    border-top: 1px solid #a39d9d;
 }
+
+
 .textbar button {
+
+    margin-top: calc(3% - 5px);
     width: 6%;
     height: 6vh;
     border-radius: 5px;;
@@ -92,6 +96,7 @@
     padding-top: 12px;
     font-size: 21px;
     margin-left: 10px;
+    margin-top: calc(3% - 5px);
 
 }
 
@@ -243,16 +248,25 @@ hr {
 
     .textbar button {
         width: 12%;
+        margin-top: 8%;
     }
     .textbar label {
         width: 12%;
         margin-bottom: 100px;
+        margin-top: 8%;
+
     }
 
     .textbar label i {
         margin-left: 25%;
     }
     
+}
+
+.markItUpHeader {
+    padding-top: 9px !important;
+    padding-bottom: 9px !important;
+    padding-left:10px !important;
 }
 
 
