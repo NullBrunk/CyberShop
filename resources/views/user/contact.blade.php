@@ -141,7 +141,7 @@
                                             <div class="message" >
                                                 @if($data[$user][$i]["type"] === "text")
                                                     
-                                                        {!! $data[$user][$i][0] !!}
+                                                        <p>{!! $data[$user][$i][0] !!}</p>
                                                     
                                                 @else
                                                     <img class="contactimg  "  src="../storage/{{ $data[$user][$i][0] }}">
@@ -153,7 +153,7 @@
                                                 <div class="message from-me"  hx-swap="outerHTML">
 
                                                     @if($data[$user][$i]["type"] === "text")
-                                                       {!! $data[$user][$i][0] !!}
+                                                        <p>{!! $data[$user][$i][0] !!}</p>
                                                     @else
                                                         <img class="contactimg" src="../storage/{{ $data[$user][$i][0] }}">
                                                     @endif
@@ -226,8 +226,10 @@
 
                 document.addEventListener('DOMContentLoaded', function() {
                     var chat = document.getElementById("chat");
-                    chat.scrollTop = chat.scrollHeight; // Défilement vers le bas
+                    chat.scrollTop = chat.scrollHeight; // Défilement vers le bas                
                 });
+
+                
             </script>
 
 

@@ -48,6 +48,7 @@
 }
 
 .textbar {
+    width: 99%;
     height: 10%;
 }
 
@@ -118,6 +119,10 @@ form div {
 
 .message i {
     margin-left: auto;
+}
+
+.message p {
+    font-size: inherit;
 }
 .profilemsg{
     display: flex;
