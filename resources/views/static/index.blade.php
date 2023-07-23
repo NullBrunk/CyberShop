@@ -75,6 +75,9 @@
             </script>
     @endif
 
+    @if(session("deletedaccount"))
+        <script>success("Your account has been removed permanently.", "Deleted")</script>
+    @endif
 @endsection
 
 {{-- 

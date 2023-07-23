@@ -226,54 +226,11 @@ class Users extends Controller {
      * 
      */
 
-    public function delete(User $user, Product $product, Notif $notif, Cart $cart, Comment $comment, Contact $contact){
+    public function delete(User $user){
 
+        # TODO : Supprimer les images dans les messages de contact / images dees produits vendus automatiquement
+        $user -> find($_SESSION["id"]) -> delete();
 
-        # Delete images linked to the users products
-
-        $imgs = $product -> select("image") 
-                 -> where("id_user", "=", $_SESSION["id"])
-                 -> get()
-                 -> toArray() ;
-
-        foreach($imgs as $img){
-            Storage::disk("public") -> delete("product_img/" . $img["image"]);
-        }
-
-
-        # Delete all the user comments
-        $comment -> where("id", "=", $_SESSION["id"]) -> delete();
-
-
-        foreach($product -> where("id", "=", $_SESSION["id"] ) -> get() -> toArray() as $pr){
-            
-            # Comments under user products
-            $comment -> where("id_product", "=", $pr["id"]) -> delete();
-
-
-            # Delete users products on other carts
-            $cart -> where("id_product", "=", $pr["id"]) -> delete();
-        }
-
-
-        # Delete user products 
-        $product -> where("id_user", "=", $_SESSION["id"]) -> delete();
-
-
-        # Delete user notifs
-        $notif -> where("id_user", "=", $_SESSION["id"]) -> delete();
-
-
-        # Delete users cart
-        $cart -> where("id_user", "=", $_SESSION["id"]) -> delete();
-
-
-        # Delete contacts messages from the user
-        $contact -> where("id_contactor", "=", $_SESSION["id"]) -> orWhere("id_contacted", "=", $_SESSION["id"]) -> delete();
-
-        # Delete the user itself
-        $user -> where("id", "=", $_SESSION["id"]) -> delete();
-
-        return to_route("disconnect");
+        return to_route("disconnect") -> with("deletedaccount", true);
     }
 }

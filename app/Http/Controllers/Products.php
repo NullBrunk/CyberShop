@@ -145,24 +145,11 @@ class Products extends Controller
             return abort(403);
         }
        
-
         # Delete the image associated with the product
         Storage::disk("public") -> delete("product_img/" . $data['image']);
 
-
-        # Delete comments attached to the product
-        $comment -> where("id_product", "=", $id) -> delete();
-
-
-        # Delete all the cart where product exists
-        $cart -> where("id_product", "=", $id) -> delete();
-
-
         # Delete the product itself
         $product -> where("id", "=", $id) -> delete();
-
-        return to_route("root");
-
     }
 
 
