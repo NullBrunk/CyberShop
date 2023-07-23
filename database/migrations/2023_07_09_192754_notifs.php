@@ -13,7 +13,7 @@ return new class extends Migration
             $table -> id();
             
             $table -> unsignedBigInteger('id_user');
-            $table -> foreign('id_user')->references('id')->on('users');
+            $table -> foreign('id_user') -> references('id') -> on('users') -> onDelete('cascade');
             
             $table -> string('type', 10);
             $table -> string('icon', 55);

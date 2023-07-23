@@ -12,10 +12,10 @@ return new class extends Migration
             $table -> id();
             
             $table -> unsignedBigInteger('id_contactor');
-            $table -> foreign('id_contactor')->references('id')->on('users');
+            $table -> foreign('id_contactor') -> references('id') -> on('users') ->onDelete('cascade');
             
             $table -> unsignedBigInteger('id_contacted');
-            $table -> foreign('id_contacted')->references('id')->on('users');
+            $table -> foreign('id_contacted') -> references('id') -> on('users') -> onDelete('cascade');
             
             
             $table -> string('type', '5') -> default("text");
