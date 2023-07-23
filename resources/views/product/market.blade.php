@@ -27,10 +27,9 @@
                 
                     <form method="post" action="{{ route("product.store") }}" enctype="multipart/form-data">  
                            
-
                             <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; margin: auto;">
                                 <div class="portfolio-info" style="padding-bottom: 10px;" >
-                                    <h2>Product information</h2>
+                                    <h2>Sell a product</h2>
                                     <hr>
                                     <ul>
                                         <li class="li"><strong style="display: flex;">Image: <input  type="file" class="input-beautify" style="border: none; background-color: inherit;" name="product_img" {{ old("product_img") }}></strong></li>
@@ -77,24 +76,24 @@
     {{-- Gestion des erreurs --}}
 
     @error("imgerror")
-            <script>alert("{{$message}}")</script>
+            <script>salert("{{$message}}")</script>
     @enderror
 
     @error("name")
         <script>
-            alert("{{$message}}")
+            salert("{{$message}}")
         </script>
     @enderror
 
     @error("price")
         <script>
-            alert("{{$message}}")
+            salert("{{$message}}")
         </script>
     @enderror
 
     @error("description")
         <script>
-            alert("{{$message}}")
+            salert("{{$message}}")
         </script>
     @enderror
 

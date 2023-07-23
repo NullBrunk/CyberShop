@@ -10,7 +10,6 @@ use App\Http\Controllers\Comments;
 use App\Http\Controllers\Contacts;
 use App\Http\Controllers\Details;
 use App\Http\Controllers\Users;
-use App\Http\Controllers\Index;
 use App\Http\Controllers\Carts;
 
 
@@ -24,10 +23,7 @@ use App\Http\Controllers\Carts;
 Route::view("/todo", "static.todo");
 
 # Index page
-Route::get('/', Index::class ) -> name("root");
-
-# Searchbar
-Route::view("/search", "product.search") -> name("articles");
+Route::view('/', "static.index") -> name("root");
 
 # Details
 Route::get('/details/{product_id}', [ Details::class, "get_details" ] ) -> name("details");
@@ -155,8 +151,8 @@ Route::prefix('product') -> name("product.") -> group(function () {
         "/update/{id}",
         [ Products::class, "edit" ]
     ) -> middleware(Logged::class) -> name("edit");
-    
 });
+Route::get("/category/{slug}", [Products::class, "show"]) -> name("product.show");
 
 
 

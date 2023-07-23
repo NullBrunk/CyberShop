@@ -69,11 +69,11 @@
             </script>
             
             @error("contact_yourself")
-                <script>alert("{{$message}}")</script>
+                <script>salert("{{$message}}")</script>
             @enderror
 
             @error("contact_no_one")
-                <script>alert("{{$message}}")</script>
+                <script>salert("{{$message}}")</script>
             @enderror
 
             <div class="content">

@@ -25,7 +25,7 @@ class UpdateProduct extends FormRequest
             "category" => "required|max:20",
             "price" => "required|regex:/(^[0-9]{0,12}(\.){0,1}[0-9]{1,2}$)/u",
             "description" => "required",
-            "name" => "required|max:45"
+            "name" => "required|max:29"
         ];
     }
 }

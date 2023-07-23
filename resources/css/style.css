@@ -597,8 +597,7 @@ section {
 }
 
 .portfolio .portfolio-item {
-  margin-bottom: 30px;
-}
+  margin-bottom: 60px;}
 
 .portfolio .portfolio-item .portfolio-img {
   overflow: hidden;
@@ -929,12 +928,14 @@ section {
   align-items: center;
   align-content: center;
   background-image: linear-gradient(to bottom right, #293e61, #85a2c2);
-  height: 30vh;
+  height: 47vh !important;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 
 .imgpres {
-  height: 25vh;
+  height: 29vh;
 }
 
 .show {
@@ -1643,4 +1644,74 @@ tr:nth-child(even) td {
 .portfolio-wrap:hover .portfoliodetails {
   
   display: block;
+}
+
+.hrproducts {
+  margin: 0;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  margin-left: 0px;
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  color: #000;
+}
+
+.sellpr {
+  font-family: "Jost", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+  padding: 10px 28px 11px 28px;
+  border-radius: 50px;
+  transition: 0.5s;
+  margin: 10px 0 0 0;
+  color: #fff;
+  background: #47b2e4;
+  width: 31%;
+  
+}
+
+.sellpr:hover {
+  color: #fff !important;
+  background-color: #209dd8;
+}
+
+
+/* product page */
+
+.products {
+  background-color: #37517e;
+  color: white !important;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding: 11px;
+}
+
+.products .title {
+  font-weight: 600;
+  color: white;
+  padding-bottom: 15px;
+  font-size: 20px;
+
+}
+
+
+
+.products .pricepr {
+  display: flex;
+  font-size: 17px;
+  font-family : "Amazon Ember", Arial, sans-serif;
+  word-wrap: break-word;
+} 
+
+.products .pricepr span {
+  font-size: 11px;
+  padding-left: 4px;
+}
+
+.products .categ {
+  font-size: 14px;
 }

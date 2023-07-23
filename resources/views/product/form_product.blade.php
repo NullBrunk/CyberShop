@@ -12,7 +12,6 @@
                 $('#textarea').markItUp(mySettings);
             })        
         </script>
-        
             <main id="main">
 
                 {{-- On se positionne en bas de la navbar --}}
@@ -50,7 +49,7 @@
                                         <h2>Product information</h2>
                                         <hr>
                                         <ul>
-                            
+
                                             {{-- On préremplit tous les champs --}}
 
                                             <li>
@@ -128,24 +127,24 @@
             <hr>
         </main>
 
-@endsection
-
 {{-- Gestion des erreurs --}}
 
 @error("name")
     <script>
-        alert("{{$message}}")
+        salert("{{$message}}")
     </script>
 @enderror
 
 @error("price")
     <script>
-        alert("{{$message}}")
+        salert("{{$message}}")
     </script>
 @enderror
 
 @error("description")
     <script>
-        alert("{{$message}}")
+        salert("{{$message}}")
     </script>
 @enderror
+@endsection
+

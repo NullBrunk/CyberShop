@@ -18,7 +18,8 @@ function success(message, alert = "Updated"){
     )
 }
 
-function alert(message){
+
+function salert(message){
     Swal.fire({
         icon: 'error',
         title: 'Error',

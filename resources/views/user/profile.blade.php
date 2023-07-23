@@ -90,27 +90,27 @@
 
                                 {{-- Gestion des erreurs --}}
                                 @error("email")
-                                    <script>alert("{{$message}}")</script>
+                                    <script>salert("{{$message}}")</script>
                                 @enderror
 
                                 @error("alreadytaken")
-                                    <script>alert("{{$message}}")</script>
+                                    <script>salert("{{$message}}")</script>
                                 @enderror
 
                                 @error("oldpass")
-                                   <script>alert("Old password cannot be empty.")</script>
+                                   <script>salert("Old password cannot be empty.")</script>
                                 @enderror 
 
                                 @error("newpass")
-                                    <script>alert("New password cannot be empty.")</script>
+                                    <script>salert("New password cannot be empty.")</script>
                                 @enderror
 
                                 @error("renewpass")
-                                    <script>alert("The two entered passwords are not same.")</script>
+                                    <script>salert("The two entered passwords are not same.")</script>
                                 @enderror
             
                                 @error("wrong_password")
-                                    <script>alert("{{$message}}")</script>
+                                    <script>salert("{{$message}}")</script>
                                 @enderror
                                 
                                 <form action="{{ route("profile.profile") }}" method="post">
@@ -183,7 +183,7 @@
                                             @foreach($data as $d)
                     
                     
-                                                <div class="col-md-3 portfolio-item">
+                                                <div class="col-md-3 portfolio-item" style="padding-bottom: 10px;">
                                                     <div class="portfolio-wrap" style="border-radius: 5px;">
                                                         <a href="/details/{{ $d['id'] }}">
                                                             <img src="/storage/product_img/{{ $d['image'] }}" class="img-fluid imgpres" alt="">

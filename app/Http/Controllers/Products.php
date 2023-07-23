@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreReq;
-use App\Http\Requests\UpdateProduct;
-
 use Illuminate\Support\Facades\Storage;
 
+use App\Http\Requests\UpdateProduct;
+use App\Http\Requests\StoreReq;
+use Illuminate\Http\Request;
 
 use App\Models\Product;
 use App\Models\Comment;
 use App\Models\Cart;
-
 
 /**
  * Test if a product is from a given user, if he is return product informations
@@ -44,19 +43,32 @@ class Products extends Controller
      * Search threw all the product with a LIKE operator
      *
      * @param Product $product   The product model
+     * @param string $category   The ctageory of the product
      * @param string $search     The product to search
      *  
      * @return array             The products that matched the like
      * 
      */
-    public function search(Product $product, string $search) : array
+    public function search(Product $product, string $category, string $search) : array
     {
 
-        return $product 
-            -> select("id", "image", "price", "class")
+        if($category === "all" ){
+            return $product 
+            -> select("id", "image", "price", "class", "name")
             -> where("name", "like", "%" . $search . "%")
             -> get()
             -> toArray();
+        }
+        else {
+            return $product 
+            -> select("id", "image", "price", "class", "name")
+            -> where("class", "=", "filter-" . $category)
+            -> where("name", "like", "%" . $search . "%")
+            -> get()
+            -> toArray();
+        }
+
+        
     }
 
 
@@ -265,5 +277,42 @@ class Products extends Controller
         else {
             return abort(404);
         }
+    }
+
+
+
+    /** 
+     * Show products of a given category
+     * 
+     * @param Product $product         The product model
+     * @param string $slug             The category name
+     * 
+     * @return view
+    */
+
+    public function show(Request $request, Product $product, $slug){
+
+        if(!in_array($slug, [ "all", "gaming", "laptop", "dresses", "food" ])){
+            return abort(404);
+        }
+       
+        if($request -> server("HTTP_HX_REQUEST") === "true" ){
+            $view = "static.pagination";
+        }
+        else {
+            $view = "product.categories";
+        }
+
+        
+        if($slug === "all"){
+            $data = $product -> orderBy('id', 'desc') -> paginate(8);
+        }
+        else {
+            $data = $product -> where("class", "=", "filter-" . $slug) -> orderBy('id', 'desc') -> paginate(8);
+        }
+
+            
+        return view($view, ["products" => $data, "name" => $slug]);
+
     }
 }

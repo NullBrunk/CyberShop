@@ -5,22 +5,33 @@
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
     <div class="container d-flex align-items-center">
-      <h1 class="logo me-auto"><a href="/">Cybershop</a></h1>
+      <h1 class="logo me-auto"><a href="/">Cybershop</a> </h1>
+      
+
         <nav id="navbar" class="navbar">
-        
+          <li style="list-style: none;"><a class="nav-link" href="{{ route("profile.profile") }}">Account</a></li>  
+
+          <li style="list-style: none;"><a class="nav-link scrollto" href="{{ route("contact.show") }}">Messages</a></li>
+
           <ul>
-            @if(!isset($_SESSION["logged"]))
-              <li><a class="nav-link scrollto" href="{{ route("root") }}">Home</a></li>            
-            @endif
 
-            <li><a class="nav-link scrollto" href="{{ route("articles") }}">Search</a></li>            
+            <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
+              <ul>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "laptop") }}"><i class="bx bx-laptop"></i> <i class="bi bi-dot"></i> Informatic</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "gaming") }}"><i class="bx bx-joystick"></i> <i class="bi bi-dot"></i> Gaming</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "dresses") }}"><i class="bx bx-body"></i> <i class="bi bi-dot"></i> Dresses</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "food") }}"><i class="bx bx-bowl-rice"></i> <i class="bi bi-dot"></i> Food</a></li>
+                <hr class="hrproducts">
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "all") }}"><i class="bx bx-border-all"></i> <i class="bi bi-dot"></i> All products</a></li>
+
             
+              </ul>
+            </li>
 
+
+            
             @if(isset($_SESSION['logged']))
-            <li ><a class="nav-link scrollto" href="{{ route("product.store") }}">Market</a></li>            
-            <li><a class="nav-link scrollto" href="{{ route("contact.show") }}">Contact</a></li>
-            <li><a class="nav-link scrollto" href="{{ route("profile.profile") }}">Profile</a></li>            
-
+                                                                                   
               
                 <script>
                     async function deleteitem(id) {
@@ -49,6 +60,10 @@
                 </script>
 
 
+
+
+
+</li>
 
               {{-- Si le tableau représentant le cart n'est pas vide --}}  
               @if(!empty($_SESSION['cart']))

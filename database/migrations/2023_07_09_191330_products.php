@@ -15,7 +15,7 @@ return new class extends Migration
             $table -> id();
             $table -> unsignedBigInteger('id_user');
             $table -> foreign('id_user') -> references('id') -> on('users') -> onDelete('cascade');
-            $table -> string('name', 45);
+            $table -> string('name', 29);
             $table -> string('price', 20);
             $table -> longText('descr');
             $table -> longText('class', 45);
