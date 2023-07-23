@@ -325,17 +325,18 @@ class Contacts extends Controller {
      * Show the view of the contact form to update a message or a 403 page if user
      * is not allowed to edit this contact message.
      *
+     * @param Request $request
      * @param Contact $contact     The message to remove threw model binding
      * 
      * @return view | redirect           
      * 
      */
     
-    public function show_form(Contact $contact){
+    public function show_form(Request $request, Contact $contact){
 
         $contact_message = $contact -> toArray();
 
-        if($contact_message["id_contactor"] === $_SESSION["id"] and $contact_message["type"] === "text"){
+        if($contact_message["id_contactor"] === $_SESSION["id"] and $contact_message["type"] === "text" and $request -> server("HTTP_HX_REQUEST") === "true"){
             return view("user.form_contact", [ "message" => $contact_message]);
         }
         else {

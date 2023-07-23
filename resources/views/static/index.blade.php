@@ -3,6 +3,11 @@
 @section("title", "Cybershop")
 
 @section("content")
+
+    <script src="https://unpkg.com/htmx.org@1.9.3" integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua" crossorigin="anonymous"></script>
+    
+    <link href="/assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
+
     <body>
         <section id="hero" class="d-flex align-items-center">
 
@@ -15,7 +20,7 @@
                 </div>
 
                 <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                    <img src="assets/img/hero-img.png" class="img-fluid animated" style="margin-left: 20%; height: 60%; margin-top: 20%;" alt="">
+                    <img src="assets/img/hero-img.webp" class="img-fluid animated" style="margin-left: 20%; height: 60%; margin-top: 20%;" alt="">
                 </div>
             </div>
         </div>
@@ -40,23 +45,19 @@
 
 
                 <div class="row portfolio-container">
-                    @foreach($data as $d)
+                    @foreach($products as $d)
 
 
                         <div class="col-md-3 portfolio-item {{ $d['class'] }}">
-                            <div class="portfolio-wrap" style="border-radius: 5px;">
+                            <div class="portfolio-wrap" style="border-radius: 5px; flex-direction: column;">
                                 <a href="/details/{{ $d['id'] }}">
                                     <img 
 
                                     data-src="/storage/product_img/{{ $d['image'] }}" 
                                     class="img-fluid imgpres" alt="">
                                 </a>
-                                <div class="portfolio-info">
-                                
-                                    <div class="portfolio-links">
-                                        <p class="portfolio-details-lightbox" data-glightbox="type: external" title="Portfolio Details"><strong>{{$d['price']}} $</strong></p>
-                                    </div>
-
+                                <div class="portfoliodetails">
+                                    <strong>{{$d['price']}} $</strong>
                                 </div>
                             </div>
                         </div>
@@ -65,6 +66,12 @@
 
                 </div>
 
+                <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() }}" hx-swap="outerHTML" >
+                    <span class="paginationbutton">
+                        <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
+                        More products
+                    </span>
+                </button>
             </div>
         </section>
 
