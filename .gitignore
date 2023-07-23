@@ -1,3 +1,4 @@
+!.gitignore
 /.phpunit.cache
 /public/build
 /public/hot
