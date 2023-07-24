@@ -151,9 +151,13 @@ Route::prefix('product') -> name("product.") -> group(function () {
         "/update/{id}",
         [ Products::class, "edit" ]
     ) -> middleware(Logged::class) -> name("edit");
+    
+    Route::post(
+        "/category/search/{category}/", 
+        [Products::class, "search"]
+    ) -> name("search");
 });
 Route::get("/category/{slug}", [Products::class, "show"]) -> name("product.show");
-
 
 
 /*

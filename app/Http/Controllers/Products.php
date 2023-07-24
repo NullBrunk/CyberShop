@@ -42,33 +42,39 @@ class Products extends Controller
     /**
      * Search threw all the product with a LIKE operator
      *
+     * @param Request $request
      * @param Product $product   The product model
      * @param string $category   The ctageory of the product
-     * @param string $search     The product to search
      *  
-     * @return array             The products that matched the like
+     * @return view
      * 
      */
-    public function search(Product $product, string $category, string $search) : array
+
+    
+    public function search(Request $request, Product $product, string $category)
     {
 
-        if($category === "all" ){
-            return $product 
-            -> select("id", "image", "price", "class", "name")
-            -> where("name", "like", "%" . $search . "%")
-            -> get()
-            -> toArray();
+        if($request -> input("search")){
+            $search = $request -> input("search");
         }
         else {
-            return $product 
-            -> select("id", "image", "price", "class", "name")
-            -> where("class", "=", "filter-" . $category)
-            -> where("name", "like", "%" . $search . "%")
-            -> get()
-            -> toArray();
+            return abort(403);
         }
 
+        if(!in_array($category, [ "all", "gaming", "laptop", "dresses", "food" ])){
+            return abort(404);
+        }
+       
         
+        if($category === "all"){
+            $data = $product -> orderBy('id', 'desc') -> where("name", "like", "%" . $search . "%") -> get();
+        }
+        else {
+            $data = $product -> where("class", "=", "filter-" . $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc') -> get();
+        }
+            
+        return view("product.categories", ["products" => $data, "name" => $category, "notpaginated" => true]);
+
     }
 
 
@@ -264,19 +270,52 @@ class Products extends Controller
             -> where("id_product", "=", $id)
             -> sum("rating") ;
 
-
         $number = $comment -> where("id_product", "=", $id) -> get() -> count();
-
-        if(!($number === 0)){
-            return [
-                "round" => intdiv($rating, $number),
-                "real" => round($rating / $number, 1),
-                "rate" => (int)$number,
-            ];
-        }
-        else {
+        if($number === 0){
             return abort(404);
         }
+
+
+        $toshow = "";
+        $rating = [
+            "round" => intdiv($rating, $number),
+            "real" => round($rating / $number, 1),
+            "rate" => (int)$number,
+        ];
+
+
+        
+        # On effectue une boucle for pour afficher 
+        # le nombre d'étoiles en jaune
+        
+        for($i=0; $i<$rating['round']; $i++){
+            $toshow .= '<i class="bi bi-star-fill" style="color: #de7921;"></i>';
+        }
+        
+        # On affiche éventuellement une demi étoile jaune
+        # si le nombre des dixiemes est supérieur à .5,
+        # Si ce n'est pas le cas on affiche une étoile blanche
+
+        if($rating["real"] >= $rating["round"] + 0.5){
+            $toshow .= '<i style="color: #de7921;" class="bi bi-star-half"></i>';
+        }
+        elseif($rating["real"] != 5.0){
+            $toshow .= '<i class="bi bi-star" style="color: #de7921;"></i>';
+        }
+
+        
+        # On affiche rating - 1 étoiles en blanche
+        # (-1 car on a deja affiché soit une demi étoile soit une etoile blanche dans le if juste au dessus)    
+
+        for($i = $rating['round'] + 1; $i < 5; $i++){
+            $toshow .= '<i class="bi bi-star" style="color: #de7921;"></i>';
+        }
+
+        $rating["icons"] = $toshow;
+
+
+        return $rating;
+
     }
 
 
@@ -305,10 +344,10 @@ class Products extends Controller
 
         
         if($slug === "all"){
-            $data = $product -> orderBy('id', 'desc') -> paginate(8);
+            $data = $product -> orderBy('id', 'desc') -> paginate(4);
         }
         else {
-            $data = $product -> where("class", "=", "filter-" . $slug) -> orderBy('id', 'desc') -> paginate(8);
+            $data = $product -> where("class", "=", "filter-" . $slug) -> orderBy('id', 'desc') -> paginate(4);
         }
 
             

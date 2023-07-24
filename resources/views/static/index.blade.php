@@ -4,7 +4,7 @@
 
 @section("content")
 
-    <script src="https://unpkg.com/htmx.org@1.9.3" integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.3" crossorigin="anonymous"></script>
     
     <link href="/assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
 

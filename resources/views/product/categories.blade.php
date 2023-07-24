@@ -11,11 +11,27 @@
 
     <body>
 
-        <div style="padding-top:6%;" class=" d-flex align-items-center">
-        
-                <form>
-                    <input id="input" type="text" placeholder="Search something ..." autofocus>
-                    <i class="bx bx-search-alt" ></i>
+        <script>
+
+            async function showrating(url, id) {
+                let resp = await fetch(url);
+                if(resp.status !==  404){
+                    const data = await resp.json();
+                    document.getElementById("stars-" + id).innerHTML = data.icons;
+                }
+                else {
+                    return false;
+                }
+
+            }
+
+        </script>
+
+        <div style="padding-top:6%;"class=" d-flex align-items-center">
+                <form  method="post" action="{{route("product.search", $name)}}">
+                    @csrf
+                    <input id="input" name="search" type="text" placeholder="Search something ..." autofocus>
+                    <button><i class="bx bx-search-alt" ></i></button>
                 </form>
     
             </div>
@@ -30,84 +46,6 @@
                 
             </div>
     
-            <script>
-    
-                // On recupere ce que l'utilisateur tape
-                const input = document.getElementById("input");
-    
-                // On recupere le conteneur vide 
-                const container = document.getElementById("container");
-
-                // produits
-                const portfolio = document.getElementById("baseproduct");
-
-    
-                // Fonction permettant d'ajouter un élement stylisé a notre conteneur vide
-                function addproduct(id, image, price, classe, name){
-                    
-           
-    
-                    container.innerHTML += `         
-    
-                    <div class="col-md-3 portfolio-item ${classe}">
-                        <div class="portfolio-wrap" style="flex-direction: column;">
-                            <a href="/details/${id}">
-                                <img src="/storage/product_img/${image}" class="img-fluid imgpres" alt="">
-                            </a>
-                        </div>
-
-                        <div class="products">
-
-                            <div class="categ">
-                                ${ classe.split('-')[1].charAt(0).toUpperCase() + classe.split('-')[1].slice(1) }
-                            </div>
-                            <div class="title">
-                                <a href="/details/${id}">${name}</a>
-                            </div>
-                        
-                            <div class="pricepr">
-                                ${price} <span>$</span>
-                            </div>
-                        </div>
-                    </div>
-                        `;
-
-                }
-    
-                // On écoute chaque fois que l'utilisateur entre quelque chose dans l'input
-                input.addEventListener('input', 
-    
-                    async function(event) {
-
-                        // supprimer les produits deja affiché                 
-
-                        let content = event.target.value;
-                        
-                        // On build l'url puis on fait une requete vers l'api
-                        let url = "http://"+ window.location.hostname + ":8000/api/products/" + "{{$name}}" + "/" + content
-                        let resp = await fetch(url);
-                        if(typeof baseproduct !== 'undefined'){
-                            baseproduct.remove()
-                        }
-
-                        // Si l'input de l'utilisateur match un produit
-                        if(resp.status !==  404){
-    
-                            const data = await resp.json();
-                            
-                            container.innerHTML = ""
-                            for(let i=0; i<data.length; i++){
-                                elem = data[i];
-                                // On l'ajoute a notre conteneur
-                                addproduct(elem.id, elem.image, elem.price, elem.class, elem.name)
-                            }
-
-                            
-
-                        }
-                });
-                
-            </script>
 
 
         </div>
@@ -149,7 +87,17 @@
                                 </div>
                                
                                 <div class="pricepr">
+                                    
                                     {{$d['price']}} <span>$</span>
+                                    <p class="pr_stars" id="stars-{{$d['id']}}"></p>
+
+                                    <script>
+
+                                        showrating("http://"+ window.location.hostname + ":8000/api/rating/" + "{{$d['id']}}", "{{$d['id']}}");
+                                    </script>                
+                                        
+                                    
+                                                                           
                                 </div>
 
                             </div>
@@ -159,7 +107,7 @@
 
                 </div>
 
-                @if($products -> nextPageUrl() !== null)
+                @if(!isset($notpaginated) && $products -> nextPageUrl() !== null)
                     <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() }}" hx-swap="outerHTML" hx-trigger="revealed">
                         <span class="paginationbutton">
                             <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>

@@ -86,7 +86,7 @@ class Details extends Controller {
             $rating = json_decode($rating_req -> body(), 1);
         }
 
-        # Bueatify our text
+        # Bueatify our text 
         $data["descr"] = style($data["descr"]);
 
         return view("product.details", ["data" => $data, "comments" => $comments, "rating" => $rating]);

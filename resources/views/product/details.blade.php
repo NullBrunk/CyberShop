@@ -172,35 +172,7 @@
                                                 {{-- On affiche le vrai nombre d'étoiles arrondis au dixième --}}
                                                 {{ $rating['real'] }} 
 
-                                                {{-- 
-                                                    On effectue une boucle for pour afficher 
-                                                    le nombre d'étoiles en jaune
-                                                --}}
-                                                @for($i=0; $i<$rating['round']; $i++)
-                                                    <i class="bi bi-star-fill" style="color: #de7921;"></i>
-                                                @endfor
-
-                                                {{-- 
-                                                    On affiche éventuellement une demi étoile jaune
-                                                    si le nombre des dixiemes du vrai rating est 
-                                                    supérieur a .5,
-                                                    si ce n'est pas le cas on affiche une étoile blanche
-                                                --}}
-
-                                                @if($rating["real"] >= $rating["round"] + 0.5)
-                                                    <i style="color: #de7921;" class="bi bi-star-half"></i>
-                                                @elseif($rating["real"] != 5.0)
-                                                    <i class="bi bi-star" style="color: #de7921;"></i>
-                                                @endif
-
-                                                {{--
-                                                    On affiche rating - 1 étoiles en blanche
-                                                    (-1 car on a deja affiché soit une demi étoile soit une etoile blanche dans le if juste au dessus)    
-                                                --}}
-
-                                                @for($i = $rating['round'] + 1; $i < 5; $i++)
-                                                    <i class="bi bi-star" style="color: #de7921;"></i>
-                                                @endfor
+                                                {!! $rating["icons"] !!}
                                             
                                                 <a href="#comments"> {{$rating["rate"]}} ratings</a>
                                         </td>

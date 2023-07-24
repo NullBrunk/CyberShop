@@ -24,7 +24,17 @@
             </div>
            
             <div class="pricepr">
+                                    
                 {{$d['price']}} <span>$</span>
+                <p class="pr_stars" id="stars-{{$d['id']}}"></p>
+
+                <script>
+
+                    showrating("http://"+ window.location.hostname + ":8000/api/rating/" + "{{$d['id']}}", "{{$d['id']}}");
+                </script>                
+                    
+                
+                                                       
             </div>
 
         </div>
