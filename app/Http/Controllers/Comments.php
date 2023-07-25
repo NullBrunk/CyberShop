@@ -67,52 +67,13 @@ class Comments extends Controller {
         $notif -> icon = "bx bx-detail";
         $notif -> name = "Commented product.";
         $notif -> content = "From " . $_SESSION["mail"] . ".";
-        $notif -> link = route("details", $req["id"]) . "#div" . self::getid($comment);
+        $notif -> link = "/details/" . $req["id"] . "/#div" . self::getid($comment);
         $notif -> type = "comment";
         $notif -> moreinfo = $req["id"];
 
         $notif -> save();
 
         return to_route("details", $req["id"]) -> with('posted', "Your comment has been posted !");
-    }
-
-
-
-    /**
-     * Get all the comment of a given product
-     *
-     * @param Comment $comment      The comment model  
-     * @param int $id               The id of the product.
-     * 
-     * @return array                A hashmap with all the comments of 
-     *                              the product.
-     * 
-     */
-
-    public function get(Comment $comment, $id){
-        
-        $data = $comment
-                -> select('comments.id', 'rating', 'id_product', 'content', 'writed_at', 'mail', 'title')
-                -> join('users', 'users.id', '=', 'comments.id_user')
-                -> where('id_product', '=', $id )
-                -> orderBy("id", "desc")
-                -> get() -> toArray();
-
-
-        if(empty($data)){
-            return abort(404);
-        }
-        
-        
-        # Beautify our text
-        include_once __DIR__ . "/../Utils/Style.php";
-        
-        for($i=0; $i < sizeof($data); $i++){
-            $data[$i]["content"] = style($data[$i]["content"]);
-        }
-
-        return ($data);
-
     }
 
 

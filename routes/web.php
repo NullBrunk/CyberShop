@@ -24,9 +24,6 @@ Route::view("/todo", "static.todo");
 # Index page
 Route::view('/', "static.index") -> name("root");
 
-# Rating
-Route::get("/rating/{product}", [ Products::class, "rating" ]) -> name("rating");
-
 /*
 |---------------------------------------------
 |  Authentication 

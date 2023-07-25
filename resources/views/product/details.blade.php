@@ -1,4 +1,4 @@
-@extends("static.base")
+@extends("layout.base")
 
 @section("title", $data["name"] )
 
@@ -256,7 +256,6 @@
 
                             {{-- On vérifie si l'api des commentaires a renvoyé quelque chose--}}
                             @if($comments)
-
                                 @foreach($comments as $comm)
                                     @php($mail = $comm -> user -> mail)
                                     <div id="{{ "div" . $comm["id"] }}" class="comments">          
@@ -360,7 +359,9 @@
                                                         
 
                                         <div class="comment">
-                                            {!! $comm["content"] !!}
+                                            <?php 
+                                            include_once __DIR__ . "/../../../app/Http/Utils/Style.php" ?>
+                                            {!! style($comm["content"]) !!}
                                             <hr>
                                         </div>
                                                             

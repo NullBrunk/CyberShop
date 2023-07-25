@@ -22,4 +22,10 @@ Route::get('/user', function (Request $request) {
 */
 
 Route::get("/products/{category}/{search}", [ Products::class, "search" ]);
+
+# get all the comments of a given product 
+
 Route::get("/comments/{id}", [ Comments::class, "get" ]);
+
+# Get the rating of a product
+Route::get("/rating/{product}", [ Products::class, "rating" ]) -> name("rating");

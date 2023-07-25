@@ -1,4 +1,4 @@
-@extends("static.base")
+@extends("layout.base")
 
 @section("title", "Cybershop")
 

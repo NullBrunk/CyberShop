@@ -1,4 +1,4 @@
-@extends("static.base")
+@extends("layout.base")
 
 @section("title", ucfirst($name))
 
@@ -91,13 +91,21 @@
                                 <div class="pricepr">
                                     
                                     {{$d['price']}} <span>$</span>
+
+                                {{-- 
+                                    If we are displaying the result of a research, the result is not paginated.
+                                    But we dont want that Javascript do 20 API calls to the rating route 
+                                    if there is 20 products to show.
+                                --}}
+                                @if(isset($notpaginated))
+                                    <p class="pr_stars" id="stars-{{$d['id']}}">{!! $rating[$d["id"]] !!}</p>
+                                @else
                                     <p class="pr_stars" id="stars-{{$d['id']}}"></p>
 
                                     <script>
-
-                                        showrating("{{route('rating', $d['id']) }}", "{{$d['id']}}");
+                                        showrating(location.protocol + "//" + window.location.hostname + ":8000/api/rating/{{ $d['id'] }}", {{$d['id']}});
                                     </script>                
-                                        
+                                @endif   
                                     
                                                                            
                                 </div>

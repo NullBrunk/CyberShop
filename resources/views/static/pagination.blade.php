@@ -29,8 +29,7 @@
                 <p class="pr_stars" id="stars-{{$d['id']}}"></p>
 
                 <script>
-
-                    showrating("{{route('rating', $d['id']) }}", "{{$d['id']}}");
+                    showrating(location.protocol + "//" + window.location.hostname + ":8000/api/rating/{{ $d['id'] }}", {{$d['id']}});
                 </script>                
                     
                 

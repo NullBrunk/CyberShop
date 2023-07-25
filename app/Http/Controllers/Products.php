@@ -79,7 +79,7 @@ class Products extends Controller
         }
 
         # Get all the comments of the product
-        $comments = $product -> comments;
+        $comments = $product -> comments() -> orderBy('id', 'desc') -> get();
 
 
         $rating = self::rating($product);
@@ -127,7 +127,11 @@ class Products extends Controller
             $data = $product -> where("class", "=", "filter-" . $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc') -> get();
         }
             
-        return view("product.categories", ["products" => $data, "name" => $category, "notpaginated" => true]);
+        foreach($data as $d){
+            $rating[$d["id"]] = self::rating($d)["icons"]; 
+        }
+
+        return view("product.categories", ["products" => $data, "name" => $category, "rating" => $rating, "notpaginated" => true]);
 
     }
 
@@ -373,7 +377,7 @@ class Products extends Controller
 
 
     /** 
-     * Show products of a given category
+     * Show products of a given category (in a little card)
      * 
      * @param Product $product         The product model
      * @param string $slug             The category name
@@ -387,12 +391,14 @@ class Products extends Controller
             return abort(404);
         }
        
+        // If HTMX is doing the request, don't display the navbar
         if($request -> server("HTTP_HX_REQUEST") === "true" ){
             $view = "static.pagination";
         }
         else {
             $view = "product.categories";
         }
+
         
         if($slug === "all"){
             $data = $product -> orderBy('id', 'desc') -> paginate(4);
