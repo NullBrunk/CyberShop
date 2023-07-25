@@ -18,9 +18,12 @@
 
             <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
               <ul>
+                
+                
                 <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "laptop") }}"><i class="bx bx-laptop"></i> <i class="bi bi-dot"></i> Informatic</a></li>
                 <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "gaming") }}"><i class="bx bx-joystick"></i> <i class="bi bi-dot"></i> Gaming</a></li>
                 <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "dresses") }}"><i class="bx bx-body"></i> <i class="bi bi-dot"></i> Dresses</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "other") }}"><i class="bx bx-question-mark"></i> <i class="bi bi-dot"></i> Other</a></li>
                 <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "food") }}"><i class="bx bx-bowl-rice"></i> <i class="bi bi-dot"></i> Food</a></li>
                 <hr class="hrproducts">
                 <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "all") }}"><i class="bx bx-border-all"></i> <i class="bi bi-dot"></i> All products</a></li>

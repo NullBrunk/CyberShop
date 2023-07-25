@@ -4,7 +4,7 @@
 
 @section("content")
 
-    script src="/assets/js/htmx.js"></script>
+    <script src="/assets/js/htmx.js"></script>
     
     <link href="/assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
 
@@ -28,16 +28,52 @@
         </section>
 
         <section>
+            <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+            <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
 
-            TODO : put a caroussel with all categories, or something like this here.
 
+
+            <section id="testimonials" class="testimonials section-bg">
+                <div class="container">
+          
+          
+                  <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                        <div class="swiper-wrapper" id="swiper-wrap"></div>
+                        
+                        <script>
+                            const container = document.getElementById("swiper-wrap");
+                        
+                            ["all", "informatic", "gaming", "dresses", "food", "other"].forEach(element => {
+                                container.innerHTML += `
+                                <div class="swiper-slide" >
+                                    <div class="testimonial-wrap">
+                                        <div class="testimonial-item">
+                                        
+                                            <p onclick="window.location.href='/category/${element}'"" style="font-style: initial !important; cursor: pointer;">
+                                                <img style="height: 17vh;" src="/assets/img/category/${element}.png"></img><br><br>
+                                                <strong>${element.charAt(0).toUpperCase() + element.slice(1)}</strong>
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                `
+                            });
+
+                        </script>
+                 </div>
+          
+                <div class="swiper-pagination"></div>
+              </section><!-- End Testimonials Section -->
+          
         </section>
 
-    
+    <script src="/assets/js/swiper.js"></script>
+
     @if(session("deletedproduct"))
-            <script>
-                success("{{ session('deletedproduct') }}", "Deleted")
-            </script>
+        <script>
+            success("{{ session('deletedproduct') }}", "Deleted")
+        </script>
     @endif
 
     @if(session("deletedaccount"))

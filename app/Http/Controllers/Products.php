@@ -387,7 +387,7 @@ class Products extends Controller
 
     public function show(Request $request, Product $product, $slug){
 
-        if(!in_array($slug, [ "all", "gaming", "laptop", "dresses", "food" ])){
+        if(!in_array($slug, [ "all", "gaming", "laptop", "dresses", "food", "other" ])){
             return abort(404);
         }
        
