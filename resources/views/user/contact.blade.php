@@ -120,19 +120,19 @@
 
                                         @if(!isset($old))
                                             @if($data[$user][$i]['me'] === false)
-                                                <div class="profilemsg time" style="background-color: #dbd7d7; margin-right: 42%;"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                                <div id="msg{{$data[$user][$i]['id']}}" class="profilemsg time" style="background-color: #dbd7d7; margin-right: 42%;"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                             @else
-                                                <div class="profilemsg time" style="background-color: #ddeffd; margin-left: 42%;"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                                <div id="msg{{$data[$user][$i]['id']}}" class="profilemsg time" style="background-color: #ddeffd; margin-left: 42%;"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                             @endif
                                         @elseif((!($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === false)))
                                             
                                             <p class="close" style="background-color: #ddeffd; margin-left: 42% !important;"></p>                                        
-                                            <div class="profilemsg time" style="background-color: #dbd7d7; margin-right: 42%;"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                            <div id="msg{{$data[$user][$i]['id']}}" class="profilemsg time" style="background-color: #dbd7d7; margin-right: 42%;"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                         
                                         @elseif((!($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === true)))
                                             
                                             <p class="close" style="margin-right: 42% !important;"></p>
-                                            <div class="profilemsg time" style="background-color: #ddeffd; margin-left: 42%;"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
+                                            <div id="msg{{$data[$user][$i]['id']}}" class="profilemsg time" style="background-color: #ddeffd; margin-left: 42%;"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                         
                                         @endif
 

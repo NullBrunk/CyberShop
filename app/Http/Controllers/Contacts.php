@@ -363,7 +363,7 @@ class Contacts extends Controller {
             $contact -> content = htmlspecialchars($request["content"]);
             $contact -> save();
 
-            return redirect(url() -> previous());
+            return redirect(url() -> previous() . "#msg" . $contact["id"]);
         }
         else {
             return abort(403);
