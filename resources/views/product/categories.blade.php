@@ -14,9 +14,11 @@
         <script>
 
             async function showrating(url, id) {
+                
                 let resp = await fetch(url);
-                if(resp.status !==  404){
-                    const data = await resp.json();
+                const data = await resp.json();
+
+                if(data.length !== 0){
                     document.getElementById("stars-" + id).innerHTML = data.icons;
                 }
                 else {

@@ -328,6 +328,10 @@ class Products extends Controller
             $total_rating += (int)$rat -> rating;
         }
 
+        if($numbers_of_rate === 0){
+            return [];
+        }
+
         $round = intdiv($total_rating, $numbers_of_rate);
         $real = round($total_rating / $numbers_of_rate, 1);
        
