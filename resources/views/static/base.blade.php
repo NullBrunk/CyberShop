@@ -11,7 +11,7 @@
         <meta content="" name="keywords">
 
         {{-- Google font --}}
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+        <link href="/assets/css/fonts.css" rel="stylesheet">
 
         {{-- CSS --}}
         <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -30,10 +30,7 @@
         <link rel="stylesheet" type="text/css" href="/assets/vendor/markitup/skins/simple/style.css">
         <link rel="stylesheet" type="text/css" href="/assets/vendor/markitup/sets/default/style.css">
 
-        <script
-        src="https://code.jquery.com/jquery-3.7.0.slim.min.js"
-        integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE="
-        crossorigin="anonymous"></script>
+        <script src="/assets/js/jquery.js"></script>
         
         <script type="text/javascript" src="/assets/vendor/markitup/jquery.markitup.js"></script>
         <script type="text/javascript" src="/assets/vendor/markitup/sets/default/set.js"></script>

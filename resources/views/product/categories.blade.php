@@ -4,7 +4,7 @@
 
 @section("content")
 
-    <script src="https://unpkg.com/htmx.org@1.9.3" integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua" crossorigin="anonymous"></script>
+    <script src="/assets/js/htmx.js"></script>
     <link href="/assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
     <link href="/assets/css/searchbar.css" rel="stylesheet">
     
@@ -28,10 +28,10 @@
         </script>
 
         <div style="padding-top:6%;"class=" d-flex align-items-center">
-                <form  method="post" action="{{route("product.search", $name)}}">
+                <form  method="post" action="{{ route("product.search", $name) }}">
                     @csrf
                     <input id="input" name="search" type="text" placeholder="Search something ..." autofocus>
-                    <button><i class="bx bx-search-alt" ></i></button>
+                    <button style="width: 3%;border-radius: 4px;border: 0;"><i class="bx bx-search-alt" ></i></button>
                 </form>
     
             </div>
@@ -93,7 +93,7 @@
 
                                     <script>
 
-                                        showrating("http://"+ window.location.hostname + ":8000/api/rating/" + "{{$d['id']}}", "{{$d['id']}}");
+                                        showrating("{{route('rating', $d['id']) }}", "{{$d['id']}}");
                                     </script>                
                                         
                                     

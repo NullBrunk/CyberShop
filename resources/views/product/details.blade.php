@@ -103,13 +103,13 @@
                                 <form  class="navbar formshow" method="post" action="{{route("cart.add")}}">  
                                     @csrf   
                                     <button class="addtocart" type="submit">BUY NOW<i  style="font-weight: bold !important;" class="bi bi-cart-plus"></i></button>
-                                    <input type="hidden"  name="id" value="{{$data['pid']}}">
+                                    <input type="hidden"  name="id" value="{{$data['id']}}">
                                 </form>
 
                             {{-- Nous sommes le vendeur --}}
                             @else
 
-                                <form class="navbar formshow" method="get" action="{{route("product.edit_form", $data['pid'])}}" >  
+                                <form class="navbar formshow" method="get" action="{{route("product.edit_form", $data['id'])}}" >  
                                     @csrf   
                                     <button  class="addtocart" type="submit">EDIT PRODUCT<i style="font-weight: bold !important;" class="bi bi-cart-check"></i></button>
                                 </form>
@@ -224,7 +224,7 @@
                                         class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
                                     </div>
 
-                                    <input name="id" type="hidden" value="{{$data['pid']}}">
+                                    <input name="id" type="hidden" value="{{$data['id']}}">
                                     
                                     <br>
                                     <p class="title" style="margin-bottom: 0; margin-top: 60px; ">Rating <abbr>*</abbr></p>
@@ -257,7 +257,8 @@
                             {{-- On vérifie si l'api des commentaires a renvoyé quelque chose--}}
                             @if($comments)
 
-                                @foreach(json_decode($comments, true) as $comm)
+                                @foreach($comments as $comm)
+                                    @php($mail = $comm -> user -> mail)
                                     <div id="{{ "div" . $comm["id"] }}" class="comments">          
                                         <div class="profile">
                                             
@@ -268,10 +269,10 @@
                                                         Si nous ne sommes pas le commentateur, son nom est affiché dans un a.
                                                         On peut ainsi le contacter en un clic.
                                                     --}}
-                                                    @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $comm["mail"]))
-                                                        {{ $comm["mail"] }}
+                                                    @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $mail))
+                                                        {{ $mail }}
                                                     @else
-                                                        <a style="color: #007185" href="{{ route("contact.user", $comm["mail"]) }}">{{$comm["mail"]}}</a>
+                                                        <a style="color: #007185" href="{{ route("contact.user", $mail) }}">{{$comm -> user-> mail}}</a>
                                                     @endif
 
                                                 </p> 
@@ -283,7 +284,7 @@
                                                     ce dernier.
                                                 --}}
 
-                                                @if(isset($_SESSION["mail"]) && $comm["mail"] === $_SESSION["mail"])           
+                                                @if(isset($_SESSION["mail"]) && $mail === $_SESSION["mail"])           
                                                     <p class="trash"> 
                                                         <i id="" onclick='menu("{{$comm["id"]}}")' style="margin-top: 16px;" class="dots bx bx-dots-vertical-rounded"></i>     
                                                     </p>
@@ -311,7 +312,7 @@
                                                     }).then((result) => {
                                                         // On redirige vers la page permettant de supprimer le commentaire
                                                         if (result.isConfirmed) {
-                                                            window.location.href = "/comments/delete/" + commid + "/{{ $data['pid'] }}"
+                                                            window.location.href = "/comments/delete/" + commid + "/{{ $data['id'] }}"
                                                         }
                                                     })
                                                 }

@@ -11,4 +11,13 @@ class Product extends Model
 
     public $timestamps = false;
 
+
+    public function comments(){
+        return $this -> hasMany(Comment::class, "id_product");
+    }
+
+    public function user(){
+        return $this -> belongsTo(User::class, "id_user"); 
+    }
+
 }

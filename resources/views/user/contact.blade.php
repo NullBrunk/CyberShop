@@ -16,7 +16,7 @@
             })        
         </script>
 
-        <script src="https://unpkg.com/htmx.org@1.9.3" integrity="sha384-lVb3Rd/Ca0AxaoZg5sACe8FJKF0tnUgR2Kd7ehUOG5GCcROv5uBIZsOqovBAcWua" crossorigin="anonymous"></script>
+        <script src="/assets/js/htmx.js"></script>
         <script>
             function menu(id_delete, id_edit){
                 document.getElementById(id_delete).classList.toggle("none")

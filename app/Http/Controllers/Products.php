@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Comment;
 use App\Models\Cart;
+use App\Models\Notif;
 
 /**
  * Test if a product is from a given user, if he is return product informations
@@ -39,6 +40,59 @@ function is_from_user(Product $product, $id){
 class Products extends Controller
 { 
  
+    /**
+     * Get the details of a given product
+     *
+     * @param Notif $notif          The notif model
+     * @param Product $product      The product threw model binding 
+     * 
+     * @return view                 A view with all the details of
+     *                              the product, including comments
+     *                              technicals details, rating etc. 
+     * 
+     */
+
+     public function get_details(Notif $notif, Product $product){
+                  
+        include_once __DIR__ . "/../Utils/Style.php";
+
+        $data = $product -> toArray();
+        $data["mail"] = $product -> user -> mail;
+        $data["uid"] = $product -> user -> id;
+
+        
+        # Delete all notifications linked to it
+        session_start();
+
+        if(isset($_SESSION["logged"])){
+
+            # If i m the seller of this product
+            if($_SESSION["id"] === $data["uid"]){
+
+                # Delete all notifs linked to it
+                $notif 
+                -> where("id_user", "=", $_SESSION["id"]) 
+                -> where("type", "=", "comment")
+                -> where("moreinfo", "=", $data["id"])
+                -> delete();
+            }
+        }
+
+        # Get all the comments of the product
+        $comments = $product -> comments;
+
+
+        $rating = self::rating($product);
+
+        # Bueatify our text 
+        $data["descr"] = style($data["descr"]);
+
+        return view("product.details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
+    
+    }
+
+
+
     /**
      * Search threw all the product with a LIKE operator
      *
@@ -212,17 +266,18 @@ class Products extends Controller
 
     public function edit(UpdateProduct $req, Product $product, Comment $comment, Cart $cart, $id, ){
 
+        $data = is_from_user($product, $id);
+        if(empty($data)){
+            return abort(403);
+        }
+
+
         # If the user clicked on the delete button 
 
         if($req["submit"] === "delete"){
             self::delete($product, $comment, $cart, $id);
 
             return to_route("root") -> with("deletedproduct", "The product has been deleted successfully.");
-        }
-        
-        $data = is_from_user($product, $id);
-        if(empty($data)){
-            return abort(403);
         }
 
         
@@ -237,7 +292,6 @@ class Products extends Controller
         ])){
             return abort(403);
         }
-
 
         $product 
         -> where("id", "=", $id)
@@ -256,39 +310,32 @@ class Products extends Controller
     /**
      * Calculate the different rating (rounded, real, number of rates) 
      *
-     * @param Comment $comment      The comments model
-     * @param int $id               The id of the product
+     * @param Product $product      A product threw model binding
      *  
      * @return array | redirect     An array with all the valuable informations
      *                              A 404 page if no one rated,
      * 
      */
     
-    public function rating(Comment $comment, $id){
+    public function rating(Product $product){
 
-        $rating = $comment 
-            -> where("id_product", "=", $id)
-            -> sum("rating") ;
+        $numbers_of_rate = 0;
+        $total_rating = 0;
+        $toshow = "";
 
-        $number = $comment -> where("id_product", "=", $id) -> get() -> count();
-        if($number === 0){
-            return abort(404);
+        foreach($product -> comments as $rat){
+            $numbers_of_rate++;
+            $total_rating += (int)$rat -> rating;
         }
 
+        $round = intdiv($total_rating, $numbers_of_rate);
+        $real = round($total_rating / $numbers_of_rate, 1);
+       
 
-        $toshow = "";
-        $rating = [
-            "round" => intdiv($rating, $number),
-            "real" => round($rating / $number, 1),
-            "rate" => (int)$number,
-        ];
-
-
-        
         # On effectue une boucle for pour afficher 
         # le nombre d'étoiles en jaune
         
-        for($i=0; $i<$rating['round']; $i++){
+        for($i=0; $i<$round; $i++){
             $toshow .= '<i class="bi bi-star-fill" style="color: #de7921;"></i>';
         }
         
@@ -296,10 +343,10 @@ class Products extends Controller
         # si le nombre des dixiemes est supérieur à .5,
         # Si ce n'est pas le cas on affiche une étoile blanche
 
-        if($rating["real"] >= $rating["round"] + 0.5){
+        if($real >= $round + 0.5){
             $toshow .= '<i style="color: #de7921;" class="bi bi-star-half"></i>';
         }
-        elseif($rating["real"] != 5.0){
+        elseif($real != 5.0){
             $toshow .= '<i class="bi bi-star" style="color: #de7921;"></i>';
         }
 
@@ -307,15 +354,16 @@ class Products extends Controller
         # On affiche rating - 1 étoiles en blanche
         # (-1 car on a deja affiché soit une demi étoile soit une etoile blanche dans le if juste au dessus)    
 
-        for($i = $rating['round'] + 1; $i < 5; $i++){
+        for($i = $round + 1; $i < 5; $i++){
             $toshow .= '<i class="bi bi-star" style="color: #de7921;"></i>';
         }
 
-        $rating["icons"] = $toshow;
-
-
-        return $rating;
-
+        return [
+            "icons" => $toshow,
+            "round" => $round,
+            "rate" => $numbers_of_rate,
+            "real" => $real,
+        ];
     }
 
 
@@ -341,7 +389,6 @@ class Products extends Controller
         else {
             $view = "product.categories";
         }
-
         
         if($slug === "all"){
             $data = $product -> orderBy('id', 'desc') -> paginate(4);

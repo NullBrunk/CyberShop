@@ -8,7 +8,6 @@ use App\Http\Middleware\Logged;
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
 use App\Http\Controllers\Contacts;
-use App\Http\Controllers\Details;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Carts;
 
@@ -25,9 +24,8 @@ Route::view("/todo", "static.todo");
 # Index page
 Route::view('/', "static.index") -> name("root");
 
-# Details
-Route::get('/details/{product_id}', [ Details::class, "get_details" ] ) -> name("details");
-
+# Rating
+Route::get("/rating/{product}", [ Products::class, "rating" ]) -> name("rating");
 
 /*
 |---------------------------------------------
@@ -157,7 +155,8 @@ Route::prefix('product') -> name("product.") -> group(function () {
         [Products::class, "search"]
     ) -> name("search");
 });
-Route::get("/category/{slug}", [Products::class, "show"]) -> name("product.show");
+Route::get("/category/{slug}", [ Products::class, "show" ]) -> name("product.show");
+Route::get('/details/{product}', [ Products::class, "get_details" ] ) -> name("details");
 
 
 /*

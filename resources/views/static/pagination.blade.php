@@ -30,7 +30,7 @@
 
                 <script>
 
-                    showrating("http://"+ window.location.hostname + ":8000/api/rating/" + "{{$d['id']}}", "{{$d['id']}}");
+                    showrating("{{route('rating', $d['id']) }}", "{{$d['id']}}");
                 </script>                
                     
                 

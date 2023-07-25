@@ -11,4 +11,5 @@ class User extends Model
 
     public $timestamps = false;
 
+    
 }

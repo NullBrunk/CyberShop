@@ -81,7 +81,7 @@
 
                                                 <script>
                                                     // On préselectionne le bon <option>
-                                                    document.getElementById("select").value = "{{ $data['class']}}" 
+                                                    document.getElementById("select").value = "{{ old('category') !== null ? old('category') : $data['class']}}" 
                                                 </script>
 
                                             </li>
