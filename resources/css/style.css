@@ -1674,6 +1674,12 @@ tr:nth-child(even) td {
   
 }
 
+@media(max-width: 768px){
+  
+  .sellpr {
+    width: 100%;
+  }
+}
 .sellpr:hover {
   color: #fff !important;
   background-color: #209dd8;

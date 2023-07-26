@@ -22,13 +22,13 @@ var swiper = new Swiper(".slide-container", {
   
     breakpoints: {
       0: {
-        slidesPerView: 2,
+        slidesPerView: 1,
       },
       520: {
-        slidesPerView: 3,
+        slidesPerView: 1,
       },
       768: {
-        slidesPerView: 4,
+        slidesPerView: 3,
       },
       1000: {
         slidesPerView: 5,
