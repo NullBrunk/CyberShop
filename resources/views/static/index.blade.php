@@ -27,7 +27,7 @@
 
         </section>
 
-        <section>
+        <section style="background: #f3f5fa;">
             <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
             <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
 
@@ -37,13 +37,13 @@
                 <div class="container">
           
           
-                  <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
+                  <div class="testimonials-slider swiper">
                         <div class="swiper-wrapper" id="swiper-wrap"></div>
                         
                         <script>
                             const container = document.getElementById("swiper-wrap");
                         
-                            ["all", "informatic", "gaming", "dresses", "food", "other"].forEach(element => {
+                            ["all", "informatics", "gaming", "dresses", "food", "furnitures", "vehicles", "appliances", "other"].forEach(element => {
                                 container.innerHTML += `
                                 <div class="swiper-slide" >
                                     <div class="testimonial-wrap">

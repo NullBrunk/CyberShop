@@ -25,7 +25,7 @@ class UpdateComment extends FormRequest
             'id' => 'required|integer',
             'id_product' => 'required|integer', 
             'title' => 'required|string|max:45',
-            'comment' => 'required|string|min',
+            'comment' => 'required|string',
             'rating' => 'required|integer|max:5|min:1'
         ];
     }

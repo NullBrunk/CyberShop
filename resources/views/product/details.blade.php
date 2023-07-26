@@ -152,7 +152,7 @@
 
                                 <tr>
                                     {{-- 
-                                        Au lieu d'afficher filter-laptop on affiche Laptop
+                                        Au lieu d'afficher filter-informatic on affiche Informatic
                                     --}}
 
                                     <th>Category</th>

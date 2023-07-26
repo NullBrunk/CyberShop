@@ -11,4 +11,10 @@ class Cart extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        "id",
+        "id_user",
+        "id_product"
+    ];
+
 }

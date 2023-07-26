@@ -10,21 +10,26 @@
 
         <nav id="navbar" class="navbar">
           <ul>
-            <li style="list-style: none;"><a class="nav-link" href="{{ route("profile.profile") }}">Account</a></li>  
 
-          <li style="list-style: none;"><a class="nav-link scrollto" href="{{ route("contact.show") }}">Messages</a></li>
-
+            @if(isset($_SESSION["logged"]))
+              <li style="list-style: none;"><a class="nav-link" href="{{ route("profile.profile") }}">Account</a></li>  
+              <li style="list-style: none;"><a class="nav-link scrollto" href="{{ route("contact.show") }}">Messages</a></li>
+            @endif
           
 
             <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
               <ul>
                 
                 
-                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "laptop") }}"><i class="bx bx-laptop"></i> <i class="bi bi-dot"></i> Informatic</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "informatics") }}"><i class="bx bx-laptop"></i> <i class="bi bi-dot"></i> Informatics</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "furnitures") }}"><i class="bx bx-door-open"></i> <i class="bi bi-dot"></i> Furnitures</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "appliances") }}"><i class="bx bx-fridge"></i> <i class="bi bi-dot"></i> Appliances</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "vehicles") }}"><i class="bx bx-car"></i> <i class="bi bi-dot"></i> Vehicles</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "dresses") }}"><i class="bx bx-shopping-bag"></i> <i class="bi bi-dot"></i> Dresses</a></li>
                 <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "gaming") }}"><i class="bx bx-joystick"></i> <i class="bi bi-dot"></i> Gaming</a></li>
-                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "dresses") }}"><i class="bx bx-body"></i> <i class="bi bi-dot"></i> Dresses</a></li>
-                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "other") }}"><i class="bx bx-question-mark"></i> <i class="bi bi-dot"></i> Other</a></li>
+                <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "other") }}"><i class="bx bx-package"></i> <i class="bi bi-dot"></i> Other</a></li>
                 <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "food") }}"><i class="bx bx-bowl-rice"></i> <i class="bi bi-dot"></i> Food</a></li>
+
                 <hr class="hrproducts">
                 <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "all") }}"><i class="bx bx-border-all"></i> <i class="bi bi-dot"></i> All products</a></li>
 
@@ -182,8 +187,8 @@
               @endif
 
             @else
-              <li><a class="nav-link scrollto" href="{{ route("signup") }}">Signup</a></li>
-              <li style="list-style-type: none;"><a class="getstarted scrollto" href="{{ route("login") }}">Login</a></li>  
+              <li><a class="nav-link scrollto" href="{{ route("auth.signup") }}">Signup</a></li>
+              <li style="list-style-type: none;"><a class="getstarted scrollto" href="{{ route("auth.login") }}">Login</a></li>  
             @endif
           </ul>
 

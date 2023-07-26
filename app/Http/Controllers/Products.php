@@ -13,28 +13,6 @@ use App\Models\Comment;
 use App\Models\Cart;
 use App\Models\Notif;
 
-/**
- * Test if a product is from a given user, if he is return product informations
- * and users information.
- *
- * @param Product $product       The product model 
- * @param int $id                The id of the product
- *  
- * @return array                 An empty array if not, a fill array if yes
- * 
- */
-
-function is_from_user(Product $product, $id){
-    
-    return $product 
-    -> select("users.id as uid", "products.id as pid", "id_user", "price", "descr", "class", "mail", "image", "name")
-    -> join('users', 'users.id', '=', 'products.id_user')
-    -> where('products.id', '=', $id )
-    -> where('id_user', '=', $_SESSION['id'] )
-    -> get()
-    -> toArray();
-}
-
 
 
 class Products extends Controller
@@ -115,7 +93,7 @@ class Products extends Controller
             return abort(403);
         }
 
-        if(!in_array($category, [ "all", "gaming", "laptop", "dresses", "food" ])){
+        if(!in_array($category, [ "all", "gaming", "informatics", "dresses", "food", "furnitures", "vehicles", "appliances" ])){
             return abort(404);
         }
        
@@ -127,6 +105,7 @@ class Products extends Controller
             $data = $product -> where("class", "=", "filter-" . $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc') -> get();
         }
             
+        $rating = [];
         foreach($data as $d){
             $rating[$d["id"]] = self::rating($d)["icons"]; 
         }
@@ -154,11 +133,14 @@ class Products extends Controller
         # Check if te user category is a valid category 
 
         if(!in_array($req["category"], [ 
-            "filter-laptop", 
+            "filter-informatics", 
             "filter-dresses",
             "filter-gaming",
             "filter-food",
-            "filter-other"
+            "filter-other",
+            "filter-furnitures", 
+            "filter-vehicles", 
+            "filter-appliances"
         ])){
             return abort(403);
         }
@@ -232,23 +214,20 @@ class Products extends Controller
     /**
      * Show an edition form to update a product if the user is allowed to 
      * 
-     * @param Product $product      The product model
-     * @param int $id               The id of the product
+     * @param Product $product      Product threw model binding
      *  
      * @return abort | view         a 403 page if he is not allowed
      *                              a view if he is.
      * 
      */
 
-    public function edit_form(Product $product, $id){
-
-        $data = is_from_user($product, $id);
+    public function edit_form(Product $product){
         
-        if(empty($data)){
+        if($_SESSION["id"] !== $product -> id_user){
             return abort(403);
         }
 
-        return view("product.form_product", ["data" => $data[0]]);
+        return view("product.form_product", ["data" => $product]);
     }
 
 
@@ -257,10 +236,9 @@ class Products extends Controller
      * Edit a product if the user is allowed to
      *
      * @param UpdateProduct $request     The informations of the new product 
-     * @param Product $product           The product model
+     * @param Product $id                The product threw model binding
      * @param Comment $comment           The comment model
      * @param Cart $cart                 The cart model
-     * @param int $id                    The id of the product
      *  
      * @return redirect                  A 403 page if he is not allowed
      *                                   redirect to the page of the updated product
@@ -268,10 +246,9 @@ class Products extends Controller
      * 
      */
 
-    public function edit(UpdateProduct $req, Product $product, Comment $comment, Cart $cart, $id, ){
+    public function edit(UpdateProduct $req, Product $product, Comment $comment, Cart $cart){
 
-        $data = is_from_user($product, $id);
-        if(empty($data)){
+        if($product -> id_user !== $_SESSION['id']){
             return abort(403);
         }
 
@@ -279,7 +256,7 @@ class Products extends Controller
         # If the user clicked on the delete button 
 
         if($req["submit"] === "delete"){
-            self::delete($product, $comment, $cart, $id);
+            self::delete($product, $comment, $cart, $product -> id);
 
             return to_route("root") -> with("deletedproduct", "The product has been deleted successfully.");
         }
@@ -288,17 +265,19 @@ class Products extends Controller
         # Test if the given category is valid
         
         if(!in_array($req["category"], [ 
-            "filter-laptop", 
+            "filter-informatics", 
             "filter-dresses",
             "filter-gaming",
             "filter-food",
-            "filter-other"
+            "filter-other",
+            "filter-furnitures", 
+            "filter-vehicles", 
+            "filter-appliances"
         ])){
             return abort(403);
         }
 
         $product 
-        -> where("id", "=", $id)
         -> update([
             "name" => $req["name"],
             "price" => $req["price"],
@@ -306,7 +285,7 @@ class Products extends Controller
             "class" => $req["category"],
         ]);
 
-        return to_route("details", $id) -> with("updated", "Product updated successfully.");
+        return to_route("details", $product -> id) -> with("updated", "Product updated successfully.");
     }
 
 
@@ -387,7 +366,7 @@ class Products extends Controller
 
     public function show(Request $request, Product $product, $slug){
 
-        if(!in_array($slug, [ "all", "gaming", "laptop", "dresses", "food", "other" ])){
+        if(!in_array($slug, [ "all", "gaming", "informatics", "dresses", "food", "other", "furnitures", "vehicles", "appliances" ])){
             return abort(404);
         }
        

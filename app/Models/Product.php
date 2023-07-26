@@ -11,6 +11,15 @@ class Product extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        "id",
+        "id_user",
+        "name",
+        "price",
+        "descr",
+        "class",
+        "image"
+    ];
 
     public function comments(){
         return $this -> hasMany(Comment::class, "id_product");

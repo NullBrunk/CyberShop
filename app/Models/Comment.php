@@ -11,6 +11,17 @@ class Comment extends Model
 
     public $timestamps = false;
 
+
+    protected $fillable = [
+        "id",
+        "id_user",
+        "id_product",
+        "title",
+        "content",
+        "rating",
+        "writed_at"
+    ];
+
     public function product()
     {
         return $this->belongsTo(Product::class, "id_product");

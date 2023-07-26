@@ -86,6 +86,7 @@ class Contacts extends Controller {
     }
 
 
+
     /**
      * Get all the messages of the user and show them
      *
@@ -101,7 +102,8 @@ class Contacts extends Controller {
         
         include_once __DIR__ . "/../Utils/Style.php";
 
-        # The array that wi'll be passed to the vue
+        # The array that will be passed to the view
+
         $exploitable_data = [];
         $contact = [];
 
@@ -144,7 +146,7 @@ class Contacts extends Controller {
                 // Push the message
                 array_push($exploitable_data[$mail], $toput);
             
-                // Update the time of the last sended message 
+                // Update the time of the latest message 
                 $exploitable_data[$mail]["time"] = $data["time"];
             }
             else {
@@ -165,7 +167,7 @@ class Contacts extends Controller {
         });
         
 
-        # If the user is requesting for the messages of another user
+        # If the user is requesting for a specific conversation with another user
         if($slug){
 
             # If the user is contacting himself
@@ -178,12 +180,12 @@ class Contacts extends Controller {
             $requested_user = $user -> where("mail", "=", $slug) -> get() -> toArray();
 
             
-            # If the requested user doses not exist
+            # If the requested user does not exist
             if(empty($requested_user))
                 return abort(404);
 
 
-            # Mark the messages of the conversations as readed
+            # Mark all wthe messages of the conversation as readed
             self::mark_readed($cont,  $requested_user[0]["id"]);
 
 
@@ -213,8 +215,9 @@ class Contacts extends Controller {
         # Get the slug
         $url = explode("/contact/", url() -> previous());
         
+
         # If there is no slug, the user is 
-        # trying to send a message to non existent user
+        # trying to send a message to ... no one
 
         if(!isset($url[1])){
             return abort(403);
@@ -326,7 +329,7 @@ class Contacts extends Controller {
      * is not allowed to edit this contact message.
      *
      * @param Request $request
-     * @param Contact $contact     The message to remove threw model binding
+     * @param Contact $contact     The message threw model binding
      * 
      * @return view | redirect           
      * 

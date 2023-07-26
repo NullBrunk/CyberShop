@@ -11,4 +11,14 @@ class Contact extends Model
 
     public $timestamps = false;
 
+
+    protected $fillable = [
+        "id",
+        "id_contactor",
+        "id_contacted",
+        "type",
+        "content",
+        "readed",
+        "time"
+    ];
 }

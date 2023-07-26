@@ -10,7 +10,6 @@ use App\Http\Requests\Login;
 
 use App\Models\Product;
 use App\Models\Comment;
-use App\Models\Contact;
 use App\Models\Notif;
 use App\Models\User;
 use App\Models\Cart;
@@ -33,7 +32,7 @@ class Users extends Controller {
      * 
      */
     
-    public function show(Login $request, User $user){
+    public function login(Login $request, User $user){
                
         $req = $request -> validated();
 
@@ -61,7 +60,7 @@ class Users extends Controller {
 
         else {
 
-            return to_route("login") -> withErrors([
+            return to_route("auth.login") -> withErrors([
                 "email" => "Wrong mail or password !"
             ]) -> onlyInput("email");
         }
@@ -88,7 +87,7 @@ class Users extends Controller {
      * 
      */
 
-     public function show_signup(){
+     public function signup_form(){
 
         /* Note :
            
@@ -99,7 +98,7 @@ class Users extends Controller {
 
         session(["captcha" => $a + $b]);
 
-        return view('login.signup', ["firstnum" => $a, "secondnum" => $b ]);
+        return view('auth.signup', ["firstnum" => $a, "secondnum" => $b ]);
      }
 
 
@@ -119,7 +118,7 @@ class Users extends Controller {
         $req = $request -> validated();
 
         if( (int)$req["captcha"] !== session("captcha")){
-            return to_route("signup") -> withErrors([
+            return to_route("auth.signup") -> withErrors([
                 "captcha" => "The result is incorrect !"
             ]) -> withInput($request->input());
         }
@@ -131,7 +130,7 @@ class Users extends Controller {
         $user -> save();
 
 
-        return to_route("login");
+        return to_route("auth.login");
 
     }
 

@@ -35,6 +35,7 @@ class Carts extends Controller {
             $_SESSION['cart'][$d["cid"]] = $d;
         }
 
+
         return redirect(url() -> previous());
     }
    
@@ -76,8 +77,8 @@ class Carts extends Controller {
         # Regenerate it
         self::initialize($cart);
 
+        
         return redirect(url() -> previous());        
-    
     }
 
 
@@ -93,7 +94,6 @@ class Carts extends Controller {
      */
 
     public function remove(Cart $id){
-
 
         if ($id["id_user"] === $_SESSION["id"]){
             $id -> delete();

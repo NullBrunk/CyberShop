@@ -24,6 +24,8 @@ Route::view("/todo", "static.todo");
 # Index page
 Route::view('/', "static.index") -> name("root");
 
+
+
 /*
 |---------------------------------------------
 |  Authentication 
@@ -37,19 +39,19 @@ Route::get('/disconnect', function () {
 
 
 Route::get(
-    '/signup', [ Users::class, "show_signup" ],
-) -> middleware(Redirect::class) -> name("signup");
+    '/signup', [ Users::class, "signup_form" ],
+) -> middleware(Redirect::class) -> name("auth.signup");
 
 
 Route::view(
     '/login', 
-    'login.login'
-) -> middleware(Redirect::class) -> name("login");
+    'auth.login'
+) -> middleware(Redirect::class) -> name("auth.login");
 
 
 Route::post(
     '/login', 
-    [ Users::class, "show" ] 
+    [ Users::class, "login" ] 
 ) -> middleware(Redirect::class);
 
 
@@ -57,6 +59,7 @@ Route::post(
     '/signup', 
     [ Users::class, "store" ] 
 ) -> middleware(Redirect::class);
+
 
 
 
@@ -69,7 +72,6 @@ Route::post(
 Route::prefix('cart') -> name("cart.") -> group(function () {
 
     Route::view("show", "user.cart") -> middleware(Logged::class) -> name("display");
-
 
     Route::get(
         "",
@@ -133,7 +135,7 @@ Route::prefix('product') -> name("product.") -> group(function () {
     Route::view("/market", "product.market") -> middleware(Logged::class) -> name("sell");
 
     Route::get(
-        "/update/{id}",
+        "/edit/{product}",
         [ Products::class, "edit_form" ]
     ) -> middleware(Logged::class) -> name("edit_form");
 
@@ -143,7 +145,7 @@ Route::prefix('product') -> name("product.") -> group(function () {
     ) -> middleware(Logged::class) -> name("store");
 
     Route::post(
-        "/update/{id}",
+        "/edit/{product}",
         [ Products::class, "edit" ]
     ) -> middleware(Logged::class) -> name("edit");
     
@@ -151,9 +153,19 @@ Route::prefix('product') -> name("product.") -> group(function () {
         "/category/search/{category}/", 
         [Products::class, "search"]
     ) -> name("search");
+
 });
-Route::get("/category/{slug}", [ Products::class, "show" ]) -> name("product.show");
-Route::get('/details/{product}', [ Products::class, "get_details" ] ) -> name("details");
+
+Route::get(
+    "/category/{slug}", 
+    [ Products::class, "show" ]
+) -> name("product.show");
+
+Route::get(
+    "/details/{product}", 
+    [ Products::class, "get_details" ] 
+) -> name("details");
+
 
 
 /*

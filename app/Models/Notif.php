@@ -10,4 +10,15 @@ class Notif extends Model
     use HasFactory;
 
     public $timestamps = false;
+
+    protected $fillable = [
+        "id",
+        "id_user",
+        "type",
+        "icon",
+        "name",
+        "content",
+        "link", 
+        "moreinfo"
+    ];
 }

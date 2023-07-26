@@ -25,7 +25,7 @@
 
                 <section id="portfolio-details" class="portfolio-details">
                     
-                    <form method="post" action="{{ route("product.edit", $data['pid']) }}" enctype="multipart/form-data">  
+                    <form method="post" action="{{ route("product.edit", $data['id']) }}" enctype="multipart/form-data">  
 
                         <div class="container">
                             <div class="row gy-4">
@@ -71,7 +71,10 @@
                                             <li>
                                                 <strong style="display: flex;  margin-top: 8px;">Category : 
                                                     <select class="select-beautify" id="select" name="category">
-                                                        <option value="filter-laptop" >Informatics</option>
+                                                        <option value="filter-informatics" >Informatics</option>
+                                                        <option value="filter-furnitures">Furnitures</option>
+                                                        <option value="filter-appliances">Appliances</option>
+                                                        <option value="filter-vehicles">Vehicles</option>
                                                         <option value="filter-dresses">Dresses</option>
                                                         <option value="filter-gaming" >Gaming</option>
                                                         <option value="filter-food" >Food</option>

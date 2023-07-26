@@ -49,6 +49,7 @@ class Comments extends Controller {
         
         $req = $request -> validated();
 
+
         # Store the comment in the database 
 
         $comment -> id_product = $req["id"];
@@ -72,6 +73,7 @@ class Comments extends Controller {
         $notif -> moreinfo = $req["id"];
 
         $notif -> save();
+
 
         return to_route("details", $req["id"]) -> with('posted', "Your comment has been posted !");
     }
@@ -107,10 +109,11 @@ class Comments extends Controller {
      *
      * @param Comment $comment     Model binding of the comment threw his id
      * 
-     * @return view         A view with a form to edit the comment
+     * @return view                A view with a form to edit the comment
      */
 
     public function update_form(Comment $comment){
+
         if($comment["id_user"] === $_SESSION["id"]){
             return view("user.form_comment", [ "data" => $comment -> toArray() ]);
         }
@@ -138,20 +141,20 @@ class Comments extends Controller {
             return to_route("details", $request["id_product"]);
         }
 
-        $req = $request -> validated();
-
-        $comment 
-            -> where("id_user", "=", $_SESSION['id'])
-            -> where("id", "=", $req["id"])
-            -> update([ 
-                "writed_at" => date('Y-m-d H:i:s'),
-                "title" => $req['title'],
-                "content" => htmlspecialchars($req["comment"]),
-                "rating" => $req["rating"], 
-            ]);
-
-
-        return to_route("details", $req["id_product"]) -> with("updatedcomm", "Your comment has been updated !");
+        $comm = $comment -> findOrFail($request['id']) ;
         
+        if($comm -> id_user === $_SESSION["id"]){
+            $comm -> update([ 
+                "writed_at" => date('Y-m-d H:i:s'),
+                "title" => $request['title'],
+                "content" => htmlspecialchars($request["comment"]),
+                "rating" => $request["rating"], 
+            ]);
+        }
+        else {
+            return abort(403);
+        }
+
+        return to_route("details", $request["id_product"]) -> with("updatedcomm", "Your comment has been updated !");        
     }
 }
