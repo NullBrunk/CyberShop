@@ -143,7 +143,7 @@
 
                                 <tr>
                                     <th>Category</th>
-                                    <td>{{ ucfirst(explode('-', $data["class"])[1]) }}</td>
+                                    <td>{{ ucfirst($data["class"]) }}</td>
                                 </tr>
 
                                 <tr>

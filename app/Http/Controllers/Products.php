@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\UpdateProduct;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\StoreReq;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,7 @@ use App\Models\Notif;
 
 class Products extends Controller
 { 
- 
+
     /**
      * Get the details of a given product
      *
@@ -102,7 +103,7 @@ class Products extends Controller
             $data = $product -> orderBy('id', 'desc') -> where("name", "like", "%" . $search . "%") -> get();
         }
         else {
-            $data = $product -> where("class", "=", "filter-" . $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc') -> get();
+            $data = $product -> where("class", "=", $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc') -> get();
         }
             
         $rating = [];
@@ -133,14 +134,14 @@ class Products extends Controller
         # Check if te user category is a valid category 
 
         if(!in_array($req["category"], [ 
-            "filter-informatics", 
-            "filter-dresses",
-            "filter-gaming",
-            "filter-food",
-            "filter-other",
-            "filter-furnitures", 
-            "filter-vehicles", 
-            "filter-appliances"
+            "informatics", 
+            "dresses",
+            "gaming",
+            "food",
+            "other",
+            "furnitures", 
+            "vehicles", 
+            "appliances"
         ])){
             return abort(403);
         }
@@ -265,14 +266,14 @@ class Products extends Controller
         # Test if the given category is valid
         
         if(!in_array($req["category"], [ 
-            "filter-informatics", 
-            "filter-dresses",
-            "filter-gaming",
-            "filter-food",
-            "filter-other",
-            "filter-furnitures", 
-            "filter-vehicles", 
-            "filter-appliances"
+            "informatics", 
+            "dresses",
+            "gaming",
+            "food",
+            "other",
+            "furnitures", 
+            "vehicles", 
+            "appliances"
         ])){
             return abort(403);
         }
@@ -383,7 +384,7 @@ class Products extends Controller
             $data = $product -> orderBy('id', 'desc') -> paginate(4);
         }
         else {
-            $data = $product -> where("class", "=", "filter-" . $slug) -> orderBy('id', 'desc') -> paginate(4);
+            $data = $product -> where("class", "=",  $slug) -> orderBy('id', 'desc') -> paginate(4);
         }
 
             

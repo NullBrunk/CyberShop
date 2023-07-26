@@ -10,6 +10,9 @@ use App\Http\Controllers\Comments;
 use App\Http\Controllers\Contacts;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Carts;
+use App\Http\Controllers\Index;
+
+
 
 
 /*
@@ -22,7 +25,7 @@ use App\Http\Controllers\Carts;
 Route::view("/todo", "static.todo");
 
 # Index page
-Route::view('/', "static.index") -> name("root");
+Route::get('/', [ Index::class , "show"]) -> name("root");
 
 
 

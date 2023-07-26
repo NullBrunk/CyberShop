@@ -39,14 +39,14 @@
                                     <strong style="display: flex; ">Category: 
 
                                         <select  class="select-beautify" name="category">
-                                            <option value="filter-informatics" >Informatics</option>
-                                            <option value="filter-furnitures">Furnitures</option>
-                                            <option value="filter-appliances">Appliances</option>
-                                            <option value="filter-vehicles">Vehicles</option>
-                                            <option value="filter-dresses">Dresses</option>
-                                            <option value="filter-gaming" >Gaming</option>
-                                            <option value="filter-food" >Food</option>
-                                            <option value="filter-other" >Other</option>
+                                            <option value="informatics" >Informatics</option>
+                                            <option value="furnitures">Furnitures</option>
+                                            <option value="appliances">Appliances</option>
+                                            <option value="vehicles">Vehicles</option>
+                                            <option value="dresses">Dresses</option>
+                                            <option value="gaming" >Gaming</option>
+                                            <option value="food" >Food</option>
+                                            <option value="other" >Other</option>
                                         </select>
 
                                     </strong>

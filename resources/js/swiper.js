@@ -1,25 +1,38 @@
-new Swiper('.testimonials-slider', {
-    speed: 600,
+var swiper = new Swiper(".slide-container", {
+    slidesPerView: 4,
+    spaceBetween: 20,
+    sliderPerGroup: 4,
     loop: true,
+    centerSlide: "true",
+    fade: "true",
+    grabCursor: "true",
     autoplay: {
-    delay: 5000,
-        disableOnInteraction: false
+      delay: 5000,
+      disableOnInteraction: false
     },
-    slidesPerView: 'auto',
     pagination: {
-        el: '.swiper-pagination',
-        type: 'bullets',
-        clickable: true
+      el: ".swiper-pagination",
+      clickable: true,
+      dynamicBullets: true,
     },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  
     breakpoints: {
-        320: {
-            slidesPerView: 1,
-            spaceBetween: 20
-        },
-
-        1200: {
-            slidesPerView: 5,
-            spaceBetween: 20
-        }
-    }
-});
+      0: {
+        slidesPerView: 2,
+      },
+      520: {
+        slidesPerView: 3,
+      },
+      768: {
+        slidesPerView: 4,
+      },
+      1000: {
+        slidesPerView: 5,
+      },
+    },
+  });
+  

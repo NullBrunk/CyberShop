@@ -7,6 +7,8 @@
     <script src="/assets/js/htmx.js"></script>
     
     <link href="/assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
+    <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
 
     <body>
         <section id="hero" class="d-flex align-items-center">
@@ -26,44 +28,41 @@
         </section>
 
 
-        <section style="background: #f3f5fa;">
+        <section class=".section" style="background: #f5f8fd;">
 
-            <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
-            <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
+            <div class="container swiper">
+                <div class="slide-container">
+                    <div class="card-wrapper swiper-wrapper" id="swiper-wrap">
 
+                        @foreach($data as $d)
 
-            <section id="testimonials" class="testimonials section-bg">
-                <div class="container">
-                    <div class="testimonials-slider swiper">
-                        <div class="swiper-wrapper" id="swiper-wrap"></div>
-                        <script>
-                            // Generate swiper caroussel
-                            const container = document.getElementById("swiper-wrap");
-                        
-                            ["all", "informatics", "gaming", "dresses", "food", "furnitures", "vehicles", "appliances", "other"].forEach(element => {
-                                container.innerHTML += `
-                                <div class="swiper-slide" >
-                                    <div class="testimonial-wrap">
-                                        <div class="testimonial-item">
-                                        
-                                            <p onclick="window.location.href='/category/${element}'"" style="font-style: initial !important; cursor: pointer;">
-                                                <img style="height: 17vh;" src="/assets/img/category/${element}.png"></img><br><br>
-                                                <strong>${element.charAt(0).toUpperCase() + element.slice(1)}</strong>
-                                            </p>
+                            <div class="card swiper-slide">
+                                <div class="image-box" onclick="window.location.href='/category/{{$d['name']}}'">
+                                    <img unselectable="on" src="/assets/img/category/{{$d['name']}}.png" alt="" />
+                                </div>
 
-                                        </div>
+                                <div class="profile-details">
+                                    <div class="name-job">
+                                    <h3 class="name" style="margin-left: 0px; color: #000;">{{ucfirst($d['name'])}}</h3>
+                                    <h4 class="job">{{$d['number']}} products</h4>
                                     </div>
                                 </div>
-                                `
-                            });
-                        </script>
+                            </div>
+                        
+                        @endforeach
+
                     </div>
                 </div>
+
+                <div class="swiper-button-next swiper-navBtn"></div>
+                <div class="swiper-button-prev swiper-navBtn"></div>
                 <div class="swiper-pagination"></div>
-            
-            </section>
-          
+
+              </div>
         </section>
+        
+
+        
         <script src="/assets/js/swiper.js"></script>
 
 

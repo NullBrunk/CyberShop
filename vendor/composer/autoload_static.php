@@ -511,6 +511,7 @@ class ComposerStaticInit3b597f19e5a01640377a5ecd11d50332
         'App\\Http\\Controllers\\Comments' => __DIR__ . '/../..' . '/app/Http/Controllers/Comments.php',
         'App\\Http\\Controllers\\Contacts' => __DIR__ . '/../..' . '/app/Http/Controllers/Contacts.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\Index' => __DIR__ . '/../..' . '/app/Http/Controllers/Index.php',
         'App\\Http\\Controllers\\Products' => __DIR__ . '/../..' . '/app/Http/Controllers/Products.php',
         'App\\Http\\Controllers\\Users' => __DIR__ . '/../..' . '/app/Http/Controllers/Users.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',

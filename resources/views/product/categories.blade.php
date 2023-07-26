@@ -68,7 +68,7 @@
 
                             <div class="products">
                                 <div class="categ">
-                                    {{ ucfirst(explode('-', $d["class"])[1]) }}
+                                    {{ ucfirst($d["class"]) }}
                                 </div>
 
                                 <div class="title">
