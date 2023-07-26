@@ -12,7 +12,6 @@
     <body>
 
         <script>
-
             async function showrating(url, id) {
                 
                 let resp = await fetch(url);
@@ -26,45 +25,34 @@
                 }
 
             }
-
         </script>
 
         <div style="padding-top:6%;"class=" d-flex align-items-center">
-                <form  method="post" action="{{ route("product.search", $name) }}">
-                    @csrf
-                    <input id="input" name="search" type="text" placeholder="Search something ..." autofocus>
-                    <button style="width: 3%;border-radius: 4px;border: 0;"><i class="bx bx-search-alt" ></i></button>
-                </form>
-    
-            </div>
-    
-    
-            <div id="portfolio" class="portfolio">
-    
-                <div class="container">
-                    <div class="row"  id="container">
-                    </div>
-                </div>
+            <form  method="post" action="{{ route("product.search", $name) }}">
+                @csrf
+                <input name="search" type="text" placeholder="Search something ..." id="input" autofocus>
                 
-            </div>
-    
+                <button style="width: 3%;border-radius: 4px;border: 0;">
+                    <i class="bx bx-search-alt"></i>
+                </button>
 
-
+            </form>
         </div>
-
+    
+    
+        <div id="portfolio" class="portfolio">
+            <div class="container">
+                <div class="row" id="container">
+                </div>
+            </div>
+        </div>
+    
 
         <section id="baseproduct" class="portfolio" >
 
-        
-        
-                
-
             <div class="container" data-aos="fade-up">
-
-            
-
-
                 <div  class="row portfolio-container">
+
                     @foreach($products as $d)
 
 
@@ -75,15 +63,14 @@
 
                                     data-src="/storage/product_img/{{ $d['image'] }}" 
                                     class="img-fluid imgpres" alt="">
-                                </a>
-                                
+                                </a> 
                             </div>
+
                             <div class="products">
-
-
                                 <div class="categ">
                                     {{ ucfirst(explode('-', $d["class"])[1]) }}
                                 </div>
+
                                 <div class="title">
                                     <a href="{{route("details", $d['id'])}}">{{ $d["name"] }}</a>
                                 </div>
@@ -92,22 +79,20 @@
                                     
                                     {{$d['price']}} <span>$</span>
 
-                                {{-- 
-                                    If we are displaying the result of a research, the result is not paginated.
-                                    But we dont want that Javascript do 20 API calls to the rating route 
-                                    if there is 20 products to show.
-                                --}}
-                                @if(isset($notpaginated))
-                                    <p class="pr_stars" id="stars-{{$d['id']}}">{!! $rating[$d["id"]] !!}</p>
-                                @else
-                                    <p class="pr_stars" id="stars-{{$d['id']}}"></p>
-
-                                    <script>
-                                        showrating(location.protocol + "//" + window.location.hostname + ":8000/api/rating/{{ $d['id'] }}", {{$d['id']}});
-                                    </script>                
-                                @endif   
+                                    @if(isset($notpaginated))
+                                        
+                                        <p class="pr_stars" id="stars-{{$d['id']}}">{!! $rating[$d["id"]] !!}</p>
                                     
-                                                                           
+                                    @else
+
+                                        <p class="pr_stars" id="stars-{{$d['id']}}"></p>
+
+                                        <script>
+                                            showrating(location.protocol + "//" + window.location.hostname + ":8000/api/rating/{{ $d['id'] }}", {{$d['id']}});
+                                        </script>   
+
+                                    @endif   
+                                      
                                 </div>
 
                             </div>
@@ -118,24 +103,22 @@
                 </div>
 
                 @if(!isset($notpaginated) && $products -> nextPageUrl() !== null)
+
                     <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() }}" hx-swap="outerHTML" hx-trigger="revealed">
                         <span class="paginationbutton">
                             <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
                         </span>
                     </button>
+
                 @endif
+
             </div>
         </section>
 
-
 @endsection
 
-{{-- 
-    Load les images uniquement lorsque la page
-    a fini de se charger.
-    Permet de gagner énormement de temps
---}}
 
+{{-- Load products image after body fully loaded --}}
 <script>
     window.addEventListener('load', function() {
         var images = document.getElementsByTagName('img');

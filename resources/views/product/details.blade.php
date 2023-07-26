@@ -4,14 +4,15 @@
 
 
 @section("content")
+
     <body>
         <script>
-
             // Afficher le menu ou le masquer lorsque l'on clique sur les 3 points
             function menu(id){
                 const menu = document.getElementById(id);
                 menu.classList.toggle("none")
             }
+
 
             // Afficher le foromulaire pour poster un commentaire
             // quand on clique sur "Click here to post a comment"
@@ -35,15 +36,12 @@
                     span.innerText = "Click here to close this menu"
                 }
             }
-        </script>
-
-
-        <script type="text/javascript">
             
             $(function() {
                 $('#commentTextBar').markItUp(mySettings);
             })        
         </script>
+
 
         <main id="main" >
 
@@ -55,23 +53,20 @@
             </section>
 
 
-            {{-- 
-                Affichage du produit à gauche
-                et de sa description à droite
-            --}}
             <section id="portfolio-details" class="portfolio-details" style="padding-bottom: 0px;">
                 <div class="container">
                     <div class="row gy-4 whenigrowibecomeablock">
                         <div class="col-lg-8 takefull" style="width: 50%; display: flex;" >
                             <div style="margin: auto;">
 
-                                {{-- Image du produit à gauche --}}
+                                {{-- Image of the product on the left --}}
                                 <img data-aos="fade-right" style="width: 85% !important;" src="../storage/product_img/{{ $data["image"] }}" alt="">
+                            
                             </div>
                         </div>
 
                         {{-- 
-                            La description texuelle du produit 
+                            Textual description of the product
                         --}}
                         <div data-aos="fade-left" class="col-lg-4 marginlr"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; height: 75vh; display: flex; flex-direction: column; ">
                             <div class="portfolio-info container" style="padding-bottom: 10px; padding-top: 30px !important;" >
@@ -80,11 +75,8 @@
                             </div>
 
                             <div class="portfolio-info" style="position: relative;   padding-top: 0px !important;  height: 65%;">
-                                <p class="descr">
-
-                                    
+                                <p class="descr">                     
                                     {!! $data["descr"] !!}
-
                                 </p>
                             </div>
                         
@@ -106,9 +98,7 @@
                                     <input type="hidden"  name="id" value="{{$data['id']}}">
                                 </form>
 
-                            {{-- Nous sommes le vendeur --}}
                             @else
-
                                 <form class="navbar formshow" method="get" action="{{route("product.edit_form", $data['id'])}}" >  
                                     @csrf   
                                     <button  class="addtocart" type="submit">EDIT PRODUCT<i style="font-weight: bold !important;" class="bi bi-cart-check"></i></button>
@@ -120,8 +110,9 @@
                         <br>
                         <hr>
 
+
                         <div id="info" data-aos="fade-right">
-                            {{-- Petit tableau descriptif du produit --}}
+
                             <h2>Product information</h2>
 
                             <table>
@@ -135,8 +126,8 @@
                                     <td>
                                         {{-- 
                                             Si nous ne sommes pas le vendeur, le mail de celui ci
-                                            est afficher dans une balise a, nous permettant
-                                            (en cliquant sur le lien), d'etre rediriger vers la page pour
+                                            est affiché dans une balise <a>, nous permettant
+                                            (en cliquant sur le lien), d'etre redirigé vers la page pour
                                             le contacter.
                                         --}}
 
@@ -151,10 +142,6 @@
                                 </tr>
 
                                 <tr>
-                                    {{-- 
-                                        Au lieu d'afficher filter-informatic on affiche Informatic
-                                    --}}
-
                                     <th>Category</th>
                                     <td>{{ ucfirst(explode('-', $data["class"])[1]) }}</td>
                                 </tr>
@@ -169,7 +156,6 @@
                                         <th>Reviews</th>
                                             <td>
 
-                                                {{-- On affiche le vrai nombre d'étoiles arrondis au dixième --}}
                                                 {{ $rating['real'] }} 
 
                                                 {!! $rating["icons"] !!}
@@ -208,6 +194,7 @@
                             <div id="formcomm" class="commentsbox none" >
                                 
                                 <form method="post" action="{{ route("comment.store", $data["id_user"]) }}" style="width:100%;">
+                                    
                                     @csrf
                                     <div class="title" style="height: 13vh;;">
                                         Title of your comment <abbr>*</abbr>
@@ -231,12 +218,16 @@
                                     <div class="rating">
                                         <input type="radio" id="star5" name="rating" value="5">
                                         <label for="star5"></label>
+                                        
                                         <input type="radio" id="star4" name="rating" value="4">
                                         <label for="star4"></label>
+                                        
                                         <input type="radio" id="star3" name="rating" value="3">
                                         <label for="star3"></label>
+                                        
                                         <input type="radio" id="star2" name="rating" value="2">
                                         <label for="star2"></label>
+                                        
                                         <input type="radio" id="star1" name="rating" value="1">
                                         <label for="star1"></label>
                                     </div> 
@@ -254,7 +245,6 @@
 
                         <div id="comments">
 
-                            {{-- On vérifie si l'api des commentaires a renvoyé quelque chose--}}
                             @if($comments)
                                 @foreach($comments as $comm)
                                     @php($mail = $comm -> user -> mail)
@@ -264,10 +254,7 @@
                                             <p class="profile">
                                                 <i style="font-size:32px; color:#007185;" class="bi bi-person-circle"> </i>
                                                 <p class="name">
-                                                    {{--
-                                                        Si nous ne sommes pas le commentateur, son nom est affiché dans un a.
-                                                        On peut ainsi le contacter en un clic.
-                                                    --}}
+               
                                                     @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $mail))
                                                         {{ $mail }}
                                                     @else
@@ -277,12 +264,7 @@
                                                 </p> 
 
 
-                                                {{-- 
-                                                    Si c'est nous qui avons posté le commentaire,
-                                                    nous proposons un petit menu pour éditer ou supprimer
-                                                    ce dernier.
-                                                --}}
-
+                                                {{-- Menu to edit/delete a comment --}}
                                                 @if(isset($_SESSION["mail"]) && $mail === $_SESSION["mail"])           
                                                     <p class="trash"> 
                                                         <i id="" onclick='menu("{{$comm["id"]}}")' style="margin-top: 16px;" class="dots bx bx-dots-vertical-rounded"></i>     
@@ -293,11 +275,6 @@
                                         </div>
 
                                         <div id="{{$comm['id']}}" class="none">
-                                        
-                                            {{-- 
-                                                Fonction qui permet de demander confirmation a l'utilisateur
-                                                quand il supprime un commentaire. 
-                                            --}}
 
                                             <script>
                                                 function deletecomm(commid){
@@ -317,18 +294,13 @@
                                                 }
                                             </script>
 
-                                            {{--
-                                                <a> stylisé comme un bouton qui redirige vers le 
-                                                formulaire de modification de commentaires
-                                            --}}
+
                                             <a href="{{route("comment.update_form", $comm["id"])}}" 
                                                 id="{{$comm['id'] . 'updatebutton'}}" class="btn btn-primary menu update" style="width: 43px; margin-left: auto !important;">
                                                 <i class="bi bi-pencil-square"></i>
                                             </a>
 
-                                            {{--
-                                                Button qui appelle la fonction de confirmation de suppression
-                                            --}}
+
                                             <button id="{{$comm['id'] . 'deletebutton'}}" onclick="deletecomm({{ $comm['id']}})" class="btn btn-primary menu" style="margin-top: 4px; margin-left: auto;">
                                                 <i class="bi bi-trash2-fill"></i>
                                             </button>
@@ -337,10 +309,7 @@
 
                                         <span class="titlecomm">{{ $comm["title"] }}</span>
 
-                                        {{-- 
-                                            Pour chaque commentaire on affiche le nombre d'étoile jaunbe et le nombre
-                                            d'étoile blanche.    
-                                        --}}
+
                                         <div class=stars>
 
                                             @for($i=0; $i<$comm["rating"]; $i++)
@@ -355,8 +324,7 @@
                                                 {{ $comm["writed_at"] }}
                                             </span>
                                         </div>
-
-                                                        
+       
 
                                         <div class="comment">
                                             <?php 

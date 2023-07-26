@@ -6,12 +6,14 @@
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
         <title id="title" >@yield("title")</title>
-        
+
         <meta content="" name="description">
         <meta content="" name="keywords">
 
+
         {{-- Google font --}}
         <link href="/assets/css/fonts.css" rel="stylesheet">
+
 
         {{-- CSS --}}
         <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -21,28 +23,28 @@
         <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="/assets/css/style.css" rel="stylesheet">
         
+
         {{-- JS --}}
         <script src="/assets/js/sweetalert2.js"></script>
+        <script src="/assets/js/jquery.js"></script>
         <script src="/assets/js/alert.js"></script>
-
+        
+        
         {{-- MarkeIt Up --}}
-
         <link rel="stylesheet" type="text/css" href="/assets/vendor/markitup/skins/simple/style.css">
         <link rel="stylesheet" type="text/css" href="/assets/vendor/markitup/sets/default/style.css">
-
-        <script src="/assets/js/jquery.js"></script>
         
         <script type="text/javascript" src="/assets/vendor/markitup/jquery.markitup.js"></script>
         <script type="text/javascript" src="/assets/vendor/markitup/sets/default/set.js"></script>
- 
 
     </head>
 
-        @include('layout.header')
+    
+    
+    @include('layout.header')
         
-        @yield("content")
-
-        
+    
+    @yield("content")
 
 
         <div id="preloader"></div>

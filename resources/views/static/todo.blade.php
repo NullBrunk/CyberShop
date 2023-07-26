@@ -2,7 +2,6 @@
 
 @section("title", "Cybershop")
 
-
 @section("content")
     <body>
         

@@ -6,12 +6,10 @@
             <meta http-equiv="X-UA-Compatible" content="ie=edge">
             <title>Profile</title>
             
-            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+            <link href="/assets/css/fonts.css" rel="stylesheet">
             <link href="assets/css/profile.css" rel="stylesheet">
 
             <script src='assets/js/sweetalert2.js'></script>
-
-            <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
             <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
             <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -22,29 +20,27 @@
             <script src="/assets/js/alert.js"></script>
     </head>
     
-
-
     <body style="background-color: #37517e;" >
 
         @include('layout.header')
 
-        <div style="padding-top: 350px;">
-        </div>
-    
+
+        <div style="padding-top: 350px;"></div>
+
+
         <div class="main-content">
     
             <script>
-
                 function undisable(){
                     for(elem of ["email", "input-sub", "newpass", "renewpass", "oldpass"])
                         document.getElementById(elem).disabled = !document.getElementById(elem).disabled
                 }
-
             </script>
 
+
             <div class="container-fluid mt--7" style="padding-right: 2.5vw !important; padding-left: 2.5vw !important;">
+                
                 <div class="row">
-            
                     <div class="col-xl-8 order-xl-1" class="">
                         <div class="card bg-secondary shadow" style="border: 0px; width: 95vw;">
                             <div class="card-header bg-white border-0">
@@ -222,23 +218,19 @@
                                             confirmButtonText: 'Yes, delete it!'
                                         }).then((result) => {
                                             if (result.isConfirmed) {
-                                            window.location.href = "/profile/delete"
-                                            
+                                                window.location.href = "/profile/delete"
                                             }
                                         })
-                                    
                 
                                     }
                                 </script>
                             </div>
                         </div>
-
                         <hr class="my-4">
                     </div>
                 </div>
             </div>
         </div>
-
         <div style="margin-top: 20px"></div>
     </body>
 </html>

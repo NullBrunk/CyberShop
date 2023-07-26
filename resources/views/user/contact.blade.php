@@ -41,32 +41,26 @@
                     }
                 })
             }
+
+            function sendmsg(){
+                Swal.fire({
+                    title: 'Enter the mail of the user',
+                    input: 'text',
+                    inputAttributes: {
+                    autocapitalize: 'off'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText: 'Contact',
+                
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                    return window.location.href = "/contact/" + result.value;
+                    }
+                })
+            }
         </script>
 
-
-
-        <div class="main" >
-
-            <script>
-
-                function sendmsg(){
-                    Swal.fire({
-                        title: 'Enter the mail of the user',
-                        input: 'text',
-                        inputAttributes: {
-                        autocapitalize: 'off'
-                        },
-                        showCancelButton: true,
-                        confirmButtonText: 'Contact',
-                    
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                        return window.location.href = "/contact/" + result.value;
-                        }
-                    })
-                }
-                
-            </script>
+        <div class="main">
             
             @error("contact_yourself")
                 <script>salert("{{$message}}")</script>
@@ -76,6 +70,7 @@
                 <script>salert("{{$message}}")</script>
             @enderror
 
+
             <div class="content">
 
                 <div class="left">
@@ -83,47 +78,44 @@
                         <i class="bx bx-mail-send"></i> 
                     </div>
 
-                        @for($i = sizeof($contact) - 1; $i >= 0; $i--)
-                            @php($value = 0)
+                    @for($i = sizeof($contact) - 1; $i >= 0; $i--)
+                        @php($value = 0)
 
-                            @php($keys = array_keys($data[$contact[$i][1]]))
-                            @php($last_key = end($keys))
+                        @php($keys = array_keys($data[$contact[$i][1]]))
+                        @php($last_key = end($keys))
 
-                            @while($last_key >= 0 && $data[$contact[$i][1]][$last_key]["readed"] !== 1 )
-                                @php($value++)
-                                @php($last_key--)
-                            @endwhile
+                        @while($last_key >= 0 && $data[$contact[$i][1]][$last_key]["readed"] !== 1 )
+                            @php($value++)
+                            @php($last_key--)
+                        @endwhile
 
 
-                            @if(isset($user) && $user === $contact[$i][1])
-                                <a class="profile-box changecolor" href="{{route("contact.user", $contact[$i][1])}}"> {{ $contact[$i][1] }}</a> 
-                            @else
-                                <a class="profile-box" href="{{route("contact.user", $contact[$i][1])}}"> {{ $contact[$i][1] }} @if(end($data[$contact[$i][1]])["readed"] === 0 and end($data[$contact[$i][1]])["me"] === false) <span class="notifs-unreaded-message"> {{ $value }} </span> @endif</a> 
-                            @endif
-                        @endfor
+                        @if(isset($user) && $user === $contact[$i][1])
+                            <a class="profile-box changecolor" href="{{route("contact.user", $contact[$i][1])}}"> {{ $contact[$i][1] }}</a> 
+                        @else
+                            <a class="profile-box" href="{{route("contact.user", $contact[$i][1])}}"> {{ $contact[$i][1] }} @if(end($data[$contact[$i][1]])["readed"] === 0 and end($data[$contact[$i][1]])["me"] === false) <span class="notifs-unreaded-message"> {{ $value }} </span> @endif</a> 
+                        @endif
+                    @endfor
             
-                    </div>
+                </div>
 
-                    <div class="right">
-                        @if(isset($noone) && $noone === true)
+                <div class="right">
+                    
+                    @if(!isset($noone) or $noone !== true) 
 
-                        @else 
-                            <div class="msgs" id="chat">
+                        <div class="msgs" id="chat">
                                 
-                                @if(isset($data[$user]))
-                                    
+                            @if(isset($data[$user]))
 
-                                    
-
-                                    @for($i=0; $i < sizeof($data[$user]) - 1; $i++)
-
-
+                                @for($i=0; $i < sizeof($data[$user]) - 1; $i++)
                                         @if(!isset($old))
+
                                             @if($data[$user][$i]['me'] === false)
                                                 <div id="msg{{$data[$user][$i]['id']}}" class="profilemsg time" style="background-color: #dbd7d7; margin-right: 42%;"><i class="bi bi-person-fill-down"></i></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                             @else
                                                 <div id="msg{{$data[$user][$i]['id']}}" class="profilemsg time" style="background-color: #ddeffd; margin-left: 42%;"><i class="bi bi-person-fill-up"></i> <i class="bi bi-dot"></i> <span>{{ $data[$user][$i]["time"] }}</span></div>
                                             @endif
+
                                         @elseif((!($old === $data[$user][$i]['me']) && ($data[$user][$i]['me'] === false)))
                                             
                                             <p class="close" style="background-color: #ddeffd; margin-left: 42% !important;"></p>                                        
@@ -140,15 +132,13 @@
                                         @if(!$data[$user][$i]['me'])
                                             <div class="message" >
                                                 @if($data[$user][$i]["type"] === "text")
-                                                    
-                                                        <p>{!! $data[$user][$i][0] !!}</p>
-                                                    
+                                                    <p>{!! $data[$user][$i][0] !!}</p>
                                                 @else
                                                     <img class="contactimg  "  src="../storage/{{ $data[$user][$i][0] }}">
                                                 @endif
                                             </div>
-
                                         @else 
+
                                             <div hx-target="this" style="background-color: #ddeffd; margin-left: 42%; width: 57%;">
                                                 <div class="message from-me"  hx-swap="outerHTML">
 
@@ -162,7 +152,7 @@
                                                 <br>
                                             </div>
 
-                                            
+                                                
                                             {{-- If the message is an image you cannot edit it --}}
                                             @if($data[$user][$i]["type"] === "text")
                                                 <button hx-get="{{ route("contact.edit_form", $data[$user][$i]["id"]) }}"
@@ -174,44 +164,47 @@
                                             <button onclick='confirm_delete( "{{ route("contact.delete", $data[$user][$i]["id"]) }}" )' id="{{$data[$user][$i]["id"]}}"  class="btn btn-primary menu none" style="margin-top: 4px;">
                                                 <i class="bi bi-trash2-fill"></i>
                                             </button>
-                                        </div>
+                                            </div>
 
                                         @endif
-                                    
-
                                         @php($old = $data[$user][$i]['me'])
 
+                                @endfor
 
-                                    @endfor
 
-
-                                    @if($old)
-                                        <p class="close" style="background-color: #ddeffd; margin-left: 42% !important;"></p>
-                                    @else
-                                        <p class="close" style="margin-right: 42% !important;"></p>
-                                    @endif
-
-                                    <?php
-                                        unset($old)
-                                    ?>
-                                
+                                @if($old)
+                                    <p class="close" style="background-color: #ddeffd; margin-left: 42% !important;"></p>
+                                @else
+                                    <p class="close" style="margin-right: 42% !important;"></p>
                                 @endif
+
+                                <?php
+                                    unset($old)
+                                ?>
+                            
+                            @endif
+
                             </div>
 
-                            
                             <div class="textbar">
                                 <form method="post" id="formchat" action="{{route("contact.store")}}" enctype="multipart/form-data">
 
-<input placeholder="Send a message to {{explode("/contact/", url() -> current())[1]}}" id="textarea" name="content" class="textarea" autofocus>
                                     @csrf
+
+                                    <input name="content" id="textarea" class="textarea" placeholder="Send a message to {{explode("/contact/", url() -> current())[1]}}" autofocus>
+                                    
                                     <input type="file" id="file-input" name="img" style="width: 0;">
                                     <label for="file-input">
                                         <i class="bx bx-image"></i>
-                                      </label>
-                                    <button name="submita"><i class="bx bx-send"></i></button>
+                                    </label>
+                                    
+                                    <button name="submita">
+                                        <i class="bx bx-send"></i>
+                                    </button>
+
                                 </form>
                             </div>
-                        @endif
+                    @endif
                     </div>
                 </div>
             </div>
@@ -229,9 +222,7 @@
                     chat.scrollTop = chat.scrollHeight; // Défilement vers le bas                
                 });
 
-                
             </script>
-
 
 @endsection
 
