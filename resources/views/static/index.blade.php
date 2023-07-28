@@ -9,6 +9,7 @@
     <link href="/assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
     <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
+    <link href="/assets/css/searchbar.css" rel="stylesheet">
 
     <body>
         <section id="hero" class="d-flex align-items-center">
@@ -16,8 +17,17 @@
                 <div class="row">
                     <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"  data-aos-delay="200">
                         <h1>E-commerce</h1>
-                        <h2>An e-Business website with Laravel & MariaDB for the backend, and Bootstrap for the front-end</h2>
-                        <a href="{{route("product.store")}}" class="sellpr"><i style="padding-right: 6px;" class="bi bi-plus-square"></i> Sell a product</a>
+                        <h2  style="padding-top: 2%; margin-bottom: 0px;">
+                            Start now by searching a new product !
+                                <form class="searchbarindex" method="get" action="{{ route("product.search", "all") }}">
+                                    <input name="q" type="text" placeholder="Type something ..." id="input" autofocus>
+                                    
+                                    <button>
+                                        <i class="bx bx-search-alt"></i>
+                                    </button>
+                    
+                                </form>
+                        </h2>
                     </div>
 
                     <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">

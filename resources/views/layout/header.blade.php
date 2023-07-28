@@ -24,13 +24,11 @@
           
           <ul>
 
-            @if($logged)
-              <li style="list-style: none;"><a class="nav-link" href="{{ route("profile.profile") }}">Account</a></li>  
-              <li style="list-style: none;"><a class="nav-link scrollto" href="{{ route("contact.show") }}">Messages</a></li>
-            @endif
-          
+            <li style="list-style: none;"><a class="nav-link" href="{{route("product.store")}}">Market</a></li>  
+            <li style="list-style: none;"><a class="nav-link scrollto" href="{{ route("contact.show") }}">Chatbox</a></li>
 
-            <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
+
+            <li class="dropdown" style="padding-right: 8px;"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
                 <ul>                    
                     <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "informatics") }}"><i class="bx bx-laptop"></i> <i class="bi bi-dot"></i> Informatics</a></li>
                     <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "furnitures") }}"><i class="bx bx-door-open"></i> <i class="bi bi-dot"></i> Furnitures</a></li>
@@ -43,6 +41,7 @@
 
                     <hr class="hrproducts">
                     <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "all") }}"><i class="bx bx-border-all"></i> <i class="bi bi-dot"></i> All products</a></li>
+                            
                 </ul>
             </li>
 
@@ -76,17 +75,72 @@
                       }
                 </script>
 
+                @if(!empty($notifs))
+                                    
+                <p id="padding" style="margin-right: 15px;"></p>
+
+                <li id="cart" style="list-style-type: none;" class="dropdown ">
+                    
+                    <a style="margin: 0px; padding: 0px;" href="#">
+
+                        <span class="badge bg-primary badge-number">
+                            {{ $notifs_number }}
+                        </span>
+                        
+                        <i class="bi bi-bell carti"  style="font-size: 26px !important;">
+                        </i>
+
+                    </a>
+
+                    <ul class="cartn notif" style="overflow: scroll; max-height: 55vh; margin-left: -350%;">
+                    
+                        @foreach($notifs as $n)
+                            
+                            <li>
+                                <p class="show_cart">
+                                    <li class="notification-item">
+                                        <i style="color:#19526f; font-size: 32px ;margin: 0 20px 0 10px;" class="{{ $n['icon'] }}"></i>
+                                        <div>
+                                            <h4 style="color: rgb(68, 68, 68)">{{ $n["title"] }} </h4>
+                                            <p> {{ $n["content"] }} </p>
+                                            
+                                            <a href="{{ $n["more"] }}">
+                                                See more 
+                                                <i class="bx bx-chevrons-right"></i>
+                                            </a>
+
+                                        </div>
+                                    </li>
+                                <p>
+                            </li>
+
+                        @endforeach
+
+                    </ul>
+                </li>
+
+                @else
+
+                <p id="padding" style="margin-right: 15px;"></p>
+
+                <li id="cart" style="list-style-type: none;" class="dropdown ">
+                    <a style="margin: 0px; padding: 0px;" href="#">
+                        <i  style="font-size: 26px !important;" class="bi bi-bell carti">
+                        </i>
+                    </a>
+                </li>
+                @endif
 
                 {{-- Si le tableau représentant le cart n'est pas vide --}}  
                 @if(!empty($_SESSION['cart']))
 
-                    <p id="padding" style="margin-right: 30px;"></p>
+                    <p id="padding" style="margin-right: 15px;"></p>
                     
                     @php($total = 0)
 
                     <li id="cart" style="list-style-type: none;" class="dropdown">
                         
-                        <a style="margin: 0px; padding: 0px;" href="#">
+                        <a style="margin: 0px; padding: 0px;" href="{{ route("cart.display")}}">
                             <span id="number" class="badge bg-primary badge-number">{{ sizeof($_SESSION["cart"]) }}</span>
                             <i style="font-size: 26px !important;" class="bi bi-cart carti"></i>
                         </a>
@@ -130,62 +184,15 @@
 
                 @endif
 
-                
-                @if(!empty($notifs))
-                    
-                    <p id="padding" style="margin-right: 15px;"></p>
-                    
-                    <li id="cart" style="list-style-type: none;" class="dropdown ">
-                        
-                        <a style="margin: 0px; padding: 0px;" href="#">
+                <div id="padding" class="sep">|</div>
+               
+                <li id="userprofile" style="list-style-type: none;" class="dropdown">
+                    <a style="margin: 0px; padding: 0px;" href="{{ route("profile.profile") }}">
+                        <i style="font-size: 26px !important;" class="bi bi-person-circle">
+                        </i>
+                    </a>
+                </li>
 
-                            <span class="badge bg-primary badge-number">
-                                {{ $notifs_number }}
-                            </span>
-                            
-                            <i class="bi bi-bell carti"  style="font-size: 26px !important;">
-                            </i>
-
-                        </a>
-
-                        <ul class="cartn notif" style="overflow: scroll; max-height: 55vh; margin-left: -350%;">
-                        
-                            @foreach($notifs as $n)
-                                
-                                <li>
-                                    <p class="show_cart">
-                                        <li class="notification-item">
-                                            <i style="color:#19526f; font-size: 32px ;margin: 0 20px 0 10px;" class="{{ $n['icon'] }}"></i>
-                                            <div>
-                                                <h4 style="color: rgb(68, 68, 68)">{{ $n["title"] }} </h4>
-                                                <p> {{ $n["content"] }} </p>
-                                                
-                                                <a href="{{ $n["more"] }}">
-                                                    See more 
-                                                    <i class="bx bx-chevrons-right"></i>
-                                                </a>
-
-                                            </div>
-                                        </li>
-                                    <p>
-                                </li>
-
-                            @endforeach
-
-                        </ul>
-                    </li>
-
-                @else
-
-                    <p id="padding" style="margin-right: 15px;"></p>
-                    
-                    <li id="cart" style="list-style-type: none;" class="dropdown ">
-                        <a style="margin: 0px; padding: 0px;" href="#">
-                            <i  style="font-size: 26px !important;" class="bi bi-bell carti">
-                            </i>
-                        </a>
-                    </li>
-                @endif
 
             @else {{-- If the user isn't logged --}}
 
