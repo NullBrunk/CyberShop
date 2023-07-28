@@ -18,8 +18,8 @@
                     <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"  data-aos-delay="200">
                         <h1>E-commerce</h1>
                         <h2  style="padding-top: 2%; margin-bottom: 0px;">
-                            Start now by searching a new product !
-                                <form class="searchbarindex" method="get" action="{{ route("product.search", "all") }}">
+                            Embrace the future of online shopping and unlock a world of innovation. Start exploring now !
+                            <form class="searchbarindex" method="get" action="{{ route("product.search", "all") }}">
                                     <input name="q" type="text" placeholder="Type something ..." id="input" autofocus>
                                     
                                     <button>

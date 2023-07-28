@@ -1655,7 +1655,7 @@ tr:nth-child(even) td {
   color: rgb(55, 55, 55);
   height: 45px;
   border-radius: 4px;
-  border: 1px solid #293e61;
+  border: 1px solid #eee;
   margin: 0px;
   padding: 0px !important;
   margin-top: 1%;
