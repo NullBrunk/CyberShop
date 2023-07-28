@@ -6,21 +6,20 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table -> id();
-            
+        Schema::create('likes', function (Blueprint $table) {
+
             $table -> unsignedBigInteger('id_user');
             $table -> foreign('id_user') -> references('id') -> on('users') -> onDelete('cascade');
             
-            $table -> unsignedBigInteger('id_product');
-            $table -> foreign('id_product') -> references('id') -> on('products') -> onDelete('cascade');
-
-            $table -> string('title', 45);
-            $table -> longText('content');
-            $table -> smallInteger('rating');
-            $table -> dateTime('writed_at');
+            $table -> unsignedBigInteger('id_comment');
+            $table -> foreign('id_comment') -> references('id') -> on('comments') -> onDelete('cascade');
+            
+            
         });
     }
 
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('comments');
+        Schema::dropIfExists('likes');
     }
 };

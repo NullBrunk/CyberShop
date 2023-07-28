@@ -11,9 +11,7 @@ use App\Http\Controllers\Contacts;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Carts;
 use App\Http\Controllers\Index;
-
-
-
+use App\Http\Controllers\Likes;
 
 /*
 |---------------------------------------------
@@ -239,3 +237,22 @@ Route::prefix('contact') -> name("contact.") -> group(function () {
 });
 
 
+
+/*
+|---------------------------------------------
+|  Liking comments management 
+|
+*/
+
+Route::prefix('like') -> name("like.") -> group(function () {
+    
+    Route::get(
+        "/toggle/{comment}",
+        [ Likes::class, "toggle" ],
+    ) -> name("toggle") -> middleware(Logged::class);
+
+    Route::get(
+        "/get/{comment}",
+        [ Likes::class, "is_liked" ],
+    ) -> name("get");
+});

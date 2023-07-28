@@ -37,6 +37,36 @@
                 }
             }
             
+            async function haveiliked(url, id) {
+                let resp = await fetch(url);
+                let data = await resp.json()
+
+                if(data.value == true){
+                    document.getElementById(id).classList.add("bi-heart-fill")
+                }
+                else {
+                    document.getElementById(id).classList.add("bi-heart")
+                }
+            }
+
+            async function heartclick(url, id, num){
+                let resp = await fetch(url);
+
+                let elem = document.getElementById(id)
+                
+                elem.classList.toggle("bi-heart-fill")
+                elem.classList.toggle("bi-heart")
+
+
+                let number = document.getElementById(num)
+                if(elem.classList.contains("bi-heart-fill")){
+                    number.innerText = parseInt(number.innerText) + 1;
+                }
+                else {
+                    number.innerText = parseInt(number.innerText) - 1;
+                }
+            }
+
             $(function() {
                 $('#commentTextBar').markItUp(mySettings);
             })        
@@ -294,23 +324,38 @@
                                                 }
                                             </script>
 
-
-                                            <a href="{{route("comment.update_form", $comm["id"])}}" 
-                                                id="{{$comm['id'] . 'updatebutton'}}" class="btn btn-primary menu update" style="width: 43px; margin-left: auto !important;">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-
-
-                                            <button id="{{$comm['id'] . 'deletebutton'}}" onclick="deletecomm({{ $comm['id']}})" class="btn btn-primary menu" style="margin-top: 4px; margin-left: auto;">
-                                                <i class="bi bi-trash2-fill"></i>
-                                            </button>
-
+                                            <div style="display:flex; flex-direction: inherit;">
+                                                <a href="{{route("comment.update_form", $comm["id"])}}" 
+                                                    id="{{$comm['id'] . 'updatebutton'}}" class="btn btn-primary menu update" style="height: 38px; margin-left: auto !important; margin-right: 6px;">
+                                                    <i class="bi bi-pencil-square"></i>
+                                                </a>
+    
+    
+                                                <button id="{{$comm['id'] . 'deletebutton'}}" onclick="deletecomm({{ $comm['id']}})" class="btn btn-primary menu" style="margin-left: 0px;">
+                                                    <i class="bi bi-trash2-fill"></i>
+                                                </button>
+                                            </div>
                                         </div>
 
-                                        <span class="titlecomm">{{ $comm["title"] }}</span>
+                                        <span class="titlecomm"style="display:flex;margin-bottom: 0px;padding-bottom: 0px;">
+                                            {{ $comm["title"] }}
+                                            <span class="likespan" onclick='heartclick("{{ route("like.toggle", $comm["id"]) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")'>
+                                                <p class="like">
+                                                    <span id="num{{$comm["id"]}}">
+                                                        {{ $comm -> like() -> count() }}
+                                                    </span>
+
+                                                    <i id="icon{{$comm["id"]}}" class="bi"></i>
+
+                                                    <script>
+                                                        haveiliked("{{ route('like.get', $comm['id']) }}", "icon{{$comm['id']}}")
+                                                    </script>
+                                                </p>
+                                            </span>
+                                        </span>
 
 
-                                        <div class=stars>
+                                        <div class="stars">
 
                                             @for($i=0; $i<$comm["rating"]; $i++)
                                                 <i class="bi bi-star-fill" style="color: #de7921;"></i>
@@ -323,6 +368,8 @@
                                             <span class="at">
                                                 {{ $comm["writed_at"] }}
                                             </span>
+
+                                            
                                         </div>
        
 
