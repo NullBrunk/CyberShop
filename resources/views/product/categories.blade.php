@@ -28,9 +28,8 @@
         </script>
 
         <div style="padding-top:6%;"class=" d-flex align-items-center">
-            <form  method="post" action="{{ route("product.search", $name) }}">
-                @csrf
-                <input name="search" type="text" placeholder="Search something ..." id="input" autofocus>
+            <form  method="get" action="{{ route("product.search", $name) }}">
+                <input name="q" type="text" placeholder="Search something ..." id="input" autofocus>
                 
                 <button style="width: 3%;border-radius: 4px;border: 0;">
                     <i class="bx bx-search-alt"></i>
@@ -102,7 +101,15 @@
 
                 </div>
 
-                @if(!isset($notpaginated) && $products -> nextPageUrl() !== null)
+                @if($products -> nextPageUrl() !== null && isset($search))
+
+                    <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() . "&q=" . $search }}" hx-swap="outerHTML" hx-trigger="revealed">
+                        <span class="paginationbutton">
+                            <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
+                        </span>
+                    </button>
+
+                @elseif($products -> nextPageUrl() !== null)
 
                     <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() }}" hx-swap="outerHTML" hx-trigger="revealed">
                         <span class="paginationbutton">

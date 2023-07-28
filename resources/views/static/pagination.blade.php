@@ -34,7 +34,15 @@
     @endforeach
 </div>
 
-@if($products -> nextPageUrl() !== null)
+@if(isset($search) && $products -> nextPageUrl() !== null)
+
+    <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() . "&q=" . $search }}" hx-swap="outerHTML" hx-trigger="revealed">
+        <span class="paginationbutton">
+            <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
+        </span>
+    </button>
+
+@elseif($products -> nextPageUrl() !== null)
     <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() }}" hx-swap="outerHTML" hx-trigger="revealed">
         <span class="paginationbutton">
             <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>

@@ -150,7 +150,7 @@ Route::prefix('product') -> name("product.") -> group(function () {
         [ Products::class, "edit" ]
     ) -> middleware(Logged::class) -> name("edit");
     
-    Route::post(
+    Route::get(
         "/category/search/{category}/", 
         [Products::class, "search"]
     ) -> name("search");

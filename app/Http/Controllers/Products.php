@@ -88,8 +88,8 @@ class Products extends Controller
     {
         $rating = [];
 
-        if($request -> input("search")){
-            $search = $request -> input("search");
+        if($request -> input("q")){
+            $search = $request -> input("q");
         }
         else {
             return abort(403);
@@ -101,10 +101,10 @@ class Products extends Controller
        
         
         if($category === "all"){
-            $data = $product -> orderBy('id', 'desc') -> where("name", "like", "%" . $search . "%") -> get();
+            $data = $product -> orderBy('id', 'desc') -> where("name", "like", "%" . $search . "%") -> paginate(4);
         }
         else {
-            $data = $product -> where("class", "=", $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc') -> get();
+            $data = $product -> where("class", "=", $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc') -> paginate(4);
         }
             
         foreach($data as $d){
@@ -119,7 +119,16 @@ class Products extends Controller
             $rating[$d["id"]] = $value;
         }
 
-        return view("product.categories", ["products" => $data, "name" => $category, "rating" => $rating, "notpaginated" => true]);
+         
+        // If HTMX is doing the request, don't display the navbar
+        if($request -> server("HTTP_HX_REQUEST") === "true" ){
+            $view = "static.pagination";
+        }
+        else {
+            $view = "product.categories";
+        }
+
+        return view($view, ["products" => $data, "name" => $category, "rating" => $rating, "search" => $search ]);
 
     }
 
