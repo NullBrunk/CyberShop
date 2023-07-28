@@ -44,11 +44,11 @@ class Likes extends Controller
     public function toggle(Like $like, Comment $comment){
         
         if(self::is_liked($comment)["value"]){
-            $like -> where("id_user", "=", $_SESSION["id"]) -> delete();
+            $like -> where("id_user", "=", $_SESSION["id"]) -> where("id_comment", "=", $comment -> id) -> delete();
         }   
         else {
             $like -> id_user = $_SESSION["id"];
-            $like -> id_comment = $comment["id"];
+            $like -> id_comment = $comment -> id;
 
             $like -> save();
         }     

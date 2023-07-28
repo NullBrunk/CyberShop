@@ -86,6 +86,7 @@ class Products extends Controller
     
     public function search(Request $request, Product $product, string $category)
     {
+        $rating = [];
 
         if($request -> input("search")){
             $search = $request -> input("search");
@@ -94,7 +95,7 @@ class Products extends Controller
             return abort(403);
         }
 
-        if(!in_array($category, [ "all", "gaming", "informatics", "dresses", "food", "furnitures", "vehicles", "appliances" ])){
+        if(!in_array($category, [ "all", "gaming", "informatics", "dresses", "food", "furnitures", "vehicles", "appliances" , "other"])){
             return abort(404);
         }
        
@@ -106,9 +107,16 @@ class Products extends Controller
             $data = $product -> where("class", "=", $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc') -> get();
         }
             
-        $rating = [];
         foreach($data as $d){
-            $rating[$d["id"]] = self::rating($d)["icons"]; 
+
+            if(!empty(self::rating($d))){
+                $value = self::rating($d)["icons"]; 
+            }
+            else {
+                $value = "";
+            }
+
+            $rating[$d["id"]] = $value;
         }
 
         return view("product.categories", ["products" => $data, "name" => $category, "rating" => $rating, "notpaginated" => true]);
@@ -141,7 +149,8 @@ class Products extends Controller
             "other",
             "furnitures", 
             "vehicles", 
-            "appliances"
+            "appliances",
+            "other"
         ])){
             return abort(403);
         }
@@ -273,7 +282,8 @@ class Products extends Controller
             "other",
             "furnitures", 
             "vehicles", 
-            "appliances"
+            "appliances",
+            "other"
         ])){
             return abort(403);
         }
@@ -367,7 +377,7 @@ class Products extends Controller
 
     public function show(Request $request, Product $product, $slug){
 
-        if(!in_array($slug, [ "all", "gaming", "informatics", "dresses", "food", "other", "furnitures", "vehicles", "appliances" ])){
+        if(!in_array($slug, [ "all", "gaming", "informatics", "dresses", "food", "other", "furnitures",  "other", "vehicles", "appliances" ])){
             return abort(404);
         }
        

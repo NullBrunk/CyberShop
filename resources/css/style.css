@@ -1271,9 +1271,11 @@ abbr {
   display: flex;
   justify-content: right;
   margin-right: 1%;
-  border-radius: 10px;
+  border-radius: 6px;
   background-color: #af2024;
   border: 1px solid #af2024;
+  padding: 4px 6px 0px 6px !important;
+  height:32px;
 }
 
 
@@ -1300,6 +1302,10 @@ abbr {
 }
 
 .update {
+  height: 32px;
+  margin-left: auto !important;
+  margin-right: 6px;
+  padding: 4px 6px 0px 6px !important;
   background-color: #32325d;
   border: 1px solid #007185;
 

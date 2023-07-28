@@ -190,7 +190,15 @@
 
                                                 {!! $rating["icons"] !!}
                                             
-                                                <a href="#comments"> {{$rating["rate"]}} ratings</a>
+                                                <a href="#comments"> 
+                                                    {{$rating["rate"]}} 
+                                                    
+                                                    @if($rating["rate"] === 1)
+                                                        rating
+                                                    @else
+                                                        ratings
+                                                    @endif
+                                                </a>
                                         </td>
                                     </tr>
                                 @endif
@@ -324,9 +332,9 @@
                                                 }
                                             </script>
 
-                                            <div style="display:flex; flex-direction: inherit;">
+                                            <div style="display:flex; flex-direction: inherit; margin-bottom: 23px;">
                                                 <a href="{{route("comment.update_form", $comm["id"])}}" 
-                                                    id="{{$comm['id'] . 'updatebutton'}}" class="btn btn-primary menu update" style="height: 38px; margin-left: auto !important; margin-right: 6px;">
+                                                    id="{{$comm['id'] . 'updatebutton'}}" class="btn btn-primary menu update">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
     
