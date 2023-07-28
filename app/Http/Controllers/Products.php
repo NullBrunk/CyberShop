@@ -101,12 +101,14 @@ class Products extends Controller
        
         
         if($category === "all"){
-            $data = $product -> orderBy('id', 'desc') -> where("name", "like", "%" . $search . "%") -> paginate(4);
+            $query = $product -> orderBy('id', 'desc') -> where("name", "like", "%" . $search . "%");
         }
         else {
-            $data = $product -> where("class", "=", $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc') -> paginate(4);
+            $query = $product -> where("class", "=", $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc');
         }
-            
+        $data = $query -> paginate(4);
+           
+        
         foreach($data as $d){
 
             if(!empty(self::rating($d))){
@@ -122,13 +124,26 @@ class Products extends Controller
          
         // If HTMX is doing the request, don't display the navbar
         if($request -> server("HTTP_HX_REQUEST") === "true" ){
-            $view = "static.pagination";
+
+            return view("static.pagination", 
+                [
+                    "products" => $data, 
+                    "name" => $category, 
+                    "rating" => $rating, 
+                    "search" => $search,
+                ]);
         }
         else {
-            $view = "product.categories";
+            return view("product.categories", 
+                [
+                    "products" => $data, 
+                    "name" => $category, 
+                    "rating" => $rating, 
+                    "search" => $search,
+                    "number" => $query -> count()
+                ]);
         }
 
-        return view($view, ["products" => $data, "name" => $category, "rating" => $rating, "search" => $search ]);
 
     }
 

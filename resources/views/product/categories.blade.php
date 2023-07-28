@@ -27,9 +27,9 @@
             }
         </script>
 
-        <div style="padding-top:6%;"class=" d-flex align-items-center">
+        <div style="padding-top:5%;"class=" d-flex align-items-center">
             <form  method="get" action="{{ route("product.search", $name) }}">
-                <input name="q" type="text" placeholder="Search something ..." id="input" autofocus>
+                <input name="q" type="text" placeholder="Search something ..." value="{{ isset($search) ? $search : ""}}" id="input" autofocus>
                 
                 <button style="width: 3%;border-radius: 4px;border: 0;">
                     <i class="bx bx-search-alt"></i>
@@ -38,7 +38,12 @@
             </form>
         </div>
     
-    
+        @if(isset($search))
+            <div class="results_for">
+                {{ $number }} @if($number === 0) result @else results @endif for <span>"{{ $search }}"</span> 
+            </div>
+        @endif
+
         <div id="portfolio" class="portfolio">
             <div class="container">
                 <div class="row" id="container">
@@ -47,7 +52,7 @@
         </div>
     
 
-        <section id="baseproduct" class="portfolio" >
+        <section id="baseproduct" class="portfolio" style="padding: 50px 0px;">
 
             <div class="container" data-aos="fade-up">
                 <div  class="row portfolio-container">

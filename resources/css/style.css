@@ -1859,3 +1859,16 @@ tr:nth-child(even) td {
 .like:hover{
   transform: scale(1.15);
 }
+
+.results_for {
+  padding-left: 10px;
+  background-color: #f5f5f5;
+  margin-left: 5%;
+  margin-right: 5%;
+  border-radius: 4px;
+  font-size: 23px;
+}
+
+.results_for span {
+  color: #007185;
+}
