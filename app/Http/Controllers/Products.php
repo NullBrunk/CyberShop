@@ -38,8 +38,8 @@ class Products extends Controller
         $data = $product -> toArray();
         $data["mail"] = $product -> user -> mail;
         $data["uid"] = $product -> user -> id;
+        $data["images"] = $product -> product_images -> toArray();
 
-        
         # Delete all notifications linked to it
         session_start();
 
@@ -101,10 +101,21 @@ class Products extends Controller
        
         
         if($category === "all"){
-            $query = $product -> orderBy('id', 'desc') -> where("name", "like", "%" . $search . "%");
+            $query = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
+
+            -> join('product_images', 'product_images.id_product', '=', 'products.id') 
+            -> where("is_main", "=", 1) 
+            -> where("name", "like", "%" . $search . "%")
+            -> orderBy('id', 'desc') ;
+
         }
         else {
-            $query = $product -> where("class", "=", $category) -> where("name", "like", "%" . $search . "%") -> orderBy('id', 'desc');
+            $query = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
+            -> join('product_images', 'product_images.id_product', '=', 'products.id') 
+            -> where("is_main", "=", 1) 
+            -> where("class", "=", $category) 
+            -> where("name", "like", "%" . $search . "%") 
+            -> orderBy('id', 'desc');
         }
         $data = $query -> paginate(4);
            
@@ -415,10 +426,22 @@ class Products extends Controller
 
         
         if($slug === "all"){
-            $data = $product -> orderBy('id', 'desc') -> paginate(4);
+
+            $data = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
+            -> join('product_images', 'product_images.id_product', '=', 'products.id') 
+            -> where("is_main", "=", 1) 
+            -> orderBy('id', 'desc') 
+            -> paginate(4); 
+
         }
         else {
-            $data = $product -> where("class", "=",  $slug) -> orderBy('id', 'desc') -> paginate(4);
+
+            $data = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
+            -> join('product_images', 'product_images.id_product', '=', 'products.id') 
+            -> where("is_main", "=", 1) 
+            -> orderBy('id', 'desc') 
+            -> where("class", "=",  $slug)
+            -> paginate(4); 
         }
 
             

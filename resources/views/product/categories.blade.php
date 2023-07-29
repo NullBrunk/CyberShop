@@ -59,13 +59,12 @@
 
                     @foreach($products as $d)
 
-
                         <div class="col-md-3 portfolio-item {{ $d['class'] }}">
                             <div class="portfolio-wrap" style="flex-direction: column;">
                                 <a href="/details/{{ $d['id'] }}">
                                     <img 
 
-                                    data-src="/storage/product_img/{{ $d['image'] }}" 
+                                    data-src="/storage/product_img/{{ $d['img'] }}" 
                                     class="img-fluid imgpres" alt="">
                                 </a> 
                             </div>

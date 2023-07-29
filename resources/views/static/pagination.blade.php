@@ -4,7 +4,7 @@
         <div class="col-md-3 portfolio-item {{ $d['class'] }}">
             <div class="portfolio-wrap" style="flex-direction: column;">
                 <a href="/details/{{ $d['id'] }}">
-                    <img src="/storage/product_img/{{ $d['image'] }}" class="img-fluid imgpres" alt="">
+                    <img src="/storage/product_img/{{ $d['img'] }}" class="img-fluid imgpres" alt="">
                 </a>
             </div>
 

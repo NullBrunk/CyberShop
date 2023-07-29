@@ -19,7 +19,6 @@ return new class extends Migration
             $table -> string('price', 20);
             $table -> longText('descr');
             $table -> longText('class', 45);
-            $table -> string('image', 50);
         });
     }
 

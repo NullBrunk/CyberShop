@@ -29,4 +29,8 @@ class Product extends Model
         return $this -> belongsTo(User::class, "id_user"); 
     }
 
+    public function product_images(){
+        return $this -> hasMany(Product_images::class, "id_product");
+    }
+
 }

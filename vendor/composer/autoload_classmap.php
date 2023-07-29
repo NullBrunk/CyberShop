@@ -43,6 +43,7 @@ return array(
     'App\\Models\\Like' => $baseDir . '/app/Models/Like.php',
     'App\\Models\\Notif' => $baseDir . '/app/Models/Notif.php',
     'App\\Models\\Product' => $baseDir . '/app/Models/Product.php',
+    'App\\Models\\Product_images' => $baseDir . '/app/Models/Product_images.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Providers\\AppServiceProvider' => $baseDir . '/app/Providers/AppServiceProvider.php',
     'App\\Providers\\AuthServiceProvider' => $baseDir . '/app/Providers/AuthServiceProvider.php',

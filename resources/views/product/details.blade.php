@@ -6,7 +6,13 @@
 @section("content")
 
     <body>
+        <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
+        <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+        
         <script>
+
+
+  
             // Afficher le menu ou le masquer lorsque l'on clique sur les 3 points
             function menu(id){
                 const menu = document.getElementById(id);
@@ -75,6 +81,7 @@
 
         <main id="main" >
 
+              
             {{-- On se positionne en dessous de la navbar --}}
             <section id="breadcrumbs" class="breadcrumbs" style="padding-top: 86px; padding-bottom: 0px !important;">
                 <div class="container">
@@ -86,12 +93,31 @@
             <section id="portfolio-details" class="portfolio-details" style="padding-bottom: 0px;">
                 <div class="container">
                     <div class="row gy-4 whenigrowibecomeablock">
-                        <div class="col-lg-8 takefull" style="width: 50%; display: flex;" >
-                            <div style="margin: auto;">
+                        <div  data-aos="fade-right" class="col-lg-8 takefull" style="width: 50%; display: flex;" >
+                            <div style="margin: 0;height: 100%;width: 100%;">
 
+                                    <div class="container swiper" style="height: 100%;width: 100%;">
+                                        <div class="slide-container" style="height: 100%;">
+                                            <div class="card-wrapper swiper-wrapper" id="swiper-wrap">
+                        
+                                                @foreach($data["images"] as $img)
+                                                    <div class="card swiper-slide" style="height: 75vh; display: flex; border: none;">
+                                                        <div style="margin: auto;">
+                                                            <img unselectable="on" src="/storage/product_img/{{$img['img']}}" alt="" />
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                        
+                                            </div>
+                                        </div>
+                        
+                                        <div class="swiper-button-next swiper-navBtn" style="background: #eee;color: black !important"></div>
+                                        <div class="swiper-button-prev swiper-navBtn" style="background: #eee;color: black !important"></div>
+                                        <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
+                        
+                                      </div>
                                 {{-- Image of the product on the left --}}
-                                <img data-aos="fade-right" style="width: 85% !important;" src="../storage/product_img/{{ $data["image"] }}" alt="">
-                            
+                                
                             </div>
                         </div>
 
@@ -396,6 +422,8 @@
             </section>
         </main>
 
+
+        <script src="/assets/js/products.js"></script>
 
     {{-- Gestion des erreurs --}}
 
