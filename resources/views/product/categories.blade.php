@@ -5,7 +5,6 @@
 @section("content")
 
     <script src="/assets/js/htmx.js"></script>
-    <link href="/assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
     <link href="/assets/css/searchbar.css" rel="stylesheet">
     
 

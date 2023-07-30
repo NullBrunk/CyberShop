@@ -93,7 +93,7 @@ class Products extends Controller
             $search = $request -> input("q");
         }
         else {
-            return abort(403);
+            return redirect(url() -> previous());
         }
 
         if(!in_array($category, [ "all", "gaming", "informatics", "dresses", "food", "furnitures", "vehicles", "appliances" , "other"])){

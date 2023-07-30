@@ -17,35 +17,13 @@
 
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
-    <div class="container d-flex align-items-center">
+    <div class="container d-flex align-items-center" style="max-width: 87vw !important;">
       <h1 class="logo me-auto"><a href="/">Cybershop</a> </h1>
       
         <nav id="navbar" class="navbar">
           
-          <ul>
+            <ul>
 
-            <li style="list-style: none;"><a class="nav-link" href="{{route("product.store")}}">Market</a></li>  
-            <li style="list-style: none;"><a class="nav-link scrollto" href="{{ route("contact.show") }}">Chatbox</a></li>
-
-
-            <li class="dropdown" style="padding-right: 8px;"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
-                <ul>                    
-                    <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "informatics") }}"><i class="bx bx-laptop"></i> <i class="bi bi-dot"></i> Informatics</a></li>
-                    <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "furnitures") }}"><i class="bx bx-door-open"></i> <i class="bi bi-dot"></i> Furnitures</a></li>
-                    <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "appliances") }}"><i class="bx bx-fridge"></i> <i class="bi bi-dot"></i> Appliances</a></li>
-                    <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "vehicles") }}"><i class="bx bx-car"></i> <i class="bi bi-dot"></i> Vehicles</a></li>
-                    <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "dresses") }}"><i class="bx bx-shopping-bag"></i> <i class="bi bi-dot"></i> Dresses</a></li>
-                    <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "gaming") }}"><i class="bx bx-joystick"></i> <i class="bi bi-dot"></i> Gaming</a></li>
-                    <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "other") }}"><i class="bx bx-package"></i> <i class="bi bi-dot"></i> Other</a></li>
-                    <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "food") }}"><i class="bx bx-bowl-rice"></i> <i class="bi bi-dot"></i> Food</a></li>
-
-                    <hr class="hrproducts">
-                    <li><a style="padding-left: 14px;" class= "nav-link" href="{{ route("product.show", "all") }}"><i class="bx bx-border-all"></i> <i class="bi bi-dot"></i> All products</a></li>
-                            
-                </ul>
-            </li>
-
- 
             @if($logged)
                                                                                    
                 <script>
@@ -77,22 +55,20 @@
 
                 @if(!empty($notifs))
                                     
-                <p id="padding" style="margin-right: 15px;"></p>
 
                 <li id="cart" style="list-style-type: none;" class="dropdown ">
                     
-                    <a style="margin: 0px; padding: 0px;" href="#">
-
+                    <a class="nav-link" href="#">
                         <span class="badge bg-primary badge-number">
                             {{ $notifs_number }}
                         </span>
                         
-                        <i class="bi bi-bell carti"  style="font-size: 26px !important;">
-                        </i>
-
+                        <i class="bi bi-bell"></i>
+                        <span>Notifs</span>
                     </a>
 
-                    <ul class="cartn notif" style="overflow: scroll; max-height: 55vh; margin-left: -350%;">
+
+                    <ul class="cartn notif">
                     
                         @foreach($notifs as $n)
                             
@@ -121,42 +97,41 @@
 
                 @else
 
-                <p id="padding" style="margin-right: 15px;"></p>
+                <a class="nav-link" href="#">
+                    <i class="bi bi-bell"></i>
+                    <span>Notifs</span>
+                </a>
 
-                <li id="cart" style="list-style-type: none;" class="dropdown ">
-                    <a style="margin: 0px; padding: 0px;" href="#">
-                        <i  style="font-size: 26px !important;" class="bi bi-bell carti">
-                        </i>
-                    </a>
-                </li>
+
                 @endif
 
                 {{-- Si le tableau représentant le cart n'est pas vide --}}  
                 @if(!empty($_SESSION['cart']))
-
-                    <p id="padding" style="margin-right: 15px;"></p>
                     
                     @php($total = 0)
 
                     <li id="cart" style="list-style-type: none;" class="dropdown">
                         
-                        <a style="margin: 0px; padding: 0px;" href="{{ route("cart.display")}}">
+                        <a class="nav-link" href="{{ route("cart.display")}}">
                             <span id="number" class="badge bg-primary badge-number">{{ sizeof($_SESSION["cart"]) }}</span>
-                            <i style="font-size: 26px !important;" class="bi bi-cart carti"></i>
+                            <i class="bi bi-cart3"></i>
+                            <span>Cart</span>
+
                         </a>
 
-                        <ul class="cartn" style="overflow: scroll; max-height: 55vh; margin-left: -350%;">
+                        <ul class="cartn">
  
                             @foreach($_SESSION['cart'] as $p)
                                 
                                 <li id="{{$p['cid']}}">
                                     <p class="show_cart">
-                                        <img src="/storage/product_img/{{ $p["image"] }}"       style="padding-left: 3%; width: 22%;">
+                                        <img src="/storage/product_img/{{ $p["image"] }}"       style="padding-left: 3%; width: 22%; display: block;">
                                         
-                                        <a href="/details/{{ $p['pid'] }}">{{ substr($p["name"], 0, 11) }}</a>
-                                        <i onclick="deleteitem({{$p['cid']}})" style="cursor: pointer" class="bi bi-trash2-fill trash-cart"></i>
+                                        <a href="/details/{{ $p['pid'] }}" style="display: block;overflow: hidden; width: 57%; margin:auto;">{{ $p["name"] }}</a>
+                                        <img src="/assets/img/trash.png" onclick="deleteitem({{$p['cid']}})" class="trash-cart"> 
                                     </p>
                                 </li>
+                                <hr>
 
                             @endforeach
 
@@ -167,43 +142,168 @@
                             </li>
                         </ul>
                     </li>
-
-                @else 
-
-                    <p id="padding" style="margin-right: 30px;"></p>
-                  
-                    <li id="cart" style="list-style-type: none;" class="dropdown">
-                
-                        <a style="margin: 0px; padding: 0px;" href="#">
-                            <i style="font-size: 26px !important;" class="bi bi-cart carti">
-                            </i>
-                        </a>
-                    
-                        <ul  class="cartn" style="overflow: scroll; max-height: 55vh; margin-left: -350%;"></ul>
-                    </li>
-
                 @endif
 
-                <div id="padding" class="sep">|</div>
-               
-                <li id="userprofile" style="list-style-type: none;" class="dropdown">
-                    <a style="margin: 0px; padding: 0px;" href="{{ route("profile.profile") }}">
-                        <i style="font-size: 26px !important;" class="bi bi-person-circle">
-                        </i>
+            @endif
+            
+            @if(!$logged or empty($_SESSION['cart']))
+                <li style="list-style: none;">
+                    <a class="nav-link" href="{{ route("cart.display")}}">
+                        <i class="bi bi-cart3"></i>
+                        <span>Cart</span>
+                    </a>
+                </li>
+            @endif
+
+
+                <li style="list-style: none;">
+                    <a class="nav-link" href="{{route("product.store")}}">
+                        <i class="bi bi-basket3"></i>
+                        <span>Market</span>
+                    </a>
+                </li>  
+                
+                <li style="list-style: none;">
+                    <a class="nav-link" href="{{ route("contact.show") }}">
+                        <i class="bi bi-chat"></i>
+                        <span>Chatbox</span>
                     </a>
                 </li>
 
 
-            @else {{-- If the user isn't logged --}}
+                <li class="dropdown" style="list-style: none;">
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-border-all"></i>
+                        <span>Products</span>
+                    </a>
 
-              <li><a class="nav-link scrollto" href="{{ route("auth.signup") }}">Signup</a></li>
-              <li style="list-style-type: none;"><a class="getstarted scrollto" href="{{ route("auth.login") }}">Login</a></li>  
-            
-            @endif
-            
-          </ul>
+                    <ul class="products" style="width: 11vw;">                    
+                        <li>
+                            <a href="{{ route("product.show", "informatics") }}">
+                                <i class="bx bx-laptop showcategory"></i> 
+                                <i class="bi bi-dot padding"></i> 
+                                <p>
+                                    Informatics
+                                </p>
+                            </a>
+                        </li>
 
-          <i class="bi bi-list mobile-nav-toggle"></i>
+                        <li>
+                            <a href="{{ route("product.show", "appliances") }}">
+                                <i class="bx bx-fridge showcategory"></i> 
+                                <i class="bi bi-dot padding"></i> 
+                                <p>
+                                    Appliances
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route("product.show", "furnitures") }}">
+                                <i class="bx bx-door-open showcategory"></i> 
+                                <i class="bi bi-dot padding"></i> 
+                                
+                                <p>
+                                    Furnitures
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route("product.show", "vehicles") }}">
+                                <i class="bx bx-car showcategory"></i> 
+                                <i class="bi bi-dot padding"></i> 
+                                <p>
+                                    Vehicles
+                                </p>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route("product.show", "dresses") }}">
+                                <i class="bx bx-shopping-bag showcategory"></i> 
+                                <i class="bi bi-dot padding"></i> 
+                                <p>
+                                    Dresses
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route("product.show", "gaming") }}">
+                                <i class="bx bx-joystick showcategory"></i> 
+                                <i class="bi bi-dot padding"></i> 
+                                <p>
+                                    Gaming
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route("product.show", "other") }}">
+                                <i class="bx bx-package showcategory"></i> 
+                                <i class="bi bi-dot padding"></i> 
+                                <p>
+                                    Other
+                                </p>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route("product.show", "food") }}">
+                                <i class="bx bx-bowl-rice showcategory"></i> 
+                                <i class="bi bi-dot padding"></i> 
+                                <p>
+                                    Food
+                                </p>
+                            </a>
+                        </li>
+
+                        <hr class="hrproducts">
+
+                        <li>
+                            <a href="{{ route("product.show", "all") }}">
+                                <i class="bx bx-border-all showcategory"></i> 
+                                <i class="bi bi-dot padding"></i> 
+                                <p>
+                                    All products
+                                </p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+ 
+                <li style="list-style: none;">
+                    <a class="nav-link" href="{{ route("profile.profile") }}">
+                        <i class="bi bi-sliders"></i>
+                        <span>Settings</span>
+
+                    </a>
+                </li>
+
+
+
+                {{-- Login button or Logout button --}}
+                @if(!$logged)
+                    <li style="list-style: none;">
+                        <a class="nav-link" href="{{ route("auth.login") }}">
+                            <i class="bi bi-box-arrow-right"></i>
+                            <span>Login</span>
+                        </a>
+                    </li>
+                @else
+                    <li style="list-style: none;">
+                        <a class="nav-link" href="{{ route("disconnect") }}">
+                            <i class="bi bi-box-arrow-left"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                @endif
+            
+            </ul>
+
+            <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
     </div>
 </header>

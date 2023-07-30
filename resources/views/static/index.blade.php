@@ -4,19 +4,26 @@
 
 @section("content")
 
-    <script src="/assets/js/htmx.js"></script>
-    
-    <link href="/assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
-    <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+
     <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
     <link href="/assets/css/searchbar.css" rel="stylesheet">
+        
+    <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/assets/vendor/typed/typed.js"></script>
+    <script src="/assets/js/htmx.js"></script>
 
     <body>
         <section id="hero" class="d-flex align-items-center">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 d-flex flex-column justify-content-center pt-4 pt-lg-0 order-2 order-lg-1"  data-aos-delay="200">
-                        <h1>E-commerce</h1>
+                        <h1>
+
+                            <span id="typed"></span>
+
+                        </h1>
+
+
                         <h2  style="padding-top: 2%; margin-bottom: 0px;">
                             Embrace the future of online shopping and unlock a world of innovation. Start exploring now !
                             <form class="searchbarindex" method="get" action="{{ route("product.search", "all") }}">
@@ -31,7 +38,7 @@
                     </div>
 
                     <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                        <img src="assets/img/hero-img.webp" class="img-fluid animated" style="margin-left: 20%; height: 60%; margin-top: 20%;" alt="">
+                        <img src="assets/img/hero-img.webp" class="img-fluid animated" style="margin-left: 33%; height: 60%; margin-top: 20%;" alt="">
                     </div>
                 </div>
             </div>
@@ -71,6 +78,17 @@
               </div>
         </section>
         
+        <script>
+            const typed = document.querySelector('.typed')
+             new Typed('#typed', {
+                strings: [ "E-Commerce" ],
+                loop: true,
+                typeSpeed: 100,
+                backSpeed: 50,
+                backDelay: 2000
+            });
+
+        </script>
 
         
         <script src="/assets/js/swiper.js"></script>

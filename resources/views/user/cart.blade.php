@@ -45,7 +45,6 @@
 
                 <button onclick="window.location.href='/todo'" class="buttoncart">
                     BUY 
-                    <i style="font-weight: bold !important;" class="bi bi-cart-check"></i> 
                 </button>
                 
             </div>

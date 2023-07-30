@@ -19,7 +19,6 @@
         <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
         <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-        <link href="/assets/vendor/glightbox/css/glightbox.css" rel="stylesheet">
         <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="/assets/css/style.css" rel="stylesheet">
         
@@ -52,8 +51,6 @@
 
         <script src="/assets/vendor/aos/aos.js"></script>
         <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="/assets/vendor/glightbox/js/glightbox.js"></script>
-        <script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
         <script src="/assets/vendor/waypoints/noframework.waypoints.js"></script>
 
         <script src="/assets/js/main.js"></script>
