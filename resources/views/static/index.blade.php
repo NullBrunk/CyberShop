@@ -81,10 +81,10 @@
         <script>
             const typed = document.querySelector('.typed')
              new Typed('#typed', {
-                strings: [ "E-Commerce" ],
+                strings: [ "Shop Smarter, Live Better.", ],
                 loop: true,
-                typeSpeed: 100,
-                backSpeed: 50,
+                typeSpeed: 75,
+                backSpeed: 25,
                 backDelay: 2000
             });
 
