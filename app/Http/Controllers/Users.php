@@ -54,6 +54,8 @@ class Users extends Controller {
             $_SESSION['id'] = $data['id'];
             $_SESSION['logged'] = true;
             $_SESSION['mail'] = $data['mail'];
+            $_SESSION['pass'] = $data['pass'];
+
 
             return to_route("cart.initialize");
         }
@@ -192,17 +194,20 @@ class Users extends Controller {
      * Show the profile page of the current user with
      * all the products that he is selling
      * 
-     * @param  Product $user    The product model
+     * @param  Product $product    The product model
      *
      * @return view             The profile page
      * 
      */
     
-    public function show_profile(Product $user){
+    public function show_profile(Product $product){
 
 
-        $data = $user 
+        $data = $product 
+            -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img as image', 'product_images.is_main')
             -> where("id_user", "=", $_SESSION["id"]) 
+            -> join('product_images', 'product_images.id_product', '=', 'products.id') 
+            -> where("is_main", "=", 1) 
             -> get() 
             -> toArray();
 

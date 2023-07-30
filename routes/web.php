@@ -8,6 +8,7 @@ use App\Http\Middleware\Logged;
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
 use App\Http\Controllers\Contacts;
+use App\Http\Controllers\Tmpimage;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Carts;
 use App\Http\Controllers\Index;
@@ -255,4 +256,26 @@ Route::prefix('like') -> name("like.") -> group(function () {
         "/get/{comment}",
         [ Likes::class, "is_liked" ],
     ) -> name("get");
+});
+
+
+
+/*
+|---------------------------------------------
+|  Liking comments management 
+|
+*/
+
+Route::prefix('/upload') -> name("tmp.") -> group(function () {
+
+    Route::post(
+        "store", 
+        [ Tmpimage::class, "store"]
+    ) -> name("store") -> middleware(Logged::class);
+
+    Route::delete(
+        "delete", 
+        [ Tmpimage::class, "delete"]
+    ) -> name("delete") -> middleware(Logged::class);
+
 });

@@ -4,9 +4,11 @@
 
 
 @section("content")
+@php($img_is_upper = $images > 1)
 
     <body>
-
+        <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
+        <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
         <script type="text/javascript">
             
             $(function() {
@@ -33,18 +35,41 @@
                         <div class="container">
                             <div class="row gy-4">
                                 <div class="col-lg-8 takefull" style="width: 50%; display: flex;" >
-                                    <div class="portfolio-details-slider swiper">
-                                        <div class="swiper-wrapper align-items-center">
-                                                                                        
-                                            <img style="width: 90% !important;" src="../../storage/product_img/{{ $data["image"] }}" alt="">
-                                            <br>
-                                            <br>
-                                                    
-                                        </div>
-                                        <div class="swiper-pagination"></div>
-                                    </div>
+                                    <div style="margin: 0;height: 100%;width: 100%;">
+    
+                                        <div class="container swiper" style="height: 100%;width: 100%;">
+                                            <div class="slide-container" style="height: 100%;">
+                                                <div class="card-wrapper swiper-wrapper" id="swiper-wrap">
+                            
+                                                    @if($img_is_upper)
+                                                        @foreach($images as $img)
+                                                            <div class="card swiper-slide" style="height: 75vh; display: flex; border: none;">
+                                                                <div style="display: flex; height: 100%; width: 85%; margin: auto;">
+                                                                    <img unselectable="on" style="max-height: 100%; max-width:100%; margin: auto;" src="/storage/product_img/{{$img['img']}}" alt="" />
+                                                                </div>
+                                                            </div>
+                                                        @endforeach
+                                                    @else 
+                                                        <div class="card" style="height: 75vh; display: flex; border: none;">
+                                                            <div style="display: flex; height: 100%; width: 85%; margin: auto;">
+                                                                <img unselectable="on" style="max-height: 100%; max-width:100%; margin: auto;" src="/storage/product_img/{{$data["images"][0]['img']}}" alt="" />
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                            
+                                            @if($img_is_upper)
+                                                <div class="swiper-button-next swiper-navBtn" style="background: #eee;color: black !important"></div>
+                                                <div class="swiper-button-prev swiper-navBtn" style="background: #eee;color: black !important"></div>
+                                                <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
+                                            @endif
+    
+                                          </div>
+                                    {{-- Image of the product on the left --}}
+                                    
                                 </div>
-
+                            </div>
                                 <div class="col-lg-4 w-50"  style="color: white; background-color: #324769 !important; border-radius: 12px;">
                                     <div class="portfolio-info" style="padding-bottom: 10px;" >
                                         <h2>Product information</h2>
@@ -119,6 +144,7 @@
                 <script>
                     document.getElementById("textarea").style.height = "14vh" 
                 </script>
+                <script src="/assets/js/products.js"></script>
             <hr>
         </main>
 

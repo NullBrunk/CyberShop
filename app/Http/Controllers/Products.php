@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
-
-use App\Http\Requests\UpdateProduct;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\StoreReq;
-use Illuminate\Http\Request;
-
-use App\Models\Product;
-use App\Models\Comment;
 use App\Models\Cart;
+
 use App\Models\Notif;
+use App\Models\Comment;
+use App\Models\Product;
+use App\Models\Tmp_images;
+use App\Models\Product_images;
 
-
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Requests\StoreReq;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\UpdateProduct;
+use Illuminate\Support\Facades\Storage;
 
 class Products extends Controller
 { 
@@ -38,7 +39,7 @@ class Products extends Controller
         $data = $product -> toArray();
         $data["mail"] = $product -> user -> mail;
         $data["uid"] = $product -> user -> id;
-        $data["images"] = $product -> product_images -> toArray();
+        $data["images"] = $product -> product_images() -> orderBy("is_main", "desc") -> get() -> toArray();
 
         # Delete all notifications linked to it
         session_start();
@@ -158,20 +159,21 @@ class Products extends Controller
 
     }
 
-
-
     /**
      * Store a product from the /sell page.
      *
-     * @param StoreReq $request      The request with all the informations
+     * @param Request $request       The request with all the informations
      * @param Product $product       The product model
+     * @param Tmp_images $tmp_image   The temporary images model
+     * @param Product_
      *  
      * @return view                  Return the view of /sell (will change)
      * 
      */
 
-     public function store(StoreReq $request, Product $product){      
+     public function store(StoreReq $request, Product $product, Tmp_images $tmp_image){      
 
+         
         $req = $request -> validated();
 
         # Check if te user category is a valid category 
@@ -191,36 +193,36 @@ class Products extends Controller
         }
 
 
-        # Test the image 
+        # Store the product 
 
-        $img = $req["product_img"];
+        $product = Product::create([
+            "id_user" => $_SESSION["id"],
+            "name" => $req["name"],
+            "descr" => htmlspecialchars($req["description"]),
+            "price" => $req["price"],
+            "class" => $req["category"],
+        ]);
 
-        if($img !== null && !$img -> getError()){
 
-            # Store the image 
+        $checksum = md5($_SESSION["pass"] . $request["_token"]);
 
-            $imgPath = $req["product_img"] -> store("product_img", "public");
+        $tmpimages = $tmp_image -> where("checksum", "=", $checksum) -> get();
+        foreach($tmpimages as $img){
 
+            $name = Str::random(40)  . "." . $img -> extension ;
 
-            # Store the product 
+            Storage::copy("tmp/" . $img -> folder . "/" . $img -> file, "product_img/" . $name, "public");
 
-            $product -> id_user = $_SESSION["id"];
+            Product_images::create([
+                "id_product" => $product -> id,
+                "img" => $name,
+                "is_main" => $img -> is_main,
+            ]);
 
-            $product -> name = $req["name"];
-            $product -> descr = htmlspecialchars($req["description"]);
-            $product -> price = $req["price"];
+            Storage::deleteDirectory("tmp/" . $img -> folder);
 
-            $product -> class = $req["category"];
-            $product -> image = substr($imgPath, 12);
-
-            $product -> save();
-
+            $img -> delete();
         }
-
-        else {
-            return to_route("product.store") -> withErrors(["imgerror" => "Invalid image"]) ;
-        }
-
         return to_route("details", $product -> id) -> with("selled", "The product has been succesfully selled !");
     }
 
@@ -230,29 +232,30 @@ class Products extends Controller
      * Delete a given product if the user is allowed to 
      *
      * @param int $id               The id of the product
-     * @param Product $product      The product model
-     * @param Comment $comment      The comment model
-     * @param cart $cart            The cart model
      *  
      * @return redirect             Redirection to / if success, or to a 403
      *                              page if not.
      * 
      */
 
-    public function delete(Product $product, Comment $comment, Cart $cart, $id){
+    public function delete($id){
 
         # Check if the product exists and is selled by the current user
 
-        $data = $product -> findOrFail($id) -> toArray();
+        $data = Product::findOrFail($id) -> toArray();
+
         if($data["id_user"] !== $_SESSION["id"] or empty($data)){
             return abort(403);
         }
        
-        # Delete the image associated with the product
-        Storage::disk("public") -> delete("product_img/" . $data['image']);
+        $path_all_images = Product_images::where("id_product", "=", $data["id"]) -> get() -> toArray();
+        foreach($path_all_images as $img)
+        {
+            Storage::delete("product_img/" . $img["img"]);
+        }
 
         # Delete the product itself
-        $product -> where("id", "=", $id) -> delete();
+        Product::where("id", "=", $id) -> delete();
     }
 
 
@@ -272,7 +275,7 @@ class Products extends Controller
             return abort(403);
         }
 
-        return view("product.form_product", ["data" => $product]);
+        return view("product.form_product", ["data" => $product, "images" => $product -> product_images() -> orderBy("is_main", "desc") -> get() -> toArray()]);
     }
 
 
@@ -297,11 +300,10 @@ class Products extends Controller
             return abort(403);
         }
 
-
         # If the user clicked on the delete button 
 
         if($req["submit"] === "delete"){
-            self::delete($product, $comment, $cart, $product -> id);
+            self::delete($product -> id);
 
             return to_route("root") -> with("deletedproduct", "The product has been deleted successfully.");
         }
@@ -330,6 +332,7 @@ class Products extends Controller
             "descr" => htmlspecialchars($req["description"]),
             "class" => $req["category"],
         ]);
+
 
         return to_route("details", $product -> id) -> with("updated", "Product updated successfully.");
     }

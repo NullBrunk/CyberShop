@@ -40,7 +40,7 @@
 
         <section class=".section" style="background: #f5f8fd;">
 
-            <div class="container swiper">
+            <div class="container swiper" style="min-height: 38vh;">
                 <div class="slide-container">
                     <div class="card-wrapper swiper-wrapper" id="swiper-wrap">
 
@@ -64,9 +64,9 @@
                     </div>
                 </div>
 
-                <div class="swiper-button-next swiper-navBtn"></div>
-                <div class="swiper-button-prev swiper-navBtn"></div>
-                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next swiper-navBtn" style="top: 48%"></div>
+                <div class="swiper-button-prev swiper-navBtn" style="top: 48%"></div>
+                <div class="swiper-pagination" style="bottom: 20px !important;"></div>
 
               </div>
         </section>

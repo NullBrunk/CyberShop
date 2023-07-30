@@ -22,7 +22,7 @@ class StoreReq extends FormRequest
     public function rules(): array
     {
         return [
-            "product_img" => "required|image|max:2000",
+            "mainimg" => "required",
             "category" => "required|max:20",
             "price" => "required|required|regex:/(^[0-9]{0,12}(\.){0,1}[0-9]{1,2}$)/u",
             "description" => "required",

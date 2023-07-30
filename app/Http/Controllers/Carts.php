@@ -25,8 +25,10 @@ class Carts extends Controller {
 
 
         $data = $cart
-            -> select('carts.id as cid', 'carts.id_user as cidu', 'carts.id_product as cip', 'products.id as pid', 'name', 'image', 'price')
+            -> select('carts.id as cid', 'carts.id_user as cidu', 'carts.id_product as cip', 'products.id as pid', 'name', 'price', 'product_images.img as image', 'product_images.is_main')
             -> join('products', 'products.id', '=', 'carts.id_product')
+            -> join('product_images', 'product_images.id_product', '=', 'products.id') 
+            -> where("is_main", "=", 1) 
             -> where('carts.id_user', '=', $_SESSION["id"] )
             -> get();
 

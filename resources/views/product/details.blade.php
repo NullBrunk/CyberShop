@@ -5,6 +5,7 @@
 
 @section("content")
 
+@php($img_is_upper = count($data["images"]) > 1)
     <body>
         <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
         <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
@@ -90,6 +91,7 @@
             </section>
 
 
+            
             <section id="portfolio-details" class="portfolio-details" style="padding-bottom: 0px;">
                 <div class="container">
                     <div class="row gy-4 whenigrowibecomeablock">
@@ -100,21 +102,30 @@
                                         <div class="slide-container" style="height: 100%;">
                                             <div class="card-wrapper swiper-wrapper" id="swiper-wrap">
                         
-                                                @foreach($data["images"] as $img)
-                                                    <div class="card swiper-slide" style="height: 75vh; display: flex; border: none;">
-                                                        <div style="margin: auto;">
-                                                            <img unselectable="on" src="/storage/product_img/{{$img['img']}}" alt="" />
+                                                @if($img_is_upper)
+                                                    @foreach($data["images"] as $img)
+                                                        <div class="card swiper-slide" style="height: 75vh; display: flex; border: none;">
+                                                            <div style="display: flex; height: 90%; width: 85%; margin: auto;">
+                                                                <img unselectable="on" style="max-height: 100%; max-width:100%; margin: auto;" src="/storage/product_img/{{$img['img']}}" alt="" />
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                @else 
+                                                    <div class="card" style="height: 75vh; display: flex; border: none;">
+                                                        <div style="display: flex; height: 100%; width: 85%; margin: auto;">
+                                                            <img unselectable="on" style="max-height: 100%; max-width:100%; margin: auto;" src="/storage/product_img/{{$data["images"][0]['img']}}" alt="" />
                                                         </div>
                                                     </div>
-                                                @endforeach
-                        
+                                                @endif
                                             </div>
                                         </div>
                         
-                                        <div class="swiper-button-next swiper-navBtn" style="background: #eee;color: black !important"></div>
-                                        <div class="swiper-button-prev swiper-navBtn" style="background: #eee;color: black !important"></div>
-                                        <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
-                        
+                                        @if($img_is_upper)
+                                            <div class="swiper-button-next swiper-navBtn" style="background: #eee;color: black !important"></div>
+                                            <div class="swiper-button-prev swiper-navBtn" style="background: #eee;color: black !important"></div>
+                                            <div class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets swiper-pagination-horizontal"></div>
+                                        @endif
+
                                       </div>
                                 {{-- Image of the product on the left --}}
                                 
@@ -373,7 +384,7 @@
 
                                         <span class="titlecomm"style="display:flex;margin-bottom: 0px;padding-bottom: 0px;">
                                             {{ $comm["title"] }}
-                                            <span class="likespan" onclick='heartclick("{{ route("like.toggle", $comm["id"]) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")'>
+                                            <span class="likespan" @if(isset($_SESSION["logged"])) onclick='heartclick("{{ route("like.toggle", $comm["id"]) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")' @endif >
                                                 <p class="like">
                                                     <span id="num{{$comm["id"]}}">
                                                         {{ $comm -> like() -> count() }}
