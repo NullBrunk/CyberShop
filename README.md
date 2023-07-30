@@ -7,10 +7,9 @@
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/NullBrunk/E-Commerce?style=for-the-badge)
 ![repo size](https://img.shields.io/github/repo-size/NullBrunk/E-Commerce?style=for-the-badge)
 
+![commerce](https://github.com/NullBrunk/E-Commerce/assets/125673909/eee9fecb-8e8a-4f66-a510-9eca6278f299)
 
-![commerce](https://github.com/NullBrunk/E-Commerce/assets/125673909/e7087180-d90c-4492-9139-5e1182c86572)
-
-</div> 
+</div>
 
 # E-Commerce
 An E-Commerce website with the Laravel Framework (Currently in dev)
