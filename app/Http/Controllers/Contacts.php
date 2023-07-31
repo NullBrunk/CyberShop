@@ -110,19 +110,20 @@ class Contacts extends Controller {
 
         foreach(getmsgs($_SESSION["mail"]) as $data){
 
-            # Create time at hand 
-            $time = explode("-", explode(" ", $data["time"])[0])[2] . " " . strtolower(date('F', mktime(0, 0, 0, explode("-", $data["time"])[1], 10))) . ", " . implode(":", array_slice(explode(":", explode(" ", $data["time"])[1]), 0, 2));
-
             # Then the contactor is the other user
             if($data["mail_contacted"] === $_SESSION["mail"]){       
                 $mail = $data["mail_contactor"];
                 
+                if($data["readed"] == 0){
+                    $exploitable_data[$mail]["unread"] = true;
+                } 
+
                 $toput = [ 
                     style($data['content']), 
                     "type" => $data["type"],
                     "me" => false, 
                     "id" => $data["id"],
-                    "time" => $time,
+                    "time" => $data["time"],
                     "readed" => $data["readed"]
 
                 ];
@@ -136,7 +137,7 @@ class Contacts extends Controller {
                     "type" => $data["type"], 
                     "me" => true, 
                     "id" => $data["id"],
-                    "time" => $time,
+                    "time" => $data["time"],
                     "readed" => $data["readed"]
                 ];
             }
@@ -156,7 +157,6 @@ class Contacts extends Controller {
             }
         }
 
-        
         # Get the full array of authors
         foreach(array_keys($exploitable_data) as $name)
             array_push( $contact, [ $exploitable_data[$name]["time"], $name ] ); 
@@ -189,11 +189,11 @@ class Contacts extends Controller {
             self::mark_readed($cont,  $requested_user[0]["id"]);
 
 
-            return view("user.contact", [ "contact" => $contact, "noone" => false, "user" => $slug, "data" => $exploitable_data ]);
+            return view("user.contact", [ "contact" => $contact, "user" => $slug, "data" => $exploitable_data ]);
         }   
 
         else {
-            return view("user.contact", [ "contact" => $contact, "noone" => true, "data" => $exploitable_data ]);
+            return view("user.contact", [ "contact" => $contact, "data" => $exploitable_data ]);
         }
     }
 
@@ -339,7 +339,7 @@ class Contacts extends Controller {
 
         $contact_message = $contact -> toArray();
 
-        if($contact_message["id_contactor"] === $_SESSION["id"] and $contact_message["type"] === "text" and $request -> server("HTTP_HX_REQUEST") === "true"){
+        if($contact_message["id_contactor"] === $_SESSION["id"]){ // and $contact_message["type"] === "text" and $request -> server("HTTP_HX_REQUEST") === "true"){
             return view("user.form_contact", [ "message" => $contact_message]);
         }
         else {

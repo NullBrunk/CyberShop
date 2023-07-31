@@ -1030,13 +1030,13 @@ abbr {
 }
 
 .update:hover {
-  background-color: #007185 !important;
+  background-color: #484883 !important;
   border: 1px solid #32325d !important;
 
 }
 
 .update:active {
-  background-color: #007185 !important;
+  background-color: #484883 !important;
   border: 1px solid #32325d !important;
 
 }
@@ -1047,7 +1047,7 @@ abbr {
   margin-right: 6px;
   padding: 4px 6px 0px 6px !important;
   background-color: #32325d;
-  border: 1px solid #007185;
+  border: 1px solid #484883;
 
 }
 
@@ -1746,3 +1746,4 @@ tr:nth-child(even) td {
   justify-content: left;
   flex-direction: row;
 }
+
