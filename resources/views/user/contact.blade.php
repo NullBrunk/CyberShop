@@ -92,8 +92,13 @@
                         
                         <div>
 
-                            @for($i=0; $i < sizeof($data[$user]) - 1; $i++)
+                            @if(!isset($data[$user]["unread"]))
+                                @php($minus = 1)
+                            @else 
+                                @php($minus = 2)
+                            @endif
 
+                            @for($i=0; $i < sizeof($data[$user]) - $minus; $i++)
                                 @php($me = $data[$user][$i]['me'])
                                 @php($current = $data[$user][$i])
 
@@ -143,8 +148,8 @@
                                                         {{ date('H:i', strtotime($current["time"])) }}
                                                     </span>
                                                 </span>
-                                            <div class="msg" id="msg{{ $data[$user][$i]['id'] }}" style="margin-left: auto; color: white; display: inline-block; background-color: rgb(24, 144, 255);  text-align: left; padding: 12px; font-size: 15px; font-family: Avenir; white-space: pre-line; overflow-wrap: anywhere; max-width: calc(100% - 100px); transition: all 0.33s ease 0s; border-radius: 1.3em 0.3em 0.3em 1.3em;">@if($current["type"]==="text"){!!$current[0]!!}@else<img src="/storage/{{$current[0]}}" style="max-height: 100%; max-width:100%;">@endif</div><style>p {margin-block-start: 0px; margin-block-end: 0px;}</style><div class="ce-avatar undefined" style="position: relative; width: 44px; height: 44px; border-radius: 50%; background-repeat: no-repeat; background-position: center center; background-size: 48px; color: white; text-align: center; font-family: Avenir; font-size: 15px; line-height: 44px; font-weight: 600; background-color: rgb(12, 170, 220); display: none;">AN<div class="ce-avatar-status" style="position: absolute; top: 0px; right: 0px; width: 8px; height: 8px; border-radius: 100%; border: 2px solid white; display: none; background-color: rgb(245, 34, 45);"></div></div>
-                                            <p style="color: white; padding: 6px;" onclick='menu("menu{{ $data[$user][$i]["id"] }}")'>
+                                            <div class="msg" id="msg{{ $data[$user][$i]['id'] }}" style="margin-left: auto; color: white; display: inline-block; background-color: rgb(24, 144, 255);  text-align: left; padding: 12px; font-size: 15px; font-family: Avenir; white-space: pre-line; overflow-wrap: anywhere; max-width: calc(100% - 100px); transition: all 0.33s ease 0s; border-bottom-left-radius: 1.3em; border-top-left-radius: 1.3em;">@if($current["type"]==="text"){!!$current[0]!!}@else<img src="/storage/{{$current[0]}}" style="max-height: 100%; max-width:100%;">@endif</div><style>p {margin-block-start: 0px; margin-block-end: 0px;}</style><div class="ce-avatar undefined" style="position: relative; width: 44px; height: 44px; border-radius: 50%; background-repeat: no-repeat; background-position: center center; background-size: 48px; color: white; text-align: center; font-family: Avenir; font-size: 15px; line-height: 44px; font-weight: 600; background-color: rgb(12, 170, 220); display: none;">AN<div class="ce-avatar-status" style="position: absolute; top: 0px; right: 0px; width: 8px; height: 8px; border-radius: 100%; border: 2px solid white; display: none; background-color: rgb(245, 34, 45);"></div></div>
+                                            <p style="color: #282b36; padding: 6px; background: #1890ff; border-top-right-radius: 0.3em; border-bottom-right-radius: 0.3em;" onclick='menu("menu{{ $data[$user][$i]["id"] }}")'>
                                                 <i class="bi bi-three-dots-vertical"></i>
                                             </p>
                                         </div>

@@ -141,7 +141,7 @@
     height: 12px;
     border-radius: 6px;
     float: right;
-    display: none;
+    display: block;
 }
 .lastmsg {
     bottom: 16px;
@@ -292,10 +292,16 @@ label {
 .options{
     display: none;
     color: white;
+    margin: auto;
+    margin-right: 2%;
 }
 
 .hovershow:hover .options{
     display:inline-block;
+}
+
+.hovershow:hover .msg{
+    margin-left: 0px !important;
 }
 
 .delete:hover {
