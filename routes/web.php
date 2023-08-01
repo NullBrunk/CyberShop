@@ -199,11 +199,11 @@ Route::prefix('settings') -> name("profile.") -> group(function () {
 
 /*
 |---------------------------------------------
-|  Contact management 
+|  Chatbox management 
 |
 */
 
-Route::prefix('contact') -> name("contact.") -> group(function () {
+Route::prefix('chatbox') -> name("contact.") -> group(function () {
 
     Route::get(
         "edit/{contact}",

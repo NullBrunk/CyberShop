@@ -30,7 +30,7 @@ function sendmsg(){
     
     }).then((result) => {
         if (result.isConfirmed) {
-        return window.location.href = "/contact/" + result.value;
+            return window.location.href = "/chatbox/" + result.value;
         }
     })
 }

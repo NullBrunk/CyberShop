@@ -180,81 +180,71 @@
                     <ul class="products" style="width: 11vw;">                    
                         <li>
                             <a href="{{ route("product.show", "informatics") }}">
-                                <i class="bx bx-laptop showcategory"></i> 
-                                <i class="bi bi-dot padding"></i> 
-                                <p>
+
+                                <span>
                                     Informatics
-                                </p>
+                                </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ route("product.show", "appliances") }}">
-                                <i class="bx bx-fridge showcategory"></i> 
-                                <i class="bi bi-dot padding"></i> 
-                                <p>
+ 
+                                <span>
                                     Appliances
-                                </p>
+                                </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ route("product.show", "furnitures") }}">
-                                <i class="bx bx-door-open showcategory"></i> 
-                                <i class="bi bi-dot padding"></i> 
-                                
-                                <p>
+
+                                <span>
                                     Furnitures
-                                </p>
+                                </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ route("product.show", "vehicles") }}">
-                                <i class="bx bx-car showcategory"></i> 
-                                <i class="bi bi-dot padding"></i> 
-                                <p>
+                                <span>
                                     Vehicles
-                                </p>
+                                </span>
                             </a>
                         </li>
                         <li>
                             <a href="{{ route("product.show", "dresses") }}">
-                                <i class="bx bx-shopping-bag showcategory"></i> 
-                                <i class="bi bi-dot padding"></i> 
-                                <p>
+                                
+                                <span>
                                     Dresses
-                                </p>
+                                </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ route("product.show", "gaming") }}">
-                                <i class="bx bx-joystick showcategory"></i> 
-                                <i class="bi bi-dot padding"></i> 
-                                <p>
+
+                                <span>
                                     Gaming
-                                </p>
+                                </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ route("product.show", "other") }}">
-                                <i class="bx bx-package showcategory"></i> 
-                                <i class="bi bi-dot padding"></i> 
-                                <p>
+                              
+                                <span>
                                     Other
-                                </p>
+                                </span>
                             </a>
                         </li>
 
                         <li>
                             <a href="{{ route("product.show", "food") }}">
-                                <i class="bx bx-bowl-rice showcategory"></i> 
-                                <i class="bi bi-dot padding"></i> 
-                                <p>
+                              
+                                <span>
                                     Food
-                                </p>
+                                </span>
                             </a>
                         </li>
 
@@ -262,11 +252,10 @@
 
                         <li>
                             <a href="{{ route("product.show", "all") }}">
-                                <i class="bx bx-border-all showcategory"></i> 
-                                <i class="bi bi-dot padding"></i> 
-                                <p>
+                                
+                                <span>
                                     All products
-                                </p>
+                                </span>
                             </a>
                         </li>
 

@@ -236,7 +236,7 @@ class Contacts extends Controller {
     public function store(Request $request, Contact $contact, User $user){
 
         # Get the slug
-        $url = explode("/contact/", url() -> previous());
+        $url = explode("/chatbox/", url() -> previous());
         
 
         # If there is no slug, the user is 
@@ -255,7 +255,7 @@ class Contacts extends Controller {
 
         
         if(empty($id)){
-            return redirect("/contact") -> withErrors(["contact_no_one" => "You cant contact this user !"]);
+            return to_route("contact.show") -> withErrors(["contact_no_one" => "You cant contact this user !"]);
         }
         else {
             $id = $id[0]["id"];

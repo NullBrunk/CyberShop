@@ -12,13 +12,6 @@
 
 
         <div class="main-content">
-    
-            <script>
-                function undisable(){
-                    for(elem of ["email", "input-sub", "newpass", "renewpass", "oldpass"])
-                        document.getElementById(elem).disabled = !document.getElementById(elem).disabled
-                }
-            </script>
 
             <style>
                 input[type="text"], input[type="password"] {
@@ -26,28 +19,8 @@
                     color: #afaca7 !important;
                     margin-bottom:10px;
                     border-color: rgb(55, 59, 61) !important;
+                    height: 6.3vh;
                 }
-
-                input[type="text"]{
-                    background: #363656;
-                    color: white;
-                }
-
-                input[type="text"]:disabled {
-                    background-color: #282b36 !important;
-                }
-
-
-                input[type="password"]:disabled {
-                    background-color: #282b36 !important;
-                }
-
-                input:disabled {
-                    background: #272742;
-                }
-
-                *:focus { outline: 0 !important; }
-
             </style>
 
             <div class="container-fluid mt--7" style="padding-right: 2.5vw !important; padding-left: 2.5vw !important;">
@@ -77,17 +50,7 @@
                 
                             <div class="card-body" style="background-color: #3e404b;">
 
-                                <p class="uinfo heading-small mb-4 fg-white" style="display: flex; color: white !important; font-family: Jost; font-weight: 500;">
-                                    
-                                    User information  
-                                    
-                                    <button onclick="undisable()" class="btn-profile" style="background-color: #363656; color: white; border:#1e5ebf;">
-                                        Edit 
-                                    
-                                        <i class="bi bi-pencil-square"></i>
-
-                                    </button>
-                                </p>    
+ 
 
 
                                 {{-- Gestion des messages de succès --}}
@@ -131,7 +94,7 @@
                                                 <div class="form-group" style="color: white;font-family: Jost;">
                                                 
                                                     <label class="form-control-label" for="input-address">E-mail</label>
-                                                    <input id="email"  name="email" class="form-control form-control-alternative" placeholder="Your e-mail address" value="{{$_SESSION['mail']}}" type="text" disabled>
+                                                    <input id="email"  name="email" class="form-control form-control-alternative" placeholder="Your e-mail address" value="{{$_SESSION['mail']}}" type="text">
                                                 
                                                 </div>
                                             </div>
@@ -142,7 +105,7 @@
                                                 <div class="form-group focused" style="color: white;font-family: Jost;">
                                             
                                                     <label class="form-control-label" for="input-address">Password</label>
-                                                    <input id="oldpass" value="{{old("oldpass")}}" name="oldpass" class="form-control form-control-alternative" placeholder="Your current password"  type="password" disabled>
+                                                    <input id="oldpass" value="{{old("oldpass")}}" name="oldpass" class="form-control form-control-alternative" placeholder="Your current password"  type="password">
                                                         
                                                 </div>
                                             </div>
@@ -153,7 +116,7 @@
                                                 <div class="form-group focused" style="color: white;font-family: Jost;">
                                                 
                                                     <label class="form-control-label" for="input-address">New password</label>
-                                                    <input id="newpass" name="newpass" value="{{old("newpass")}}"class="form-control form-control-alternative" placeholder="Enter a new password" type="password" disabled>
+                                                    <input id="newpass" name="newpass" value="{{old("newpass")}}"class="form-control form-control-alternative" placeholder="Enter a new password" type="password">
                                             
                                                 </div>
                                             </div>
@@ -163,7 +126,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-group focused" style="color: white;font-family: Jost;">
 
-                                                    <input id="renewpass" name="renewpass" value="{{old("renewpass")}}" class="form-control form-control-alternative" placeholder="Re-enter the new password" type="password" disabled>
+                                                    <input id="renewpass" name="renewpass" value="{{old("renewpass")}}" class="form-control form-control-alternative" placeholder="Re-enter the new password" type="password">
                                             
                                     
                                                 </div>
@@ -171,16 +134,15 @@
                                         </div>
 
                                     </div>
-                                    <input type="submit" id="input-sub" name="submit" value="Update" class="btn btn-primary" style="background-color: #32325d;" disabled>
+                                    <input type="submit" id="input-sub" name="submit" value="Update" class="btn btn-primary" style="background-color: #32325d;">
                                     
                                 </form>
 
                             
 
                                 <hr class="my-4" style="color: white !important;">
-                                <h6 class="heading-small mb-4 fg-white" style="color: white !important; font-family: Jost; font-weight: 500;">Delete my account</h6>
                                 <div style="color: white !important; font-family: Jost;">
-                                    Once your account is deleted, all the comments, products that you sell, history <br> of the products that you buyed/selled will be <strong>permanently deleted</strong> !
+                                    Once your account is deleted, all the comments, products that you sell, history of the products that you <br> buyed/selled, liked comments, chat messages and more will be <strong>permanently deleted</strong> !
                                 </div>
                                 <br>
                         
@@ -212,5 +174,4 @@
                 </div>
             </div>
         </div>
-        <div style="margin-top: 20px"></div>
 @endsection

@@ -67,7 +67,7 @@ function show(){
                 "icon" => "bx bx-chat",
                 "title" => "1 message received.",
                 "content" => "From " . $mail . ".",
-                "more" => "/contact/" . $mail,
+                "more" => "/chatbox/" . $mail,
                 "type" => "message"
             ];
         }
