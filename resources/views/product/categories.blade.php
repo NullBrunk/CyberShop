@@ -79,7 +79,7 @@
                                
                                 <div class="pricepr">
                                     
-                                    {{$d['price']}} <span>$</span>
+                                    {{ number_format($d['price'], 2, '.', ' ') }} <span>$</span>
 
                                     @if(isset($notpaginated))
                                         

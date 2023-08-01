@@ -215,7 +215,7 @@
 
                                 <tr>
                                     <th>Price</th>
-                                    <td>{{ $data['price'] }}$</td>
+                                    <td>{{ number_format($data['price'], 2, '.', ' ') }}$</td>
                                 </tr>
 
                                 @if($rating)

@@ -137,7 +137,7 @@ class Products extends Controller
         // If HTMX is doing the request, don't display the navbar
         if($request -> server("HTTP_HX_REQUEST") === "true" ){
 
-            return view("static.pagination", 
+            return view("product.pagination", 
                 [
                     "products" => $data, 
                     "name" => $category, 
@@ -421,7 +421,7 @@ class Products extends Controller
        
         // If HTMX is doing the request, don't display the navbar
         if($request -> server("HTTP_HX_REQUEST") === "true" ){
-            $view = "static.pagination";
+            $view = "product.pagination";
         }
         else {
             $view = "product.categories";
