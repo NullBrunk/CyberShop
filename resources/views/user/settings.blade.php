@@ -1,31 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>Profile</title>
-            
-            <link href="/assets/css/fonts.css" rel="stylesheet">
-            <link href="assets/css/profile.css" rel="stylesheet">
+@extends("layout.base")
 
-            <script src='assets/js/sweetalert2.js'></script>
-
-            <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-            <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-            <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-
-            <link href="assets/css/style.css" rel="stylesheet">
-            <script src="assets/js/sweetalert2.js"></script>
-            <script src="/assets/js/alert.js"></script>
-    </head>
+@section("title", "Settings")
     
-    <body style="background-color: #37517e;" >
+@section("content")
+    <body style="background-color: #282b36;" >
 
         @include('layout.header')
 
 
-        <div style="padding-top: 350px;"></div>
+        <div style="padding-top: 108px;"></div>
 
 
         <div class="main-content">
@@ -37,18 +20,47 @@
                 }
             </script>
 
+            <style>
+                input[type="text"], input[type="password"] {
+                    background-color: #1a1b1c !important;
+                    color: #afaca7 !important;
+                    margin-bottom:10px;
+                    border-color: rgb(55, 59, 61) !important;
+                }
+
+                input[type="text"]{
+                    background: #363656;
+                    color: white;
+                }
+
+                input[type="text"]:disabled {
+                    background-color: #282b36 !important;
+                }
+
+
+                input[type="password"]:disabled {
+                    background-color: #282b36 !important;
+                }
+
+                input:disabled {
+                    background: #272742;
+                }
+
+                *:focus { outline: 0 !important; }
+
+            </style>
 
             <div class="container-fluid mt--7" style="padding-right: 2.5vw !important; padding-left: 2.5vw !important;">
                 
                 <div class="row">
                     <div class="col-xl-8 order-xl-1" class="">
                         <div class="card bg-secondary shadow" style="border: 0px; width: 95vw;">
-                            <div class="card-header bg-white border-0">
+                            <div class="card-header border-0" style="background-color: #3e404b;">
                                 <div class="row align-items-center">
                                     <div class="col-8">
                                         <h3 class="mb-0" style="width: 152%; display: flex; ">
                                             
-                                            <p class="block">My account</p>
+                                            <p class="block" style="color: white; ">My account</p>
                         
                                             <button 
                                                 onclick="window.location.href = '/disconnect'" 
@@ -63,13 +75,13 @@
                                 </div>
                             </div>
                 
-                            <div class="card-body" style="background-color: white;">
+                            <div class="card-body" style="background-color: #3e404b;">
 
-                                <p class="uinfo heading-small text-muted mb-4">
+                                <p class="uinfo heading-small mb-4 fg-white" style="display: flex; color: white !important; font-family: Jost; font-weight: 500;">
                                     
                                     User information  
                                     
-                                    <button onclick="undisable()" class="btn-profile">
+                                    <button onclick="undisable()" class="btn-profile" style="background-color: #363656; color: white; border:#1e5ebf;">
                                         Edit 
                                     
                                         <i class="bi bi-pencil-square"></i>
@@ -109,14 +121,14 @@
                                     <script>salert("{{$message}}")</script>
                                 @enderror
                                 
-                                <form action="{{ route("profile.profile") }}" method="post">
+                                <form action="{{ route("profile.settings") }}" method="post">
 
                                     @csrf
 
                                     <div class="pl-lg-4">
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-group focused">
+                                                <div class="form-group" style="color: white;font-family: Jost;">
                                                 
                                                     <label class="form-control-label" for="input-address">E-mail</label>
                                                     <input id="email"  name="email" class="form-control form-control-alternative" placeholder="Your e-mail address" value="{{$_SESSION['mail']}}" type="text" disabled>
@@ -127,7 +139,7 @@
 
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-group focused">
+                                                <div class="form-group focused" style="color: white;font-family: Jost;">
                                             
                                                     <label class="form-control-label" for="input-address">Password</label>
                                                     <input id="oldpass" value="{{old("oldpass")}}" name="oldpass" class="form-control form-control-alternative" placeholder="Your current password"  type="password" disabled>
@@ -138,7 +150,7 @@
 
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-group focused">
+                                                <div class="form-group focused" style="color: white;font-family: Jost;">
                                                 
                                                     <label class="form-control-label" for="input-address">New password</label>
                                                     <input id="newpass" name="newpass" value="{{old("newpass")}}"class="form-control form-control-alternative" placeholder="Enter a new password" type="password" disabled>
@@ -149,7 +161,7 @@
 
                                         <div class="row">
                                             <div class="col-md-12">
-                                                <div class="form-group focused">
+                                                <div class="form-group focused" style="color: white;font-family: Jost;">
 
                                                     <input id="renewpass" name="renewpass" value="{{old("renewpass")}}" class="form-control form-control-alternative" placeholder="Re-enter the new password" type="password" disabled>
                                             
@@ -163,41 +175,11 @@
                                     
                                 </form>
 
-                                <hr class="my-4">
-
-                                <h6 class="heading-small text-muted mb-4">Products that you sell</h6>
- 
-                                <div class="pl-lg-4">
-                                    <div class="row">
-
-                                        <div class="row portfolio-container">
-
-                                            @if(empty($data))
-                                                You are not selling any product yet, <a style="width: 20% !important;" href="{{route("product.store")}}">start here !</a>
-                                            @endif
                             
-                                            @foreach($data as $d)
-                    
-                    
-                                                <div class="col-md-3 portfolio-item" style="padding-bottom: 10px;">
-                                                    <div class="portfolio-wrap" style="border-radius: 5px;">
-                                                        <a href="/details/{{ $d['id'] }}">
-                                                            <img src="/storage/product_img/{{ $d['image'] }}" class="img-fluid imgpres" alt="">
-                                                        </a>
-                                                        <div class="portfolio-info">
-                                                        </div>
-                                                    </div>
-                    
-                                                </div>
-                                            @endforeach
-                        
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <hr class="my-4">
-                                <h6 class="heading-small text-muted mb-4">Delete my account</h6>
-                                <div class="">
+                                <hr class="my-4" style="color: white !important;">
+                                <h6 class="heading-small mb-4 fg-white" style="color: white !important; font-family: Jost; font-weight: 500;">Delete my account</h6>
+                                <div style="color: white !important; font-family: Jost;">
                                     Once your account is deleted, all the comments, products that you sell, history <br> of the products that you buyed/selled will be <strong>permanently deleted</strong> !
                                 </div>
                                 <br>
@@ -226,11 +208,9 @@
                                 </script>
                             </div>
                         </div>
-                        <hr class="my-4">
                     </div>
                 </div>
             </div>
         </div>
         <div style="margin-top: 20px"></div>
-    </body>
-</html>
+@endsection

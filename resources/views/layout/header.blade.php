@@ -125,7 +125,7 @@
                                 
                                 <li id="{{$p['cid']}}">
                                     <p class="show_cart">
-                                        <img src="/storage/product_img/{{ $p["image"] }}"       style="padding-left: 3%; width: 22%; display: block;">
+                                        <img src="/storage/product_img/{{ $p["image"] }}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
                                         
                                         <a href="/details/{{ $p['pid'] }}" style="display: block;overflow: hidden; width: 57%; margin:auto;">{{ $p["name"] }}</a>
                                         <img src="/assets/img/trash.png" onclick="deleteitem({{$p['cid']}})" class="trash-cart"> 
@@ -275,7 +275,7 @@
 
  
                 <li style="list-style: none;">
-                    <a class="nav-link" href="{{ route("profile.profile") }}">
+                    <a class="nav-link" href="{{ route("profile.settings") }}">
                         <i class="bi bi-sliders"></i>
                         <span>Settings</span>
 

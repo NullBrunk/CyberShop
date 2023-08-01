@@ -172,16 +172,16 @@ Route::get(
 
 /*
 |---------------------------------------------
-|  Profile management 
+|  Settings management 
 |
 */
 
-Route::prefix('profile') -> name("profile.") -> group(function () {
+Route::prefix('settings') -> name("profile.") -> group(function () {
 
     Route::post(
         "",
-        [ Users::class, "profile"]
-    ) -> middleware(Logged::class) -> name("profile");
+        [ Users::class, "settings"]
+    ) -> middleware(Logged::class) -> name("settings");
         
     Route::get(
         "/delete", 
@@ -190,7 +190,7 @@ Route::prefix('profile') -> name("profile.") -> group(function () {
         
     Route::get(
         "",
-        [Users::class, "show_profile"]
+        [Users::class, "show_settings"]
     ) -> middleware(Logged::class);
     
 });

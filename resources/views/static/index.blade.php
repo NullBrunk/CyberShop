@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-in" data-aos-delay="200">
-                        <img src="assets/img/hero-img.webp" class="img-fluid animated" style="margin-left: 33%; height: 60%; margin-top: 20%;" alt="">
+                        <img src="assets/img/hero-img.webp" class="img-fluid animated" style="margin-left: 33%; height: 60%; margin-top: 20%; " alt="">
                     </div>
                 </div>
             </div>

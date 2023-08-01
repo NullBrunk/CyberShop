@@ -21,7 +21,7 @@
                 
                 <div class="chatheader">
                     
-                    <div class="chatChat">
+                    <div class="chatChat" style="user-select: none !important;">
                         Chats
                     </div>
                     <button class="chatbutton" onclick="sendmsg()">
@@ -36,7 +36,7 @@
                     @php($current_data = $data[$current_user])
                     @php($last = end($current_data))
 
-                    <div onclick='window.location.href = "{{route("contact.user", $current_user)}}"' class="cardcontact @if(isset($user) && $user === $current_user) selected @endif"> {{-- selected --}}
+                    <div onclick='window.location.href = "{{route("contact.user", $current_user)}}"' class="cardcontact @if(isset($user) && $user === $current_user) selected @endif" style="user-select: none !important;">
                         <div class="cardIcon">
                             <div class="cardAvatar">{{ strtoupper(substr(explode("@", $current_user)[0], 0, 2)) }}</div>
                         </div>
@@ -104,7 +104,7 @@
 
 
                                 @if(!isset($old) or (isset($old) && date('d', strtotime($current["time"])) !== date('d', strtotime($old["time"]) )));
-                                    <div class="showtime">{{ date('d F, Y', strtotime($current["time"])) }}</div>
+                                    <div class="showtime" style="user-select: none !important;">{{ date('d F, Y', strtotime($current["time"])) }}</div>
                                 @endif
 
 
@@ -122,7 +122,7 @@
                                                 
                                                 <div style="display: inline-block; color: white; padding: 12px; font-size: 15px; font-family: Avenir; white-space: pre-line; background-color: #434756; overflow-wrap: anywhere; max-width: calc(100% - 148px); transition: all 0.33s ease 0s; border-radius: 0.3em 1.3em 1.3em 0.3em;">@if($current["type"]==="text"){!!$current[0]!!}@else<img src="/storage/{{$current[0]}}" style="max-height: 100%; max-width:100%;">@endif</div><style>p {margin-block-start: 0px; margin-block-end: 0px;}</style><div class="ce-avatar undefined" style="position: absolute; width: 44px; height: 44px; border-radius: 50%; background-repeat: no-repeat; background-position: center center; background-size: 48px; color: white; text-align: center; font-family: Avenir; font-size: 15px; line-height: 44px; font-weight: 600; background-color: rgb(70, 117, 153); bottom: 0px; left: 2px; display: none;">aaa<div class="ce-avatar-status" style="position: absolute; top: 0px; right: 0px; width: 8px; height: 8px; border-radius: 100%; border: 2px solid white; display: none; background-color: rgb(245, 34, 45);"></div></div>
                                                 <span class="options" style="padding-top: 10px !important; margin-left: 0px;">
-                                                    <span style="padding-left: 10px; color: white;" >
+                                                    <span style="padding-left: 10px; color: white; user-select: none !important;" >
                                                         {{ date('H:i', strtotime($current["time"])) }}
                                                     </span>
                                                 </span>
@@ -144,7 +144,7 @@
                                                 </div>
                                                 
                                                 <span class="options">
-                                                    <span style="padding-left: 10px; color: white;">
+                                                    <span style="padding-left: 10px; color: white; user-select: none !important;">
                                                         {{ date('H:i', strtotime($current["time"])) }}
                                                     </span>
                                                 </span>
@@ -162,6 +162,10 @@
 
                                 @php($old = $data[$user][$i])
                             @endfor
+
+                            <div style="margin-top:20px;">
+
+                            </div>
                             
                         </div>
                     

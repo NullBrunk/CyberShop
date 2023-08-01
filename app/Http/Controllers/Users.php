@@ -140,16 +140,16 @@ class Users extends Controller {
 
 
     /**
-     * Update the profile of a given user if he is allowed to 
+     * Update the settings of a given user if he is allowed to 
      *
      * @param UpdateProfile $request     The request with all the valuable informations 
      * @param User          $user        The user model
      * 
-     * @return redirect                  Redirect to the profile page in all the cases
+     * @return redirect                  Redirect to the settings page in all the cases
      * 
      */
     
-    public function profile(UpdateProfile $request, User $user){
+    public function settings(UpdateProfile $request, User $user){
 
         $req = $request -> validated();
 
@@ -165,7 +165,7 @@ class Users extends Controller {
         # with wrong credentials, abort
 
         if(empty($verify_user)){
-            return to_route("profile.profile") -> withErrors(["wrong_password" => "The entered password does not match your actual password."]);
+            return to_route("profile.settings") -> withErrors(["wrong_password" => "The entered password does not match your actual password."]);
         }
 
         # The user is authorized     
@@ -180,19 +180,19 @@ class Users extends Controller {
 
         }
         catch (Exception $e){
-            return to_route("profile.profile") -> withErrors(["alreadytaken" => "Mail is already taken."]);            
+            return to_route("profile.settings") -> withErrors(["alreadytaken" => "Mail is already taken."]);            
         }
 
 
         $_SESSION['mail'] = $req['email'];
 
-        return to_route("profile.profile") -> with("done", "Your information has been updated.");
+        return to_route("profile.settings") -> with("done", "Your information has been updated.");
     }
 
 
 
     /**
-     * Show the profile page of the current user with
+     * Show the settings page of the current user with
      * all the products that he is selling
      * 
      * @param  Product $product    The product model
@@ -201,7 +201,7 @@ class Users extends Controller {
      * 
      */
     
-    public function show_profile(Product $product){
+    public function show_settings(Product $product){
 
 
         $data = $product 
@@ -212,7 +212,7 @@ class Users extends Controller {
             -> get() 
             -> toArray();
 
-        return view("user.profile", [ "data" => $data ]);
+        return view("user.settings", [ "data" => $data ]);
     }
 
 

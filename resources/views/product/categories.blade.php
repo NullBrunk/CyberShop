@@ -64,7 +64,7 @@
                                     <img 
 
                                     data-src="/storage/product_img/{{ $d['img'] }}" 
-                                    class="img-fluid imgpres" alt="">
+                                    class="img-fluid imgpres" style="user-select: none !important;">
                                 </a> 
                             </div>
 

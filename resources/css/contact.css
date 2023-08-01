@@ -162,7 +162,7 @@
     display: flex;
     margin-left: 12px;
     width: calc(100% - 24px);
-    height: 86px;
+    height: 46px;
 }
 .menubar,
 .pdp,
@@ -207,7 +207,7 @@
     background: linear-gradient(0deg, #3e404b 0, #3e404b 75%, #282b36 100%);
     background-color: rgba(0, 0, 0, 0);
     border-radius: 8px 8px 0 0 !important;
-    height: calc((100% - 85px) - 72px - 24px - 12px) !important;
+    height: calc((100% - 85px) - 66px) !important;
 }
 .he,
 .me {
