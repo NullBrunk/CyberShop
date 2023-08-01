@@ -158,8 +158,11 @@ class Contacts extends Controller {
         }
 
         # Get the full array of authors
-        foreach(array_keys($exploitable_data) as $name)
-            array_push( $contact, [ $exploitable_data[$name]["time"], $name ] ); 
+        foreach(array_keys($exploitable_data) as $name){
+            if(!isset($_SESSION["closed"][$name])){
+                array_push( $contact, [ $exploitable_data[$name]["time"], $name ] ); 
+            }
+        }
     
         # Sort it
         usort($contact, function ($date1, $date2) {
@@ -170,12 +173,15 @@ class Contacts extends Controller {
         # If the user is requesting for a specific conversation with another user
         if($slug){
 
+            
             # If the user is contacting himself
             if($slug === $_SESSION["mail"]){
                 return to_route("contact.show") -> withErrors(["contact_yourself" => "You cant contact yourself"]);  
             }
-
             
+            # If the user id hidden (if user have clicked on the "Close MP" button)
+            unset($_SESSION["closed"][$slug]);
+
             # Get the mail of the requested user
             $requested_user = $user -> where("mail", "=", $slug) -> get() -> toArray();
 
@@ -197,6 +203,23 @@ class Contacts extends Controller {
         }
     }
 
+
+
+    /**
+     * "Close" a conversation by hidding the user with who you are tchatting
+     * in the contact sidebar 
+     * 
+     * @param string $user
+     * 
+     * @return redirect
+     */
+
+     public function close(string $user){
+
+        $_SESSION["closed"][$user] = true;
+     
+        return to_route("contact.show");
+    }
 
 
     /**

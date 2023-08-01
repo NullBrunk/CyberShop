@@ -55,6 +55,7 @@ class Users extends Controller {
             $_SESSION['logged'] = true;
             $_SESSION['mail'] = $data['mail'];
             $_SESSION['pass'] = $data['pass'];
+            $_SESSION["closed"] = [];
 
 
             return to_route("cart.initialize");

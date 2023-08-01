@@ -226,15 +226,19 @@ Route::prefix('contact') -> name("contact.") -> group(function () {
     ) -> middleware(Logged::class) -> name("show");
 
     Route::get(
-        "{slug}",
-        [ Contacts::class, "show"]
-    ) -> middleware(Logged::class) -> name("user");
-
+        "/close/{user}",
+        [ Contacts::class, "close" ]
+    ) -> middleware(Logged::class);
+    
     Route::patch(
         "edit/{contact}",
         [ Contacts::class, "edit"]
     ) -> middleware(Logged::class) -> name("edit");
 
+    Route::get(
+        "{slug}",
+        [ Contacts::class, "show"]
+    ) -> middleware(Logged::class) -> name("user");
 });
 
 
