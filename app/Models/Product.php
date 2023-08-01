@@ -21,6 +21,12 @@ class Product extends Model
         "image"
     ];
 
+
+    public function format_price() : string
+    {
+        return number_format($this -> price, 2, '.', ' ');
+    }
+
     public function comments(){
         return $this -> hasMany(Comment::class, "id_product");
     }

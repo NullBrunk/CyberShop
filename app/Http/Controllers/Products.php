@@ -13,7 +13,6 @@ use App\Models\Product_images;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreReq;
-use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UpdateProduct;
 use Illuminate\Support\Facades\Storage;
 
@@ -36,10 +35,10 @@ class Products extends Controller
                   
         include_once __DIR__ . "/../Utils/Style.php";
 
-        $data = $product -> toArray();
-        $data["mail"] = $product -> user -> mail;
-        $data["uid"] = $product -> user -> id;
-        $data["images"] = $product -> product_images() -> orderBy("is_main", "desc") -> get() -> toArray();
+        $data = $product;
+        $stylised_description = style($data -> descr);
+
+        $images = $product -> product_images() -> orderBy("is_main", "desc") -> get() -> toArray();
 
         # Delete all notifications linked to it
         session_start();
@@ -64,10 +63,8 @@ class Products extends Controller
 
         $rating = self::rating($product);
 
-        # Bueatify our text 
-        $data["descr"] = style($data["descr"]);
 
-        return view("product.details", ["data" => $data, "comments" => $comments, "rating" => $rating]);
+        return view("product.details", ["product" => $product, "images" => $images, "stylised_description" => $stylised_description, "comments" => $comments, "rating" => $rating]);
     
     }
 

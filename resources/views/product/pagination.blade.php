@@ -19,7 +19,7 @@
                 </div>
             
                 <div class="pricepr">                 
-                    {{ number_format($d['price'], 2, '.', ' ') }} <span>$</span>
+                    {{ $d -> format_price() }} <span>$</span>
 
                     <p class="pr_stars" id="stars-{{$d['id']}}"></p>
 

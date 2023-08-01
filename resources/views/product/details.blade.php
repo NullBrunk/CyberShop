@@ -1,11 +1,12 @@
 @extends("layout.base")
 
-@section("title", $data["name"] )
+@section("title", $product -> name )
 
 
 @section("content")
 
-@php($img_is_upper = count($data["images"]) > 1)
+@php($img_is_upper = count($images) > 1)
+@php($mail = $product -> user -> mail)
     <body>
         <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
         <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
@@ -103,7 +104,7 @@
                                             <div class="card-wrapper swiper-wrapper" id="swiper-wrap">
                         
                                                 @if($img_is_upper)
-                                                    @foreach($data["images"] as $img)
+                                                    @foreach($images as $img)
                                                         <div class="card swiper-slide" style="height: 75vh; display: flex; border: none;">
                                                             <div style="display: flex; height: 90%; width: 85%; margin: auto;">
                                                                 <img unselectable="on" style="max-height: 100%; max-width:100%; margin: auto;" src="/storage/product_img/{{$img['img']}}" alt="" />
@@ -113,7 +114,7 @@
                                                 @else 
                                                     <div class="card" style="height: 75vh; display: flex; border: none;">
                                                         <div style="display: flex; height: 100%; width: 85%; margin: auto;">
-                                                            <img unselectable="on" style="max-height: 100%; max-width:100%; margin: auto;" src="/storage/product_img/{{$data["images"][0]['img']}}" alt="" />
+                                                            <img unselectable="on" style="max-height: 100%; max-width:100%; margin: auto;" src="/storage/product_img/{{$images[0]['img']}}" alt="" />
                                                         </div>
                                                     </div>
                                                 @endif
@@ -137,13 +138,13 @@
                         --}}
                         <div data-aos="fade-left" class="col-lg-4 marginlr"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; height: 75vh; display: flex; flex-direction: column; ">
                             <div class="portfolio-info container" style="padding-bottom: 10px; padding-top: 30px !important;" >
-                                <h2>{{$data["name"]}}</h2>
+                                <h2>{{$product -> name}}</h2>
                                 <hr>
                             </div>
 
                             <div class="portfolio-info" style="position: relative;   padding-top: 0px !important;  height: 65%;">
                                 <p class="descr">                     
-                                    {!! $data["descr"] !!}
+                                    {!! $stylised_description !!}
                                 </p>
                             </div>
                         
@@ -157,16 +158,16 @@
 
 
                             {{-- Pas connecté OU le vendeur n'est pas nous --}}
-                            @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"]))
+                            @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $mail !== $_SESSION["mail"]))
 
                                 <form  class="navbar formshow" method="post" action="{{route("cart.add")}}">  
                                     @csrf   
                                     <button class="addtocart" type="submit">BUY NOW<i  style="font-weight: bold !important;" class="bi bi-cart-plus"></i></button>
-                                    <input type="hidden"  name="id" value="{{$data['id']}}">
+                                    <input type="hidden"  name="id" value="{{$product -> id}}">
                                 </form>
 
                             @else
-                                <form class="navbar formshow" method="get" action="{{route("product.edit_form", $data['id'])}}" >  
+                                <form class="navbar formshow" method="get" action="{{route("product.edit_form", $product -> id)}}" >  
                                     @csrf   
                                     <button  class="addtocart" type="submit">EDIT PRODUCT<i style="font-weight: bold !important;" class="bi bi-cart-check"></i></button>
                                 </form>
@@ -185,7 +186,7 @@
                             <table>
                                 <tr>
                                     <th>Name</th>
-                                    <td>{{$data["name"]}}</td>
+                                    <td>{{$product -> name}}</td>
                                 </tr>
 
                                 <tr>
@@ -198,24 +199,24 @@
                                             le contacter.
                                         --}}
 
-                                        @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $data['mail'] !== $_SESSION["mail"])) 
-                                            <a href="{{route('contact.user', $data['mail'])}}">
-                                                {{ $data['mail'] }}
+                                        @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $mail !== $_SESSION["mail"])) 
+                                            <a href="{{route('contact.user', $mail)}}">
+                                                {{ $mail }}
                                             </a> 
                                         @else 
-                                            {{ $data['mail'] }} 
+                                            {{ $mail }} 
                                         @endif
                                     </td>
                                 </tr>
 
                                 <tr>
                                     <th>Category</th>
-                                    <td>{{ ucfirst($data["class"]) }}</td>
+                                    <td>{{ ucfirst($product -> class) }}</td>
                                 </tr>
 
                                 <tr>
                                     <th>Price</th>
-                                    <td>{{ number_format($data['price'], 2, '.', ' ') }}$</td>
+                                    <td>{{ $product -> format_price() }}$</td>
                                 </tr>
 
                                 @if($rating)
@@ -268,7 +269,7 @@
 
                             <div id="formcomm" class="commentsbox none" >
                                 
-                                <form method="post" action="{{ route("comment.store", $data["id_user"]) }}" style="width:100%;">
+                                <form method="post" action="{{ route("comment.store", $product -> id_user) }}" style="width:100%;">
                                     
                                     @csrf
                                     <div class="title" style="height: 13vh;;">
@@ -286,7 +287,7 @@
                                         class="commentbar" name="comment" type="text">{{old("comment")}}</textarea>
                                     </div>
 
-                                    <input name="id" type="hidden" value="{{$data['id']}}">
+                                    <input name="id" type="hidden" value="{{ $product -> id }}">
                                     
                                     <br>
                                     <p class="title" style="margin-bottom: 0; margin-top: 60px; ">Rating <abbr>*</abbr></p>
@@ -363,7 +364,7 @@
                                                     }).then((result) => {
                                                         // On redirige vers la page permettant de supprimer le commentaire
                                                         if (result.isConfirmed) {
-                                                            window.location.href = "/comments/delete/" + commid + "/{{ $data['id'] }}"
+                                                            window.location.href = "/comments/delete/" + commid + "/{{ $product -> id }}"
                                                         }
                                                     })
                                                 }

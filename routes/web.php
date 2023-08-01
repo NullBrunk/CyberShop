@@ -266,7 +266,7 @@ Route::prefix('like') -> name("like.") -> group(function () {
 
 /*
 |---------------------------------------------
-|  Liking comments management 
+|  File upload managment
 |
 */
 
