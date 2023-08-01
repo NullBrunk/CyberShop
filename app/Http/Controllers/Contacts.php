@@ -159,9 +159,27 @@ class Contacts extends Controller {
 
         # Get the full array of authors
         foreach(array_keys($exploitable_data) as $name){
-            if(!isset($_SESSION["closed"][$name])){
+            
+            # On vérifie que l'utilisateur n'a pas fermé le MP
+            # mais aussi qu'il n'a pas recu de nouveaux messages.
+            # si il a recu des nouveaux messages on affiche le contact 
+            # meme si il a été fermé par l'utilisateur
+
+            $last_is_unread = end($exploitable_data[$name])["readed"] === 0;
+            $last_is_him = end($exploitable_data[$name])["me"] === false;
+            
+
+            if(isset($_SESSION["closed"][$name])){
+
+                if($last_is_him && $last_is_unread){
+                    array_push( $contact, [ $exploitable_data[$name]["time"], $name ] ); 
+                }
+
+            }
+            else {
                 array_push( $contact, [ $exploitable_data[$name]["time"], $name ] ); 
             }
+
         }
     
         # Sort it
