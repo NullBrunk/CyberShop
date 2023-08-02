@@ -69,6 +69,7 @@
                             </div>
 
                             <div class="products">
+
                                 <div class="categ">
                                     {{ ucfirst($d["class"]) }}
                                 </div>

@@ -168,7 +168,6 @@
 
                             @else
                                 <form class="navbar formshow" method="get" action="{{route("product.edit_form", $product -> id)}}" >  
-                                    @csrf   
                                     <button  class="addtocart" type="submit">EDIT PRODUCT<i style="font-weight: bold !important;" class="bi bi-cart-check"></i></button>
                                 </form>
                             @endif

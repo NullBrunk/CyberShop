@@ -1741,9 +1741,9 @@ tr:nth-child(even) td {
   color: #73c5eb;
 }
 
+
 .show_cart {
   display: flex;
   justify-content: left;
   flex-direction: row;
 }
-
