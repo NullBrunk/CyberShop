@@ -46,7 +46,7 @@ class Products extends Controller
         if(isset($_SESSION["logged"])){
 
             # If i m the seller of this product
-            if($_SESSION["id"] === $data["uid"]){
+            if($_SESSION["id"] === $data -> id_user){
 
                 # Delete all notifs linked to it
                 $notif 
