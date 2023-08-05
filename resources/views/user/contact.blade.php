@@ -91,7 +91,7 @@
                         <div class="cardTitle">{{ $current_user }}</div>
 
 
-                        @if(isset($current_data["unread"]))
+                        @if($current_data["unread"] === true)
                             <div class="unread"></div>
                         @endif
 
@@ -139,15 +139,10 @@
                         
                         <div>
 
-                            @if(!isset($data[$user]["unread"]))
-                                @php($minus = 1)
-                            @else 
-                                @php($minus = 2)
-                            @endif
 
 
                             @if(isset($data[$user]))
-                                @for($i=0; $i < sizeof($data[$user]) - $minus; $i++)
+                                @for($i=0; $i < sizeof($data[$user]) - 2; $i++)
                                     @php($me = $data[$user][$i]['me'])
                                     @php($current = $data[$user][$i])
 

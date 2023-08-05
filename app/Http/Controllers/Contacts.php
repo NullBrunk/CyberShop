@@ -8,7 +8,9 @@ use App\Http\Requests\ContactReq;
 use Illuminate\Http\Request;
 
 use App\Models\Contact;
+use App\Models\Notif;
 use App\Models\User;
+
 
 
 /**
@@ -111,12 +113,12 @@ class Contacts extends Controller {
         foreach(getmsgs($_SESSION["mail"]) as $data){
 
             # Then the contactor is the other user
-            if($data["mail_contacted"] === $_SESSION["mail"]){       
+            if($data["mail_contacted"] === $_SESSION["mail"]){   
+
                 $mail = $data["mail_contactor"];
                 
-                if($data["readed"] == 0){
-                    $exploitable_data[$mail]["unread"] = true;
-                } 
+                $exploitable_data[$mail]["unread"] = $data["readed"] == 0;
+        
 
                 $toput = [ 
                     style($data['content']), 
@@ -131,7 +133,11 @@ class Contacts extends Controller {
 
             # Then the contactor is us
             else {
+
                 $mail = $data["mail_contacted"];
+                
+                $exploitable_data[$mail]["unread"] = false;
+                
                 $toput = [ 
                     style($data['content']),
                     "type" => $data["type"], 
@@ -159,28 +165,13 @@ class Contacts extends Controller {
 
         # Get the full array of authors
         foreach(array_keys($exploitable_data) as $name){
-            
-            # On vérifie que l'utilisateur n'a pas fermé le MP
-            # mais aussi qu'il n'a pas recu de nouveaux messages.
-            # si il a recu des nouveaux messages on affiche le contact 
-            # meme si il a été fermé par l'utilisateur
 
-            $last_is_unread = end($exploitable_data[$name])["readed"] === 0;
-            $last_is_him = end($exploitable_data[$name])["me"] === false;
-            
-
-            if(isset($_SESSION["closed"][$name])){
-
-                if($last_is_him && $last_is_unread){
-                    array_push( $contact, [ $exploitable_data[$name]["time"], $name ] ); 
-                }
-
-            }
-            else {
+            if(!isset($_SESSION["closed"][$name])){
                 array_push( $contact, [ $exploitable_data[$name]["time"], $name ] ); 
             }
 
         }
+
     
         # Sort it
         usort($contact, function ($date1, $date2) {
@@ -197,7 +188,7 @@ class Contacts extends Controller {
                 return to_route("contact.show") -> withErrors(["contact_yourself" => "You cant contact yourself"]);  
             }
             
-            # If the user id hidden (if user have clicked on the "Close MP" button)
+            # If the user is hidden (if user have clicked on the "Close MP" button)
             unset($_SESSION["closed"][$slug]);
 
             # Get the mail of the requested user
@@ -211,6 +202,10 @@ class Contacts extends Controller {
 
             # Mark all wthe messages of the conversation as readed
             self::mark_readed($cont,  $requested_user[0]["id"]);
+
+            
+            # Delete all notifications of that user
+            Notif::where("id_user", "=", $_SESSION["id"]) -> where("moreinfo", "=", $requested_user[0]["id"]) -> where("type", "=", "chatbox") -> delete();
 
 
             return view("user.contact", [ "contact" => $contact, "user" => $slug, "data" => $exploitable_data ]);
@@ -328,6 +323,19 @@ class Contacts extends Controller {
             $contact -> save();
 
         }
+
+        
+        # Send a notification to the concerned user
+
+        Notif::create([
+            "id_user" => $id,
+            "type" => "chatbox",
+            "icon" => "bx bx-chat",
+            "name" => "1 message received.",
+            "content" => "From " . $_SESSION["mail"],
+            "link" => "/chatbox/" . $_SESSION["mail"],
+            "moreinfo" => $_SESSION["id"]
+        ]);
 
     
         return to_route("contact.user", $mail);
