@@ -9,6 +9,12 @@
     
     <script src="/assets/js/htmx.js"></script>
 
+    <style>
+        body {
+            background-color: #282b36 !important;
+        }
+    </style>
+
     <script>
         function menu(id){
             document.getElementById(id).classList.toggle("none")
@@ -114,7 +120,7 @@
         </div>
 
         <div class="right">
-            <div class="chatsmsgs">
+            <div class="chatsmsgs" >
 
                 @if(isset($user))
 
@@ -135,9 +141,9 @@
                         </div>
                     </div>
 
-                    <div class="messages" id="chat">
+                    <div class="messages"  id="chat" >
                         
-                        <div>
+                        <div  data-aos="fade-up" data-aos-duration="200">
 
 
 
@@ -215,7 +221,7 @@
                     
                     </div>
 
-                    <form class="textbar" method="post" action="{{route("contact.store")}}" id="formchat" enctype="multipart/form-data">
+                    <form  class="textbar" method="post" action="{{route("contact.store")}}" id="formchat" enctype="multipart/form-data">
                         
                         @csrf
 
@@ -247,10 +253,12 @@
         fileInput.addEventListener('change', function() {
             form.submit();
         });
-        document.addEventListener('DOMContentLoaded', function() {
+
+        window.addEventListener('load', function() {
             var chat = document.getElementById("chat");
-            chat.scrollTop = chat.scrollHeight; // Défilement vers le bas                
+            chat.scrollTop = chat.scrollHeight; // Défilement vers le bas              
         });
+             
     </script>
 
     {{-- Error --}}
