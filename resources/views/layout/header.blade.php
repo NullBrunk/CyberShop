@@ -283,7 +283,7 @@
                     </li>
                 @else
                     <li style="list-style: none;">
-                        <a class="nav-link" href="{{ route("disconnect") }}">
+                        <a class="nav-link" href="{{ route("logout") }}">
                             <i class="bi bi-box-arrow-left"></i>
                             <span>Logout</span>
                         </a>

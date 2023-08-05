@@ -359,8 +359,6 @@ class Contacts extends Controller {
         else {
             return abort(403);
         }
-
-        return redirect(url() -> previous());
     }
 
 

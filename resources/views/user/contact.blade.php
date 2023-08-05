@@ -7,10 +7,55 @@
 
     <link rel="stylesheet" href="/assets/css/contact.css">
     
-    <script src="/assets/js/contact.js"></script>
     <script src="/assets/js/htmx.js"></script>
 
+    <script>
+        function menu(id){
+            document.getElementById(id).classList.toggle("none")
+        }
 
+
+        function sendmsg(){
+            Swal.fire({
+                title: 'Enter the mail of the user',
+                input: 'text',
+                inputAttributes: {
+                autocapitalize: 'off'
+                },
+                showCancelButton: true,
+                confirmButtonText: 'Contact',
+            
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    return window.location.href = "/chatbox/" + result.value;
+                }
+            })
+        }
+
+        function confirm_delete(url, id){
+            Swal.fire({
+                title: 'Are you sure?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#293e61',
+                cancelButtonColor: '#af2024',
+                confirmButtonText: 'Yes, delete it!'
+
+            }).then((result) => {
+
+                if (result.isConfirmed) {
+                    fetch(url, {
+                        method: "DELETE",
+                        headers: {
+                            "X-CSRF-Token": "{{ csrf_token() }}",
+                        },
+                    }).then(() => {
+                        document.getElementById(id).remove();
+                    })
+                }
+            })
+        }
+    </script>
     
     <div class="chatbody">
         
@@ -112,7 +157,7 @@
                                     @endif
 
 
-                                    <div class="content @if(!$me) his @endif">
+                                    <div class="content @if(!$me) his @endif" id="divmsg{{ $data[$user][$i]['id'] }}">
                                         <div class="contentc" style="display: flex;">
 
                                             @if(isset($old) and $old["me"] !== $me)
@@ -142,7 +187,7 @@
                                                             </button>
                                                         @endif
         
-                                                        <button onclick='confirm_delete( "{{ route("contact.delete", $data[$user][$i]["id"]) }}" )' class="btn btn-primary update delete" style="height: 32px; border 1px solid #bd3b3f; background-color: #af2024; border: 1px solid #bd3b3f;">
+                                                        <button onclick='confirm_delete( "{{ route("contact.delete", $data[$user][$i]["id"]) }}", "divmsg{{$data[$user][$i]["id"]}}" )' class="btn btn-primary update delete" style="height: 32px; border 1px solid #bd3b3f; background-color: #af2024; border: 1px solid #bd3b3f;">
                                                             <i class="bi bi-trash2-fill"></i>
                                                         </button>  
                                                     </div>

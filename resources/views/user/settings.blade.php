@@ -36,7 +36,7 @@
                                             <p class="block" style="color: white; ">My account</p>
                         
                                             <button 
-                                                onclick="window.location.href = '/disconnect'" 
+                                                onclick="window.location.href = '/logout'" 
                                                 class="btn btn-primary logout">
                                                     Disconnect
                                             </button>
@@ -162,7 +162,14 @@
                                             confirmButtonText: 'Yes, delete it!'
                                         }).then((result) => {
                                             if (result.isConfirmed) {
-                                                window.location.href = "/profile/delete"
+                                                fetch("{{ route('profile.delete') }}", {
+                                                    method: "DELETE",
+                                                    headers: {
+                                                        "X-CSRF-Token": "{{ csrf_token() }}",
+                                                    },
+                                                }).then(() => {
+                                                    window.location.href = "/logout";
+                                                });
                                             }
                                         })
                 

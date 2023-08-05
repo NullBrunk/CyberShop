@@ -102,6 +102,9 @@
 
         @if(session("deletedaccount"))
             <script>success("Your account has been removed permanently.", "Deleted")</script>
+            @php
+                session() -> forget("deletedaccount")
+            @endphp
         @endif
 
 @endsection

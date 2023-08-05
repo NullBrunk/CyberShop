@@ -236,6 +236,6 @@ class Users extends Controller {
         # TODO : Supprimer les images dans les messages de contact / images dees produits vendus automatiquement
         $user -> find($_SESSION["id"]) -> delete();
 
-        return to_route("disconnect") -> with("deletedaccount", true);
+        session(["deletedaccount" => true]);
     }
 }

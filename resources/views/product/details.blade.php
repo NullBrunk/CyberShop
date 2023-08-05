@@ -363,7 +363,14 @@
                                                     }).then((result) => {
                                                         // On redirige vers la page permettant de supprimer le commentaire
                                                         if (result.isConfirmed) {
-                                                            window.location.href = "/comments/delete/" + commid + "/{{ $product -> id }}"
+                                                            fetch("/comments/delete/" + commid + "/{{ $product -> id }}", {
+                                                                method: "DELETE",
+                                                                headers: {
+                                                                    "X-CSRF-Token": "{{ csrf_token() }}",
+                                                                },
+                                                            }).then(() => {
+                                                                window.location.reload();
+                                                            });
                                                         }
                                                     })
                                                 }

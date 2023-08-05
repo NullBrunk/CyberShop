@@ -9,6 +9,9 @@
         <meta content="" name="description">
         <meta content="" name="keywords">
 
+        {{-- Favicon --}}
+        <link rel="icon" type="image/png" href="/assets/img/favicon.png"> 
+
         {{-- Google fonts --}}
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Jost:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
@@ -42,7 +45,7 @@
                             <h3 class="text-center mb-4">Login</h3>
                     
                             <form method="post" class="login-form">
-                                {{ csrf_field() }}
+                                @csrf
 
                                 @if($errors->has('email') or $errors->has('pass'))
                                     <div class="alert alert-danger">

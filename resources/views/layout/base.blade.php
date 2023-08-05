@@ -11,6 +11,10 @@
         <meta content="" name="keywords">
 
 
+        {{-- Favicon --}}
+        <link rel="icon" type="image/png" href="/assets/img/favicon.png"> 
+
+
         {{-- Google font --}}
         <link href="/assets/css/fonts.css" rel="stylesheet">
 
