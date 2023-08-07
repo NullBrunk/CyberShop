@@ -58,7 +58,7 @@ class Products extends Controller
         }
 
         # Get all the comments of the product
-        $comments = $product -> comments() -> orderBy('id', 'desc') -> get();
+        $comments = $product -> comments() -> desc() -> get();
 
 
         $rating = self::rating($product);
@@ -104,7 +104,7 @@ class Products extends Controller
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
             -> where("name", "like", "%" . $search . "%")
-            -> orderBy('id', 'desc') ;
+            -> desc() ;
 
         }
         else {
@@ -113,7 +113,7 @@ class Products extends Controller
             -> where("is_main", "=", 1) 
             -> where("class", "=", $category) 
             -> where("name", "like", "%" . $search . "%") 
-            -> orderBy('id', 'desc');
+            -> desc() ;
         }
         $data = $query -> paginate(4);
            
@@ -430,7 +430,7 @@ class Products extends Controller
             $data = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
-            -> orderBy('id', 'desc') 
+            -> desc()  
             -> paginate(4); 
 
         }
@@ -439,7 +439,7 @@ class Products extends Controller
             $data = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
-            -> orderBy('id', 'desc') 
+            -> desc() 
             -> where("class", "=",  $slug)
             -> paginate(4); 
         }
@@ -448,4 +448,29 @@ class Products extends Controller
         return view($view, ["products" => $data, "name" => $slug]);
 
     }
+
+
+
+    /**
+     * Pass all the product details in JSON
+     *
+     * @param Product $product         The product threw model binding
+     *
+     * @return array
+     */
+    public function api_details(Product $product){
+
+        $img_url = $product -> product_images() -> where("is_main", "=", true) -> first() -> img;
+        $data = $product -> toArray();
+
+        # Don't leak the id of the seller
+        unset($data["id_uses"]);
+
+        # Add the main image url of the product
+        $data["img"] = $img_url;
+
+        return $data;
+    }
+
+
 }

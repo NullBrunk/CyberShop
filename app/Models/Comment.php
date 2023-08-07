@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,5 +34,10 @@ class Comment extends Model
 
     public function like(){
         return $this -> hasMany(Like::class, "id_comment");
+    }
+    
+
+    public function scopeDesc(Builder $builder){
+        return $builder -> orderBy("id", "desc");
     }
 }

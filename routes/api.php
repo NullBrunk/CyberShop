@@ -23,11 +23,14 @@ Route::get('/user', function (Request $request) {
 
 Route::get("/products/{category}/{search}", [ Products::class, "search" ]);
 
+# Get all the informations of a product
+
+Route::get("/products/{product}", [ Products::class, "api_details" ]);
+
+
 # get all the comments of a given product 
 
 Route::get("/comments/{id}", [ Comments::class, "get" ]);
 
 # Get the rating of a product
 Route::get("/rating/{product}", [ Products::class, "rating" ]) -> name("rating");
-
-# Get the number of selled product by category

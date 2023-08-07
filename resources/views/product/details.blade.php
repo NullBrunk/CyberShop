@@ -7,14 +7,13 @@
 
 @php($img_is_upper = count($images) > 1)
 @php($mail = $product -> user -> mail)
+
     <body>
         <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
         <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
         
         <script>
 
-
-  
             // Afficher le menu ou le masquer lorsque l'on clique sur les 3 points
             function menu(id){
                 const menu = document.getElementById(id);
@@ -73,6 +72,62 @@
                 else {
                     number.innerText = parseInt(number.innerText) - 1;
                 }
+            }
+
+            function addtocart(id){
+
+                /* Add the product into the cart server side */
+                fetch("/cart/add/" + id).then((resp) => {
+                
+         
+                    // If there is a redirection, the user is not logged
+
+                    if(!resp.redirected){
+                        
+                        resp.json().then((data) => {
+
+                            /* Add the product into the cart client side */
+                            
+                            const id_cart_elem = data.id
+                            const url = location.protocol + "//" + window.location.hostname + ":8000/api/products/" + id
+
+                            fetch(url).then((response) => {
+                                
+                                if (response.ok) {
+                                    response.json().then((data) => {
+
+                                        let cart = document.getElementById("cart_to_fill");
+
+                                        cart.innerHTML += `
+                                            <li id="${id_cart_elem}">
+                                                <p class="show_cart">
+
+                                                    <img src="/storage/product_img/${data.img}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
+
+                                                    <a href="/details/${data.id}" style="display: block;overflow: hidden; width: 57%; margin:auto;">${data.name}</a>
+                                                    <img src="/assets/img/trash.png" onclick="deleteitem(${id_cart_elem})" class="trash-cart">
+                                                </p>
+                                            </li>
+                                            <hr id="hr${id_cart_elem}">
+                                        `     
+                                    })
+                                }
+                            })
+
+                            // Update the span on top of the cart icon 
+                            
+                            const num = document.getElementById("number");
+                            
+                            if(num.innerHTML === ""){
+                                num.innerHTML = 1
+                            }
+                            else {
+                                num.innerHTML = parseInt(num.innerHTML) + 1
+                            }
+                            
+                        })
+                    }
+                })
             }
 
             $(function() {
@@ -160,11 +215,9 @@
                             {{-- Pas connecté OU le vendeur n'est pas nous --}}
                             @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $mail !== $_SESSION["mail"]))
 
-                                <form  class="navbar formshow" method="post" action="{{route("cart.add")}}">  
-                                    @csrf   
-                                    <button class="addtocart" type="submit">BUY NOW<i  style="font-weight: bold !important;" class="bi bi-cart-plus"></i></button>
-                                    <input type="hidden"  name="id" value="{{$product -> id}}">
-                                </form>
+                                <div  class="navbar formshow">
+                                    <button class="addtocart" type="submit" onclick='addtocart("{{$product -> id}}")'>BUY NOW<i  style="font-weight: bold !important;" class="bi bi-cart-plus"></i></button>
+                                </div>
 
                             @else
                                 <form class="navbar formshow" method="get" action="{{route("product.edit_form", $product -> id)}}" >  

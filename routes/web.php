@@ -66,7 +66,7 @@ Route::prefix('cart') -> controller(Carts::class) -> middleware(Logged::class) -
 
     Route::get("/delete/{id}",  'remove') -> name('remove');
 
-    Route::post("/add", 'add') -> name('add');
+    Route::get("/add/{product}", 'add') -> name('add');
 
 });
 

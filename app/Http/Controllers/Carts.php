@@ -13,30 +13,17 @@ class Carts extends Controller {
     /**
      * Initialize a cart by putting all the in database
      * information into a SESSION variable.
-     * 
-     * @param Cart $cart    The cart model
      *
      * @return redirect     Redirection to the page that call this function.
      */
 
-    public function initialize(Cart $cart){
+    public function initialize(){
 
         $_SESSION['cart'] = [];
 
-
-        $data = $cart
-            -> select('carts.id as cid', 'carts.id_user as cidu', 'carts.id_product as cip', 'products.id as pid', 'name', 'price', 'product_images.img as image', 'product_images.is_main')
-            -> join('products', 'products.id', '=', 'carts.id_product')
-            -> join('product_images', 'product_images.id_product', '=', 'products.id') 
-            -> where("is_main", "=", 1) 
-            -> where('carts.id_user', '=', $_SESSION["id"] )
-            -> get();
-
-        
-        foreach($data as $d){
-            $_SESSION['cart'][$d["cid"]] = $d;
+        foreach(Cart::where("id_user", "=", $_SESSION["id"]) -> get() as $d){
+            $_SESSION['cart'][$d["id"]] = $d;
         }
-
 
         return redirect(url() -> previous());
     }
@@ -47,40 +34,32 @@ class Carts extends Controller {
      * Add a product to the cart and call the inititialize function
      * to change the content of the session.
      *
-     * @param Request $reques       The infotmations of the commended product.
-     * @param Product $product      The product model
-     * @param Cart $cart            The cart model
+     * @param Product $product       Product threw model binding.
+
      *     
-     * @return redirect             Redirection to the cart or to a 403 page if 
-     *                              the user is not authorized.
+     * @return response             
      * 
      */
 
-    public function add(Request $request, Cart $cart, Product $product){
+    public function add(Product $product){
         
-        $product_id = $request -> input("id");
-
-        if(!$product_id){
-            return abort(403);
-        }
-
-
-        # Check if the product exists
-        $product -> findOrFail($product_id); 
-    
-
         # Insert it into the cart
-        $cart -> id_user =  $_SESSION["id"];
-        $cart -> id_product = $product_id;
 
-        $cart -> save();
+        $add_to_cart = Cart::create([
+            "id_user" =>  $_SESSION["id"],
+            "id_product" => $product -> id,
+        ]);
+
+        # Add it into the session
+
+        $_SESSION['cart'][$add_to_cart -> id] = $add_to_cart;
 
 
-        # Regenerate it
-        self::initialize($cart);
+        return [
+            "added" => true,
+            "id" => $add_to_cart -> id
+        ];
 
-        
-        return redirect(url() -> previous());        
     }
 
 

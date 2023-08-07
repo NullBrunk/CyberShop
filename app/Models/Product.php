@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,4 +40,7 @@ class Product extends Model
         return $this -> hasMany(Product_images::class, "id_product");
     }
 
+    public function scopeDesc(Builder $builder){
+        return $builder -> orderBy("id", "desc");
+    }
 }

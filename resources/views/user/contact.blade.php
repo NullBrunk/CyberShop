@@ -5,6 +5,8 @@
 
 @section("content")   
 
+    
+
     <link rel="stylesheet" href="/assets/css/contact.css">
     
     <script src="/assets/js/htmx.js"></script>

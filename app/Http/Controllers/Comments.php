@@ -24,7 +24,7 @@ class Comments extends Controller {
     public function getid(Comment $comment){
 
         return $comment -> where("id_user", "=", $_SESSION["id"]) 
-                        -> orderBy("id", "desc") 
+                        -> desc() 
                         -> limit(1) 
                         -> get() 
                         -> toArray()[0]["id"];
@@ -44,7 +44,8 @@ class Comments extends Controller {
      *                                    commented.
      * 
      */
-
+    
+    
     public function store(StoreComments $request, Comment $comment, Notif $notif, $slug){
         
         $req = $request -> validated();
@@ -118,7 +119,7 @@ class Comments extends Controller {
             return view("user.form_comment", [ "data" => $comment -> toArray() ]);
         }
         else {
-            return abort(403);
+            return abort(403); 
         }
     }
 

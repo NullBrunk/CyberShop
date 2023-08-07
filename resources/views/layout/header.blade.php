@@ -1,101 +1,101 @@
 @if(!isset($_SESSION))
-  @php(session_start());
+    @php(session_start());
 @endif
 
 @php($logged = isset($_SESSION["logged"]))
 
 
 @if($logged)
-    <?php
+        <?php
         include_once __DIR__ . "/../../../app/Http/Utils/Notifs.php";
         $array_info = show();
 
         $notifs = $array_info[0];
         $notifs_number = $array_info[1];
-    ?>
+        ?>
 @endif
 
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
     <div class="container d-flex align-items-center" style="max-width: 87vw !important;">
-      <h1 class="logo me-auto"><a href="/">Cybershop</a> </h1>
-      
+        <h1 class="logo me-auto"><a href="/">Cybershop</a> </h1>
+
         <nav id="navbar" class="navbar">
-          
+
             <ul>
 
-            @if($logged)
-                                                                                   
-                <script>
-                    async function deleteitem(id) {
+                @if($logged)
 
-                        // Supprimer un élément du panier
-                        url = "/cart/delete/"+id;
-                        let resp = await fetch(url);
+                    <script>
+                        async function deleteitem(id) {
 
-
-                        // Supprimer l'élément de la div sans avoir a reloader la page
-                        const elem = document.getElementById(id);
-                        elem.remove();
+                            // Supprimer un élément du panier
+                            url = "/cart/delete/" + id;
+                            let resp = await fetch(url);
 
 
-                        // On modifie le nombre affiché en haut du panier
-                        const num = document.getElementById("number");
+                            // Supprimer l'élément de la div sans avoir a reloader la page ainsi que son hr
+                            document.getElementById(id).remove();
+                            document.getElementById("hr" + id).remove()
 
 
-                        if(num.innerHTML == 1){
-                          number = document.getElementById("number");
-                          number.remove()
-                        } 
-                        else {
-                          num.innerHTML = num.innerHTML - 1
+                            // On modifie le nombre affiché en haut du panier
+                            const num = document.getElementById("number");
+
+
+                            if(num.innerHTML == 1){
+                                number = document.getElementById("number");
+                                number.innerHTML = ""
+                            }
+                            else {
+                                num.innerHTML = num.innerHTML - 1
+                            }
                         }
-                      }
-                </script>
+                    </script>
 
-                @if(!empty($notifs))
-                                    
+                    @if(!empty($notifs))
 
-                <li id="cart" style="list-style-type: none;" class="dropdown ">
-                    
-                    <a class="nav-link" href="#">
+
+                        <li id="cart" style="list-style-type: none;" class="dropdown ">
+
+                            <a class="nav-link" href="#">
                         <span class="badge bg-primary badge-number">
                             {{ $notifs_number }}
                         </span>
-                        
-                        <i class="bi bi-bell"></i>
-                        <span>Notifs</span>
-                    </a>
+
+                                <i class="bi bi-bell"></i>
+                                <span>Notifs</span>
+                            </a>
 
 
-                    <ul class="cartn notif">
-                    
-                        @foreach($notifs as $n)
-                            
-                            <li>
-                                <p class="show_cart">
+                            <ul class="cartn notif">
+
+                                @foreach($notifs as $n)
+
+                                    <li>
+                                        <p class="show_cart">
                                     <li class="notification-item">
                                         <i style="color:#19526f; font-size: 32px ;margin: 0 20px 0 10px;" class="{{ $n['icon'] }}"></i>
                                         <div>
                                             <h4 style="color: rgb(68, 68, 68)">{{ $n["title"] }} </h4>
                                             <p> {{ $n["content"] }} </p>
-                                            
+
                                             <a href="{{ $n["more"] }}">
-                                                See more 
+                                                See more
                                                 <i class="bx bx-chevrons-right"></i>
                                             </a>
 
                                         </div>
                                     </li>
-                                <p>
-                            </li>
+                                    <p>
+                        </li>
 
                         @endforeach
 
-                    </ul>
-                </li>
+            </ul>
+            </li>
 
-                @else
+            @else
 
                 <a class="nav-link" href="#">
                     <i class="bi bi-bell"></i>
@@ -103,196 +103,216 @@
                 </a>
 
 
-                @endif
+            @endif
 
-                {{-- Si le tableau représentant le cart n'est pas vide --}}  
-                @if(!empty($_SESSION['cart']))
-                    
-                    @php($total = 0)
+            {{-- Si le tableau représentant le cart n'est pas vide --}}
+            @if(!empty($_SESSION['cart']))
 
-                    <li id="cart" style="list-style-type: none;" class="dropdown">
-                        
-                        <a class="nav-link" href="{{ route("cart.display")}}">
-                            <span id="number" class="badge bg-primary badge-number">{{ sizeof($_SESSION["cart"]) }}</span>
-                            <i class="bi bi-cart3"></i>
-                            <span>Cart</span>
+                @php($total = 0)
 
-                        </a>
+                <li id="cart" style="list-style-type: none;" class="dropdown">
 
-                        <ul class="cartn">
- 
-                            @foreach($_SESSION['cart'] as $p)
-                                
-                                <li id="{{$p['cid']}}">
+                    <a class="nav-link" href="{{ route("cart.display")}}">
+                        <span id="number" class="badge bg-primary badge-number">{{ sizeof($_SESSION["cart"]) }}</span>
+                        <i class="bi bi-cart3"></i>
+                        <span>Cart</span>
+
+                    </a>
+
+                    <ul class="cartn">
+
+                        <div id="cart_to_fill">
+
+                            @foreach($_SESSION['cart'] as $c)
+
+                                <li id="{{ $c -> id }}">
                                     <p class="show_cart">
-                                        <img src="/storage/product_img/{{ $p["image"] }}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
-                                        
-                                        <a href="/details/{{ $p['pid'] }}" style="display: block;overflow: hidden; width: 57%; margin:auto;">{{ $p["name"] }}</a>
-                                        <img src="/assets/img/trash.png" onclick="deleteitem({{$p['cid']}})" class="trash-cart"> 
+
+                                        <img src="/storage/product_img/{{ $c -> product -> product_images() -> where("is_main", "=", 1) -> first() -> img }}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
+
+                                        <a href="/details/{{ $c -> product -> id }}" style="display: block;overflow: hidden; width: 57%; margin:auto;">{{ $c -> product -> name }}</a>
+                                        <img src="/assets/img/trash.png" onclick="deleteitem({{$c -> id}})" class="trash-cart">
                                     </p>
                                 </li>
-                                <hr>
+                                <hr id="hr{{ $c -> id }}">
 
                             @endforeach
 
-                            <li>
-                                <a id="price" class="button" href="{{route("cart.display")}}" style="width: 90%; display: block;">
-                                    Buy
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                @endif
+                        </div>
+
+                        <li>
+                            <a id="price" class="button" href="{{route("cart.display")}}" style="width: 90%; display: block;">
+                                Buy
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endif
 
             @endif
-            
+
             @if(!$logged or empty($_SESSION['cart']))
-                <li style="list-style: none;">
+                <li id="cart" style="list-style-type: none;" class="dropdown">
+
                     <a class="nav-link" href="{{ route("cart.display")}}">
+                        <span id="number" class="badge bg-primary badge-number"></span>
                         <i class="bi bi-cart3"></i>
                         <span>Cart</span>
+
                     </a>
+
+                    <ul class="cartn">
+
+                        <div id="cart_to_fill">
+                        </div>
+
+                        <li>
+                            <a id="price" class="button" href="{{route("cart.display")}}" style="width: 90%; display: block;">
+                                Buy
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             @endif
 
 
-                <li style="list-style: none;">
-                    <a class="nav-link" href="{{route("product.store")}}">
-                        <i class="bi bi-basket3"></i>
-                        <span>Market</span>
-                    </a>
-                </li>  
-                
-                <li style="list-style: none;">
-                    <a class="nav-link" href="{{ route("contact.show") }}">
-                        <i class="bi bi-chat"></i>
-                        <span>Chatbox</span>
-                    </a>
-                </li>
+            <li style="list-style: none;">
+                <a class="nav-link" href="{{route("product.store")}}">
+                    <i class="bi bi-basket3"></i>
+                    <span>Market</span>
+                </a>
+            </li>
+
+            <li style="list-style: none;">
+                <a class="nav-link" href="{{ route("contact.show") }}">
+                    <i class="bi bi-chat"></i>
+                    <span>Chatbox</span>
+                </a>
+            </li>
 
 
-                <li class="dropdown" style="list-style: none;">
-                    <a class="nav-link" href="#">
-                        <i class="bi bi-border-all"></i>
-                        <span>Products</span>
-                    </a>
+            <li class="dropdown" style="list-style: none;">
+                <a class="nav-link" href="#">
+                    <i class="bi bi-border-all"></i>
+                    <span>Products</span>
+                </a>
 
-                    <ul class="products" style="width: 11vw;">                    
-                        <li>
-                            <a href="{{ route("product.show", "informatics") }}">
+                <ul class="products" style="width: 11vw;">
+                    <li>
+                        <a href="{{ route("product.show", "informatics") }}">
 
                                 <span>
                                     Informatics
                                 </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
 
-                        <li>
-                            <a href="{{ route("product.show", "appliances") }}">
+                    <li>
+                        <a href="{{ route("product.show", "appliances") }}">
  
                                 <span>
                                     Appliances
                                 </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
 
-                        <li>
-                            <a href="{{ route("product.show", "furnitures") }}">
+                    <li>
+                        <a href="{{ route("product.show", "furnitures") }}">
 
                                 <span>
                                     Furnitures
                                 </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
 
-                        <li>
-                            <a href="{{ route("product.show", "vehicles") }}">
+                    <li>
+                        <a href="{{ route("product.show", "vehicles") }}">
                                 <span>
                                     Vehicles
                                 </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route("product.show", "dresses") }}">
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route("product.show", "dresses") }}">
                                 
                                 <span>
                                     Dresses
                                 </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
 
-                        <li>
-                            <a href="{{ route("product.show", "gaming") }}">
+                    <li>
+                        <a href="{{ route("product.show", "gaming") }}">
 
                                 <span>
                                     Gaming
                                 </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
 
-                        <li>
-                            <a href="{{ route("product.show", "other") }}">
+                    <li>
+                        <a href="{{ route("product.show", "other") }}">
                               
                                 <span>
                                     Other
                                 </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
 
-                        <li>
-                            <a href="{{ route("product.show", "food") }}">
+                    <li>
+                        <a href="{{ route("product.show", "food") }}">
                               
                                 <span>
                                     Food
                                 </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
 
-                        <hr class="hrproducts">
+                    <hr class="hrproducts">
 
-                        <li>
-                            <a href="{{ route("product.show", "all") }}">
+                    <li>
+                        <a href="{{ route("product.show", "all") }}">
                                 
                                 <span>
                                     All products
                                 </span>
-                            </a>
-                        </li>
+                        </a>
+                    </li>
 
-                    </ul>
-                </li>
+                </ul>
+            </li>
 
- 
+
+            <li style="list-style: none;">
+                <a class="nav-link" href="{{ route("profile.settings") }}">
+                    <i class="bi bi-sliders"></i>
+                    <span>Settings</span>
+
+                </a>
+            </li>
+
+
+
+            {{-- Login button or Logout button --}}
+            @if(!$logged)
                 <li style="list-style: none;">
-                    <a class="nav-link" href="{{ route("profile.settings") }}">
-                        <i class="bi bi-sliders"></i>
-                        <span>Settings</span>
-
+                    <a class="nav-link" href="{{ route("auth.login") }}">
+                        <i class="bi bi-box-arrow-right"></i>
+                        <span>Login</span>
                     </a>
                 </li>
-
-
-
-                {{-- Login button or Logout button --}}
-                @if(!$logged)
-                    <li style="list-style: none;">
-                        <a class="nav-link" href="{{ route("auth.login") }}">
-                            <i class="bi bi-box-arrow-right"></i>
-                            <span>Login</span>
-                        </a>
-                    </li>
-                @else
-                    <li style="list-style: none;">
-                        <a class="nav-link" href="{{ route("logout") }}">
-                            <i class="bi bi-box-arrow-left"></i>
-                            <span>Logout</span>
-                        </a>
-                    </li>
+            @else
+                <li style="list-style: none;">
+                    <a class="nav-link" href="{{ route("logout") }}">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
                 @endif
-            
-            </ul>
 
-            <i class="bi bi-list mobile-nav-toggle"></i>
+                </ul>
+
+                <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>
     </div>
 </header>
