@@ -26,7 +26,7 @@ class StoreReq extends FormRequest
             "category" => "required|max:20",
             "price" => "required|required|regex:/(^[0-9]{0,12}(\.){0,1}[0-9]{1,2}$)/u",
             "description" => "required",
-            "name" => "required|max:29"
+            "name" => "required|max:24"
         ];
     }
 }

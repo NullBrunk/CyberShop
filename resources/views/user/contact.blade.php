@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="/assets/css/contact.css">
     
-    <script src="/assets/js/htmx.js"></script>
+    <script src="/assets/vendor/htmx/htmx.js"></script>
 
     <style>
         body {

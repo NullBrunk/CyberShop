@@ -10,7 +10,7 @@
         
     <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
     <script src="/assets/vendor/typed/typed.js"></script>
-    <script src="/assets/js/htmx.js"></script>
+    <script src="/assets/vendor/htmx/htmx.js"></script>
 
     <body>
         <section id="hero" class="d-flex align-items-center">

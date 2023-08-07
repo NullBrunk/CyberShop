@@ -4,7 +4,7 @@
 
 @section("content")
 
-    <script src="/assets/js/htmx.js"></script>
+    <script src="/assets/vendor/htmx/htmx.js"></script>
     <link href="/assets/css/searchbar.css" rel="stylesheet">
     
 

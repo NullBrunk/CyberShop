@@ -36,7 +36,7 @@
                             <hr>
                                        
                             <ul>
-                                <li class="li"><strong style="display: flex; ">Name:  <input  placeholder="Brown Mushroom" class="input-beautify" type="text" name="name" value="{{old("name")}}" autofocus></strong></li>
+                                <li class="li"><strong style="display: flex; ">Name:  <input  placeholder="Brown Mushroom (Max: 24 characters)" class="input-beautify" type="text" name="name" value="{{old("name")}}" autofocus></strong></li>
                                 <li class="li"><strong style="display: flex; ">Price: <input  placeholder="From 0.00 to 999md " class="input-beautify" type="text" name="price" value="{{old("price")}}"></strong></li>
                                 <li class="li">
                                     <strong style="display: flex; ">Category: 
