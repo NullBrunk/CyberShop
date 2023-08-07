@@ -80,7 +80,6 @@ class Carts extends Controller {
             $id -> delete();
         }
     
-
         unset($_SESSION["cart"][$id["id"]]);
 
         return to_route("root");

@@ -83,16 +83,16 @@ function addtocart(id){
                             let cart = document.getElementById("cart_to_fill");
 
                             cart.innerHTML += `
-                                <li id="${id_cart_elem}">
+                                <li id="cart_${id_cart_elem}">
                                     <p class="show_cart">
 
                                         <img src="/storage/product_img/${data.img}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
 
                                         <a href="/details/${data.id}" style="display: block;overflow: hidden; width: 57%; margin:auto;">${data.name}</a>
-                                        <img src="/assets/img/trash.png" onclick="deleteitem(${id_cart_elem})" class="trash-cart">
+                                        <img src="/assets/img/trash.png" onclick='deleteitem("cart_${id_cart_elem}")' class="trash-cart">
                                     </p>
                                 </li>
-                                <hr id="hr${id_cart_elem}">
+                                <hr id="hrcart_${id_cart_elem}">
                             `     
                         })
                     }

@@ -28,8 +28,8 @@
         
 
         {{-- JS --}}
-        <script src="/assets/js/sweetalert2.js"></script>
-        <script src="/assets/js/jquery.js"></script>
+        <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
+        <script src="/assets/vendor/jquery/jquery.js"></script>
         <script src="/assets/js/alert.js"></script>
         
         

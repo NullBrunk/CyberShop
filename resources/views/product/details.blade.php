@@ -14,6 +14,31 @@
         
         <script src="/assets/js/details.js"></script>
 
+        <script>
+            function deletecomm(commid){
+                Swal.fire({
+                    title: 'Are you sure?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#293e61',
+                    cancelButtonColor: '#af2024',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    // On redirige vers la page permettant de supprimer le commentaire
+                    if (result.isConfirmed) {
+                        fetch("/comments/delete/" + commid + "/{{ $product -> id }}", {
+                            method: "DELETE",
+                            headers: {
+                                "X-CSRF-Token": "{{ csrf_token() }}",
+                            },
+                        }).then(() => {
+                            document.getElementById("comment_div_"+commid).remove()
+                        });
+                    }
+                })
+            }
+        </script>
+
         <main id="main" >
 
               
@@ -253,14 +278,17 @@
 
                             @if($comments)
                                 @foreach($comments as $comm)
+
+                                <div id="comment_div_{{ $comm -> id }}">
+
                                     @php($mail = $comm -> user -> mail)
-                                    <div id="{{ "div" . $comm["id"] }}" class="comments">          
+                                    <div id="{{ "div" . $comm -> id  }}" class="comments">          
                                         <div class="profile">
                                             
                                             <p class="profile">
                                                 <i style="font-size:32px; color:#007185;" class="bi bi-person-circle"> </i>
                                                 <p class="name">
-               
+            
                                                     @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $mail))
                                                         {{ $mail }}
                                                     @else
@@ -273,48 +301,23 @@
                                                 {{-- Menu to edit/delete a comment --}}
                                                 @if(isset($_SESSION["mail"]) && $mail === $_SESSION["mail"])           
                                                     <p class="trash"> 
-                                                        <i id="" onclick='menu("{{$comm["id"]}}")' style="margin-top: 16px;" class="dots bx bx-dots-vertical-rounded"></i>     
+                                                        <i id="" onclick='menu("{{$comm -> id }}")' style="margin-top: 16px;" class="dots bx bx-dots-vertical-rounded"></i>     
                                                     </p>
                                                 @endif 
 
                                             </div>
                                         </div>
 
-                                        <div id="{{$comm['id']}}" class="none">
-
-                                            <script>
-                                                function deletecomm(commid){
-                                                    Swal.fire({
-                                                        title: 'Are you sure?',
-                                                        icon: 'warning',
-                                                        showCancelButton: true,
-                                                        confirmButtonColor: '#293e61',
-                                                        cancelButtonColor: '#af2024',
-                                                        confirmButtonText: 'Yes, delete it!'
-                                                    }).then((result) => {
-                                                        // On redirige vers la page permettant de supprimer le commentaire
-                                                        if (result.isConfirmed) {
-                                                            fetch("/comments/delete/" + commid + "/{{ $product -> id }}", {
-                                                                method: "DELETE",
-                                                                headers: {
-                                                                    "X-CSRF-Token": "{{ csrf_token() }}",
-                                                                },
-                                                            }).then(() => {
-                                                                window.location.reload();
-                                                            });
-                                                        }
-                                                    })
-                                                }
-                                            </script>
+                                        <div id="{{$comm -> id }}" class="none">
 
                                             <div style="display:flex; flex-direction: inherit; margin-bottom: 23px;">
-                                                <a href="{{route("comment.update_form", $comm["id"])}}" 
-                                                    id="{{$comm['id'] . 'updatebutton'}}" class="btn btn-primary menu update">
+                                                <a href="{{route("comment.update_form", $comm -> id )}}" 
+                                                    id="{{$comm -> id  . 'updatebutton'}}" class="btn btn-primary menu update">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
     
     
-                                                <button id="{{$comm['id'] . 'deletebutton'}}" onclick="deletecomm({{ $comm['id']}})" class="btn btn-primary menu" style="margin-left: 0px;">
+                                                <button id="{{$comm -> id  . 'deletebutton'}}" onclick="deletecomm({{ $comm -> id }})" class="btn btn-primary menu" style="margin-left: 0px;">
                                                     <i class="bi bi-trash2-fill"></i>
                                                 </button>
                                             </div>
@@ -322,16 +325,16 @@
 
                                         <span class="titlecomm"style="display:flex;margin-bottom: 0px;padding-bottom: 0px;">
                                             {{ $comm["title"] }}
-                                            <span class="likespan" @if(isset($_SESSION["logged"])) onclick='heartclick("{{ route("like.toggle", $comm["id"]) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")' @endif >
+                                            <span class="likespan" @if(isset($_SESSION["logged"])) onclick='heartclick("{{ route("like.toggle", $comm -> id ) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")' @endif >
                                                 <p class="like">
-                                                    <span id="num{{$comm["id"]}}">
+                                                    <span id="num{{$comm -> id }}">
                                                         {{ $comm -> like() -> count() }}
                                                     </span>
 
-                                                    <i id="icon{{$comm["id"]}}" class="bi"></i>
+                                                    <i id="icon{{$comm -> id }}" class="bi"></i>
 
                                                     <script>
-                                                        haveiliked("{{ route('like.get', $comm['id']) }}", "icon{{$comm['id']}}")
+                                                        haveiliked("{{ route('like.get', $comm -> id ) }}", "icon{{$comm -> id }}")
                                                     </script>
                                                 </p>
                                             </span>
@@ -354,7 +357,7 @@
 
                                             
                                         </div>
-       
+    
 
                                         <div class="comment">
                                             <?php 
@@ -362,7 +365,7 @@
                                             {!! style($comm["content"]) !!}
                                             <hr>
                                         </div>
-                                                            
+                                    </div>                  
                                 @endforeach
                             @endif
 

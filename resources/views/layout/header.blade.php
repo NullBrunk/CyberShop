@@ -7,11 +7,11 @@
 
 @if($logged)
         <?php
-        include_once __DIR__ . "/../../../app/Http/Utils/Notifs.php";
-        $array_info = show();
+            include_once __DIR__ . "/../../../app/Http/Utils/Notifs.php";
+            $array_info = show();
 
-        $notifs = $array_info[0];
-        $notifs_number = $array_info[1];
+            $notifs = $array_info[0];
+            $notifs_number = $array_info[1];
         ?>
 @endif
 
@@ -29,8 +29,10 @@
                     <script>
                         async function deleteitem(id) {
 
+
+                            let idproduct = id.split("_")[1];
                             // Supprimer un élément du panier
-                            url = "/cart/delete/" + id;
+                            url = "/cart/delete/" + idproduct;
                             let resp = await fetch(url);
 
 
@@ -125,16 +127,16 @@
 
                             @foreach($_SESSION['cart'] as $c)
 
-                                <li id="{{ $c -> id }}">
+                                <li id="cart_{{ $c -> id }}">
                                     <p class="show_cart">
 
                                         <img src="/storage/product_img/{{ $c -> product -> product_images() -> where("is_main", "=", 1) -> first() -> img }}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
 
                                         <a href="/details/{{ $c -> product -> id }}" style="display: block;overflow: hidden; width: 57%; margin:auto;">{{ $c -> product -> name }}</a>
-                                        <img src="/assets/img/trash.png" onclick="deleteitem({{$c -> id}})" class="trash-cart">
+                                        <img src="/assets/img/trash.png" onclick='deleteitem("cart_{{$c -> id}}")' class="trash-cart">
                                     </p>
                                 </li>
-                                <hr id="hr{{ $c -> id }}">
+                                <hr id="hrcart_{{ $c -> id }}">
 
                             @endforeach
 
