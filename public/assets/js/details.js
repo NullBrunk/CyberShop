@@ -111,7 +111,10 @@ function addtocart(id){
                 
             })
         }
+
     })
+    
+    return true;
 }
 
 $(function() {

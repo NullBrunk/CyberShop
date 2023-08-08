@@ -120,7 +120,7 @@
                             @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $mail !== $_SESSION["mail"]))
 
                                 <div  class="navbar formshow">
-                                    <button class="addtocart" type="submit" onclick='addtocart("{{$product -> id}}")'>BUY NOW<i  style="font-weight: bold !important;" class="bi bi-cart-plus"></i></button>
+                                    <button class="addtocart" type="submit" onclick='addtocart("{{$product -> id}}"); success("The product has been added to the cart", "Added")'>BUY NOW<i  style="font-weight: bold !important;" class="bi bi-cart-plus"></i></button>
                                 </div>
 
                             @else

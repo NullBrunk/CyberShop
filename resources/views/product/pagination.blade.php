@@ -43,8 +43,8 @@
     </button>
 
 @elseif($products -> nextPageUrl() !== null)
-    
-    <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() }}" hx-swap="outerHTML" hx-trigger="revealed">
+
+<button class="buttonpag" hx-get="{{ $products -> nextPageUrl() }}" hx-swap="outerHTML" hx-trigger="revealed">
         <span class="paginationbutton">
             <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
         </span>
