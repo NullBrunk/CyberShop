@@ -2,10 +2,11 @@
 
 @section("title", ucfirst($name))
 
+
 @section("content")
 
-    <script src="/assets/vendor/htmx/htmx.js"></script>
     <link href="/assets/css/searchbar.css" rel="stylesheet">
+    <script src="/assets/vendor/htmx/htmx.js"></script>
     
 
     <body>
@@ -22,7 +23,6 @@
                 else {
                     return false;
                 }
-
             }
         </script>
 
@@ -43,14 +43,7 @@
             </div>
         @endif
 
-        <div id="portfolio" class="portfolio">
-            <div class="container">
-                <div class="row" id="container">
-                </div>
-            </div>
-        </div>
     
-
         <section id="baseproduct" class="portfolio" style="padding: 50px 0px;">
 
             <div class="container" data-aos="fade-up">

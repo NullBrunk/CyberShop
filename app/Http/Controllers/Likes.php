@@ -6,7 +6,9 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Like;
 
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 
 class Likes extends Controller
 {

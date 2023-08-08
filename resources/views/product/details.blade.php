@@ -39,8 +39,8 @@
             }
         </script>
 
-        <main id="main" >
 
+        <main id="main" >
               
             {{-- On se positionne en dessous de la navbar --}}
             <section id="breadcrumbs" class="breadcrumbs" style="padding-top: 86px; padding-bottom: 0px !important;">
@@ -70,6 +70,7 @@
                                                         </div>
                                                     @endforeach
                                                 @else 
+                                                
                                                     <div class="card" style="height: 75vh; display: flex; border: none;">
                                                         <div style="display: flex; height: 100%; width: 85%; margin: auto;">
                                                             <img unselectable="on" style="max-height: 100%; max-width:100%; margin: auto;" src="/storage/product_img/{{$images[0]['img']}}" alt="" />

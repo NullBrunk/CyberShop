@@ -198,3 +198,4 @@ Route::prefix('/upload') -> controller(Tmpimage::class) -> middleware(Logged::cl
     Route::delete("delete", "delete") -> name("delete") -> middleware(Logged::class);
 
 });
+

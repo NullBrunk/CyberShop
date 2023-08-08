@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Tmp_images;
 use Illuminate\Support\Facades\Storage;
 
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 
 class Tmpimage extends Controller
 {
