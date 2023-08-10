@@ -15,15 +15,13 @@ class Comments extends Controller {
     /**
      * Get the id of the latest user comment
      * 
-     * @param Comment $comment      the Comment model
-     * 
      * @return int                  the id
      * 
      */
 
-    public function getid(Comment $comment){
+    public function getid(){
 
-        return $comment -> where("id_user", "=", $_SESSION["id"]) 
+        return Comment::where("id_user", "=", $_SESSION["id"]) 
                         -> desc() 
                         -> limit(1) 
                         -> get() 
@@ -46,37 +44,41 @@ class Comments extends Controller {
      */
     
     
-    public function store(StoreComments $request, Comment $comment, Notif $notif, $slug){
+    public function store(StoreComments $request, int $slug){
         
+
         $req = $request -> validated();
 
 
         # Store the comment in the database 
 
-        $comment -> id_product = $req["id"];
-        $comment -> writed_at = date('Y-m-d H:i:s');
-        $comment -> id_user = $_SESSION['id'];
-        $comment -> title = $req['title'];
-        $comment -> content = htmlspecialchars($req["comment"]);
-        $comment -> rating = $req["rating"];
+        Comment::create([
+            "id_product" => $req["id"],
+            "writed_at" => date('Y-m-d H:i:s'),
+            "id_user" => $_SESSION['id'],
+            "title" => $req['title'],
+            "content" => htmlspecialchars($req["comment"]),
+            "rating" => $req["rating"],
+        ]);
 
-        $comment -> save();
 
 
         # Generate a notifications to the seller of the product
 
-        $notif -> id_user = $slug;
-        $notif -> icon = "bx bx-detail";
-        $notif -> name = "Commented product.";
-        $notif -> content = "From " . $_SESSION["mail"] . ".";
-        $notif -> link = "/details/" . $req["id"] . "/#div" . self::getid($comment);
-        $notif -> type = "comment";
-        $notif -> moreinfo = $req["id"];
+        Notif::create([
+            "id_user" => $slug,
+            "icon" => "bx bx-detail",
+            "name" => "Commented product.",
+            "content" => "From " . $_SESSION["mail"] . ".",
+            "link" => "/details/" . $req["id"] . "/#div" . self::getid(),
+            "type" => "comment",
+            "moreinfo" => $req["id"],
+        ]);
 
-        $notif -> save();
 
 
-        return to_route("details", $req["id"]) -> with('posted', "Your comment has been posted !");
+        return to_route("details", $req["id"]) 
+                -> with('posted', "Your comment has been posted !");
     }
 
 
@@ -91,7 +93,7 @@ class Comments extends Controller {
      *                              (thanks to the $article variable).
      */
 
-    public function delete(Comment $comment, $article){
+    public function delete(Comment $comment, int $article){
 
         if($comment["id_user"] === $_SESSION["id"]){
             $comment -> delete();
@@ -129,20 +131,19 @@ class Comments extends Controller {
      * Edit a comment if the user is allowed to
      *
      * @param UpdateComment $request     The new informations to put in the comment
-     * @param Comment $comment           The comment model
      * 
      * @return redirect                  Redirection to the location where the 
      *                                   comment has been posted.
      */
 
-    public function edit(UpdateComment $request, Comment $comment){
+    public function edit(UpdateComment $request){
 
         # If the user clicked on the abort button
         if($request["abort"] === "Abort"){
             return to_route("details", $request["id_product"]);
         }
 
-        $comm = $comment -> findOrFail($request['id']) ;
+        $comm = Comment::findOrFail($request['id']) ;
         
         if($comm -> id_user === $_SESSION["id"]){
             $comm -> update([ 
@@ -156,6 +157,7 @@ class Comments extends Controller {
             return abort(403);
         }
 
-        return to_route("details", $request["id_product"]) -> with("updatedcomm", "Your comment has been updated !");        
+        return to_route("details", $request["id_product"]) 
+                -> with("updatedcomm", "Your comment has been updated !");        
     }
 }

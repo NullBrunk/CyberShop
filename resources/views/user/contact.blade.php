@@ -6,6 +6,12 @@
 @section("content")   
 
     
+    <style>
+        .swal2-popup {
+            background: #3e404b !important;
+            color: white !important;
+        }        
+    </style>
 
     <link rel="stylesheet" href="/assets/css/contact.css">
     
@@ -89,7 +95,7 @@
 
                     @php($current_user = $contact[$i][1])
                     @php($current_data = $data[$current_user])
-                    @php($last = end($current_data))
+                    @php($last = $current_data[sizeof($data[$current_user]) - 3])
 
                     <div onclick='window.location.href = "{{route("contact.user", $current_user)}}"' class="cardcontact @if(isset($user) && $user === $current_user) selected @endif" style="user-select: none !important;">
                         <div class="cardIcon">
@@ -155,7 +161,7 @@
                                     @php($current = $data[$user][$i])
 
 
-                                    @if(!isset($old) or (isset($old) && date('d', strtotime($current["time"])) !== date('d', strtotime($old["time"]) )));
+                                    @if(!isset($old) or (isset($old) && date('d', strtotime($current["time"])) !== date('d', strtotime($old["time"]) )))
                                         <div class="showtime" style="user-select: none !important;">{{ date('d F, Y', strtotime($current["time"])) }}</div>
                                     @endif
 
@@ -261,6 +267,8 @@
             chat.scrollTop = chat.scrollHeight; // Défilement vers le bas              
         });
              
+
+        
     </script>
 
     {{-- Error --}}

@@ -22,7 +22,6 @@ class Products extends Controller
     /**
      * Get the details of a given product
      *
-     * @param Notif $notif          The notif model
      * @param Product $product      The product threw model binding 
      * 
      * @return view                 A view with all the details of
@@ -31,7 +30,7 @@ class Products extends Controller
      * 
      */
 
-     public function get_details(Notif $notif, Product $product){
+     public function get_details(Product $product){
                   
         include_once __DIR__ . "/../Utils/Style.php";
 
@@ -41,7 +40,8 @@ class Products extends Controller
         $images = $product -> product_images() -> orderBy("is_main", "desc") -> get() -> toArray();
 
         # Delete all notifications linked to it
-        session_start();
+        if(!isset($_SESSION))
+            session_start();
 
         if(isset($_SESSION["logged"])){
 
@@ -49,8 +49,7 @@ class Products extends Controller
             if($_SESSION["id"] === $data -> id_user){
 
                 # Delete all notifs linked to it
-                $notif 
-                -> where("id_user", "=", $_SESSION["id"]) 
+                Notif::where("id_user", "=", $_SESSION["id"]) 
                 -> where("type", "=", "comment")
                 -> where("moreinfo", "=", $data["id"])
                 -> delete();
@@ -64,7 +63,13 @@ class Products extends Controller
         $rating = self::rating($product);
 
 
-        return view("product.details", ["product" => $product, "images" => $images, "stylised_description" => $stylised_description, "comments" => $comments, "rating" => $rating]);
+        return view("product.details", [
+            "stylised_description" => $stylised_description, 
+            "comments" => $comments, 
+            "product" => $product, 
+            "images" => $images, 
+            "rating" => $rating
+        ]);
     
     }
 
@@ -74,15 +79,14 @@ class Products extends Controller
      * Search threw all the product with a LIKE operator
      *
      * @param Request $request
-     * @param Product $product   The product model
-     * @param string $category   The ctageory of the product
+     * @param string $category   The category of the product
      *  
      * @return view
      * 
      */
 
     
-    public function search(Request $request, Product $product, string $category)
+    public function search(Request $request, string $category)
     {
         $rating = [];
 
@@ -99,7 +103,7 @@ class Products extends Controller
        
         
         if($category === "all"){
-            $query = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
+            $query = Product::select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
 
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
@@ -108,7 +112,7 @@ class Products extends Controller
 
         }
         else {
-            $query = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
+            $query = Product::select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
             -> where("class", "=", $category) 
@@ -160,15 +164,13 @@ class Products extends Controller
      * Store a product from the /sell page.
      *
      * @param Request $request       The request with all the informations
-     * @param Product $product       The product model
      * @param Tmp_images $tmp_image   The temporary images model
-     * @param Product_
      *  
      * @return view                  Return the view of /sell (will change)
      * 
      */
 
-     public function store(StoreReq $request, Product $product, Tmp_images $tmp_image){      
+     public function store(StoreReq $request,Tmp_images $tmp_image){      
 
          
         $req = $request -> validated();
@@ -282,8 +284,6 @@ class Products extends Controller
      *
      * @param UpdateProduct $request     The informations of the new product 
      * @param Product $id                The product threw model binding
-     * @param Comment $comment           The comment model
-     * @param Cart $cart                 The cart model
      *  
      * @return redirect                  A 403 page if he is not allowed
      *                                   redirect to the page of the updated product
@@ -291,7 +291,7 @@ class Products extends Controller
      * 
      */
 
-    public function edit(UpdateProduct $req, Product $product, Comment $comment, Cart $cart){
+    public function edit(UpdateProduct $req, Product $product){
 
         if($product -> id_user !== $_SESSION['id']){
             return abort(403);
@@ -404,13 +404,12 @@ class Products extends Controller
     /** 
      * Show products of a given category (in a little card)
      * 
-     * @param Product $product         The product model
      * @param string $slug             The category name
      * 
      * @return view
     */
 
-    public function show(Request $request, Product $product, $slug){
+    public function show(Request $request, $slug){
 
         if(!in_array($slug, [ "all", "gaming", "informatics", "dresses", "food", "other", "furnitures",  "other", "vehicles", "appliances" ])){
             return abort(404);
@@ -427,7 +426,7 @@ class Products extends Controller
         
         if($slug === "all"){
 
-            $data = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
+            $data = Product::select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
             -> desc()  
@@ -436,7 +435,7 @@ class Products extends Controller
         }
         else {
 
-            $data = $product -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
+            $data = Product::select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
             -> desc() 

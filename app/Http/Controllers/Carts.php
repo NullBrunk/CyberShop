@@ -67,10 +67,9 @@ class Carts extends Controller {
     /**
      * Remove a product from teh SESSION cart and from the Database.
      *
-     * @param Cart $id      The concerned produc (threw model binding)
+     * @param Cart $id      The concerned product (threw model binding)
      * 
-     * @return redirect     Redirection a redirection, but this method is always
-     *                      called from js in a fetch(), so no matter what it returns
+     * @return redirect     
      * 
      */
 

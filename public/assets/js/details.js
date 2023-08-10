@@ -52,9 +52,11 @@ async function heartclick(url, id, num){
     let number = document.getElementById(num)
     if(elem.classList.contains("bi-heart-fill")){
         number.innerText = parseInt(number.innerText) + 1;
+        return true;
     }
     else {
         number.innerText = parseInt(number.innerText) - 1;
+        return false;
     }
 }
 
@@ -120,3 +122,7 @@ function addtocart(id){
 $(function() {
     $('#commentTextBar').markItUp(mySettings);
 })        
+
+
+
+  

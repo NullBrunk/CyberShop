@@ -75,10 +75,9 @@ class Contacts extends Controller {
      * 
      */
 
-    public function mark_readed(Contact $comment, int $id){
+    public function mark_readed(int $id){
 
-        $comment 
-        -> where("id_contacted", "=", $_SESSION["id"])
+        Contact::where("id_contacted", "=", $_SESSION["id"])
         -> where("id_contactor", "=", $id)
         -> where("readed", "=", 0)
 
@@ -92,15 +91,13 @@ class Contacts extends Controller {
     /**
      * Get all the messages of the user and show them
      *
-     * @param Contact $cont    Contact model
-     * @param User $user       User model
      * @param string $slug     A mail to show, or nothing
      * 
      * @return view            Une vue avec tous les messages échangés
      * 
      */
 
-    public function show(Contact $cont, User $user, $slug = false){
+    public function show($slug = false){
         
         include_once __DIR__ . "/../Utils/Style.php";
 
@@ -185,14 +182,15 @@ class Contacts extends Controller {
             
             # If the user is contacting himself
             if($slug === $_SESSION["mail"]){
-                return to_route("contact.show") -> withErrors(["contact_yourself" => "You cant contact yourself"]);  
+                return to_route("contact.show") 
+                    -> withErrors(["contact_yourself" => "You cant contact yourself"]);  
             }
             
             # If the user is hidden (if user have clicked on the "Close MP" button)
             unset($_SESSION["closed"][$slug]);
 
             # Get the mail of the requested user
-            $requested_user = $user -> where("mail", "=", $slug) -> get() -> toArray();
+            $requested_user = User::where("mail", "=", $slug) -> get() -> toArray();
 
             
             # If the requested user does not exist
@@ -201,18 +199,25 @@ class Contacts extends Controller {
 
 
             # Mark all wthe messages of the conversation as readed
-            self::mark_readed($cont,  $requested_user[0]["id"]);
+            self::mark_readed($requested_user[0]["id"]);
 
             
             # Delete all notifications of that user
-            Notif::where("id_user", "=", $_SESSION["id"]) -> where("moreinfo", "=", $requested_user[0]["id"]) -> where("type", "=", "chatbox") -> delete();
+            Notif::where("id_user", "=", $_SESSION["id"]) 
+                    -> where("moreinfo", "=", $requested_user[0]["id"]) 
+                    -> where("type", "=", "chatbox") 
+                    -> delete();
 
 
-            return view("user.contact", [ "contact" => $contact, "user" => $slug, "data" => $exploitable_data ]);
+            return view("user.contact", [
+                "contact" => $contact, "user" => $slug, "data" => $exploitable_data 
+            ]);
         }   
 
         else {
-            return view("user.contact", [ "contact" => $contact, "data" => $exploitable_data ]);
+            return view("user.contact", [ 
+                "contact" => $contact, "data" => $exploitable_data 
+            ]);
         }
     }
 
@@ -239,14 +244,12 @@ class Contacts extends Controller {
      * Store a message sended to a specific user
      *
      * @param Request $request      The request with all the informations
-     * @param Contact $contact         The contact model
-     * @param User $user               The user model
      * 
      * @return redirect                Redirect to the contact page with the right slug   
      * 
      */
 
-    public function store(Request $request, Contact $contact, User $user){
+    public function store(Request $request){
 
         # Get the slug
         $url = explode("/chatbox/", url() -> previous());
@@ -264,11 +267,12 @@ class Contacts extends Controller {
         
 
         # Test if the user exists
-        $id = $user -> where("mail", "=", $mail) -> get() -> toArray();
+        $id = User::where("mail", "=", $mail) -> get() -> toArray();
 
         
         if(empty($id)){
-            return to_route("contact.show") -> withErrors(["contact_no_one" => "You cant contact this user !"]);
+            return to_route("contact.show") 
+                    -> withErrors(["contact_no_one" => "You cant contact this user !"]);
         }
         else {
             $id = $id[0]["id"];
@@ -289,17 +293,15 @@ class Contacts extends Controller {
                 
                 
                 # Add the img to the contact messages
-                $contact -> id_contactor = $_SESSION["id"];
-                $contact -> id_contacted = $id;
-        
-                $contact -> content = $img_path;
-                
-                $contact -> type = "img";
-                $contact -> time = date('Y-m-d H:i:s');
-                $contact -> readed = false;
-                
-                $contact -> save();
-            
+                Contact::create([
+                    "id_contactor" => $_SESSION["id"],
+                    "id_contacted" => $id,
+                    "content" => $img_path,
+                    "type" => "img",
+                    "time" => date('Y-m-d H:i:s'),
+                    "readed" => false,
+                ]);
+
             }
         }
         else {
@@ -312,15 +314,13 @@ class Contacts extends Controller {
     
             # Add the message
     
-            $contact -> id_contactor = $_SESSION["id"];
-            $contact -> id_contacted = $id;
-    
-            $contact -> content = htmlspecialchars($req["content"]);
-            
-            $contact -> time = date('Y-m-d H:i:s');
-            $contact -> readed = false;
-            
-            $contact -> save();
+            Contact::create([
+                "id_contactor" => $_SESSION["id"],
+                "id_contacted" => $id,
+                "content" => htmlspecialchars($req["content"]),
+                "time" => date('Y-m-d H:i:s'),
+                "readed" => false,
+            ]);
 
         }
 
@@ -386,7 +386,7 @@ class Contacts extends Controller {
 
         $contact_message = $contact -> toArray();
 
-        if($contact_message["id_contactor"] === $_SESSION["id"]){ // and $contact_message["type"] === "text" and $request -> server("HTTP_HX_REQUEST") === "true"){
+        if($contact_message["id_contactor"] === $_SESSION["id"] and $contact_message["type"] === "text" and $request -> server("HTTP_HX_REQUEST") === "true"){
             return view("user.form_contact", [ "message" => $contact_message]);
         }
         else {

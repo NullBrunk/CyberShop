@@ -11,7 +11,35 @@
     <body>
         <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
         <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+        <script src="/assets/vendor/confetti/confetti.min.js"></script>
+
+        <!-- JS -->
+        <script src="/assets/vendor/confetti/confetti.min.js"></script>
+        <script type="text/javascript">
+
+
+
+        function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+        }
         
+        const btn = document.querySelector('#btn');
+        const canvas = document.querySelector('#confetti-canvas');
+        function onButtonClick(y){
+            var myConfetti = confetti.create(canvas, {
+                resize: true,
+                useWorker: true
+            });
+            myConfetti({
+                spread: 80,
+                particleCount: 150,
+                origin: { y: y, x: 0.88 }
+            });
+        }
+        </script>
+
+        <!-- CSS -->
+
         <script src="/assets/js/details.js"></script>
 
         <script>
@@ -326,7 +354,7 @@
 
                                         <span class="titlecomm"style="display:flex;margin-bottom: 0px;padding-bottom: 0px;">
                                             {{ $comm["title"] }}
-                                            <span class="likespan" @if(isset($_SESSION["logged"])) onclick='heartclick("{{ route("like.toggle", $comm -> id ) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")' @endif >
+                                            <span id="bruno{{ $comm -> id }}" class="likespan" >
                                                 <p class="like">
                                                     <span id="num{{$comm -> id }}">
                                                         {{ $comm -> like() -> count() }}
@@ -340,6 +368,24 @@
                                                 </p>
                                             </span>
                                         </span>
+
+                                        <script>
+                                            document.getElementById("bruno{{ $comm -> id }}").addEventListener("click", (event) => {
+                                                
+                                                @if(isset($_SESSION["logged"])) 
+                                                    heartclick("{{ route("like.toggle", $comm -> id ) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")
+                                                    
+                                                    if(!document.getElementById("icon{{$comm["id"]}}").classList.contains("bi-heart-fill")) { 
+
+                                                        const m = (0.2 - 1.0) / (112 - 710);
+                                                        const b = 1.0 - m * 710;
+        
+                                                        onButtonClick(m * event.clientY + b); 
+                                                    }
+                                                @endif 
+                                            })
+                                        </script>
+
 
 
                                         <div class="stars">
@@ -375,6 +421,7 @@
             </section>
         </main>
 
+      
 
         <script src="/assets/js/products.js"></script>
 

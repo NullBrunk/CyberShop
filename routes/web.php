@@ -11,9 +11,6 @@ use App\Http\Controllers\Carts;
 use App\Http\Controllers\Index;
 use App\Http\Controllers\Likes;
 
-use App\Http\Middleware\Redirect;
-use App\Http\Middleware\Logged;
-
 
 /*
 |---------------------------------------------
@@ -34,12 +31,14 @@ Route::get('/', [ Index::class , "show"]) -> name("root");
 */
 
 Route::get('/logout', function () {
+
     session_destroy();
     return redirect('/');
-}) -> name("logout") -> middleware(Logged::class);
+
+}) -> name("logout") -> middleware("auth");
 
 
-Route::name("auth.") -> controller(Users::class) -> middleware(Redirect::class) -> group(function (){
+Route::name("auth.") -> controller(Users::class) -> middleware("redirect") -> group(function (){
 
     Route::get('/signup', "signup_form") -> name("signup");
 
@@ -58,7 +57,7 @@ Route::name("auth.") -> controller(Users::class) -> middleware(Redirect::class) 
 |  Cart management 
 */
 
-Route::prefix('cart') -> controller(Carts::class) -> middleware(Logged::class) -> name("cart.") -> group(function () {
+Route::prefix('cart') -> controller(Carts::class) -> middleware("auth") -> name("cart.") -> group(function () {
     
     Route::view("show", "user.cart") -> name("display");
 
@@ -77,7 +76,7 @@ Route::prefix('cart') -> controller(Carts::class) -> middleware(Logged::class) -
 |  Comments management 
 */
 
-Route::prefix('comments') -> controller(Comments::class) -> middleware(Logged::class) -> name("comment.")  -> group(function () {
+Route::prefix('comments') -> controller(Comments::class) -> middleware("auth") -> name("comment.")  -> group(function () {
     
     Route::get("/update/{comment}", "update_form") -> name("update_form");
 
@@ -98,19 +97,19 @@ Route::prefix('comments') -> controller(Comments::class) -> middleware(Logged::c
 
 Route::prefix('product') -> controller(Products::class) -> name("product.") -> group(function () {
 
-    Route::view("/market", "product.market") -> middleware(Logged::class) -> name("sell");
+    Route::view("/market", "product.market") -> middleware("auth") -> name("sell");
 
     Route::get(
         "/edit/{product}", "edit_form" 
-    ) -> middleware(Logged::class) -> name("edit_form");
+    ) -> middleware("auth") -> name("edit_form");
 
     Route::post(
         "/market", "store" 
-    ) -> middleware(Logged::class) -> name("store");
+    ) -> middleware("auth") -> name("store");
 
     Route::post(
         "/edit/{product}", "edit"
-    ) -> middleware(Logged::class) -> name("edit");
+    ) -> middleware("auth") -> name("edit");
     
     Route::get(
         "/category/search/{category}/", "search"
@@ -129,7 +128,7 @@ Route::get("/details/{product}", [ Products::class, "get_details" ]) -> name("de
 |  Settings management 
 */
 
-Route::prefix('settings') -> controller(Users::class) -> middleware(Logged::class) -> name("profile.") -> group(function () {
+Route::prefix('settings') -> controller(Users::class) -> middleware("auth") -> name("profile.") -> group(function () {
     
     Route::post("", "settings") -> name("settings");
 
@@ -146,7 +145,7 @@ Route::prefix('settings') -> controller(Users::class) -> middleware(Logged::clas
 |  Chatbox management 
 */
 
-Route::prefix('chatbox') -> controller(Contacts::class) -> middleware(Logged::class) -> name("contact.") -> group(function () {
+Route::prefix('chatbox') -> controller(Contacts::class) -> middleware("auth") -> name("contact.") -> group(function () {
 
     Route::get("edit/{contact}","show_form") -> name("edit_form");
 
@@ -178,7 +177,7 @@ Route::prefix('like') -> controller(Likes::class,) -> name("like.") -> group(fun
     
     Route::get(
         "/toggle/{comment}", "toggle"
-    ) -> name("toggle") -> middleware(Logged::class);
+    ) -> name("toggle") -> middleware("auth");
 
     Route::get(
         "/get/{comment}", "is_liked"
@@ -192,10 +191,10 @@ Route::prefix('like') -> controller(Likes::class,) -> name("like.") -> group(fun
 |  File upload managment
 */
 
-Route::prefix('/upload') -> controller(Tmpimage::class) -> middleware(Logged::class) -> name("tmp.") -> group(function () {
+Route::prefix('/upload') -> controller(Tmpimage::class) -> middleware("auth") -> name("tmp.") -> group(function () {
     
     Route::post("store", "store") -> name("store") ;
-    Route::delete("delete", "delete") -> name("delete") -> middleware(Logged::class);
+    Route::delete("delete", "delete") -> name("delete") -> middleware("auth");
 
 });
 

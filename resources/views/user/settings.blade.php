@@ -8,6 +8,13 @@
         @include('layout.header')
 
 
+        <style>
+            .swal2-popup {
+                background: #3e404b !important;
+                color: white !important;
+            }        
+        </style>
+        
         <div style="padding-top: 108px;"></div>
 
 

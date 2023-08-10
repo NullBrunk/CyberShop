@@ -299,14 +299,14 @@
             @if(!$logged)
                 <li style="list-style: none;">
                     <a class="nav-link" href="{{ route("auth.login") }}">
-                        <i class="bi bi-box-arrow-right"></i>
+                        <i class="bi bi-box-arrow-left"></i>
                         <span>Login</span>
                     </a>
                 </li>
             @else
                 <li style="list-style: none;">
                     <a class="nav-link" href="{{ route("logout") }}">
-                        <i class="bi bi-box-arrow-left"></i>
+                        <i class="bi bi-box-arrow-right"></i>
                         <span>Logout</span>
                     </a>
                 </li>

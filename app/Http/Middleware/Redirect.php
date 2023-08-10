@@ -15,11 +15,11 @@ class Redirect
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!isset($_SESSION)){
+        if(!isset($_SESSION)) {
             session_start();
         }
 
-        if(isset($_SESSION["logged"])){
+        if(isset($_SESSION["logged"])) {
             return to_route("root");
         }
 

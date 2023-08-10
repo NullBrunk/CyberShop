@@ -10,6 +10,7 @@ if(!isset($_SESSION)){
     session_start();
 }
 
+
 class Likes extends Controller
 {
 
@@ -29,7 +30,11 @@ class Likes extends Controller
             return [ "value" => false ];
         }
 
-        return !empty($comment -> like() -> where("id_user", "=", $_SESSION["id"]) -> get() -> toArray()) ? [ "value" => true ] : [ "value" => false ];
+        return !empty(
+            $comment -> like() 
+                -> where("id_user", "=", $_SESSION["id"]) 
+                -> get() -> toArray()
+        ) ? [ "value" => true ] : [ "value" => false ];
     }
 
 
@@ -39,23 +44,23 @@ class Likes extends Controller
      * like the comment
      *
      * @param Like $like            the like model
-     * @param Comment $comment          the comment id 
+     * @param Comment $comment          the comment threw model binding 
      *
      */
 
-    public function toggle(Like $like, Comment $comment){
+    public function toggle(Comment $comment){
         
         if(self::is_liked($comment)["value"]){
-            $like -> where("id_user", "=", $_SESSION["id"]) -> where("id_comment", "=", $comment -> id) -> delete();
+            Like::where("id_user", "=", $_SESSION["id"]) 
+                -> where("id_comment", "=", $comment -> id) 
+                -> delete();
         }   
         else {
-            $like -> id_user = $_SESSION["id"];
-            $like -> id_comment = $comment -> id;
-
-            $like -> save();
+            Like::create([
+                "id_user" => $_SESSION["id"],
+                "id_comment" => $comment -> id,
+            ]);
+           
         }     
     }
-    
-
-
 }

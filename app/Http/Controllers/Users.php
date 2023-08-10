@@ -25,14 +25,13 @@ class Users extends Controller {
      * Log the user if he gave the good username and password.
      *
      * @param Login $request     The request with the username & password.
-     * @param User  $user        The user model
      *  
      * @return redirect          redirect to / if he is logged 
      *                           redirect to /login if he isn't.
      * 
      */
     
-    public function login(Login $request, User $user){
+    public function login(Login $request){
                
         $req = $request -> validated();
 
@@ -42,7 +41,7 @@ class Users extends Controller {
             return redirect('/');
         }
 
-        $data = $user -> where([
+        $data = User::where([
             [ "mail", "=",  $req["email"]],
             [ "pass", "=", hash("sha512", hash("sha512", $req["pass"])) ],
         ]) -> get() -> toArray();
@@ -92,10 +91,6 @@ class Users extends Controller {
 
      public function signup_form(){
 
-        /* Note :
-           
-        */
-
         $a = rand(1, 100);
         $b = rand(1, 100);
 
@@ -110,7 +105,6 @@ class Users extends Controller {
      * Signup a user
      *
      * @param Signup $request     The informations to store a new user in the database
-     * @param User   $user        The user model 
      * 
      * @return redirect           Redirect / when he signed up
      * 
@@ -127,14 +121,13 @@ class Users extends Controller {
         }
         session() -> forget("captcha");
         
-        $user -> mail = $req["mail"];
-        $user -> pass = hash("sha512", hash("sha512", $req["pass"]));
-        
-        $user -> save();
-
+        User::create([
+            "mail" => $req["mail"],
+            "pass" => hash("sha512", hash("sha512", $req["pass"])),
+        ]);
+      
 
         return to_route("auth.login");
-
     }
 
 
@@ -143,19 +136,18 @@ class Users extends Controller {
      * Update the settings of a given user if he is allowed to 
      *
      * @param UpdateProfile $request     The request with all the valuable informations 
-     * @param User          $user        The user model
      * 
      * @return redirect                  Redirect to the settings page in all the cases
      * 
      */
     
-    public function settings(UpdateProfile $request, User $user){
+    public function settings(UpdateProfile $request){
 
         $req = $request -> validated();
 
         # Check if the hashed given password is the good one
 
-        $verify_user = $user -> where([
+        $verify_user = User::where([
             [ "mail", "=",  $_SESSION['mail']],
             [ "pass", "=", hash("sha512", hash("sha512", $req['oldpass'])) ],
         ]) -> get() -> toArray();
@@ -165,14 +157,15 @@ class Users extends Controller {
         # with wrong credentials, abort
 
         if(empty($verify_user)){
-            return to_route("profile.settings") -> withErrors(["wrong_password" => "The entered password does not match your actual password."]);
+            return to_route("profile.settings") 
+                -> withErrors(["wrong_password" => "The entered password does not match your actual password."]);
         }
 
         # The user is authorized     
        
         try {
             
-            $user -> where("mail", "=", $_SESSION['mail'])
+            User::where("mail", "=", $_SESSION['mail'])
                   -> update([ 
                     "mail" => $req['email'],
                     "pass" => hash("sha512", hash("sha512", $req['newpass'])), 
@@ -180,13 +173,15 @@ class Users extends Controller {
 
         }
         catch (Exception $e){
-            return to_route("profile.settings") -> withErrors(["alreadytaken" => "Mail is already taken."]);            
+            return to_route("profile.settings") 
+                -> withErrors(["alreadytaken" => "Mail is already taken."]);            
         }
 
 
         $_SESSION['mail'] = $req['email'];
 
-        return to_route("profile.settings") -> with("done", "Your information has been updated.");
+        return to_route("profile.settings") 
+            -> with("done", "Your information has been updated.");
     }
 
 
@@ -194,18 +189,14 @@ class Users extends Controller {
     /**
      * Show the settings page of the current user with
      * all the products that he is selling
-     * 
-     * @param  Product $product    The product model
-     *
+     *      *
      * @return view             The profile page
      * 
      */
     
-    public function show_settings(Product $product){
+    public function show_settings(){
 
-
-        $data = $product 
-            -> select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img as image', 'product_images.is_main')
+        $data = Product::select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img as image', 'product_images.is_main')
             -> where("id_user", "=", $_SESSION["id"]) 
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
@@ -220,21 +211,19 @@ class Users extends Controller {
     /**
      * Delete a user if he is allowed to
      * 
-     * @param User    $user          The user model
-     * @param Product $product       The product model
-     * @param Notif   $notif         The notification model
-     * @param Cart    $cart          The cart model
-     * @param Comment $comment       The comment model
-     *  
      *
      * @return redirect              Redirect to the / page
      * 
      */
 
-    public function delete(User $user){
+    public function delete(){
 
-        # TODO : Supprimer les images dans les messages de contact / images dees produits vendus automatiquement
-        $user -> find($_SESSION["id"]) -> delete();
+        # TODO :
+        #
+        # Delete images of selled product / images on 
+        # contact messages
+        
+        User::ind($_SESSION["id"]) -> delete();
 
         session(["deletedaccount" => true]);
     }

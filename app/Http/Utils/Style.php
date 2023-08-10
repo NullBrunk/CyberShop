@@ -2,7 +2,7 @@
 
 /**
  * 
- * Convert \n, Markdown like in displayable HTML 
+ * Convert \n and Markdown like syntax in displayable HTML 
  *
  * @param string $data    The string to convert
  *
@@ -14,7 +14,7 @@ function style(string $data) : string
 {
 
     # Contact messages come from <input>, not textarea.
-    # So we don't have some \r\n to convert when a - is passed as first char.
+    # So we don't have some \r\n to convert **when a - is passed as first char**.
     # We need to test this manually
 
     if(strlen($data) > 2 && $data[0] === "-" && $data[1] === " "){
