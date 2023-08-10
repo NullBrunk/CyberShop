@@ -124,6 +124,7 @@ class Users extends Controller {
         User::create([
             "mail" => $req["mail"],
             "pass" => hash("sha512", hash("sha512", $req["pass"])),
+
         ]);
       
 
