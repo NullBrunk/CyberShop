@@ -77,16 +77,6 @@
                                 </div>
                     
 
-                                @error("captcha")
-                                    <div class="alert alert-danger">
-                                        {{$message}}
-                                    </div>
-                                @enderror
-                                <div class="form-group">
-                                    <input type="number" id="captcha" name="captcha" class="form-control rounded-left" placeholder="Result of {{ $firstnum . " + " . $secondnum }}" required>
-                                </div>
-            
-
                                 <div class="form-group">
                                     <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign-Up</button>
                                 </div>

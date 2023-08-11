@@ -26,7 +26,6 @@ class Signup extends FormRequest
             'mail' => 'required|email|unique:users|max:50',
             'pass' => 'required',
             'repass' => 'required|same:pass',
-            'captcha' => "required|integer"
         ];
     }
 }

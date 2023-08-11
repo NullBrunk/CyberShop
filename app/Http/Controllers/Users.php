@@ -79,37 +79,6 @@ class Users extends Controller {
 
 
     /**
-     * Generate a captcha and display the signup page
-     * 
-     * !! Very important note 
-     *    
-     *    With this very simplistic captcha you will be protected 
-     *    against the majority of bots that spam on the fly 
-     *    (bots that doesn't target you specifically). 
-     *         
-     *    However, to be protected from targeted spam on this site, 
-     *    you'll probably have to use a more complete captcha 
-     *    such as ReCaptcha for example.
-     * !!
-     * 
-     * 
-     * @return view 
-     * 
-     */
-
-     public function signup_form(){
-
-        $a = rand(1, 100);
-        $b = rand(1, 100);
-
-        session(["captcha" => $a + $b]);
-
-        return view('auth.signup', ["firstnum" => $a, "secondnum" => $b ]);
-     }
-
-
-
-    /**
      * Signup a user
      *
      * @param Signup $request     The informations to store a new user in the database
@@ -122,14 +91,6 @@ class Users extends Controller {
 
         $req = $request -> validated();
         $checksum = Str::random(20);
-
-        if(false===true){ // (int)$req["captcha"] !== session("captcha")){
-            return to_route("auth.signup") -> withErrors([
-                "captcha" => "The result is incorrect !"
-            ]) -> withInput($request->input());
-        }
-
-        session() -> forget("captcha");
         
         // Send verification mail
 

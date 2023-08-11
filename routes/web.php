@@ -41,7 +41,7 @@ Route::get('/logout', function () {
 
 Route::name("auth.") -> controller(Users::class) -> middleware("redirect") -> group(function (){
 
-    Route::get('/signup', "signup_form") -> name("signup");
+    Route::view('/signup', "auth.signup") -> name("signup");
 
     Route::view('/login', 'auth.login') -> name("login");
 
