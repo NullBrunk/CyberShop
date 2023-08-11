@@ -104,7 +104,9 @@ class Users extends Controller {
             "checksum" => $checksum,
         ]);
       
-        event(new SignupEvent($user -> mail, $checksum));
+
+        // Dispatch a SignupEvent so that the SignupListenner catch it
+        SignupEvent::dispatch($user -> mail, $checksum);
 
         return to_route("auth.login") -> with("success", "A confirmation mail have been sent to " . $user -> mail);
     }

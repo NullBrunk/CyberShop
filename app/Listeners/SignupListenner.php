@@ -2,12 +2,13 @@
 
 namespace App\Listeners;
 
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Mail\Mailer;
 use App\Events\SignupEvent;
 use App\Mail\ConfirmMail;
-use Illuminate\Mail\Mailer;
 
 
-class SignupListenner
+class SignupListenner implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -18,7 +19,8 @@ class SignupListenner
     }
 
     /**
-     * Handle the event.
+     * Send an email to the user with a random generated string to 
+     * confirm his mail address.
      */
     public function handle(SignupEvent $event): void
     {
