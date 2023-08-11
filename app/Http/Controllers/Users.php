@@ -233,7 +233,7 @@ class Users extends Controller {
         # Delete images of selled product / images on 
         # contact messages
         
-        User::ind($_SESSION["id"]) -> delete();
+        User::find($_SESSION["id"]) -> delete();
 
         session(["deletedaccount" => true]);
     }
