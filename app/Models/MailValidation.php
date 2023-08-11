@@ -5,20 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class MailValidation extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
-    
     protected $fillable = [
-        "id",
-        "mail",
-        "pass"
-    ];
-
-    protected $casts = [
-        "verified" => "bool"
+        "id", "id_user", "checksum"
     ];
 }

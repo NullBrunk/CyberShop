@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\SignupEvent;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Products;
@@ -10,7 +11,7 @@ use App\Http\Controllers\Users;
 use App\Http\Controllers\Carts;
 use App\Http\Controllers\Index;
 use App\Http\Controllers\Likes;
-
+use App\Models\User;
 
 /*
 |---------------------------------------------
@@ -49,6 +50,9 @@ Route::name("auth.") -> controller(Users::class) -> middleware("redirect") -> gr
     Route::post('/signup', "store");
 
 });
+Route::get("/mail/verify/{slug}", 
+    [ Users::class, "confirm_mail" ]
+) -> name("auth.confirm_mail");
 
 
 

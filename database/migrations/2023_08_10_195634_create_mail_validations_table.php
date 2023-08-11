@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table -> id();
-            $table -> string('mail', 50) -> unique();
-            $table -> string('pass', 130);
-            $table -> boolean('verified') -> default(false);
+        Schema::create('mail_validations', function (Blueprint $table) {
+            $table->id();
+            $table -> unsignedBigInteger('id_user');
+            $table -> foreign('id_user') -> references('id') -> on('users');
+            $table -> text("checksum");
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::drop('users');
+        Schema::dropIfExists('mail_validations');
     }
 };

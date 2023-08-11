@@ -104,3 +104,9 @@ sudo systemctl start apache2
 ```
 
 And open http://127.0.0.1 or http://localhost on your browser
+
+
+
+# Thanks
+
+S/o to <a href="https://codepen.io/md-khokon">Md-khokon</a> for <a href="https://codepen.io/md-khokon/pen/bPLqzV">this amazing e-mail template</a>

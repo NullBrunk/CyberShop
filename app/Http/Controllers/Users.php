@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\SignupEvent;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 use App\Http\Requests\UpdateProfile;
 use App\Http\Requests\Signup;
 use App\Http\Requests\Login;
 
+use App\Models\MailValidation;
 use App\Models\Product;
 use App\Models\Comment;
 use App\Models\Notif;
 use App\Models\User;
 use App\Models\Cart;
-
 use Exception;
 
 session_start();
@@ -49,6 +51,12 @@ class Users extends Controller {
         if(!empty($data)){
 
             $data = $data[0];
+
+            if(!$data["verified"] ){
+                return to_route("auth.login") -> withErrors([
+                    "verify" => "You need to verify your mail address"
+                ]) -> onlyInput("email");
+            }
 
             $_SESSION['id'] = $data['id'];
             $_SESSION['logged'] = true;
@@ -113,22 +121,60 @@ class Users extends Controller {
     public function store(Signup $request, User $user){
 
         $req = $request -> validated();
+        $checksum = Str::random(20);
 
-        if( (int)$req["captcha"] !== session("captcha")){
+        if(false===true){ // (int)$req["captcha"] !== session("captcha")){
             return to_route("auth.signup") -> withErrors([
                 "captcha" => "The result is incorrect !"
             ]) -> withInput($request->input());
         }
+
         session() -> forget("captcha");
         
-        User::create([
+        // Send verification mail
+
+        $user = User::create([
             "mail" => $req["mail"],
             "pass" => hash("sha512", hash("sha512", $req["pass"])),
+        ]);
 
+        MailValidation::create([
+            "id_user" => $user -> id,
+            "checksum" => $checksum,
         ]);
       
+        event(new SignupEvent($user -> mail, $checksum));
 
-        return to_route("auth.login");
+        return to_route("auth.login") -> with("success", "A confirmation mail have been sent to " . $user -> mail);
+    }
+
+
+    
+    /** 
+     * Confirm the email of a given user
+     * 
+     * @param string $checksum         The random string sended to the user
+     * 
+     */
+
+    public function confirm_mail(string $checksum){
+
+        $data = MailValidation::where("checksum", "=", $checksum) -> get();
+
+        if($data -> first()){
+
+            $info = $data[0];
+
+            User::where("id", "=", $info -> id_user) -> update([
+                "verified" => 1
+            ]);
+
+            $info -> delete();
+
+            return to_route("auth.login") -> with("success", "Your mail have been confirmed, you can log-in now.", "Verified !");
+        }
+
+        return abort(403);
     }
 
 
