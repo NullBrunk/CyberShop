@@ -36,10 +36,10 @@ Route::get('/logout', function () {
     session_destroy();
     return redirect('/');
 
-}) -> name("logout") -> middleware("auth");
+}) -> name("logout") -> middleware("logged");
 
 
-Route::name("auth.") -> controller(Users::class) -> middleware("redirect") -> group(function (){
+Route::name("auth.") -> controller(Users::class) -> middleware("guest") -> group(function (){
 
     Route::view('/signup', "auth.signup") -> name("signup");
 
@@ -61,7 +61,7 @@ Route::get("/mail/verify/{slug}",
 |  Cart management 
 */
 
-Route::prefix('cart') -> controller(Carts::class) -> middleware("auth") -> name("cart.") -> group(function () {
+Route::prefix('cart') -> controller(Carts::class) -> middleware("logged") -> name("cart.") -> group(function () {
     
     Route::view("show", "user.cart") -> name("display");
 
@@ -80,7 +80,7 @@ Route::prefix('cart') -> controller(Carts::class) -> middleware("auth") -> name(
 |  Comments management 
 */
 
-Route::prefix('comments') -> controller(Comments::class) -> middleware("auth") -> name("comment.")  -> group(function () {
+Route::prefix('comments') -> controller(Comments::class) -> middleware("logged") -> name("comment.")  -> group(function () {
     
     Route::get("/update/{comment}", "update_form") -> name("update_form");
 
@@ -101,19 +101,19 @@ Route::prefix('comments') -> controller(Comments::class) -> middleware("auth") -
 
 Route::prefix('product') -> controller(Products::class) -> name("product.") -> group(function () {
 
-    Route::view("/market", "product.market") -> middleware("auth") -> name("sell");
+    Route::view("/market", "product.market") -> middleware("logged") -> name("sell");
 
     Route::get(
         "/edit/{product}", "edit_form" 
-    ) -> middleware("auth") -> name("edit_form");
+    ) -> middleware("logged") -> name("edit_form");
 
     Route::post(
         "/market", "store" 
-    ) -> middleware("auth") -> name("store");
+    ) -> middleware("logged") -> name("store");
 
     Route::post(
         "/edit/{product}", "edit"
-    ) -> middleware("auth") -> name("edit");
+    ) -> middleware("logged") -> name("edit");
     
     Route::get(
         "/category/search/{category}/", "search"
@@ -132,7 +132,7 @@ Route::get("/details/{product}", [ Products::class, "get_details" ]) -> name("de
 |  Settings management 
 */
 
-Route::prefix('settings') -> controller(Users::class) -> middleware("auth") -> name("profile.") -> group(function () {
+Route::prefix('settings') -> controller(Users::class) -> middleware("logged") -> name("profile.") -> group(function () {
     
     Route::post("", "settings") -> name("settings");
 
@@ -149,7 +149,7 @@ Route::prefix('settings') -> controller(Users::class) -> middleware("auth") -> n
 |  Chatbox management 
 */
 
-Route::prefix('chatbox') -> controller(Contacts::class) -> middleware("auth") -> name("contact.") -> group(function () {
+Route::prefix('chatbox') -> controller(Contacts::class) -> middleware("logged") -> name("contact.") -> group(function () {
 
     Route::get("edit/{contact}","show_form") -> name("edit_form");
 
@@ -181,7 +181,7 @@ Route::prefix('like') -> controller(Likes::class,) -> name("like.") -> group(fun
     
     Route::get(
         "/toggle/{comment}", "toggle"
-    ) -> name("toggle") -> middleware("auth");
+    ) -> name("toggle") -> middleware("logged");
 
     Route::get(
         "/get/{comment}", "is_liked"
@@ -195,10 +195,10 @@ Route::prefix('like') -> controller(Likes::class,) -> name("like.") -> group(fun
 |  File upload managment
 */
 
-Route::prefix('/upload') -> controller(Tmpimage::class) -> middleware("auth") -> name("tmp.") -> group(function () {
+Route::prefix('/upload') -> controller(Tmpimage::class) -> middleware("logged") -> name("tmp.") -> group(function () {
     
     Route::post("store", "store") -> name("store") ;
-    Route::delete("delete", "delete") -> name("delete") -> middleware("auth");
+    Route::delete("delete", "delete") -> name("delete") -> middleware("logged");
 
 });
 

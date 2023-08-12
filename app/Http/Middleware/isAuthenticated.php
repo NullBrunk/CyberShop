@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 
 
-class Logged
+class isAuthenticated
 {
     /**
      * Handle an incoming request.
