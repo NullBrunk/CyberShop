@@ -263,7 +263,7 @@
                                     
                                     <div class="contentcomment title" style="margin-top: 10px; height: 23vh;">
                                         Your comment <abbr>*</abbr>
-                                        <textarea id="commentTextBar" placeholder="To help you write a useful comment for our CyberShop:
+                                        <textarea id="commentTextBar" placeholder="To help you write a useful comment for our cyber shop:
 
     - Explain to us why you chose this note?
     - What did you like best about this product?

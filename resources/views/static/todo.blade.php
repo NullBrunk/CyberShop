@@ -1,7 +1,5 @@
 @extends("layout.base")
 
-@section("title", "Cybershop")
-
 @section("content")
     <body>
         

@@ -96,7 +96,7 @@
 
   <!-- start preheader -->
   <div class="preheader" style="display: none; max-width: 0; max-height: 0; overflow: hidden; font-size: 1px; line-height: 1px; color: #fff; opacity: 0;">
-    Welcome to CyberShop {{ $mail }}, please confirm your e-mail address ...
+    Welcome to {{ env("APP_NAME") }} {{ $mail }}, please confirm your e-mail address ...
   </div>
   <!-- end preheader -->
 
@@ -165,7 +165,7 @@
           <!-- start copy -->
           <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
-              <p style="margin: 0;">Welcome to <a href="{{route("root") }}">CyberShop</a> {{ $mail }}, please click on the button below to confirm your email address. </p>
+              <p style="margin: 0;">Welcome to <a href="{{route("root") }}">{{ env("APP_NAME") }}</a> {{ $mail }}, please click on the button below to confirm your email address. </p>
             </td>
           </tr>
           <!-- end copy -->
