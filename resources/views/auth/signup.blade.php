@@ -45,35 +45,33 @@
                             
                                 @csrf
                                                                    
-                                @error("mail")
-                                    <div class="alert alert-danger">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
 
                                 <div class="form-group">
-                                    <input value="{{ old("mail") }}" type="mail" id="mail" name="mail" class="form-control rounded-left" placeholder="E-mail" required autofocus>
+                                    <input value="{{ old("mail") }}" type="mail" id="mail" name="mail" class="form-control rounded-left @error('mail') is-invalid @enderror" placeholder="E-mail" required autofocus>
+                                    <div class="invalid-feedback">
+                                        @error("mail")
+                                            {{ $message }}
+                                        @enderror
+                                    </div>
                                 </div>
 
-                                @error("pass")
-                                    <div class="alert alert-danger">
-                                        {{$message}}
+                                <div class="form-group ">
+                                    <input value="{{ old("pass") }}" type="password" id="pass" name="pass" class="form-control rounded-left @error('pass') is-invalid @enderror" placeholder="Password" required>
+                                    <div class="invalid-feedback">
+                                        @error("pass")
+                                            {{ $message }}
+                                        @enderror
                                     </div>
-                                @enderror
-
-                                <div class="form-group d-flex">
-                                    <input value="{{ old("pass") }}" type="password" id="pass" name="pass" class="form-control rounded-left" placeholder="Password" required>
                                 </div>
 
                                 
-                                @error("repass")
-                                    <div class="alert alert-danger">
-                                        {{$message}}
+                                <div class="form-group ">
+                                    <input value="{{ old("repass") }}" type="password" id="pass" name="repass" class="form-control rounded-left @error('repass') is-invalid @enderror" placeholder="Re Password" required>
+                                    <div class="invalid-feedback">
+                                        @error("repass")
+                                            {{ $message }}
+                                        @enderror
                                     </div>
-                                @enderror
-
-                                <div class="form-group d-flex">
-                                    <input value="{{ old("repass") }}"type="password" id="pass" name="repass" class="form-control rounded-left" placeholder="Re Password" required>
                                 </div>
                     
 

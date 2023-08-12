@@ -30,9 +30,10 @@
 
     @include('layout.header')
 
-    <body style="background-color: #e1e1e1 !important; overflow: hidden;" >
+    <body style="background-color: #e1e1e1 !important;" >
     
         <br>
+
 
 
         <section>
@@ -50,11 +51,7 @@
                             <form method="post" class="login-form">
                                 @csrf
 
-                                @if($errors->has('email') or $errors->has('pass'))
-                                    <div class="alert alert-danger">
-                                        Wrong mail or password !
-                                    </div>
-                                @endif
+                                
 
                                 @error("verify")
                                     <div class="alert alert-danger">
@@ -70,10 +67,19 @@
                 
 
                                 <div class="form-group">
-                                    <input type="mail" id="email" name="email" class="form-control rounded-left" placeholder="E-mail" value="{{old("email")}}" required autofocus>
+                                    @php($condition = $errors->has('email') or $errors->has('pass'))
+                                    
+                                    @if($condition) 
+                                        <div class="alert alert-danger">
+                                            Invalid mail or password !    
+                                        </div>
+                                    @endif
+
+                                    <input  type="mail" id="email" name="email" class="form-control rounded-left @if($condition) is-invalid @endif" placeholder="E-mail" value="{{old("email")}}" required>    
+                                
                                 </div>
                                 <div class="form-group d-flex">
-                                    <input type="password" id="pass" name="pass" class="form-control rounded-left" placeholder="Password" required>
+                                    <input type="password" id="pass" name="pass" class="form-control rounded-left @if($condition) is-invalid @endif" placeholder="Password" required>
                                 </div>
 
                                 <div class="form-group">
