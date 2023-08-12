@@ -18,7 +18,7 @@
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
     <div class="container d-flex align-items-center" style="max-width: 87vw !important;">
-        <h1 class="logo me-auto"> <a href="/">{{ env("APP_NAME") }}</a> </h1>
+        <h1 class="logo me-auto"> <a href="/">{{ config("app.name") }}</a> </h1>
 
         <nav id="navbar" class="navbar">
 
