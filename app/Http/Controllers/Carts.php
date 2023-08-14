@@ -25,7 +25,7 @@ class Carts extends Controller {
             $_SESSION['cart'][$d["id"]] = $d;
         }
 
-        return redirect(url() -> previous());
+        return back();
     }
    
     

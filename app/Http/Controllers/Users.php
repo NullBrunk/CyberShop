@@ -90,7 +90,7 @@ class Users extends Controller {
     public function store(Signup $request, User $user){
 
         $req = $request -> validated();
-        $checksum = Str::random(20);
+        $checksum = Str::uuid();
         
         // Send verification mail
 

@@ -53,11 +53,7 @@
 
                                 
 
-                                @error("verify")
-                                    <div class="alert alert-danger">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
+                               
 
                                 @if(session() -> has("success"))
                                     <script>
@@ -69,14 +65,18 @@
                                 <div class="form-group">
                                     @php($condition = $errors->has('email') or $errors->has('pass'))
                                     
+                                    <input  type="mail" id="email" name="email" class="form-control rounded-left @if($condition or $errors -> has('verify')) is-invalid @endif" placeholder="E-mail" value="{{old("email")}}" required>    
+                                    @error("verify")
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+
                                     @if($condition) 
-                                        <div class="alert alert-danger">
+                                        <div class="invalid-feedback">
                                             Invalid mail or password !    
                                         </div>
                                     @endif
-
-                                    <input  type="mail" id="email" name="email" class="form-control rounded-left @if($condition) is-invalid @endif" placeholder="E-mail" value="{{old("email")}}" required>    
-                                
                                 </div>
                                 <div class="form-group d-flex">
                                     <input type="password" id="pass" name="pass" class="form-control rounded-left @if($condition) is-invalid @endif" placeholder="Password" required>
