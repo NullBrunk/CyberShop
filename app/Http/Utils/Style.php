@@ -58,3 +58,5 @@ function style(string $data) : string
     # And we return the newly created string
     return $data;
 }
+
+

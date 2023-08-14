@@ -6,13 +6,12 @@
 
 
 @if($logged)
-        <?php
-            include_once __DIR__ . "/../../../app/Http/Utils/Notifs.php";
-            $array_info = show();
+    <?php
+        $notifications = \App\Http\Controllers\Notifications::get_array_notifications();
 
-            $notifs = $array_info[0];
-            $notifs_number = $array_info[1];
-        ?>
+        $notifs = $notifications[0];
+        $notifs_number = $notifications[1];
+    ?>
 @endif
 
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">

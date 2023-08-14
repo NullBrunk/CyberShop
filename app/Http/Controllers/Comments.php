@@ -8,7 +8,8 @@ use App\Http\Requests\UpdateComment;
 
 use App\Models\Comment;
 use App\Models\Notif;
-
+use App\Models\User;
+use App\Notifications\CommentedProductNotification;
 
 class Comments extends Controller {
 
@@ -65,18 +66,14 @@ class Comments extends Controller {
 
         # Generate a notifications to the seller of the product
 
-        Notif::create([
-            "id_user" => $slug,
-            "icon" => "bx bx-detail",
-            "name" => "Commented product.",
+        $user = User::find($slug);
+        $user -> notify(new CommentedProductNotification([
             "content" => "From " . $_SESSION["mail"] . ".",
+            "id_product" => $req["id"],
             "link" => "/details/" . $req["id"] . "/#div" . self::getid(),
-            "type" => "comment",
-            "moreinfo" => $req["id"],
-        ]);
+        ]));
 
-
-
+        
         return to_route("details", $req["id"]) 
                 -> with('posted', "Your comment has been posted !");
     }

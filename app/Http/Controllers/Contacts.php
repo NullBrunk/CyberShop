@@ -10,8 +10,7 @@ use Illuminate\Http\Request;
 use App\Models\Contact;
 use App\Models\Notif;
 use App\Models\User;
-
-
+use App\Notifications\ReceivedMessageNotification;
 
 /**
  * Get all the contact messages of the current user using PDO
@@ -201,12 +200,10 @@ class Contacts extends Controller {
             # Mark all wthe messages of the conversation as readed
             self::mark_readed($requested_user[0]["id"]);
 
-            
+        
             # Delete all notifications of that user
-            Notif::where("id_user", "=", $_SESSION["id"]) 
-                    -> where("moreinfo", "=", $requested_user[0]["id"]) 
-                    -> where("type", "=", "chatbox") 
-                    -> delete();
+            User::find($_SESSION["id"]) -> notifications() -> where("data", "like", "%" . $slug . "%") -> delete();
+        
 
 
             return view("user.contact", [
@@ -327,16 +324,10 @@ class Contacts extends Controller {
         
         # Send a notification to the concerned user
 
-        Notif::create([
-            "id_user" => $id,
-            "type" => "chatbox",
-            "icon" => "bx bx-chat",
-            "name" => "1 message received.",
-            "content" => "From " . $_SESSION["mail"],
+        User::find($id) -> notify(new ReceivedMessageNotification([
+            "content" => "From " . $_SESSION["mail"] . ".",
             "link" => "/chatbox/" . $_SESSION["mail"],
-            "moreinfo" => $_SESSION["id"]
-        ]);
-
+        ]));
     
         return to_route("contact.user", $mail);
     }

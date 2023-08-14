@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreReq;
 use App\Http\Requests\UpdateProduct;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class Products extends Controller
@@ -49,10 +50,10 @@ class Products extends Controller
             if($_SESSION["id"] === $data -> id_user){
 
                 # Delete all notifs linked to it
-                Notif::where("id_user", "=", $_SESSION["id"]) 
-                -> where("type", "=", "comment")
-                -> where("moreinfo", "=", $data["id"])
-                -> delete();
+                User::find($_SESSION["id"]) 
+                    -> notifications() 
+                    -> where("data", "like", "%" . "\"id_product\":\"" . $product -> id . "\"" . "%") 
+                    -> delete();
             }
         }
 
