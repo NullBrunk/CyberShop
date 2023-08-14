@@ -9,9 +9,8 @@ use App\Models\Notif;
  * @return array  The notifications.
  */
 
-function show(){
-
-
+function show() : array
+{
     $notif_number = 0;
     $to_push = [];
 
@@ -21,12 +20,9 @@ function show(){
     foreach(Notif::where("id_user", "=", $_SESSION["id"]) -> where("type", "=", "chatbox") -> orderBy("id", "desc") -> get() -> toArray() as $d){
        
         if(isset($to_push[$d["moreinfo"]])){
-
             $number = explode(" m", $to_push[$d["moreinfo"]]["title"])[0];
             $d["name"] = (int)$number + 1 . " messages received.";
-
         }
-
 
         $to_push[$d["moreinfo"]] = [              
             "icon" => $d['icon'],
@@ -36,12 +32,11 @@ function show(){
             "type" => "comment",
         ];
         
-
         $notif_number++;
     }
 
     
-    # We get all the notifs from the notif table
+    # We get all the commented product notifs
 
     foreach(Notif::where("id_user", "=", $_SESSION["id"]) -> where("type", "=", "comment") -> orderBy("id", "desc") -> get() -> toArray() as $d) {
         $to_push["o" . $d["id"]] = 
