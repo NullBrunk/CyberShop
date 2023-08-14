@@ -35,7 +35,6 @@ sudo systemctl start mysql
 And create the database & tables
 
 ```bash
-php artisan notification:table
 php artisan migrate
 ```
 
