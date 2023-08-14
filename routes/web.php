@@ -100,24 +100,27 @@ Route::prefix('comments') -> controller(Comments::class) -> middleware("logged")
 */
 
 Route::prefix('product') -> controller(Products::class) -> name("product.") -> group(function () {
-
+    
+    Route::get(
+        "/category/search/{category}/", "search"
+    ) -> name("search");
     Route::view("/market", "product.market") -> middleware("logged") -> name("sell");
-
+    
+    Route::post(
+        "/market", "store" 
+    ) -> middleware("logged") -> name("store");
+    
     Route::get(
         "/edit/{product}", "edit_form" 
     ) -> middleware("logged") -> name("edit_form");
 
     Route::post(
-        "/market", "store" 
-    ) -> middleware("logged") -> name("store");
-
-    Route::post(
         "/edit/{product}", "edit"
     ) -> middleware("logged") -> name("edit");
     
-    Route::get(
-        "/category/search/{category}/", "search"
-    ) -> name("search");
+    Route::delete(
+        "/edit/image/{image}", "remove_image"
+    ) -> middleware("logged") -> name("image_delete");
 
 });
 

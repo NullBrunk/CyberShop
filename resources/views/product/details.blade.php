@@ -17,25 +17,23 @@
         <script src="/assets/vendor/confetti/confetti.min.js"></script>
         <script type="text/javascript">
 
-
-
-        function randomInRange(min, max) {
-            return Math.random() * (max - min) + min;
-        }
-        
-        const btn = document.querySelector('#btn');
-        const canvas = document.querySelector('#confetti-canvas');
-        function onButtonClick(y){
-            var myConfetti = confetti.create(canvas, {
-                resize: true,
-                useWorker: true
-            });
-            myConfetti({
-                spread: 80,
-                particleCount: 150,
-                origin: { y: y, x: 0.88 }
-            });
-        }
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+            
+            const btn = document.querySelector('#btn');
+            const canvas = document.querySelector('#confetti-canvas');
+            function onButtonClick(y){
+                var myConfetti = confetti.create(canvas, {
+                    resize: true,
+                    useWorker: true
+                });
+                myConfetti({
+                    spread: 80,
+                    particleCount: 150,
+                    origin: { y: y, x: 0.88 }
+                });
+            }
         </script>
 
         <!-- CSS -->

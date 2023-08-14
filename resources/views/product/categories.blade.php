@@ -26,14 +26,17 @@
             }
         </script>
 
-        <div style="padding-top:5%;"class=" d-flex align-items-center">
+        <div style="padding-top: 6%;" class=" d-flex align-items-center">
             <form  method="get" action="{{ route("product.search", $name) }}">
-                <input name="q" type="text" placeholder="Search something ..." value="{{ isset($search) ? $search : ""}}" id="input" autofocus>
                 
-                <button style="width: 3%;border-radius: 4px;border: 0;">
+                <button class="button-search">
                     <i class="bx bx-search-alt"></i>
                 </button>
 
+                <input class="searchbar" name="q" type="text" placeholder="Search something ..." value="{{ isset($search) ? $search : ""}}" id="input" autofocus>
+                
+                <input class="max-price" type="text" name="mp" placeholder="Max price" value="{{ isset($max_price) ? $max_price : ""}}">
+                    
             </form>
         </div>
     
@@ -97,22 +100,23 @@
 
                 </div>
 
-                @if($products -> nextPageUrl() !== null && isset($search))
+                @php($query_string = "")
 
-                    <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() . "&q=" . $search }}" hx-swap="outerHTML" hx-trigger="revealed">
+                @if(isset($search))
+                    @php($query_string .= "&q=" . $search)
+                @endif
+
+                @if(isset($max_price) && $max_price !== null) 
+                    @php($query_string .= "&mp=" . $max_price)
+                @endif
+
+                  
+                @if($products -> nextPageUrl() !== null)
+                    <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() . $query_string }}" hx-swap="outerHTML" hx-trigger="revealed">
                         <span class="paginationbutton">
                             <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
                         </span>
                     </button>
-
-                @elseif($products -> nextPageUrl() !== null)
-
-                    <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() }}" hx-swap="outerHTML" hx-trigger="revealed">
-                        <span class="paginationbutton">
-                            <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
-                        </span>
-                    </button>
-
                 @endif
 
             </div>

@@ -24,3 +24,38 @@ var swiper = new Swiper(".slide-container", {
     },
     
 });
+
+
+function delete_image(url, elem, csrf){
+    Swal.fire({
+        title: 'Are you sure ?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#293e61',
+        cancelButtonColor: '#af2024',
+        confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        // On redirige vers la page permettant de supprimer le commentaire
+        if (result.isConfirmed) {
+            fetch(url, {
+                method: "DELETE",
+                headers: {
+                    "X-CSRF-Token": csrf,
+                },
+            }).then((data) => {
+
+                status_code = data.status;
+
+                if(status_code === 403) {
+                    salert("Forbidden");
+                }
+                else if(status_code === 401) {
+                    salert("Cannot delete the main image !");
+                }
+                else {
+                    window.location.reload();
+                }
+            });
+        }
+    })
+    }

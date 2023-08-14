@@ -34,17 +34,20 @@
     @endforeach
 </div>
 
-@if(isset($search) && $products -> nextPageUrl() !== null)
+@php($query_string = "")
 
-    <button class="buttonpag" hx-get="{{ $products -> nextPageUrl() . "&q=" . $search }}" hx-swap="outerHTML" hx-trigger="revealed">
-        <span class="paginationbutton">
-            <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
-        </span>
-    </button>
+@if(isset($search))
+    @php($query_string .= "&q=" . $search)
+@endif
 
-@elseif($products -> nextPageUrl() !== null)
+@if(isset($max_price) && $max_price !== null) 
+    @php($query_string .= "&mp=" . $max_price)
+@endif
 
-<button class="buttonpag" hx-get="{{ $products -> nextPageUrl() }}" hx-swap="outerHTML" hx-trigger="revealed">
+
+@if($products -> nextPageUrl() !== null)
+
+<button class="buttonpag" hx-get="{{ $products -> nextPageUrl() . $query_string }}" hx-swap="outerHTML" hx-trigger="revealed">
         <span class="paginationbutton">
             <span class="spinner-border spinner-border-sm htmx-indicator" role="status" aria-hidden="true"></span>
         </span>

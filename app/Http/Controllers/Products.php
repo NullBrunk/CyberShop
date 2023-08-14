@@ -94,7 +94,7 @@ class Products extends Controller
             $search = $request -> input("q");
         }
         else {
-            return redirect(url() -> previous());
+            return back();
         }
 
         if(!in_array($category, [ "all", "gaming", "informatics", "dresses", "food", "furnitures", "vehicles", "appliances" , "other"])){
@@ -107,8 +107,7 @@ class Products extends Controller
 
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
-            -> where("name", "like", "%" . $search . "%")
-            -> desc() ;
+            -> where("name", "like", "%" . $search . "%");
 
         }
         else {
@@ -116,10 +115,15 @@ class Products extends Controller
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
             -> where("class", "=", $category) 
-            -> where("name", "like", "%" . $search . "%") 
-            -> desc() ;
+            -> where("name", "like", "%" . $search . "%") ;
         }
-        $data = $query -> paginate(4);
+
+        $max_price = $request -> input("mp");
+        if($max_price){
+            $query -> where("price", "<", (float)$max_price) -> desc();
+        }
+
+        $data = $query -> desc() -> paginate(4);
            
         
         foreach($data as $d){
@@ -144,6 +148,7 @@ class Products extends Controller
                     "name" => $category, 
                     "rating" => $rating, 
                     "search" => $search,
+                    "max_price" => $max_price
                 ]);
         }
         else {
@@ -153,7 +158,8 @@ class Products extends Controller
                     "name" => $category, 
                     "rating" => $rating, 
                     "search" => $search,
-                    "number" => $query -> count()
+                    "number" => $query -> count(),
+                    "max_price" => $max_price
                 ]);
         }
 
@@ -471,5 +477,33 @@ class Products extends Controller
         return $data;
     }
 
+
+
+    /**  
+     *  Remove an image of a product
+     *
+     *  @param Product_images $id       the image threw model binding
+     * 
+     * @return      401 : Image is the main image, you are unauthorized
+     *              403 : Image is not an image of a product that you sell , 403
+     *              
+     *              200 : Removed images succesfully
+    */
+    
+    public function remove_image(Product_images $image){
+        
+        if($image -> is_main) {
+            return abort(401);
+        }
+        
+        if($image -> product -> id_user !== $_SESSION["id"]){
+            return abort(403);
+        }
+
+        Storage::delete("product_img/" . $image -> img);
+        $image -> delete();
+
+        return response('Ok', 200);
+    }
 
 }
