@@ -65,18 +65,21 @@
                                 <div class="form-group">
                                     @php($condition = $errors->has('email') or $errors->has('pass'))
                                     
-                                    <input  type="mail" id="email" name="email" class="form-control rounded-left @if($condition or $errors -> has('verify')) is-invalid @endif" placeholder="E-mail" value="{{old("email")}}" required>    
+                                    @if($condition) 
+                                        <div style="text-align: center;color: #dc3545;">
+                                            Invalid mail or password !    
+                                        </div>
+                                    @endif
+
                                     @error("verify")
-                                        <div class="invalid-feedback">
+                                        <div style="text-align: center;color: #dc3545;">
                                             {{ $message }}
                                         </div>
                                     @enderror
 
-                                    @if($condition) 
-                                        <div class="invalid-feedback">
-                                            Invalid mail or password !    
-                                        </div>
-                                    @endif
+                                    <input  type="mail" id="email" name="email" class="form-control rounded-left @if($condition or $errors -> has('verify')) is-invalid @endif" placeholder="E-mail" value="{{old("email")}}" required>    
+                                    
+                                   
                                 </div>
                                 <div class="form-group d-flex">
                                     <input type="password" id="pass" name="pass" class="form-control rounded-left @if($condition) is-invalid @endif" placeholder="Password" required>
