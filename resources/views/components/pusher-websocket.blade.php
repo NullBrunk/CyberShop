@@ -2,7 +2,7 @@
 <script>
     var pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
         encrypted: true,
-        cluster: "eu"
+        cluster: "{{ env("PUSHER_APP_CLUSTER") }}"
     });
 
     // Subscribe to the channel we specified in our Laravel Event
@@ -10,6 +10,8 @@
 
     // Bind a function to a Event (the full Laravel class)
     channel.bind('App\\Events\\NotificationReceived', function(data) {
-        Livewire.emit("new_notif", )
+        if(data.id_user === {{ $_SESSION["id"] }} ){
+            Livewire.emit("new_notif")
+        }
     });
 </script>

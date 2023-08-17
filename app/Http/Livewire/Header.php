@@ -17,6 +17,7 @@ class Header extends Component
     protected $listeners = ['new_notif' => 'get_notifs'];
 
     public function get_notifs(){
+
         $data = Notifications::get_array_notifications();
 
         $this -> notifs = $data[0];
