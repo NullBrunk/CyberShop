@@ -19,12 +19,21 @@ The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 
 # Installation
 
-```
+```bash
 git clone https://github.com/NullBrunk/E-Commerce
 cd E-Commerce 
 ```
 
-First of all you'll need to install MySQL or MariaDB, composer and MailDev/MailHog.
+First of all you'll need to install MySQL or MariaDB, composer and MailDev/MailHog, then :
+
+```bash
+# Install composer productions dependencies
+composer install --no-dev
+
+# Install node_modules
+npm install
+```
+
 
 Then, you can change the .env and put your SQL username, password, db_name host and port.
 Start the mariadb/mysql service and run
@@ -37,14 +46,20 @@ php artisan migrate
 
 Then you'll need to link the storage directory to public/storage/
 
-```
+```bash
 php artisan storage:link
 ```
 
-Finally, you can launch the artisan development server
+Finally, you can launch the artisan development server on web port, and launch the API
 
+In one terminal type
 ```
-php artisan serve
+sudo php artisan serve --port=80
+```
+
+In another type
+```
+php artisan server --port=8000
 ```
 
 
