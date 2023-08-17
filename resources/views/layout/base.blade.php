@@ -25,13 +25,13 @@
         <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
         <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="/assets/css/style.css" rel="stylesheet">
-        
+        @livewireStyles
 
         {{-- JS --}}
         <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
         <script src="/assets/vendor/jquery/jquery.js"></script>
         <script src="/assets/js/alert.js"></script>
-        
+        @livewireScripts
         
         {{-- MarkeIt Up --}}
         <link rel="stylesheet" type="text/css" href="/assets/vendor/markitup/skins/simple/style.css">
