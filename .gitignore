@@ -15,3 +15,5 @@ yarn-error.log
 /.idea
 /.vscode
 /.db
+/vendor
+/node_modules
