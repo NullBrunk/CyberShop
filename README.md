@@ -24,7 +24,7 @@ git clone https://github.com/NullBrunk/E-Commerce
 cd E-Commerce 
 ```
 
-First of all you'll need to install MySQL or MariaDB, composer and MailDev/MailHog, then :
+First of all you'll need to install MySQL or MariaDB, composer, npm and MailDev or MailHog, then :
 
 ```bash
 # Install composer productions dependencies
