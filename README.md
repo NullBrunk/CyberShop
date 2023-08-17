@@ -19,20 +19,17 @@ The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 
 # Installation
 
-First of all, install Apache, PHP and Mysql.
-
-
-## Database & PHP
-Change the .env and put your SQL credentials, also choose a database name.
-
-
-Then start the MySQL service
-
-```bash
-sudo systemctl start mysql
+```
+git clone https://github.com/NullBrunk/E-Commerce
+cd E-Commerce 
 ```
 
-And create the database & tables
+First of all you'll need to install MySQL or MariaDB, composer and MailDev/MailHog.
+
+Then, you can change the .env and put your SQL username, password, db_name host and port.
+Start the mariadb/mysql service and run
+
+Then start the MySQL service and run
 
 ```bash
 php artisan migrate
@@ -44,69 +41,13 @@ Then you'll need to link the storage directory to public/storage/
 php artisan storage:link
 ```
 
-## Apache 
-
-We now need to serv the web serv on port 80 and the API on the port 8000, so go into /etc/apache2/ports.conf and add 
+Finally, you can launch the artisan development server
 
 ```
-Listen 8000
+php artisan serve
 ```
-Under the `Listen 80` line.
-
-You'll also need to sudo nano /etc/apache2/sites-enabled/000-default.conf and change the port 8000 like this :
-<br>
-Replace
-```
-<VirtualHost *:80>
-```
-By 
-```
-<VirtualHost *:80 *:8000>
-```
-<br>
-<br>
-
-Then clone the repository, and give all perm's to the www-data user :
-<br>
-```
-cd /var/www/html
-git clone https://github.com/NullBrunk/E-Commerce/
-sudo chown www-data:www-data -R * .*
-```
-<br>
-With all this done, let's point to the right directory : you'll need to edit the /etc/apache2/sites-enabled/000-default.conf file. Change the 
-<br>
-```
-DocumentRoot /var/www/html
-``` 
-
-to
-
-``` 
-DocumentRoot /var/www/html/E-Commerce/public
-```
-<br>
-Now, you'll need to enable apache rewriting module AND set AllowOverride to All.
-To allow mod_rewrite, type
-
-```
-sudo a2enmod rewrite 
-```
-<br>
-Now you need to `sudo nano /etc/apache2/apache2.conf` and search for <Directory /var/www/>.
-Replace the "AllowOverride None" by an "AllowOverride All".
-
-<br>
-Ggs, You can finally start the apache and see the result :
-
-```
-sudo systemctl start apache2
-```
-
-And open http://127.0.0.1 or http://localhost on your browser
-
 
 
 # Thanks
 
-S/o to <a href="https://codepen.io/md-khokon">Md-khokon</a> for <a href="https://codepen.io/md-khokon/pen/bPLqzV">this amazing e-mail template</a>
+- Thanks to <a href="https://codepen.io/md-khokon">Md-khokon</a> for <a href="https://codepen.io/md-khokon/pen/bPLqzV">this amazing e-mail template</a>
