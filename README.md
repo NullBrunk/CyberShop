@@ -34,7 +34,6 @@ composer install --no-dev
 npm install
 ```
 
-
 Then, you can change the .env and put your SQL username, password, db_name host and port.
 Start the mariadb/mysql service and run
 
@@ -61,6 +60,9 @@ In another type
 ```
 php artisan server --port=8000
 ```
+
+### Quick note : 
+We have some services that are real-time on this Website. But since i dont want to bloat my tech-stack, i choosed to use https://pusher.com/ instead of a Redis/NodeJS websocket approach. The .env is actually filled with my PUSHER config, but since the free plan is limited, you can go signup and use the premium plan if you want, or use my prebuilt config.  
 
 
 # Thanks

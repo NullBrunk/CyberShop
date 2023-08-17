@@ -30,7 +30,7 @@ class NotificationReceived implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('channel-notif'),
+            new Channel('notifs'),
         ];
     }
 }

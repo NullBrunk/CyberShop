@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
+
+
 class Notifications extends Controller
 {
     public static function get_array_notifications(){
         
+   
         $notif_number = 0;
         $to_push = [];
         
