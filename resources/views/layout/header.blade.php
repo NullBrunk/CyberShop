@@ -5,7 +5,7 @@
 @php($logged = isset($_SESSION["logged"]))
 
 
-<header id="header" class="fixed-top " style="background-color: #293E61 !important;">
+<header id="header" class="fixed-top " style="background-color: #293E61 !important;" hx-boost="true">
 
     <div class="container d-flex align-items-center" style="max-width: 87vw !important;">
         <h1 class="logo me-auto"> <a href="/">{{ config("app.name") }}</a> </h1>
@@ -16,6 +16,9 @@
 
                 @if($logged)
 
+                    {{-- Using the PUSHER websocket --}}
+                    <x-pusher-websocket />
+                    
                     <livewire:header />
 
                     <script>
@@ -265,7 +268,5 @@
     </div>
 </header>
 
-{{-- Using the PUSHER websocket --}}
 
-<x-pusher-websocket />
 
