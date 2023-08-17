@@ -29,9 +29,6 @@ First of all you'll need to install MySQL or MariaDB, composer, npm and MailDev 
 ```bash
 # Install composer productions dependencies
 composer install --no-dev
-
-# Install node_modules
-npm install
 ```
 
 Then, you can change the .env and put your SQL username, password, db_name host and port.
