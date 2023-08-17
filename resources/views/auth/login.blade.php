@@ -22,9 +22,11 @@
         <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="/assets/css/login.css" rel="stylesheet">
         <link href="/assets/css/style.css" rel="stylesheet">
+        @livewireStyles
 
         <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
         <script src="/assets/js/alert.js"></script>
+        @livewireScripts
 
     </head>
 
@@ -48,56 +50,13 @@
 
                             <h3 class="text-center mb-4">Login</h3>
                     
-                            <form method="post" class="login-form">
-                                @csrf
+                            @if(session() -> has("success"))
+                                <script>
+                                    success("{{ session("success") }}", "Signed Up !"); 
+                                </script>
+                            @endif
 
-                                
-
-                               
-
-                                @if(session() -> has("success"))
-                                    <script>
-                                        success("{{ session("success") }}", "Signed Up !"); 
-                                    </script>
-                                @endif
-                
-
-                                <div class="form-group">
-                                    @php($condition = $errors->has('email') or $errors->has('pass'))
-                                    
-                                    @if($condition) 
-                                        <div style="text-align: center;color: #dc3545;">
-                                            Invalid mail or password !    
-                                        </div>
-                                    @endif
-
-                                    @error("verify")
-                                        <div style="text-align: center;color: #dc3545;">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
-
-                                    <input  type="mail" id="email" name="email" class="form-control rounded-left @if($condition or $errors -> has('verify')) is-invalid @endif" placeholder="E-mail" value="{{old("email")}}" required>    
-                                    
-                                   
-                                </div>
-                                <div class="form-group d-flex">
-                                    <input type="password" id="pass" name="pass" class="form-control rounded-left @if($condition) is-invalid @endif" placeholder="Password" required>
-                                </div>
-
-                                <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Login</button>
-                                </div>
-
-                                <div class="form-group d-md-flex">
-                                    <div class="w-50">
-                                    </div>
-
-                                    <div class="w-50 text-md-right">
-                                        <a style="color:#47b2e4 !important;" href="/signup">Sign-Up</a>
-                                    </div>
-                                </div>
-                            </form>
+                            <livewire:login-form />
                             
                         </div>
                     </div>

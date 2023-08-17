@@ -71,7 +71,7 @@ class Users extends Controller {
         else {
 
             return to_route("auth.login") -> withErrors([
-                "email" => "Wrong mail or password !"
+                "invalid" => "Wrong mail or password !"
             ]) -> onlyInput("email");
         }
     }

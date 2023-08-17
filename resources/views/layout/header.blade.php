@@ -5,7 +5,7 @@
 @php($logged = isset($_SESSION["logged"]))
 
 
-<header id="header" class="fixed-top " style="background-color: #293E61 !important;" hx-boost="true">
+<header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
     <div class="container d-flex align-items-center" style="max-width: 87vw !important;">
         <h1 class="logo me-auto"> <a href="/">{{ config("app.name") }}</a> </h1>

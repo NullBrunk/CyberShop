@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Login</title>
+        <title>Signup</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -22,9 +22,11 @@
         <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
         <link href="/assets/css/login.css" rel="stylesheet">
         <link href="/assets/css/style.css" rel="stylesheet">
+        @livewireStyles
 
         <script src="/assets/vendor/sweetalert/sweetalert2.js"></script>
         <script src="/assets/js/alert.js"></script>
+        @livewireScripts
 
     </head>
     
@@ -44,55 +46,8 @@
 
                             <h3 class="text-center mb-4">Sign-up</h3>
                     
-                            <form method="post" class="login-form">
-                            
-                                @csrf
-                                                                   
+                            <livewire:signup-form />
 
-                                <div class="form-group">
-                                    <input value="{{ old("mail") }}" type="mail" id="mail" name="mail" class="form-control rounded-left @error('mail') is-invalid @enderror" placeholder="E-mail" required autofocus>
-                                    <div class="invalid-feedback">
-                                        @error("mail")
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="form-group ">
-                                    <input value="{{ old("pass") }}" type="password" id="pass" name="pass" class="form-control rounded-left @error('pass') is-invalid @enderror" placeholder="Password" required>
-                                    <div class="invalid-feedback">
-                                        @error("pass")
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                
-                                <div class="form-group ">
-                                    <input value="{{ old("repass") }}" type="password" id="pass" name="repass" class="form-control rounded-left @error('repass') is-invalid @enderror" placeholder="Re Password" required>
-                                    <div class="invalid-feedback">
-                                        @error("repass")
-                                            {{ $message }}
-                                        @enderror
-                                    </div>
-                                </div>
-                    
-
-                                <div class="form-group">
-                                    <button type="submit" class="form-control btn btn-primary rounded submit px-3">Sign-Up</button>
-                                </div>
-            
-                                <div class="form-group d-md-flex">
-                    
-                                    <div class="w-50">                                   
-                                    </div>
-                                    
-                                    <div class="w-50 text-md-right">
-                                        <a style="color:#47b2e4 !important;" href="/login">Login</a>
-                                    </div>
-
-                                </div>
-                            </form>
                         </div>
                     </div>
                 </div>
