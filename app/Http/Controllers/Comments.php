@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationReceived;
 use App\Http\Requests\StoreComments;
 use App\Http\Requests\UpdateComment;
 
@@ -73,6 +74,9 @@ class Comments extends Controller {
             "link" => "/details/" . $req["id"] . "/#div" . self::getid(),
         ]));
 
+
+        # Generate an event
+        NotificationReceived::dispatch($slug);
         
         return to_route("details", $req["id"]) 
                 -> with('posted', "Your comment has been posted !");

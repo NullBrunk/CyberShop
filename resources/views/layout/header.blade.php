@@ -5,15 +5,6 @@
 @php($logged = isset($_SESSION["logged"]))
 
 
-@if($logged)
-    <?php
-        $notifications = \App\Http\Controllers\Notifications::get_array_notifications();
-
-        $notifs = $notifications[0];
-        $notifs_number = $notifications[1];
-    ?>
-@endif
-
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
     <div class="container d-flex align-items-center" style="max-width: 87vw !important;">
@@ -24,6 +15,8 @@
             <ul>
 
                 @if($logged)
+
+                    <livewire:header />
 
                     <script>
                         async function deleteitem(id) {
@@ -54,103 +47,57 @@
                         }
                     </script>
 
-                    @if(!empty($notifs))
 
+                    {{-- Si le tableau représentant le cart n'est pas vide --}}
+                    @if(!empty($_SESSION['cart']))
 
-                        <li id="cart" style="list-style-type: none;" class="dropdown ">
+                        @php($total = 0)
 
-                            <a class="nav-link" href="#">
-                        <span class="badge bg-primary badge-number">
-                            {{ $notifs_number }}
-                        </span>
+                        <li id="cart" style="list-style-type: none;" class="dropdown">
 
-                                <i class="bi bi-bell"></i>
-                                <span>Notifs</span>
+                            <a class="nav-link" href="{{ route("cart.display")}}">
+                                <span id="number" class="badge bg-primary badge-number">{{ sizeof($_SESSION["cart"]) }}</span>
+                                <i class="bi bi-cart3"></i>
+                                <span>Cart</span>
+
                             </a>
 
+                            <ul class="cartn">
 
-                            <ul class="cartn notif">
+                                <div id="cart_to_fill">
 
-                                @foreach($notifs as $n)
+                                    @foreach($_SESSION['cart'] as $c)
 
-                                    <li>
-                                        <p class="show_cart">
-                                    <li class="notification-item">
-                                        <i style="color:#19526f; font-size: 32px ;margin: 0 20px 0 10px;" class="{{ $n['icon'] }}"></i>
-                                        <div>
-                                            <h4 style="color: rgb(68, 68, 68)">{{ $n["title"] }} </h4>
-                                            <p> {{ $n["content"] }} </p>
+                                        <li id="cart_{{ $c -> id }}">
+                                            <p class="show_cart">
 
-                                            <a href="{{ $n["more"] }}">
-                                                See more
-                                                <i class="bx bx-chevrons-right"></i>
-                                            </a>
+                                                <img src="/storage/product_img/{{ $c -> product -> product_images() -> where("is_main", "=", 1) -> first() -> img }}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
 
-                                        </div>
-                                    </li>
-                                    <p>
-                        </li>
+                                                <a href="/details/{{ $c -> product -> id }}" style="display: block;overflow: hidden; width: 57%; margin:auto;">{{ $c -> product -> name }}</a>
+                                                <img src="/assets/img/trash.png" onclick='deleteitem("cart_{{$c -> id}}")' class="trash-cart">
+                                            </p>
+                                        </li>
+                                        <hr id="hrcart_{{ $c -> id }}">
 
-                        @endforeach
+                                    @endforeach
 
-            </ul>
-            </li>
+                                </div>
 
-            @else
-
-                <a class="nav-link" href="#">
-                    <i class="bi bi-bell"></i>
-                    <span>Notifs</span>
-                </a>
-
-
-            @endif
-
-            {{-- Si le tableau représentant le cart n'est pas vide --}}
-            @if(!empty($_SESSION['cart']))
-
-                @php($total = 0)
-
-                <li id="cart" style="list-style-type: none;" class="dropdown">
-
-                    <a class="nav-link" href="{{ route("cart.display")}}">
-                        <span id="number" class="badge bg-primary badge-number">{{ sizeof($_SESSION["cart"]) }}</span>
-                        <i class="bi bi-cart3"></i>
-                        <span>Cart</span>
-
-                    </a>
-
-                    <ul class="cartn">
-
-                        <div id="cart_to_fill">
-
-                            @foreach($_SESSION['cart'] as $c)
-
-                                <li id="cart_{{ $c -> id }}">
-                                    <p class="show_cart">
-
-                                        <img src="/storage/product_img/{{ $c -> product -> product_images() -> where("is_main", "=", 1) -> first() -> img }}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
-
-                                        <a href="/details/{{ $c -> product -> id }}" style="display: block;overflow: hidden; width: 57%; margin:auto;">{{ $c -> product -> name }}</a>
-                                        <img src="/assets/img/trash.png" onclick='deleteitem("cart_{{$c -> id}}")' class="trash-cart">
-                                    </p>
+                                <li>
+                                    <a id="price" class="button" href="{{route("cart.display")}}" style="width: 90%; display: block;">
+                                        Buy
+                                    </a>
                                 </li>
-                                <hr id="hrcart_{{ $c -> id }}">
-
-                            @endforeach
-
-                        </div>
-
-                        <li>
-                            <a id="price" class="button" href="{{route("cart.display")}}" style="width: 90%; display: block;">
-                                Buy
-                            </a>
+                            </ul>
                         </li>
-                    </ul>
-                </li>
-            @endif
+                    @endif
 
-            @endif
+                @else
+                    <a class="nav-link" href="#">
+                        <i class="bi bi-bell"></i>
+                        <span>Notifs</span>
+                    </a>
+                @endif
 
             @if(!$logged or empty($_SESSION['cart']))
                 <li id="cart" style="list-style-type: none;" class="dropdown">

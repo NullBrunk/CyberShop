@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NotificationReceived;
 use Illuminate\Support\Facades\Storage;
 
 use App\Http\Requests\ContactReq;
@@ -329,6 +330,10 @@ class Contacts extends Controller {
             "link" => "/chatbox/" . $_SESSION["mail"],
         ]));
     
+        # Generate an event
+        
+        NotificationReceived::dispatch($id);
+
         return to_route("contact.user", $mail);
     }
 
