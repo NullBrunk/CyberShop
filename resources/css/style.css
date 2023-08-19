@@ -1423,11 +1423,9 @@ tr:nth-child(even) td {
 
 }
 
-
-
 .products .pricepr {
   display: flex;
-  font-size: 17px;
+  font-size: 17px !important;
   font-family : "Amazon Ember", Arial, sans-serif;
   word-wrap: break-word;
 } 

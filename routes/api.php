@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
+use App\Http\Controllers\Users;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,3 +35,4 @@ Route::get("/comments/{id}", [ Comments::class, "get" ]);
 
 # Get the rating of a product
 Route::get("/rating/{product}", [ Products::class, "rating" ]) -> name("rating");
+

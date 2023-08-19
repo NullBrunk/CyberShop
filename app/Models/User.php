@@ -10,9 +10,6 @@ class User extends Model
 {
 
     use HasFactory, Notifiable;
-
-    public $timestamps = false;
-
     
     protected $fillable = [
         "id",
@@ -23,4 +20,9 @@ class User extends Model
     protected $casts = [
         "verified" => "bool"
     ];
+
+    public function format_date(){
+        return  date('d/m/Y', strtotime($this -> created_at));
+    }
+
 }

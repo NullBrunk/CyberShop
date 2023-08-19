@@ -16,6 +16,8 @@ return new class extends Migration
             $table -> string('mail', 50) -> unique();
             $table -> string('pass', 130);
             $table -> boolean('verified') -> default(false);
+
+            $table -> timestamps();
         });
     }
 

@@ -237,4 +237,20 @@ class Users extends Controller {
 
         session(["deletedaccount" => true]);
     }
+
+
+
+    /**
+     * Get date of creation of an account
+     * 
+     * @param User $user          User threw model binding
+     * 
+     * @return array       Result
+     */
+
+    public function creation(User $user) {
+        return [
+            "date" => "25/10/2008",
+        ];
+    }
 }

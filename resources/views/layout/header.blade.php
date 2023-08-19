@@ -235,9 +235,9 @@
 
 
             <li style="list-style: none;">
-                <a class="nav-link" href="{{ route("profile.settings") }}">
+                <a class="nav-link" @if(isset($_SESSION["mail"])) href="{{ route("profile", $_SESSION["mail"]) }}" @else href="/login" @endif>
                     <i class="bi bi-sliders"></i>
-                    <span>Settings</span>
+                    <span>Profile</span>
 
                 </a>
             </li>

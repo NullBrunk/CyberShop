@@ -1,17 +1,17 @@
 <?php
 
-use App\Events\SignupEvent;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
 use App\Http\Controllers\Contacts;
 use App\Http\Controllers\Tmpimage;
+use App\Http\Controllers\Profile;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Carts;
 use App\Http\Controllers\Index;
 use App\Http\Controllers\Likes;
-use App\Models\User;
+
 
 /*
 |---------------------------------------------
@@ -24,7 +24,8 @@ Route::view("/todo", "static.todo");
 # Index page
 Route::get('/', [ Index::class , "show"]) -> name("root");
 
-
+# Profile page
+Route::get("/p/{user:mail}", [ Profile::class, "show"] ) -> name("profile");
 
 /*
 |---------------------------------------------
