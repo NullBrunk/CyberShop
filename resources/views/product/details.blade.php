@@ -370,7 +370,7 @@
                                         <script>
                                             document.getElementById("bruno{{ $comm -> id }}").addEventListener("click", (event) => {
                                                 
-                                                @if(isset($_SESSION["logged"])) 
+                                                @isset($_SESSION["logged"])
                                                     heartclick("{{ route("like.toggle", $comm -> id ) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")
                                                     
                                                     if(!document.getElementById("icon{{$comm["id"]}}").classList.contains("bi-heart-fill")) { 
@@ -380,7 +380,7 @@
         
                                                         onButtonClick(m * event.clientY + b); 
                                                     }
-                                                @endif 
+                                                @endisset 
                                             })
                                         </script>
 

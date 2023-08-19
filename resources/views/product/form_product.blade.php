@@ -7,6 +7,11 @@
 @php($img_is_upper = sizeof($images) > 1)
 
     <body>
+        <link rel="stylesheet" href="/assets/vendor/filepond/filepond.css">
+        <link rel="stylesheet" href="/assets/vendor/filepond/filepond-plugin-image-preview.css">
+        <script src="/assets/vendor/filepond/filepond.js"></script>
+        <script src="/assets/vendor/filepond/filepond-plugin-image-preview.js"></script>
+
         <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
         <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
         <script type="text/javascript">
@@ -75,7 +80,7 @@
                                 </div>
                                 <form method="post" action="{{ route("product.edit", $data['id']) }}" enctype="multipart/form-data" style="width: 50% !important;">
                                     <div  style="color: white; background-color: #324769 !important; border-radius: 12px;">
-                                        <div class="portfolio-info" style="padding-bottom: 10px;" >   
+                                        <div class="portfolio-info" style="padding-bottom: 0px;" >   
                                             <h2>Product information</h2>
                                             <hr>
                                             <ul>
@@ -105,6 +110,13 @@
                                                         document.getElementById("select").value = "{{ old('category') !== null ? old('category') : $data['class']}}" 
                                                     </script>
                                                 </li>
+
+                                                <li class="mt-4">
+                                                    <strong>
+                                                        Ajouter des images :
+                                                        <input id="otherimgs" type="file" class="filepond" multiple data-allow-reorder="true" data-max-file-size="3MB" name="otherimg">
+                                                    </strong>
+                                                </li>
                                             </ul>
                                         </div>
 
@@ -115,6 +127,8 @@
                                                 </textarea>      
                                             </p> 
                                         </div>
+
+
                                     
                                         @csrf
         
@@ -134,7 +148,21 @@
 
 
                 <script>
-                    document.getElementById("textarea").style.height = "14vh" 
+                    document.getElementById("textarea").style.height = "14vh";
+
+                    FilePond.registerPlugin(FilePondPluginImagePreview);
+                    FilePond.create(document.getElementById("mainimg"));
+                    FilePond.create(document.getElementById("otherimgs"));
+
+                    FilePond.setOptions({
+                        server : {
+                            process : "{{ route('tmp.store') }}",
+                            revert : "{{ route('tmp.delete') }}",
+                            headers : {
+                                "X-CSRF-TOKEN" : "{{ csrf_token() }}"
+                            }
+                        },
+                    })
                 </script>
                 <script src="/assets/js/products.js"></script>
             <hr>

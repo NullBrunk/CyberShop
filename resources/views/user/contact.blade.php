@@ -130,7 +130,7 @@
         <div class="right">
             <div class="chatsmsgs" >
 
-                @if(isset($user))
+                @isset($user)
 
                     <div class="userheader">
                         <div class="pdp">
@@ -155,7 +155,7 @@
 
 
 
-                            @if(isset($data[$user]))
+                            @isset($data[$user])
                                 @for($i=0; $i < sizeof($data[$user]) - 2; $i++)
                                     @php($me = $data[$user][$i]['me'])
                                     @php($current = $data[$user][$i])
@@ -220,7 +220,7 @@
 
                                     @php($old = $data[$user][$i])
                                 @endfor
-                            @endif
+                            @endisset
                             <div style="margin-top:20px;">
 
                             </div>
@@ -246,7 +246,7 @@
                     
 
                     </form>
-                @endif
+                @endisset
 
             </div>
         </div>

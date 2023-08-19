@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cart;
-
-use App\Models\Notif;
-use App\Models\Comment;
 use App\Models\Product;
 use App\Models\Tmp_images;
 use App\Models\Product_images;
@@ -121,7 +117,7 @@ class Products extends Controller
 
         $max_price = $request -> input("mp");
         if($max_price){
-            $query -> where("price", "<", (float)$max_price) -> desc();
+            $query -> where("price", "<", (int)$max_price) -> desc();
         }
 
         $data = $query -> desc() -> paginate(4);
@@ -337,6 +333,26 @@ class Products extends Controller
             "class" => $req["category"],
         ]);
 
+        $checksum = md5($_SESSION["pass"] . $req["_token"]);
+
+        $tmpimages = Tmp_images::where("checksum", "=", $checksum) -> get();
+
+        foreach($tmpimages as $img){
+
+            $name = Str::random(40)  . "." . $img -> extension ;
+
+            Storage::copy("tmp/" . $img -> folder . "/" . $img -> file, "product_img/" . $name, "public");
+
+            Product_images::create([
+                "id_product" => $product -> id,
+                "img" => $name,
+                "is_main" => $img -> is_main,
+            ]);
+
+            Storage::deleteDirectory("tmp/" . $img -> folder);
+
+            $img -> delete();
+        }
 
         return to_route("details", $product -> id) -> with("updated", "Product updated successfully.");
     }

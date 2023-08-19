@@ -36,13 +36,13 @@
 
 @php($query_string = "")
 
-@if(isset($search))
+@isset($search))
     @php($query_string .= "&q=" . $search)
-@endif
+@endisset
 
-@if(isset($max_price) && $max_price !== null) 
+@isset($max_price) && $max_price !== null) 
     @php($query_string .= "&mp=" . $max_price)
-@endif
+@endisset
 
 
 @if($products -> nextPageUrl() !== null)

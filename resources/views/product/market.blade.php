@@ -83,13 +83,10 @@
 
                 document.getElementById("textbar").style.height = "14vh" 
             
-                FilePond.registerPlugin(FilePondPluginImagePreview);
 
+                FilePond.registerPlugin(FilePondPluginImagePreview);
                 FilePond.create(document.getElementById("mainimg"));
                 FilePond.create(document.getElementById("otherimgs"));
-
-
-                  
 
                 FilePond.setOptions({
                     server : {

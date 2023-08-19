@@ -40,11 +40,11 @@
             </form>
         </div>
     
-        @if(isset($search))
+        @isset($search)
             <div class="results_for">
                 {{ $number }} @if($number === 0) result @else results @endif for <span>"{{ $search }}"</span> 
             </div>
-        @endif
+        @endisset
 
     
         <section id="baseproduct" class="portfolio" style="padding: 50px 0px;">
@@ -77,7 +77,7 @@
                                 <div class="pricepr">
                                     {{ $d -> format_price() }} <span>$</span>
 
-                                    @if(isset($notpaginated))
+                                    @isset($notpaginated)
                                         
                                         <p class="pr_stars" id="stars-{{$d['id']}}">{!! $rating[$d["id"]] !!}</p>
                                     
@@ -89,7 +89,7 @@
                                             showrating(location.protocol + "//" + window.location.hostname + ":8000/api/rating/{{ $d['id'] }}", {{$d['id']}});
                                         </script>   
 
-                                    @endif   
+                                    @endisset
                                       
                                 </div>
 
@@ -102,13 +102,13 @@
 
                 @php($query_string = "")
 
-                @if(isset($search))
+                @isset($search)
                     @php($query_string .= "&q=" . $search)
-                @endif
+                @endisset
 
-                @if(isset($max_price) && $max_price !== null) 
+                @isset($max_price) && $max_price !== null) 
                     @php($query_string .= "&mp=" . $max_price)
-                @endif
+                @endisset
 
                   
                 @if($products -> nextPageUrl() !== null)
