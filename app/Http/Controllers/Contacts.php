@@ -331,7 +331,6 @@ class Contacts extends Controller {
         ]));
     
         # Generate an event
-        
         NotificationReceived::dispatch($id);
 
         return to_route("contact.user", $mail);

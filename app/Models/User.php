@@ -25,4 +25,7 @@ class User extends Model
         return  date('d/m/Y', strtotime($this -> created_at));
     }
 
+    public function comments() {
+        return $this -> hasMany(Comment::class, "id_user");
+    }
 }
