@@ -35,6 +35,14 @@
             </div>
         </div>
 
+        <div class="cards">
+            <div class="comments">
+                <h5>Latests comments</h5>
+                @livewire("profile-page-comments", ['mail' => $user -> mail] )
+            </div>
+
+                @livewire("profile-page-informations", ["mail" => $user -> mails])
+        </div>
         @livewire("profile-page-product", ['mail' => $user -> mail] )
     </div>
 

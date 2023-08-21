@@ -113,7 +113,7 @@
 
                                                 <li class="mt-4">
                                                     <strong>
-                                                        Ajouter des images :
+                                                        Add images :
                                                         <input id="otherimgs" type="file" class="filepond" multiple data-allow-reorder="true" data-max-file-size="3MB" name="otherimg">
                                                     </strong>
                                                 </li>
