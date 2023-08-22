@@ -36,11 +36,11 @@
 
 @php($query_string = "")
 
-@isset($search))
+@isset($search)
     @php($query_string .= "&q=" . $search)
 @endisset
 
-@isset($max_price) && $max_price !== null) 
+@isset($max_price) 
     @php($query_string .= "&mp=" . $max_price)
 @endisset
 
