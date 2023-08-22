@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Notif;
+use App\Models\Comment;
 use App\Events\NotificationReceived;
 use App\Http\Requests\StoreComments;
 use App\Http\Requests\UpdateComment;
-
-
-use App\Models\Comment;
-use App\Models\Notif;
-use App\Models\User;
 use App\Notifications\CommentedProductNotification;
+
 
 class Comments extends Controller {
 

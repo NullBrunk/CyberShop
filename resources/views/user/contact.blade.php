@@ -99,7 +99,7 @@
 
                     <div onclick='window.location.href = "{{route("contact.user", $current_user)}}"' class="cardcontact @if(isset($user) && $user === $current_user) selected @endif" style="user-select: none !important;">
                         <div class="cardIcon">
-                            <div class="cardAvatar">{{ strtoupper(substr(explode("@", $current_user)[0], 0, 2)) }}</div>
+                            <img class="cardAvatar" src="https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name={{ $current_user }}" alt="">
                         </div>
 
                         <div class="cardTitle">{{ $current_user }}</div>
@@ -134,7 +134,7 @@
 
                     <div class="userheader">
                         <div class="pdp">
-                            <div class="cardAvatar">{{ strtoupper(substr(explode("@", $user)[0], 0, 2)) }} </div>
+                            <img class="cardAvatar" src="https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name={{ $user }}" alt="">
                         </div>
                         <div class="menubar">
                             <div class="name">

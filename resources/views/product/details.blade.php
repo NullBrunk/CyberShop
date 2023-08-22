@@ -312,8 +312,8 @@
                                     <div id="{{ "div" . $comm -> id  }}" class="comments">          
                                         <div class="profile">
                                             
-                                            <p class="profile">
-                                                <i style="font-size:32px; color:#007185;" class="bi bi-person-circle"> </i>
+                                            <p class="profile" style='margin-bottom: 0px;'>
+                                                <img class="cardAvatar" src="https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name={{ $mail }}" alt="" style="height: 28px;">
                                                 <p class="name">
             
                                                     @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $mail))
@@ -328,7 +328,7 @@
                                                 {{-- Menu to edit/delete a comment --}}
                                                 @if(isset($_SESSION["mail"]) && $mail === $_SESSION["mail"])           
                                                     <p class="trash"> 
-                                                        <i id="" onclick='menu("{{$comm -> id }}")' style="margin-top: 16px;" class="dots bx bx-dots-vertical-rounded"></i>     
+                                                        <i id="" onclick='menu("{{$comm -> id }}")' class="dots bx bx-dots-vertical-rounded"></i>     
                                                     </p>
                                                 @endif 
 
