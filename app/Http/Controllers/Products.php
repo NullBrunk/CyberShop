@@ -523,4 +523,28 @@ class Products extends Controller
         return response('Ok', 200);
     }
 
+
+
+    /**
+     * Fonction to change the main img of a product
+     * 
+     * @param Product_images $image      The image threw model binding
+     * 
+     */
+
+    public function change_main(Product_images $image) {
+        
+        if($image -> product -> id_user != $_SESSION["id"]) {
+            return abort(403);
+        }
+
+        Product_images::where("id_product", $image -> id_product) 
+            -> where("is_main", true) 
+            -> update([
+                "is_main" => false
+            ]);
+
+        $image -> is_main = true;
+        $image -> save();
+    }
 }

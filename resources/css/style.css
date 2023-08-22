@@ -1767,3 +1767,33 @@ tr:nth-child(even) td {
   background-color: #bd3b3f !important;
   border: 1px solid #af2024 !important;
 }
+
+
+.change-main-img {
+  border: none;
+  background: #32325d;
+  color: white;
+  height: 31px;
+  border-radius: 50%;
+  width: 31px;
+  font-size: 17px !important;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+
+.change-main-img:hover {
+  background-color: #007185;
+  border: 1px solid #007185 !important;
+}
+
+.change-main-img:active {
+  background-color: #007185 !important;
+  border: 1px solid #007185 !important;
+}
+
+.option-details {
+  display: flex;
+  flex-direction: column;
+}
+

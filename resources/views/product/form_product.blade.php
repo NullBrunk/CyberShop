@@ -50,9 +50,16 @@
                                                             <div id="image_{{$img['id']}}" class="card swiper-slide" style="height: 75vh; display: flex; border: none;">
                                                                 <div style="display: flex; height: 100%; width: 85%; margin: auto;">
                                                                     <img unselectable="on" style="max-height: 90%; max-width:90%; margin: auto;" src="/storage/product_img/{{$img['img']}}" alt="" />
-                                                                    <button onclick="delete_image('{{ route('product.image_delete', $img['id']) }}', 'image_{{$img['id']}}', '{{ csrf_token() }}')" class="delete-img">
-                                                                        <i class="bi bi-x"></i>
-                                                                    </button>
+                                                                    <p class="option-details">
+                                                                        <button onclick="delete_image('{{ route('product.image_delete', $img['id']) }}', 'image_{{$img['id']}}', '{{ csrf_token() }}')" class="delete-img">
+                                                                            <i class="bi bi-x"></i>
+                                                                        </button>
+                                                                        
+                                                                        <button class="change-main-img" onclick="change_main_img('{{ route('product.change_main', $img['id']) }}')">
+
+                                                                            <i class="bx bx-image"></i>
+                                                                        </button>
+                                                                    </p>
                                                                 </div>        
                                                             </div>
                                                         @endforeach

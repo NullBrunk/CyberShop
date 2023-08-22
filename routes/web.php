@@ -123,6 +123,10 @@ Route::prefix('product') -> controller(Products::class) -> name("product.") -> g
         "/edit/image/{image}", "remove_image"
     ) -> middleware("logged") -> name("image_delete");
 
+    Route::get(
+        "/edit/image/{image}", "change_main"
+    ) -> middleware("logged") -> name("change_main");
+
 });
 
 Route::get("/category/{slug}", [ Products::class, "show" ]) -> name("product.show");

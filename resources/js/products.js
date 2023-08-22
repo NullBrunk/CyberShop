@@ -58,4 +58,20 @@ function delete_image(url, elem, csrf){
             });
         }
     })
-    }
+}
+
+function change_main_img(url) {
+    Swal.fire({
+        title: "Do you really wan't to replace the main image ?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#293e61',
+        cancelButtonColor: '#af2024',
+        confirmButtonText: 'Yes, change it!'
+    }).then((result) => {
+        // On redirige vers la page permettant de supprimer le commentaire
+        if (result.isConfirmed) {
+            fetch(url);
+        }
+    });
+} 
