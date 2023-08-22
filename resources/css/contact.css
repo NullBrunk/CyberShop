@@ -17,7 +17,7 @@
 }
 @font-face {
     font-family: Avenir;
-    src: url("/assets/avenir.ttf") format("truetype");
+    src: url("/assets/fonts/avenir.ttf") format("truetype");
 }
 .chatbody {
     font-family: Avenir;
@@ -106,12 +106,9 @@
     text-align: center;
     font-size: 14px;
     line-height: 40px;
-    background-color: #fa7921;
     top: 22px;
     margin-left: 12px;
     transition: 0.66s;
-    border: 1px solid #fa541c;
-    box-shadow: rgba(245, 34, 45, 0.35) 0 2px 7px;
 }
 .cardTitle,
 .lastmsg,

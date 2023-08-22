@@ -1,6 +1,6 @@
 @font-face {
     font-family: Avenir;
-    src: url("/assets/avenir.ttf") format("truetype");
+    src: url("/assets/fonts/avenir.ttf") format("truetype");
 }
 
 body {
