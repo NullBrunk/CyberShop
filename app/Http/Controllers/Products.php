@@ -534,7 +534,7 @@ class Products extends Controller
 
     public function change_main(Product_images $image) {
         
-        if($image -> product -> id_user != $_SESSION["id"]) {
+        if($image -> product -> id_user !== $_SESSION["id"]) {
             return abort(403);
         }
 
