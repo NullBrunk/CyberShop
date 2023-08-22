@@ -61,6 +61,8 @@ class Users extends Controller {
             $_SESSION['id'] = $data['id'];
             $_SESSION['logged'] = true;
             $_SESSION['mail'] = $data['mail'];
+            session(['mail' => $data['mail']]);
+            
             $_SESSION['pass'] = $data['pass'];
             $_SESSION["closed"] = [];
 

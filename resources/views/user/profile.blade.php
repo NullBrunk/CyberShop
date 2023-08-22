@@ -1,7 +1,7 @@
 @extends("layout.base")
 
-
-@section("title", "Profile")
+{{-- In case the user is me, title is "my profile". Else the title is "profile of wathever@user.com" --}}
+@section("title", $user -> mail === session("mail") ? "My profile" : "Profile of " . $user -> mail )
 
 @section("content")
 
@@ -18,7 +18,7 @@
 
         <div class="informations">
             <div class="profile-name">
-                <p class="m-auto">{{ ucfirst(substr($user -> mail, 0, 1)) }}</p>
+                <img src="https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name={{ $user -> mail }}" alt="">
             </div>
             <div class="profile-info">
                 <p class="mail">
@@ -29,21 +29,27 @@
                 </p>
             </div>    
             <div class="buttons">
-                <a class="signal" href="/todo"><i class="bi bi-exclamation-circle"></i></a>
-                <a class="chat" href="{{ route("contact.user", $user -> mail) }}"><i class="bi bi-envelope"></i></a>
-                <a class="settings" href="{{ route("profile.settings") }}"><i class="bi bi-gear"></i></a>
+                
+                
+                @if(session("mail") !== $user -> mail) 
+                    <a class="signal" href="/todo"><i class="bi bi-exclamation-circle"></i></a>
+                    <a class="chat" href="{{ route("contact.user", $user -> mail) }}"><i class="bi bi-envelope"></i></a>
+                @else
+                    <a class="chat" href="{{ route("profile.settings") }}"><i class="bi bi-gear"></i></a>
+                @endif
+
             </div>
         </div>
 
         <div class="cards">
             <div class="comments">
-                <h5>Latests comments</h5>
-                @livewire("profile-page-comments", ['mail' => $user -> mail] )
+                <h5>My latests comments</h5>
+                @livewire("profile-page-comments", [ "mail" => $user -> mail ] )
             </div>
 
-                @livewire("profile-page-informations", ["mail" => $user -> mails])
+                @livewire("profile-page-informations", [ "mail" => $user -> mail ])
         </div>
-        @livewire("profile-page-product", ['mail' => $user -> mail] )
+        @livewire("profile-page-product", ["mail" => $user -> mail] )
     </div>
 
 @endsection

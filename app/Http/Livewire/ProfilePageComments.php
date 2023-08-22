@@ -15,7 +15,7 @@ class ProfilePageComments extends Component
     public function render()
     {
         return view('livewire.profile-page-comments', [
-            "comments" => User::where("mail", "=", $this -> mail) -> first() -> comments,
+            "comments" => User::where("mail", "=", $this -> mail) -> first() -> comments() -> with("product") -> get(),
         ]);
     }
 }

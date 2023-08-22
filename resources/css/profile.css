@@ -112,10 +112,6 @@ body {
     }
 }
 
-.buttons .settings {
-    background-color: #09a6d6;
-}
-
 .buttons .chat {
     background-color: #fc7593;
 }
@@ -234,4 +230,23 @@ body {
 .space b {
     font-size: 12px;
     font-weight: 300;
+}
+
+.flex {
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+}
+
+.comment-content {
+    width: 90%;
+}
+
+.likes {
+    width: 10%;
+    text-align: end;
+}
+
+.hrsep {
+    margin-top: 15px;
 }
