@@ -28,7 +28,7 @@ var swiper = new Swiper(".slide-container", {
 
 function delete_image(url, elem, csrf){
     Swal.fire({
-        title: 'Are you sure ?',
+        title: 'Do you really want to delete this image ?',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#293e61',
@@ -62,7 +62,7 @@ function delete_image(url, elem, csrf){
 
 function change_main_img(url) {
     Swal.fire({
-        title: "Do you really wan't to replace the main image ?",
+        title: "Do you really want to set this as main image ?",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#293e61',

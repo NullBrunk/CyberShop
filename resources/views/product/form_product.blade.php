@@ -4,7 +4,9 @@
 
 
 @section("content")
-@php($img_is_upper = sizeof($images) > 1)
+
+@php($img_nb = sizeof($images))
+@php($img_is_upper = $img_nb > 1)
 
     <body>
         <link rel="stylesheet" href="/assets/vendor/filepond/filepond.css">
@@ -46,20 +48,30 @@
                                                 <div class="card-wrapper swiper-wrapper" id="swiper-wrap">
                             
                                                     @if($img_is_upper) {{-- If there is more than one image --}}
-                                                        @foreach($images as $img)
+                                                        @foreach($images as $k => $img)
                                                             <div id="image_{{$img['id']}}" class="card swiper-slide" style="height: 75vh; display: flex; border: none;">
-                                                                <div style="display: flex; height: 100%; width: 85%; margin: auto;">
-                                                                    <img unselectable="on" style="max-height: 90%; max-width:90%; margin: auto;" src="/storage/product_img/{{$img['img']}}" alt="" />
-                                                                    <p class="option-details">
-                                                                        <button onclick="delete_image('{{ route('product.image_delete', $img['id']) }}', 'image_{{$img['id']}}', '{{ csrf_token() }}')" class="delete-img">
-                                                                            <i class="bi bi-x"></i>
-                                                                        </button>
-                                                                        
-                                                                        <button class="change-main-img" onclick="change_main_img('{{ route('product.change_main', $img['id']) }}')">
+                                                                <div style="display: flex; height: 100%; width: 85%; margin: auto; flex-direction: column">
+                                                                    <div style="display: flex; justify-content: space-between;">
+                                                                        <span class="img_number">
+                                                                            <strong>
+                                                                                {{ $k + 1 }}
+                                                                            </strong>
+                                                                            <span>
+                                                                                 / {{ $img_nb }}
+                                                                            </span>
+                                                                        </span>
 
-                                                                            <i class="bx bx-image"></i>
-                                                                        </button>
-                                                                    </p>
+                                                                        <p class="option-details">   
+                                                                            <button class="change-main-img" onclick="change_main_img('{{ route('product.change_main', $img['id']) }}')">
+                                                                                <i class="bx bx-image"></i>
+                                                                            </button>
+                                                                            
+                                                                            <button onclick="delete_image('{{ route('product.image_delete', $img['id']) }}', 'image_{{$img['id']}}', '{{ csrf_token() }}')" class="delete-img">
+                                                                                <i class="bx bx-trash-alt"></i>
+                                                                            </button>
+                                                                        </p>
+                                                                    </div>
+                                                                    <img unselectable="on" style="max-height: 90%; max-width:90%; margin: auto;" src="/storage/product_img/{{$img['img']}}" alt="" />
                                                                 </div>        
                                                             </div>
                                                         @endforeach

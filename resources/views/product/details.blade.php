@@ -5,7 +5,9 @@
 
 @section("content")
 
-@php($img_is_upper = count($images) > 1)
+@php($img_nb = sizeof($images))
+@php($img_is_upper = $img_nb > 1)
+
 @php($mail = $product -> user -> mail)
 
     <body>
@@ -88,8 +90,18 @@
                                             <div class="card-wrapper swiper-wrapper" id="swiper-wrap">
                         
                                                 @if($img_is_upper)
-                                                    @foreach($images as $img)
-                                                        <div class="card swiper-slide" style="height: 75vh; display: flex; border: none;">
+                                                    @foreach($images as $k => $img)
+                                                        <div class="card swiper-slide" style="height: 75vh; display: flex; border: none; flex-direction: column;">
+                                                            <div style="display: flex; justify-content: space-between;">
+                                                                <span class="img_number">
+                                                                    <strong>
+                                                                        {{ $k + 1 }}
+                                                                    </strong>
+                                                                    <span>
+                                                                         / {{ $img_nb }}
+                                                                    </span>
+                                                                </span>
+                                                            </div>
                                                             <div style="display: flex; height: 90%; width: 85%; margin: auto;">
                                                                 <img unselectable="on" style="max-height: 100%; max-width:100%; margin: auto;" src="/storage/product_img/{{$img['img']}}" alt="" />
                                                             </div>

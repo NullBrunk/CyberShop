@@ -1753,7 +1753,7 @@ tr:nth-child(even) td {
   height: 31px;
   border-radius: 50%;
   width: 31px;
-  font-size: 19px !important;
+  font-size: 17px !important;
   font-weight: 700;
 }
 
@@ -1778,7 +1778,7 @@ tr:nth-child(even) td {
   width: 31px;
   font-size: 17px !important;
   font-weight: 700;
-  margin-top: 6px;
+  margin-right: 6px;
 }
 
 
@@ -1794,6 +1794,12 @@ tr:nth-child(even) td {
 
 .option-details {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 }
 
+.img_number {
+  background-color: #e1e1e1;
+  padding: 1px 8px 1Px 8px;
+  height: 28px;
+  border-radius: 6px;
+}
