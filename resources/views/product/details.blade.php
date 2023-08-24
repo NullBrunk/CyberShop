@@ -250,7 +250,6 @@
                 <div class="container" data-aos="fade-top-right">
 
                     <ol></ol>
-
                     
                     <h2>Comments <span style="font-size: 20px;">(@if($comments){{$comments->count()}}@endif)</span></h2>
 
