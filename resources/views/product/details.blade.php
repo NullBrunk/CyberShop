@@ -252,7 +252,7 @@
                     <ol></ol>
 
                     
-                    <h2>Comments</h2>
+                    <h2>Comments <span style="font-size: 20px;">(@if($comments){{$comments->count()}}@endif)</span></h2>
 
                     @if(!isset($_SESSION["logged"]))
                         <div class="alert alert-info">
