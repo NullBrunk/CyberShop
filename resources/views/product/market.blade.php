@@ -105,7 +105,7 @@
 
         {{-- Gestion des erreurs --}}
 
-        @error("imgerror")
+        @error("mainimg")
                 <script>salert("{{$message}}")</script>
         @enderror
 
