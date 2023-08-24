@@ -114,7 +114,6 @@ h6 {
 }
 
 .navbar li {
-  margin-bottom: 24px;
   position: relative;
 }
 
@@ -191,7 +190,6 @@ h6 {
 
   .dropdown {
     text-align: center;
-    justify-content: center;
     display: flex;
     flex-direction: column;
   }
@@ -200,9 +198,7 @@ h6 {
     left: -100%;
   }
 
-  .nav-link {
-    margin: auto !important;
-  }
+
 }
 
 /**
@@ -251,22 +247,6 @@ h6 {
   padding-left: 1vw !important;
 }
 
-.cartn {
-  display: block !important;
-  margin-top: 15% !important;
-  overflow: scroll;
-  max-height: 55vh;
-  width: 15vw;
-}
-
-.cartn i {
-  padding: 0px;
-  margin: 0px;
-}
-
-.notif {
-  width: 260px;
-} 
 
 .msgs p {
   font-size: 10px;
@@ -346,6 +326,7 @@ h6 {
   flex-direction: column;
   padding-top: 15%;
   padding-bottom: 15%;
+  justify-content: space-between;
 }
 
 .navbar-mobile a,
@@ -1628,7 +1609,7 @@ tr:nth-child(even) td {
 }
 
 .searchbarindex button {
-  width: 8%;
+  width: 52px;
   border-top-right-radius: 4px !important;
   border-bottom-right-radius: 4px !important;
   border: 0;
@@ -1649,7 +1630,7 @@ tr:nth-child(even) td {
 
 .nav-link {
   width: 90px;
-  height: 50px;
+  height: 55px;
   position: relative;
   font-size: 1.1em;
   color: #fff;
@@ -1833,6 +1814,12 @@ tr:nth-child(even) td {
   width: 50%;
 }
 
+.img-fluid {
+  margin-left: 33%;
+  height: 60%;
+  margin-top: 20%;
+}
+
 @media(max-width: 600px){
   .top-navbar {
       margin-top: 12%;
@@ -1846,4 +1833,9 @@ tr:nth-child(even) td {
     width: 100%;
   }
 
+  .img-fluid {
+    margin: 0% !important;
+    height: 80%;
+  }
 }
+
