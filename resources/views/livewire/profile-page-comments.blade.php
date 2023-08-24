@@ -1,8 +1,7 @@
 <div>
     @foreach($comments as $comm )
-        <hr class="hrsep">
 
-        <div>
+        <div style="padding: 10px;">
             <a href="{{ route("details", $comm -> product -> id) }}">
                 {{ $comm -> product -> name }}
             </a> | <strong>{{$comm -> title }}</strong>
@@ -22,5 +21,7 @@
                 </div>
             </div>
         </div>
+        <hr class="hrsep">
+
     @endforeach
 </div>

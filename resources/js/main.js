@@ -113,6 +113,17 @@
   
   })()
 
-function a(){
-    console.log("oh");
+function logout() {
+  Swal.fire({
+      title: 'Are you sure?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#293e61',
+      cancelButtonColor: '#af2024',
+      confirmButtonText: 'Yes, logout!'
+  }).then((result) => {
+      if (result.isConfirmed) {
+          window.location.href = "/logout";
+      }
+  })
 }

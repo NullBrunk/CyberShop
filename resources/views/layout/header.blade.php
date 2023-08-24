@@ -4,7 +4,6 @@
 
 @php($logged = isset($_SESSION["logged"]))
 
-
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
     <div class="container d-flex align-items-center" style="max-width: 87vw !important;">
@@ -254,7 +253,7 @@
                     </li>
                 @else
                     <li style="list-style: none;">
-                        <a class="nav-link" href="{{ route("logout") }}">
+                        <a class="nav-link" style="cursor: pointer;" onclick="logout()">
                             <i class="bi bi-box-arrow-right"></i>
                             <span>Logout</span>
                         </a>

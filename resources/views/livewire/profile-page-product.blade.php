@@ -4,6 +4,7 @@
         @isset($products)
         <div>
             <div class="row portfolio-container" style="padding: 15px;">
+                <h5>Products in sale</h5>
                 @foreach($products as $product)
                     <div class="col-md-2 portfolio-item {{ $product['class'] }} " style="@if($limit === false) margin-bottom: 40px; @endif margin-top: 10px;">
                         <div class="portfolio-wrap" style="flex-direction: column; height: 29vh !important;">

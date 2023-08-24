@@ -192,7 +192,6 @@
                                             (en cliquant sur le lien), d'etre redirigé vers la page pour
                                             le contacter.
                                         --}}
-
                                         @if(!isset($_SESSION["mail"]) or (isset($_SESSION["mail"]) && $mail !== $_SESSION["mail"])) 
                                             <a href="{{route('profile', $mail)}}">
                                                 {{ $mail }}
