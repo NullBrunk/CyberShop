@@ -64,7 +64,7 @@
 
                             </a>
 
-                            <ul class="cartn">
+                            <ul style="width: 250px">
 
                                 <div id="cart_to_fill">
 
@@ -80,16 +80,16 @@
                                             </p>
                                         </li>
                                         <hr id="hrcart_{{ $c -> id }}">
-
-                                    @endforeach
+                                        
+                                        @endforeach
+                                        <li>
+                                            <a id="price" class="button" href="{{route("cart.display")}}" style="width: 90%; display: block;">
+                                                Buy
+                                            </a>
+                                        </li>
 
                                 </div>
 
-                                <li>
-                                    <a id="price" class="button" href="{{route("cart.display")}}" style="width: 90%; display: block;">
-                                        Buy
-                                    </a>
-                                </li>
                             </ul>
                         </li>
                     @endif
@@ -111,7 +111,7 @@
 
                     </a>
 
-                    <ul class="cartn">
+                    <ul style="width: 250px">
 
                         <div id="cart_to_fill">
                         </div>
@@ -147,7 +147,7 @@
                     <span>Products</span>
                 </a>
 
-                <ul class="products" style="width: 11vw;">
+                <ul class="products" style="width: 150px;">
                     <li>
                         <a href="{{ route("product.show", "informatics") }}">
 

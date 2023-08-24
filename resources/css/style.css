@@ -122,7 +122,6 @@ h6 {
   transition: 0.3s;
   margin: 0px;
   width: 83px;
-  height: 100%;
   padding: 18px 0px 3px 40px;
 }
 
@@ -1399,7 +1398,6 @@ tr:nth-child(even) td {
   margin-bottom: 0px;
   margin-left: 0px;
   width: 80%;
-  margin-left: 10%;
   margin-top: 5%;
   margin-bottom: 5%;
   color: #000;

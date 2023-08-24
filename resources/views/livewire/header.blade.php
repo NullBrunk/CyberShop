@@ -2,7 +2,7 @@
     
     @if(!empty($notifs))
 
-        <li id="cart" style="list-style-type: none;" class="dropdown ">
+        <li style="list-style-type: none;" class="dropdown ">
             <a class="nav-link" href="#">
                 <span class="badge bg-primary badge-number">
                     {{ $notifs_number }}
@@ -12,7 +12,7 @@
                 <span>Notifs</span>
             </a>
 
-            <ul class="cartn notif">
+            <ul style="width: 250px">
                 @foreach($notifs as $n)
 
                     <li>
