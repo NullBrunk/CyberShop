@@ -42,8 +42,11 @@
         </div>
 
         <div class="cards">
-            <div class="comments">
-                <h5>Latests comments</h5>
+            <div class="comments relative">
+                <div class="commentbar-top">
+                    <h5 style="padding: 10px 0px 0px 10px;">Latests comments</h5>
+                    <hr style="color: black; margin: 0px;">
+                </div>
                 @livewire("profile-page-comments", [ "mail" => $user -> mail ] )
             </div>
 

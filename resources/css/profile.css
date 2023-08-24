@@ -195,7 +195,6 @@ body {
     width : 48%;
     border-radius: 8px;
     overflow: scroll;
-    padding: 10px;
 }
 
 .general-rating i {
@@ -249,4 +248,53 @@ body {
 
 .hrsep {
     margin-top: 15px;
+}
+
+@media(max-width: 550px) {
+    .cards {
+        flex-direction: column;
+    }
+
+    .comments {
+        width: 100%;
+        height: 60%;
+        order: 100;
+    }
+
+    .cards {
+        height: 75vh;
+    }
+
+    .space b {
+        display: none;
+    }
+
+    .space span {
+        display: contents;
+    }
+
+    .more-infos {
+        width: 100%;
+        height: 40%;
+        margin-bottom: 15px;
+    }
+
+    .more-infos p {
+        text-align: center
+    }
+
+    .cards {
+        justify-content: flex-start;
+    }
+}
+
+.relative {
+    position: relative
+}
+
+.commentbar-top {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 2;
 }
