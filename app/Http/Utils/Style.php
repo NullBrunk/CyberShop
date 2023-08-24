@@ -48,7 +48,7 @@ function style(string $data) : string
         "\*\*(.*?)\*\*" => "<strong>$1</strong>",
         "\*(.*?)\*" => "<em>$1</em>",
         "~~(.*?)~~" => "<strike>$1</strike>",
-        "!\((.*?)\\)" => "<a href=\"$1\">$1</a>",
+        "!\((.*?)\\)" => "<a target='_blank' href=\"$1\">$1</a>",
     ];
 
     foreach($conver as $k => $v){
