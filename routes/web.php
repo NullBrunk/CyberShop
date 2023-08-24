@@ -64,7 +64,7 @@ Route::get("/mail/verify/{slug}",
 
 Route::prefix('cart') -> controller(Carts::class) -> middleware("logged") -> name("cart.") -> group(function () {
     
-    Route::view("show", "user.cart") -> name("display");
+    Route::view("show", "static. todo") -> name("display");
 
     Route::get("" , 'initialize') -> name("initialize");
 

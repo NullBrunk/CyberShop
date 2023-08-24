@@ -27,7 +27,7 @@ form {
 }
 
 .max-price {
-    width: 7%;
+    width: 89px;
     padding-left: 8px;
     margin-left: 1%;
     border: 1px solid #293e61;
@@ -35,7 +35,7 @@ form {
 }
 
 .button-search {
-    width: 3%;
+    width: 43px;
     border-radius: 4px;
     margin-right: 1%;
     border: 1px solid #293e61;

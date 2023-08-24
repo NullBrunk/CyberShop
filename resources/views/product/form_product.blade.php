@@ -97,7 +97,7 @@
                                     
                                     </div>
                                 </div>
-                                <form method="post" action="{{ route("product.edit", $data['id']) }}" enctype="multipart/form-data" style="width: 50% !important;">
+                                <form method="post" action="{{ route("product.edit", $data['id']) }}" class="margin5" enctype="multipart/form-data" >
                                     <div  style="color: white; background-color: #324769 !important; border-radius: 12px;">
                                         <div class="portfolio-info" style="padding-bottom: 0px;" >   
                                             <h2>Product information</h2>

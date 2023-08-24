@@ -42,6 +42,10 @@ h6 {
   transition: all 0.4s;
 }
 
+.margin5 {
+  width: 50%;
+}
+
 .back-to-top i {
   font-size: 24px;
   color: #fff;
@@ -110,6 +114,7 @@ h6 {
 }
 
 .navbar li {
+  margin-bottom: 24px;
   position: relative;
 }
 
@@ -184,8 +189,19 @@ h6 {
     left: -90%;
   }
 
+  .dropdown {
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+  }
+
   .navbar .dropdown .dropdown:hover>ul {
     left: -100%;
+  }
+
+  .nav-link {
+    margin: auto !important;
   }
 }
 
@@ -315,7 +331,7 @@ h6 {
 }
 
 .navbar-mobile ul {
-  display: block;
+  display: flex;
   position: absolute;
   top: 55px;
   right: 15px;
@@ -326,6 +342,10 @@ h6 {
   background-color: #fff;
   overflow-y: auto;
   transition: 0.3s;
+  text-align: center;
+  flex-direction: column;
+  padding-top: 15%;
+  padding-bottom: 15%;
 }
 
 .navbar-mobile a,
@@ -1683,6 +1703,8 @@ tr:nth-child(even) td {
     color: #405984 !important
   }
 
+  
+
 }
 
 
@@ -1801,4 +1823,27 @@ tr:nth-child(even) td {
   padding: 1px 8px 1Px 8px;
   height: 28px;
   border-radius: 6px;
+}
+
+.top-navbar {
+  margin-top: 6%;
+}
+
+.margin50 {
+  width: 50%;
+}
+
+@media(max-width: 600px){
+  .top-navbar {
+      margin-top: 12%;
+  }
+
+  .margin50 {
+    width: 90%;
+  }
+
+  .margin5 {
+    width: 100%;
+  }
+
 }

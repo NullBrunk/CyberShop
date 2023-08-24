@@ -26,7 +26,7 @@
             }
         </script>
 
-        <div style="padding-top: 6%;" class=" d-flex align-items-center">
+        <div class="top-navbar d-flex align-items-center">
             <form  method="get" action="{{ route("product.search", $name) }}">
                 
                 <button class="button-search">

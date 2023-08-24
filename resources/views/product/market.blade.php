@@ -19,7 +19,7 @@
 
         <main id="main">
 
-            <section id="breadcrumbs" class="breadcrumbs" style="padding-top: 86px; padding-bottom: 0px !important;">
+            <section id="breadcrumbs" class="breadcrumbs" style="padding-top: 100px; padding-bottom: 0px !important;">
                 <div class="container">
                     <ol></ol>
                     <h2></h2>
@@ -30,7 +30,7 @@
             
                 <form method="post" action="{{ route("product.store") }}" enctype="multipart/form-data">  
                     
-                    <div class="col-lg-4"  style="color: white; background-color: #324769 !important; border-radius: 12px; width: 50%; margin: auto; margin-bottom: 86px;">
+                    <div class="col-lg-4 margin50"  style="color: white; background-color: #324769 !important; border-radius: 12px; margin: auto; margin-bottom: 86px;">
                         <div class="portfolio-info" style="padding-bottom: 10px;" >
                             <h2>Sell a product</h2>
                             <hr>
@@ -69,8 +69,10 @@
                             </p> 
                         </div>
                     
-                        @csrf      
-                        <input class="addtocart" style="margin-left: 42%; margin-top:0px; margin-bottom: 3%;" name="submit" type="submit" value="Sell !">
+                        @csrf    
+                        <div style="display: flex; width: 100%;">
+                            <input class="addtocart" style="margin-bottom: 3%;" name="submit" type="submit" value="Sell !">
+                        </div>  
                     </div>
                 </form>
         
