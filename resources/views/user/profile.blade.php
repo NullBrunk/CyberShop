@@ -35,7 +35,7 @@
                     <a class="signal" href="/todo"><i class="bi bi-exclamation-circle"></i></a>
                     <a class="chat" href="{{ route("contact.user", $user -> mail) }}"><i class="bi bi-envelope"></i></a>
                 @else
-                    <a class="chat" href="{{ route("profile.settings") }}"><i class="bi bi-gear"></i></a>
+                    <a class="chat" href="{{ route("settings.show") }}"><i class="bi bi-gear"></i></a>
                 @endif
 
             </div>

@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\SignupEvent;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-
-use App\Http\Requests\UpdateProfile;
-use App\Http\Requests\Signup;
-use App\Http\Requests\Login;
-
-use App\Models\MailValidation;
-use App\Models\Product;
-use App\Models\Comment;
-use App\Models\Notif;
-use App\Models\User;
-use App\Models\Cart;
 use Exception;
+use App\Models\Cart;
+use App\Models\User;
+
+use App\Models\Notif;
+use App\Models\Comment;
+use App\Models\Product;
+
+use App\Events\SignupEvent;
+use Illuminate\Support\Str;
+use App\Http\Requests\Login;
+use Illuminate\Http\Request;
+use App\Http\Requests\Signup;
+use App\Models\MailValidation;
+use App\Http\Requests\UpdateProfile;
+use Illuminate\Support\Facades\Storage;
 
 session_start();
 
@@ -143,83 +144,6 @@ class Users extends Controller {
     }
 
 
-
-    /**
-     * Update the settings of a given user if he is allowed to 
-     *
-     * @param UpdateProfile $request     The request with all the valuable informations 
-     * 
-     * @return redirect                  Redirect to the settings page in all the cases
-     * 
-     */
-    
-    public function settings(UpdateProfile $request){
-
-        $req = $request -> validated();
-
-        # Check if the hashed given password is the good one
-
-        $verify_user = User::where([
-            [ "mail", "=",  $_SESSION['mail']],
-            [ "pass", "=", hash("sha512", hash("sha512", $req['oldpass'])) ],
-        ]) -> get() -> toArray();
-
-
-        # The user is trying to change his profile information
-        # with wrong credentials, abort
-
-        if(empty($verify_user)){
-            return to_route("profile.settings") 
-                -> withErrors(["wrong_password" => "The entered password does not match your actual password."]);
-        }
-
-        # The user is authorized     
-       
-        try {
-            
-            User::where("mail", "=", $_SESSION['mail'])
-                  -> update([ 
-                    "mail" => $req['email'],
-                    "pass" => hash("sha512", hash("sha512", $req['newpass'])), 
-                ]);
-
-        }
-        catch (Exception $e){
-            return to_route("profile.settings") 
-                -> withErrors(["alreadytaken" => "Mail is already taken."]);            
-        }
-
-
-        $_SESSION['mail'] = $req['email'];
-
-        return to_route("profile.settings") 
-            -> with("done", "Your information has been updated.");
-    }
-
-
-
-    /**
-     * Show the settings page of the current user with
-     * all the products that he is selling
-     *      *
-     * @return view             The profile page
-     * 
-     */
-    
-    public function show_settings(){
-
-        $data = Product::select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img as image', 'product_images.is_main')
-            -> where("id_user", "=", $_SESSION["id"]) 
-            -> join('product_images', 'product_images.id_product', '=', 'products.id') 
-            -> where("is_main", "=", 1) 
-            -> get() 
-            -> toArray();
-
-        return view("user.settings", [ "data" => $data ]);
-    }
-
-
-
     /**
      * Delete a user if he is allowed to
      * 
@@ -228,31 +152,15 @@ class Users extends Controller {
      * 
      */
 
-    public function delete(){
+    public function delete(Request $request){
 
-        # TODO :
-        #
-        # Delete images of selled product / images on 
-        # contact messages
-        
-        User::find($_SESSION["id"]) -> delete();
+        if($request -> input("password")){
+            User::where("mail", $_SESSION["mail"]) 
+            -> where("password", 
+                hash("sha512", hash("sha512", $request -> input("password")))
+            ) -> delete();
+        }
 
-        session(["deletedaccount" => true]);
-    }
-
-
-
-    /**
-     * Get date of creation of an account
-     * 
-     * @param User $user          User threw model binding
-     * 
-     * @return array       Result
-     */
-
-    public function creation(User $user) {
-        return [
-            "date" => "25/10/2008",
-        ];
+        return to_route("root") -> with("deletedaccount", true);
     }
 }

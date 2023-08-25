@@ -44,7 +44,7 @@ class Tmpimage extends Controller
             }
             
             $extension = strtolower($main_img->getClientOriginalExtension());
-            if (!in_array($extension, ['jpg', 'jpeg', 'png'])){
+            if (!in_array($extension, ['jpg', 'jpeg', 'png', 'svg', 'webp'])){
                 return response()->json(["error" => "Wrong filetype"], 422);
             }
             

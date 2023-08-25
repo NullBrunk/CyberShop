@@ -8,8 +8,8 @@
                 @foreach($products as $product)
                     <div class="col-md-2 portfolio-item {{ $product['class'] }} " style="@if($limit === false) margin-bottom: 40px; @endif margin-top: 10px;">
                         <div class="portfolio-wrap" style="flex-direction: column; height: 29vh !important;">
-                            <a href="/details/{{ $product['id'] }}">
-                                <img src="/storage/product_img/{{ $product -> product_images() -> where("is_main", true) -> first() -> img }}" class="img-fluid" style="user-select: none !important; height: 19vh;">
+                            <a style="text-align: center;" href="/details/{{ $product['id'] }}">
+                                <img src="/storage/product_img/{{ $product -> product_images() -> where("is_main", true) -> first() -> img }}" class="imgpres" style="user-select: none !important; height: 19vh !important;">
                             </a>
                         </div>
             

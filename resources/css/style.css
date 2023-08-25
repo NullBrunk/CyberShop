@@ -677,6 +677,7 @@ section {
 
 .imgpres {
   height: 29vh;
+  max-width: 94%;
 }
 
 .show {
@@ -1838,4 +1839,3 @@ tr:nth-child(even) td {
     height: 80%;
   }
 }
-

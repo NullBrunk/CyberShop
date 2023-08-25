@@ -56,11 +56,11 @@
 
                         <div class="col-md-3 portfolio-item {{ $d['class'] }}">
                             <div class="portfolio-wrap" style="flex-direction: column;">
-                                <a href="/details/{{ $d['id'] }}">
+                                <a style="text-align: center;" href="/details/{{ $d['id'] }}">
                                     <img 
 
                                     data-src="/storage/product_img/{{ $d['img'] }}" 
-                                    class="img-fluid imgpres" style="user-select: none !important;">
+                                    class="imgpres" style="user-select: none !important;">
                                 </a> 
                             </div>
 

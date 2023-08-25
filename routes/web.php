@@ -140,13 +140,13 @@ Route::get("/details/{product}", [ Products::class, "get_details" ]) -> name("de
 |  Settings management 
 */
 
-Route::prefix('settings') -> controller(Users::class) -> middleware("logged") -> name("profile.") -> group(function () {
+Route::prefix('settings') -> controller(Users::class) -> middleware("logged") -> name("settings.") -> group(function () {
+    
+    Route::view("", "user.settings") -> name("show");
     
     Route::post("", "settings") -> name("settings");
-
+    
     Route::delete("/delete", "delete") -> name("delete");
-
-    Route::get("", "show_settings");
 
 });
 
