@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Model
 {
@@ -22,7 +23,11 @@ class User extends Model
     ];
 
     public function format_date(){
-        return  date('d/m/Y', strtotime($this -> created_at));
+        # Get the human readable date (3 weeks from now, 2 days ago ...)
+        $date = Carbon::parse($this -> created_at) -> diffForHumans();
+
+        # Convert the "from now" to "ago"
+        return str_replace("from now", "ago", $date);
     }
 
     public function comments() {

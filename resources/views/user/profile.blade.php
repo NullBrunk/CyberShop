@@ -25,7 +25,7 @@
                     {{ strtoupper($user -> mail) }}
                 </p>
                 <p class="joined" id="joined">
-                    Joined the {{ $user -> format_date() }}
+                    Joined {{ $user -> format_date() }}
                 </p>
             </div>    
             <div class="buttons">
