@@ -92,7 +92,7 @@ class Chatbox extends Controller {
             });
 
             return view("users.chatbox", [ 
-                "array_contacts" => $array_contacts, "user" => $slug, "messages" => $messages  
+                "array_contacts" => $array_contacts, "user" => $slug, "messages" => $messages, "avatar" => $array_contacts[session("id_slug")]["user"]["avatar"]  
             ]);
         }
 
