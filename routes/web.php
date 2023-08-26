@@ -4,8 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
-use App\Http\Controllers\Contacts;
 use App\Http\Controllers\Tmpimage;
+use App\Http\Controllers\Chatbox;
 use App\Http\Controllers\Profile;
 use App\Http\Controllers\Users;
 use App\Http\Controllers\Carts;
@@ -157,7 +157,7 @@ Route::prefix('settings') -> controller(Users::class) -> middleware("logged") ->
 |  Chatbox management 
 */
 
-Route::prefix('chatbox') -> controller(Contacts::class) -> middleware("logged") -> name("contact.") -> group(function () {
+Route::prefix('chatbox') -> controller(Chatbox::class) -> middleware("logged") -> name("contact.") -> group(function () {
 
     Route::get("edit/{contact}","show_form") -> name("edit_form");
 
