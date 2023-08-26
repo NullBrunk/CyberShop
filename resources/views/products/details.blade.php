@@ -323,7 +323,7 @@
                                         <div class="profile">
                                             
                                             <p class="profile" style='margin-bottom: 0px;'>
-                                                <img class="cardAvatar" src="https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name={{ $mail }}" alt="" style="height: 28px;">
+                                                <img class="cardAvatar" src="{{ $comm -> user -> avatar }}" alt="" style="height: 28px;">
                                                 <p class="name">
             
                                                     @if(isset($_SESSION['mail']) and ($_SESSION["mail"] === $mail))

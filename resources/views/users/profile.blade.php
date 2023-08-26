@@ -18,7 +18,7 @@
 
         <div class="absolute informations">
             <div class="profile-name">
-                <img src="https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name={{ $user -> mail }}" alt="">
+                <img src="{{ $user -> avatar }}" alt="">
             </div>
             <div class="profile-info">
                 <p class="mail">

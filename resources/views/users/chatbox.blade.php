@@ -92,31 +92,27 @@
 
                 </div>
 
-                @for($i = sizeof($contact) - 1; $i >= 0; $i--)
-                
-                    
 
-                    @php($current_user = $contact[$i][1])
-                    @php($current_data = $data[$current_user])
-                    @php($last = $current_data[sizeof($data[$current_user]) - 3])
+                @foreach($array_contacts as $contact)
+                    @php($mail = $contact["user"]["mail"])
 
-                    <div onclick='window.location.href = "{{route("contact.user", $current_user)}}"' class="cardcontact @if(isset($user) && $user === $current_user) selected @endif" style="user-select: none !important;">
+                    <div onclick='window.location.href = "{{route("contact.user", $mail )}}"' class="cardcontact @if(isset($user) && $user === $mail) selected @endif" style="user-select: none !important;">
                         <div class="cardIcon">
-                            <img class="cardAvatar" src="https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name={{ $current_user }}" alt="">
+                            <img class="cardAvatar" src="{{ $contact["user"]["avatar"] }}" alt="">
                         </div>
 
-                        <div class="cardTitle">{{ $current_user }}</div>
+                        <div class="cardTitle">{{ $mail }}</div>
 
 
-                        @if($current_data["unread"] === true)
+                        @if($contact["readed"] === 0 && $contact["id_contacted"] === $_SESSION["id"] )
                             <div class="unread"></div>
                         @endif
 
                         
                         <div class="lastmsg">
                             <div class="lastmsgcontent">
-                                @if($last["type"] === "text")
-                                    {!! $last[0] !!}
+                                @if($contact["type"] === "text")
+                                    {!! $contact["content"] !!}
                                 @else
                                     Image
                                 @endif
@@ -125,7 +121,7 @@
                         </div>
                     </div>
 
-                @endfor
+                @endforeach
 
             </div>
         </div>
@@ -137,7 +133,6 @@
 
                     <div class="userheader">
                         <div class="pdp">
-                            <img class="cardAvatar" src="https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name={{ $user }}" alt="">
                         </div>
                         <div class="menubar">
                             <div class="name">
@@ -146,7 +141,7 @@
                         </div>
 
                         <div class="toolbar">
-                            <span class="close" onclick="window.location.href = '/chatbox/close/{{$user}}'" style="padding: 22px;">
+                            <span class="close" onclick="window.location.href = '/chatbox/close/{{ $user }}'" style="padding: 22px;">
                                     <i style="font-size: 27px;" class="bi bi-x-lg"></i>
                             </span>
                         </div>
@@ -156,30 +151,27 @@
                         
                         <div  data-aos="fade-up" data-aos-duration="200">
 
+                            @if(!empty($messages))
 
+                                @foreach($messages as $msg)
 
-                            @isset($data[$user])
-                                @for($i=0; $i < sizeof($data[$user]) - 2; $i++)
-                                    @php($me = $data[$user][$i]['me'])
-                                    @php($current = $data[$user][$i])
-
-
+                                    @php($me = $msg -> id_contactor === $_SESSION["id"])
 
                                     @if(
                                         !isset($old) or (
                                             isset($old) && 
-                                            Carbon::parse($current["time"]) -> format('d') 
+                                            Carbon::parse($msg["time"]) -> format('d') 
                                                 !== 
                                             Carbon::parse($old["time"]) -> format('d') 
                                             )
                                         )
                                         
-                                        <div class="showtime" style="user-select: none !important;">{{ Carbon::parse($current["time"]) -> format('d F, Y') }}</div>
+                                        <div class="showtime" style="user-select: none !important;">{{ Carbon::parse($msg["time"]) -> format('d F, Y') }}</div>
                                     
                                         @endif
 
 
-                                    <div class="content @if(!$me) his @endif" id="divmsg{{ $data[$user][$i]['id'] }}">
+                                    <div class="content @if(!$me) his @endif" id="divmsg{{ $msg["id"] }}">
                                         <div class="contentc" style="display: flex;">
 
                                             @if(isset($old) and $old["me"] !== $me)
@@ -190,11 +182,10 @@
 
                                                 <div class="hovershow" style="position: relative; width: calc(100% - 2px); display:flex;">
                                                     
-                                                    
-                                                    <div style="display: inline-block; color: white; padding: 12px; font-size: 15px; font-family: Avenir; white-space: pre-line; background-color: #434756; overflow-wrap: anywhere; max-width: calc(100% - 148px); transition: all 0.33s ease 0s; border-radius: 0.3em 1.3em 1.3em 0.3em;">@if($current["type"]==="text"){!!$current[0]!!}@else<img src="/storage/{{$current[0]}}" style="max-height: 100%; max-width:100%;">@endif</div><style>p {margin-block-start: 0px; margin-block-end: 0px;}</style><div class="ce-avatar undefined" style="position: absolute; width: 44px; height: 44px; border-radius: 50%; background-repeat: no-repeat; background-position: center center; background-size: 48px; color: white; text-align: center; font-family: Avenir; font-size: 15px; line-height: 44px; font-weight: 600; background-color: rgb(70, 117, 153); bottom: 0px; left: 2px; display: none;">aaa<div class="ce-avatar-status" style="position: absolute; top: 0px; right: 0px; width: 8px; height: 8px; border-radius: 100%; border: 2px solid white; display: none; background-color: rgb(245, 34, 45);"></div></div>
+                                                    <div style="display: inline-block; color: white; padding: 12px; font-size: 15px; font-family: Avenir; white-space: pre-line; background-color: #434756; overflow-wrap: anywhere; max-width: calc(100% - 148px); transition: all 0.33s ease 0s; border-radius: 0.3em 1.3em 1.3em 0.3em;">@if($msg["type"]==="text"){!!$msg["content"]!!}@else<img src="/storage/{{$msg["content"]}}" style="max-height: 100%; max-width:100%;">@endif</div><style>p {margin-block-start: 0px; margin-block-end: 0px;}</style><div class="ce-avatar undefined" style="position: absolute; width: 44px; height: 44px; border-radius: 50%; background-repeat: no-repeat; background-position: center center; background-size: 48px; color: white; text-align: center; font-family: Avenir; font-size: 15px; line-height: 44px; font-weight: 600; background-color: rgb(70, 117, 153); bottom: 0px; left: 2px; display: none;">aaa<div class="ce-avatar-status" style="position: absolute; top: 0px; right: 0px; width: 8px; height: 8px; border-radius: 100%; border: 2px solid white; display: none; background-color: rgb(245, 34, 45);"></div></div>
                                                     <span class="options" style="padding-top: 10px !important; margin-left: 0px;">
                                                         <span style="padding-left: 10px; color: white; user-select: none !important;" >
-                                                            {{ Carbon::parse($current["time"]) -> format('H:i') }}
+                                                            {{ Carbon::parse($msg["time"]) -> format('H:i') }}
                                                         </span>
                                                     </span>
                                                 </div>
@@ -202,25 +193,25 @@
                                             
 
                                                 <div class="hovershow" style="position: relative; width: calc(100% - 2px); display:flex;">
-                                                    <div id="menu{{ $data[$user][$i]["id"] }}" class="none">
-                                                        @if($data[$user][$i]["type"] === "text")
-                                                            <button hx-target="#msg{{$data[$user][$i]['id']}}" hx-get="{{ route("contact.edit_form", $data[$user][$i]["id"]) }}" hx-swap="innerHTML" class="btn btn-primary update" style="margin: 0px; border: 1px solid #484883;;">
+                                                    <div id="menu{{ $msg["id"] }}" class="none">
+                                                        @if($msg["type"] === "text")
+                                                            <button hx-target="#msg{{$msg['id']}}" hx-get="{{ route("contact.edit_form", $msg["id"]) }}" hx-swap="innerHTML" class="btn btn-primary update" style="margin: 0px; border: 1px solid #484883;;">
                                                                 <i class="bi bi-pencil-square"></i>
                                                             </button>
                                                         @endif
         
-                                                        <button onclick='confirm_delete( "{{ route("contact.delete", $data[$user][$i]["id"]) }}", "divmsg{{$data[$user][$i]["id"]}}" )' class="btn btn-primary update delete" style="height: 32px; border 1px solid #bd3b3f; background-color: #af2024; border: 1px solid #bd3b3f;">
+                                                        <button onclick='confirm_delete( "{{ route("contact.delete", $msg["id"]) }}", "divmsg{{$msg["id"]}}" )' class="btn btn-primary update delete" style="height: 32px; border 1px solid #bd3b3f; background-color: #af2024; border: 1px solid #bd3b3f;">
                                                             <i class="bi bi-trash2-fill"></i>
                                                         </button>  
                                                     </div>
                                                     
                                                     <span class="options">
                                                         <span style="padding-left: 10px; color: white; user-select: none !important;">
-                                                            {{ Carbon::parse($current["time"]) -> format('H:i') }}
+                                                            {{ Carbon::parse($msg["time"]) -> format('H:i') }}
                                                         </span>
                                                     </span>
-                                                <div class="msg" id="msg{{ $data[$user][$i]['id'] }}" style="margin-left: auto; color: white; display: inline-block; background-color: rgb(24, 144, 255);  text-align: left; padding: 12px; font-size: 15px; font-family: Avenir; white-space: pre-line; overflow-wrap: anywhere; max-width: calc(100% - 100px); transition: all 0.33s ease 0s; border-bottom-left-radius: 1.3em; border-top-left-radius: 1.3em;">@if($current["type"]==="text"){!!$current[0]!!}@else<img src="/storage/{{$current[0]}}" style="max-height: 100%; max-width:100%;">@endif</div><style>p {margin-block-start: 0px; margin-block-end: 0px;}</style><div class="ce-avatar undefined" style="position: relative; width: 44px; height: 44px; border-radius: 50%; background-repeat: no-repeat; background-position: center center; background-size: 48px; color: white; text-align: center; font-family: Avenir; font-size: 15px; line-height: 44px; font-weight: 600; background-color: rgb(12, 170, 220); display: none;">AN<div class="ce-avatar-status" style="position: absolute; top: 0px; right: 0px; width: 8px; height: 8px; border-radius: 100%; border: 2px solid white; display: none; background-color: rgb(245, 34, 45);"></div></div>
-                                                <p style="color: #282b36; padding: 6px; background: #1890ff; border-top-right-radius: 0.3em; border-bottom-right-radius: 0.3em;" onclick='menu("menu{{ $data[$user][$i]["id"] }}")'>
+                                                <div class="msg" id="msg{{ $msg['id'] }}" style="margin-left: auto; color: white; display: inline-block; background-color: rgb(24, 144, 255);  text-align: left; padding: 12px; font-size: 15px; font-family: Avenir; white-space: pre-line; overflow-wrap: anywhere; max-width: calc(100% - 100px); transition: all 0.33s ease 0s; border-bottom-left-radius: 1.3em; border-top-left-radius: 1.3em;">@if($msg["type"]==="text"){!!$msg["content"]!!}@else<img src="/storage/{{$msg["content"]}}" style="max-height: 100%; max-width:100%;">@endif</div><style>p {margin-block-start: 0px; margin-block-end: 0px;}</style><div class="ce-avatar undefined" style="position: relative; width: 44px; height: 44px; border-radius: 50%; background-repeat: no-repeat; background-position: center center; background-size: 48px; color: white; text-align: center; font-family: Avenir; font-size: 15px; line-height: 44px; font-weight: 600; background-color: rgb(12, 170, 220); display: none;">AN<div class="ce-avatar-status" style="position: absolute; top: 0px; right: 0px; width: 8px; height: 8px; border-radius: 100%; border: 2px solid white; display: none; background-color: rgb(245, 34, 45);"></div></div>
+                                                <p style="color: #282b36; padding: 6px; background: #1890ff; border-top-right-radius: 0.3em; border-bottom-right-radius: 0.3em;" onclick='menu("menu{{ $msg["id"] }}")'>
                                                     <i class="bi bi-three-dots-vertical"></i>
                                                 </p>
                                             </div>
@@ -231,9 +222,10 @@
                                         </div>
                                     </div>
 
-                                    @php($old = $data[$user][$i])
-                                @endfor
-                            @endisset
+                                    @php($old = $msg)
+                                    @php($old["me"] = $me)
+                                @endforeach
+                            @endif
                             <div style="margin-top:20px;">
 
                             </div>

@@ -14,56 +14,6 @@ use App\Notifications\ReceivedMessageNotification;
 
 
 
-/**
- * Get all the contact messages of the current user using PDO
- *
- * @param int $mail     The mail of the current user
- * 
- * @return array        An array with all the messages sended to/by the
- *                      the current user
- */
-
-function getmsgs($mail){
-
-    $pdo = new \PDO("mysql:host=localhost;dbname=" . env("DB_DATABASE"), env("DB_USERNAME"), env("DB_PASSWORD"));
-
-    $sql = $pdo -> prepare("
-        SELECT * FROM
-            (
-                SELECT contacts.id,readed,type,content,id_contacted,users.mail as mail_contacted 
-                FROM contacts 
-                INNER JOIN 
-                    users 
-                ON 
-                contacts.id_contacted = users.id
-            ) as contacted
-        INNER JOIN
-            (
-                SELECT contacts.id,readed,content,id_contactor,users.mail as mail_contactor,time 
-                FROM contacts 
-                INNER JOIN 
-                    users 
-                ON 
-                    contacts.id_contactor = users.id
-            ) as contactor
-
-        ON contacted.id = contactor.id 
-
-        WHERE 
-            contacted.mail_contacted = :mail 
-        OR 
-            contactor.mail_contactor = :mail
-
-        ORDER BY contacted.id
-    ");
-    $sql -> execute([
-        "mail" => $mail
-    ]);
-
-    return $sql -> fetchall(\PDO::FETCH_ASSOC);
-}
-
-
 class Chatbox extends Controller {
 
     /**
@@ -102,122 +52,53 @@ class Chatbox extends Controller {
         
         include_once __DIR__ . "/../Utils/Style.php";
 
-        # The array that will be passed to the view
+        $array_contacts = [];
 
-        $exploitable_data = [];
-        $contact = [];
+        $all_msgs = Contact::where("id_contacted", $_SESSION["id"]) 
+            -> orWhere("id_contactor", $_SESSION["id"])
+            -> get(); 
 
+        foreach($all_msgs -> reverse() as $msg) {
 
-        foreach(getmsgs($_SESSION["mail"]) as $data){
-
-            # Then the contactor is the other user
-            if($data["mail_contacted"] === $_SESSION["mail"]){   
-
-                $mail = $data["mail_contactor"];
-                
-                $exploitable_data[$mail]["unread"] = $data["readed"] == 0;
-        
-
-                $toput = [ 
-                    style($data['content']), 
-                    "type" => $data["type"],
-                    "me" => false, 
-                    "id" => $data["id"],
-                    "time" => $data["time"],
-                    "readed" => $data["readed"]
-
-                ];
+            $id = $msg -> id_contacted === $_SESSION["id"] ? $msg -> id_contactor : $msg -> id_contacted;
+            
+            if(!isset($array_contacts[$id])){
+                $array_contacts[$id] = $msg -> toArray();
+                $array_contacts[$id]["user"] = User::select("id", "mail", "avatar") -> where("id", $id) -> first() -> toArray();
             } 
-
-            # Then the contactor is us
-            else {
-
-                $mail = $data["mail_contacted"];
-               
-                $exploitable_data[$mail]["unread"] = false;
-                
-                $toput = [ 
-                    style($data['content']),
-                    "type" => $data["type"], 
-                    "me" => true, 
-                    "id" => $data["id"],
-                    "time" => $data["time"],
-                    "readed" => $data["readed"]
-                ];
-            }
-
-
-            if(isset($exploitable_data[$mail])){
-                // Push the message
-                array_push($exploitable_data[$mail], $toput);
-            
-                // Update the time of the latest message 
-                $exploitable_data[$mail]["time"] = $data["time"];
-            }
-            else {
-
-                // Push the time of the message as well as the message himself
-                $exploitable_data[$mail] = [ "time" => $data["time"], $toput ];
-            }
         }
 
-        # Get the full array of authors
-        foreach(array_keys($exploitable_data) as $name){
+        if($slug) {
 
-            if(!isset($_SESSION["closed"][$name])){
-                array_push( $contact, [ $exploitable_data[$name]["time"], $name ] ); 
-            }
-
-        }
-
-    
-        # Sort it
-        usort($contact, function ($date1, $date2) {
-            return strtotime($date1[0]) - strtotime($date2[0]);
-        });
-        
-
-        # If the user is requesting for a specific conversation with another user
-        if($slug){
-
-            
             # If the user is contacting himself
             if($slug === $_SESSION["mail"]){
                 return to_route("contact.show") 
                     -> withErrors(["contact_yourself" => "You cant contact yourself"]);  
             }
             
-            # If the user is hidden (if user have clicked on the "Close MP" button)
+            # If the user is closed 
             unset($_SESSION["closed"][$slug]);
 
-            # Get the mail of the requested user
-            $requested_user = User::where("mail", "=", $slug) -> get() -> toArray();
+            session(["id_slug" => User::where("mail", $slug) -> first() -> id]);
 
-            
-            # If the requested user does not exist
-            if(empty($requested_user))
-                return abort(404);
+            # Mark all the messages as readed
+            self::mark_readed(session("id_slug"));
 
-
-            # Mark all wthe messages of the conversation as readed
-            self::mark_readed($requested_user[0]["id"]);
-
-        
-            # Delete all notifications of that user
+            # Mark all notifs as readed
             User::find($_SESSION["id"]) -> notifications() -> where("data", "like", "%" . $slug . "%") -> delete();
-        
 
+            $messages = $all_msgs -> reject( function ($item) {
+                return !($item -> id_contacted === session("id_slug") or $item -> id_contactor === session("id_slug"));
+            });
 
-            return view("users.chatbox", [
-                "contact" => $contact, "user" => $slug, "data" => $exploitable_data 
-            ]);
-        }   
-
-        else {
             return view("users.chatbox", [ 
-                "contact" => $contact, "data" => $exploitable_data 
+                "array_contacts" => $array_contacts, "user" => $slug, "messages" => $messages  
             ]);
         }
+
+        return view("users.chatbox", [ 
+            "array_contacts" => $array_contacts 
+        ]);
     }
 
 
