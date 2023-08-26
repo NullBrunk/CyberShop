@@ -82,15 +82,10 @@
                                         <hr id="hrcart_{{ $c -> id }}">
                                         
                                         @endforeach
-                                        <li>
-                                            <a id="price" class="button" href="{{route("cart.display")}}" style="width: 90%; display: block;">
-                                                Buy
-                                            </a>
-                                        </li>
-
-                                </div>
-
+                                        
+                                    </div>
                             </ul>
+                            
                         </li>
                     @endif
 

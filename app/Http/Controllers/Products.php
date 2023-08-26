@@ -474,6 +474,29 @@ class Products extends Controller
 
 
 
+    /**
+     * Pass all the product details in JSON
+     *
+     * @param Product $product         The product threw model binding
+     *
+     * @return array
+     */
+    public function api_details(Product $product){
+
+        $img_url = $product -> product_images() -> where("is_main", "=", true) -> first() -> img;
+        $data = $product -> toArray();
+
+        # Don't leak the id of the seller
+        unset($data["id_user"]);
+
+        # Add the main image url of the product
+        $data["img"] = $img_url;
+
+        return $data;
+    }
+
+
+
     /**  
      *  Remove an image of a product
      *

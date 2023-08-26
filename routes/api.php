@@ -17,6 +17,11 @@ use App\Http\Controllers\Users;
 */
 
 
+
+# Get all the informations of a product
+Route::get("/products/{product}", [ Products::class, "api_details" ]);
+
+
 # Get the rating of a product
 Route::get("/rating/{product}", [ Products::class, "rating" ]) -> name("rating");
 
