@@ -105,7 +105,7 @@ Route::prefix('product') -> controller(Products::class) -> name("product.") -> g
     Route::get(
         "/category/search/{category}/", "search"
     ) -> name("search");
-    Route::view("/market", "product.market") -> middleware("logged") -> name("sell");
+    Route::view("/market", "products.market") -> middleware("logged") -> name("sell");
     
     Route::post(
         "/market", "store" 
