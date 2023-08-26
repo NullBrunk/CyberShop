@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Notif;
+
 use App\Models\Comment;
 use App\Events\NotificationReceived;
+
 use App\Http\Requests\StoreComments;
 use App\Http\Requests\UpdateComment;
 use App\Notifications\CommentedProductNotification;
@@ -118,7 +120,7 @@ class Comments extends Controller {
     public function update_form(Comment $comment){
 
         if($comment["id_user"] === $_SESSION["id"]){
-            return view("user.form_comment", [ "data" => $comment -> toArray() ]);
+            return view("users.form_comment", [ "data" => $comment -> toArray() ]);
         }
         else {
             return abort(403); 

@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use App\Models\Tmp_images;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 if(!isset($_SESSION)){

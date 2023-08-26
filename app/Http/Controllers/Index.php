@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
-use Illuminate\Support\Facades\DB;
 use App\Models\Product;
-
+use Illuminate\Support\Facades\DB;
 
 class Index extends Controller
 { 

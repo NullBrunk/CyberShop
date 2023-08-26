@@ -2,25 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Exception;
-use App\Models\Cart;
 use App\Models\User;
-
-use App\Models\Notif;
-use App\Models\Comment;
-use App\Models\Product;
-
 use App\Events\SignupEvent;
 use Illuminate\Support\Str;
 use App\Http\Requests\Login;
 use Illuminate\Http\Request;
 use App\Http\Requests\Signup;
 use App\Models\MailValidation;
-use App\Http\Requests\UpdateProfile;
 use App\Http\Requests\UpdateSettings;
-use Illuminate\Support\Facades\Storage;
 
-session_start();
+if(!isset($_SESSION)){
+    session_start();
+}
 
 class Users extends Controller {
 
@@ -156,7 +149,7 @@ class Users extends Controller {
         
         $user = User::find($_SESSION["id"]) -> first();
 
-        return view("user.settings", [
+        return view("users.settings", [
             "user" => $user,
         ]);
     }

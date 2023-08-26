@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NotificationReceived;
-use Illuminate\Support\Facades\Storage;
-
-use App\Http\Requests\ContactReq;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 use App\Models\Contact;
-use App\Models\User;
+use Illuminate\Http\Request;
+
+use App\Http\Requests\ContactReq;
+use App\Events\NotificationReceived;
+use Illuminate\Support\Facades\Storage;
 use App\Notifications\ReceivedMessageNotification;
+
+
 
 /**
  * Get all the contact messages of the current user using PDO
@@ -206,13 +208,13 @@ class Chatbox extends Controller {
         
 
 
-            return view("user.chatbox", [
+            return view("users.chatbox", [
                 "contact" => $contact, "user" => $slug, "data" => $exploitable_data 
             ]);
         }   
 
         else {
-            return view("user.chatbox", [ 
+            return view("users.chatbox", [ 
                 "contact" => $contact, "data" => $exploitable_data 
             ]);
         }
@@ -381,7 +383,7 @@ class Chatbox extends Controller {
         $contact_message = $contact -> toArray();
 
         if($contact_message["id_contactor"] === $_SESSION["id"] and $contact_message["type"] === "text" and $request -> server("HTTP_HX_REQUEST") === "true"){
-            return view("user.form_contact", [ "message" => $contact_message]);
+            return view("users.form_contact", [ "message" => $contact_message]);
         }
         else {
             return abort(403);

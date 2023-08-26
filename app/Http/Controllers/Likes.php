@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Models\Comment;
 use App\Models\Like;
+use App\Models\Comment;
 
 if(!isset($_SESSION)){
     session_start();
 }
-
 
 class Likes extends Controller
 {

@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Product;
 use App\Models\Tmp_images;
-use App\Models\Product_images;
 
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\Product_images;
 use App\Http\Requests\StoreReq;
+
 use App\Http\Requests\UpdateProduct;
-use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 
 class Products extends Controller
@@ -60,7 +61,7 @@ class Products extends Controller
         $rating = self::rating($product);
 
 
-        return view("product.details", [
+        return view("products.details", [
             "stylised_description" => $stylised_description, 
             "comments" => $comments, 
             "product" => $product, 
@@ -139,7 +140,7 @@ class Products extends Controller
         // If HTMX is doing the request, don't display the navbar
         if($request -> server("HTTP_HX_REQUEST") === "true" ){
 
-            return view("product.pagination", 
+            return view("products.pagination", 
                 [
                     "products" => $data, 
                     "name" => $category, 
@@ -149,7 +150,7 @@ class Products extends Controller
                 ]);
         }
         else {
-            return view("product.categories", 
+            return view("products.categories", 
                 [
                     "products" => $data, 
                     "name" => $category, 
@@ -277,7 +278,7 @@ class Products extends Controller
             return abort(403);
         }
 
-        return view("product.form_product", ["data" => $product, "images" => $product -> product_images() -> orderBy("is_main", "desc") -> get() -> toArray()]);
+        return view("products.form_product", ["data" => $product, "images" => $product -> product_images() -> orderBy("is_main", "desc") -> get() -> toArray()]);
     }
 
 
