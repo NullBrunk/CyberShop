@@ -407,7 +407,7 @@
                                             @endfor
 
                                             <span class="at">
-                                                {{ $comm["writed_at"] }}
+                                                {{ \Carbon\Carbon::parse($comm["writed_at"]) -> format('d F Y, H:i') }}
                                             </span>
 
                                             
