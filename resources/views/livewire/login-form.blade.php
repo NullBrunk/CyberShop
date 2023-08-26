@@ -49,7 +49,7 @@
             </div>
 
             <div class="w-50 text-md-right">
-                <a style="color:#47b2e4 !important;" href="/signup">Sign-Up</a>
+                <a style="color:#47b2e4 !important;" href="/signup">Sign Up</a>
             </div>
         </div>
     </form>

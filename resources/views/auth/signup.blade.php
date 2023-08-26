@@ -44,7 +44,7 @@
                                 <span class="bx bx-user-plus" style="font-size: 45px; "></span>
                             </div>
 
-                            <h3 class="text-center mb-4">Sign-up</h3>
+                            <h3 class="text-center mb-4">Sign Up</h3>
                     
                             <livewire:signup-form />
 

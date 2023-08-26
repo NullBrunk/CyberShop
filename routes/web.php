@@ -50,10 +50,8 @@ Route::name("auth.") -> controller(Users::class) -> middleware("guest") -> group
 
     Route::post('/signup', "store");
 
+    Route::get("/mail/verify/{slug}", "confirm_mail") -> name("confirm_mail");
 });
-Route::get("/mail/verify/{slug}", 
-    [ Users::class, "confirm_mail" ]
-) -> name("auth.confirm_mail");
 
 
 
@@ -64,7 +62,7 @@ Route::get("/mail/verify/{slug}",
 
 Route::prefix('cart') -> controller(Carts::class) -> middleware("logged") -> name("cart.") -> group(function () {
     
-    Route::view("show", "static. todo") -> name("display");
+    Route::view("show", "static.todo") -> name("display");
 
     Route::get("" , 'initialize') -> name("initialize");
 
@@ -100,7 +98,7 @@ Route::prefix('comments') -> controller(Comments::class) -> middleware("logged")
 |  Products management 
 */
 
-Route::prefix('product') -> controller(Products::class) -> name("product.") -> group(function () {
+Route::prefix('products') -> controller(Products::class) -> name("product.") -> group(function () {
     
     Route::get(
         "/category/search/{category}/", "search"
@@ -185,7 +183,7 @@ Route::prefix('chatbox') -> controller(Chatbox::class) -> middleware("logged") -
 |  Liking comments management 
 */
 
-Route::prefix('like') -> controller(Likes::class,) -> name("like.") -> group(function () {
+Route::prefix('likes') -> controller(Likes::class,) -> name("like.") -> group(function () {
     
     Route::get(
         "/toggle/{comment}", "toggle"
@@ -203,7 +201,7 @@ Route::prefix('like') -> controller(Likes::class,) -> name("like.") -> group(fun
 |  File upload managment
 */
 
-Route::prefix('/upload') -> controller(Tmpimage::class) -> middleware("logged") -> name("tmp.") -> group(function () {
+Route::prefix('/uploads') -> controller(Tmpimage::class) -> middleware("logged") -> name("tmp.") -> group(function () {
     
     Route::post("store", "store") -> name("store") ;
     Route::delete("delete", "delete") -> name("delete") -> middleware("logged");

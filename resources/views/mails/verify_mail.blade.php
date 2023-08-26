@@ -170,12 +170,14 @@
           </tr>
           <!-- end copy -->
 
-		  <tr>
+		    <tr>
             <td align="left" bgcolor="#ffffff" style="padding: 24px; padding-top: 2px; padding-bottom: 30px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;">
               <p style="margin: 0;">If the button doesn't work, copy and paste the following link in your browser:</p>
-              <p style="margin: 0;"><a href="{{ route("auth.confirm_mail", $checksum) }}" target="_blank">{{ route("auth.confirm_mail", $checksum) }}</a></p>
+              <p style="margin: 0;"><a href="{{ route("auth.confirm_mail", $checksum) }}" target="_blank">{{ route("auth.confirm_mail", $checksum) }}</a></p>            
+              <p style="margin-top: 15px;">If you're being redirected to the index page, that means that you're already logged with another account. Please logout, then click on the link a second time.</p>        
             </td>
-          </tr>
+
+        </tr>
 
           <!-- start button -->
           <tr>
