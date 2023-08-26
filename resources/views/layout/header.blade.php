@@ -66,24 +66,28 @@
 
                             <ul style="width: 250px">
 
-                                <div id="cart_to_fill">
+                                <div id="">
 
-                                    @foreach($_SESSION['cart'] as $c)
+                                    <div id="cart_to_fill">
 
+                                        @foreach($_SESSION['cart'] as $c)
+                                        
                                         <li id="cart_{{ $c -> id }}">
                                             <p class="show_cart">
 
                                                 <img src="/storage/product_img/{{ $c -> product -> product_images() -> where("is_main", "=", 1) -> first() -> img }}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
-
+                                                
                                                 <a href="/details/{{ $c -> product -> id }}" style="display: block;overflow: hidden; width: 57%; margin:auto;">{{ $c -> product -> name }}</a>
                                                 <img src="/assets/img/trash.png" onclick='deleteitem("cart_{{$c -> id}}")' class="trash-cart">
                                             </p>
                                         </li>
                                         <hr id="hrcart_{{ $c -> id }}">
-                                        
+
                                         @endforeach
-                                        
+
                                     </div>
+                                    <a href="/todo" class="btn btn-primary update-button cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900;"> BUY </a>                                  
+                                </div>
                             </ul>
                             
                         </li>
@@ -112,9 +116,7 @@
                         </div>
 
                         <li>
-                            <a id="price" class="button" href="{{route("cart.display")}}" style="width: 90%; display: block;">
-                                Buy
-                            </a>
+
                         </li>
                     </ul>
                 </li>

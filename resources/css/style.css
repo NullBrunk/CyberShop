@@ -110,7 +110,6 @@ h6 {
   padding: 0;
   display: flex;
   list-style: none;
-  align-items: center;
 }
 
 .navbar li {
@@ -322,11 +321,9 @@ h6 {
   background-color: #fff;
   overflow-y: auto;
   transition: 0.3s;
-  text-align: center;
   flex-direction: column;
   padding-top: 15%;
   padding-bottom: 15%;
-  justify-content: space-between;
 }
 
 .navbar-mobile a,
@@ -1845,19 +1842,19 @@ tr:nth-child(even) td {
 }
 
 .update-button {
-  color: white;
+  color: white !important;
   padding: 7px !important;
   background-color: #293e61;
-  border: 1px solid #0d6efd;
+  border: 1px solid #007185;
 }
 
 .update-button:hover {
-  background-color: #0d6efd;
+  background-color: #007185;
   border: 1px solid #293e61;
 }
 
 .update-button:focus {
-  background-color: #0d6efd;
+  background-color: #007185;
   border: 1px solid #293e61;
 }
 
