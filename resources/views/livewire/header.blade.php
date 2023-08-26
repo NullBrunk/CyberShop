@@ -2,7 +2,7 @@
     
     @if(!empty($notifs))
 
-        <li style="list-style-type: none;" class="dropdown ">
+        <li style="list-style-type: none;" class="dropdown">
             <a class="nav-link" href="#">
                 <span class="badge bg-primary badge-number">
                     {{ $notifs_number }}

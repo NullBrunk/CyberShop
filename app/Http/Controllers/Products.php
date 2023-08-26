@@ -441,10 +441,10 @@ class Products extends Controller
        
         // If HTMX is doing the request, don't display the navbar
         if($request -> server("HTTP_HX_REQUEST") === "true" ){
-            $view = "product.pagination";
+            $view = "products.pagination";
         }
         else {
-            $view = "product.categories";
+            $view = "products.categories";
         }
 
         
@@ -470,29 +470,6 @@ class Products extends Controller
             
         return view($view, ["products" => $data, "name" => $slug]);
 
-    }
-
-
-
-    /**
-     * Pass all the product details in JSON
-     *
-     * @param Product $product         The product threw model binding
-     *
-     * @return array
-     */
-    public function api_details(Product $product){
-
-        $img_url = $product -> product_images() -> where("is_main", "=", true) -> first() -> img;
-        $data = $product -> toArray();
-
-        # Don't leak the id of the seller
-        unset($data["id_uses"]);
-
-        # Add the main image url of the product
-        $data["img"] = $img_url;
-
-        return $data;
     }
 
 

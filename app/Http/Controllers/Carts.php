@@ -17,7 +17,7 @@ class Carts extends Controller {
 
     public function initialize(){
 
-        $_SESSION['cart'] = [];
+        $_SESSION['cart'] = []; 
 
         foreach(Cart::where("id_user", "=", $_SESSION["id"]) -> get() as $d){
             $_SESSION['cart'][$d["id"]] = $d;
