@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\Signup;
 use App\Models\MailValidation;
 use App\Http\Requests\UpdateProfile;
+use App\Http\Requests\UpdateSettings;
 use Illuminate\Support\Facades\Storage;
 
 session_start();
@@ -137,16 +138,64 @@ class Users extends Controller {
 
             $info -> delete();
 
-            return to_route("auth.login") -> with("success", "Your mail have been confirmed, you can log-in now.", "Verified !");
+            return to_route("auth.login") -> with("success", "Your mail have been confirmed, you can log-in now.");
         }
 
         return abort(403);
     }
 
 
+
+    /**
+     * Show the settings form view  
+     * 
+     * return view
+     */
+
+    public function settings_form() {
+        
+        $user = User::find($_SESSION["id"]) -> first();
+
+        return view("user.settings", [
+            "user" => $user,
+        ]);
+    }
+
+
+
+    /** 
+     * Update the password of a user if he is allowed to 
+     * 
+     * @param UpdateSettings $request
+     * 
+     * @return redirect
+    */
+
+    public function settings(UpdateSettings $request) {
+
+        $hashed_new_pass = hash("sha512", hash("sha512", $request -> input("newpass")));
+        $user = User::find($_SESSION["id"]);
+
+        if($user -> pass === hash("sha512", hash("sha512", $request -> input("pass")))) {
+            $user -> update([
+                "pass" => $hashed_new_pass
+            ]);
+            
+            $_SESSION['pass'] = $hashed_new_pass;
+
+            return back() -> with("success", true);
+        }
+        else {
+            return back() -> withErrors(["pass" => "Invalid password"]);
+        }
+    }
+
+
+
     /**
      * Delete a user if he is allowed to
-     * 
+     *
+     * @param Request $request 
      *
      * @return redirect              Redirect to the / page
      * 
@@ -155,12 +204,19 @@ class Users extends Controller {
     public function delete(Request $request){
 
         if($request -> input("password")){
-            User::where("mail", $_SESSION["mail"]) 
-            -> where("password", 
+            $response = User::where("mail", $_SESSION["mail"]) 
+            -> where("pass", 
                 hash("sha512", hash("sha512", $request -> input("password")))
             ) -> delete();
+            
+            if($response === 1){
+                session(["deletedaccount" => true]);
+                return to_route("logout");
+            }
+            else {
+                return back() -> withErrors(["password_error" => true]);
+            }
         }
-
-        return to_route("root") -> with("deletedaccount", true);
+        return back();
     }
 }

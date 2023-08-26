@@ -32,6 +32,11 @@
                     </div>
                     @endforeach
 
+                    @if($product_number === 0)
+                        <p class="mt-2">
+                            {{ $mail }} is not selling any product
+                        </p>
+                    @endif
                     <div style="text-align: center; margin-top: 10px;">
                         @if($product_number > 6)
                             @if($limit === true)

@@ -142,9 +142,9 @@ Route::get("/details/{product}", [ Products::class, "get_details" ]) -> name("de
 
 Route::prefix('settings') -> controller(Users::class) -> middleware("logged") -> name("settings.") -> group(function () {
     
-    Route::view("", "user.settings") -> name("show");
+    Route::get("", "settings_form") -> name("show");
     
-    Route::post("", "settings") -> name("settings");
+    Route::post("", "settings") -> name("update");
     
     Route::delete("/delete", "delete") -> name("delete");
 

@@ -1,6 +1,14 @@
 <div>
-    @foreach($comments as $comm )
 
+
+    @if(sizeof($comments) === 0)
+        <p class="p-4">
+            {{ $mail }} has not leaved any comment
+        </p>
+    @endif
+    
+    @foreach($comments as $comm )
+    
         <div style="padding: 10px;">
             <a href="{{ route("details", $comm -> product -> id) }}">
                 {{ $comm -> product -> name }}

@@ -1839,3 +1839,28 @@ tr:nth-child(even) td {
     height: 80%;
   }
 }
+
+.mr-12 {
+  margin-right: 12px;
+}
+
+.update-button {
+  color: white;
+  padding: 7px !important;
+  background-color: #293e61;
+  border: 1px solid #0d6efd;
+}
+
+.update-button:hover {
+  background-color: #0d6efd;
+  border: 1px solid #293e61;
+}
+
+.update-button:focus {
+  background-color: #0d6efd;
+  border: 1px solid #293e61;
+}
+
+.light {
+  font-weight: 400;
+}
