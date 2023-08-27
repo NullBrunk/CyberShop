@@ -33,4 +33,18 @@ class User extends Model
     public function comments() {
         return $this -> hasMany(Comment::class, "id_user");
     }
+
+    public function get_color(string $color) {
+
+        if(!in_array($color, ["background", "color"])){
+            return "#000000";
+        }
+
+        if(str_contains($this -> avatar, "&" . $color . "=")) {
+            return substr(explode("&". $color . "=", $this -> avatar)[1], 0, 6);
+        }
+
+        return "#000000";
+    }
+
 }

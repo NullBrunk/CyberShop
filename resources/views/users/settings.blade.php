@@ -34,12 +34,12 @@
                     <div class="d-flex flex-row">
                         <div class="w-50 d-flex flex-column text-center">
                             <span class="avenir-900">Background :</span>
-                            <input class="w-50 m-auto" type="color" name="bgcolor">
+                            <input class="w-50 m-auto" type="color" name="bgcolor" value="#{{ $user -> get_color("background") }}">
                         </div>
     
                         <div class="w-50 d-flex flex-column text-center">
                             <span class="avenir-900">Frontground : </span>
-                            <input class="w-50 m-auto" type="color" name="fgcolor">
+                            <input class="w-50 m-auto" type="color" name="fgcolor" value="#{{ $user -> get_color("color") }}">
                         </div>
                     </div>
 
