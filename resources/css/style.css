@@ -1861,3 +1861,8 @@ tr:nth-child(even) td {
 .light {
   font-weight: 400;
 }
+
+.avenir-900 {
+  font-weight: 900;
+  font-family: Avenir;
+}

@@ -33,13 +33,13 @@
                     @csrf
                     <div class="d-flex flex-row">
                         <div class="w-50 d-flex flex-column text-center">
-                            <span>Background :</span>
-                            <input class="w-75 m-auto" type="color" name="bgcolor">
+                            <span class="avenir-900">Background :</span>
+                            <input class="w-50 m-auto" type="color" name="bgcolor">
                         </div>
     
                         <div class="w-50 d-flex flex-column text-center">
-                            <span>Frontground : </span>
-                            <input class="w-75 m-auto" type="color" name="fgcolor">
+                            <span class="avenir-900">Frontground : </span>
+                            <input class="w-50 m-auto" type="color" name="fgcolor">
                         </div>
                     </div>
 
