@@ -43,7 +43,7 @@
 
                     <div class="contentcomment title" style="margin-top: 10px; height: 23vh;">
                         Your comment <abbr>*</abbr>
-                        <textarea  class="commentbar" name="comment" id="commentTextBar" type="text">{{ htmlspecialchars_decode($data["content"]) }}</textarea>
+                        <textarea class="commentbar" name="comment" id="commentTextBar" type="text">{{ htmlspecialchars_decode($data["content"]) }}</textarea>
                     </div>
                     <input name="id" type="hidden" value="{{$data['id']}}">
                     

@@ -141,9 +141,7 @@
 
                                         <div class="portfolio-info">
                                             <p  style="background: #fff;">
-                                                <textarea name="description" id="textarea" placeholder="Description of the product" class="textarea-beautify">
-{{ htmlspecialchars_decode($data["descr"]) }}
-                                                </textarea>      
+                                                <textarea name="description" id="textarea" placeholder="Description of the product" class="textarea-beautify">{{ htmlspecialchars_decode($data["descr"]) }}</textarea>
                                             </p> 
                                         </div>
 
