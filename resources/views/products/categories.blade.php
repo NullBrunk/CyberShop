@@ -27,7 +27,7 @@
         </script>
 
         <div class="top-navbar d-flex align-items-center">
-            <form  method="get" action="{{ route("product.search", $name) }}">
+            <form  method="get" action="{{ route("product.search", $name) }}" class="d-flex w-100">
                 
                 <button class="button-search">
                     <i class="bx bx-search-alt"></i>
@@ -47,10 +47,10 @@
         @endisset
 
     
-        <section id="baseproduct" class="portfolio" style="padding: 50px 0px;">
+        <section id="baseproduct" style="padding: 50px 0px;">
 
             <div class="container" data-aos="fade-up">
-                <div  class="row portfolio-container">
+                <div  class="row portfolio-container mt-4 mb-4">
 
                     @foreach($products as $d)
 

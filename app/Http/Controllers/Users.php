@@ -89,14 +89,17 @@ class Users extends Controller {
 
         $req = $request -> validated();
         $checksum = Str::uuid();
-        
-        // Send verification mail
+    
 
         $user = User::create([
             "mail" => $req["mail"],
             "pass" => hash("sha512", hash("sha512", $req["pass"])),
+            "avatar" => "https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name=" . $req["mail"],
         ]);
 
+        
+        // Send verification mail
+        
         MailValidation::create([
             "id_user" => $user -> id,
             "checksum" => $checksum,

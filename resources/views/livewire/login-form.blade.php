@@ -38,19 +38,19 @@
                     {{ $message }}
                 @enderror
             </div>
+            
         </div>
 
         <div class="form-group">
             <button type="submit" class="form-control btn btn-primary rounded submit px-3">Login</button>
         </div>
 
-        <div class="form-group d-md-flex">
-            <div class="w-50">
-            </div>
+        <div class="d-flex justify-content-between">
 
-            <div class="w-50 text-md-right">
-                <a style="color:#47b2e4 !important;" href="/signup">Sign Up</a>
-            </div>
+            <a style="color:#007185 !important;margin-top: 3px;" href="{{ route("auth.forgot_form") }}">Forgot password</a>
+            <a style="color:#007185 !important" href="{{ route("auth.signup") }}"> Sign Up</a>
+
+
         </div>
     </form>
 </div>

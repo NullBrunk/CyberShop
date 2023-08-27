@@ -320,9 +320,9 @@
 
                                     @php($mail = $comm -> user -> mail)
                                     <div id="{{ "div" . $comm -> id  }}" class="comments">          
-                                        <div class="profile">
+                                        <div class="d-flex">
                                             
-                                            <p class="profile" style='margin-bottom: 0px;'>
+                                            <p class="d-flex" style='margin-bottom: 0px;'>
                                                 <img class="cardAvatar" src="{{ $comm -> user -> avatar }}" alt="" style="height: 28px;">
                                                 <p class="name">
             
@@ -347,14 +347,14 @@
 
                                         <div id="{{$comm -> id }}" class="none">
 
-                                            <div style="display:flex; flex-direction: inherit; margin-bottom: 23px;">
+                                            <div class="d-flex flex-row justify-content-end mb-4">
                                                 <a href="{{route("comment.update_form", $comm -> id )}}" 
-                                                    id="{{$comm -> id  . 'updatebutton'}}" class="btn btn-primary menu update">
+                                                    id="{{$comm -> id  . 'updatebutton'}}" class="menu button-blue">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </a>
     
     
-                                                <button id="{{$comm -> id  . 'deletebutton'}}" onclick="deletecomm({{ $comm -> id }})" class="btn btn-primary menu" style="margin-left: 0px;">
+                                                <button id="{{$comm -> id  . 'deletebutton'}}" onclick="deletecomm({{ $comm -> id }})" class="menu button-red" style="margin-left: 0px;">
                                                     <i class="bi bi-trash2-fill"></i>
                                                 </button>
                                             </div>

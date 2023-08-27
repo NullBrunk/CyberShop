@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Events\ForgotPasswordEvent;
 use App\Events\SignupEvent;
+use App\Listeners\ForgotPasswordListener;
 use App\Listeners\SignupListenner;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -22,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         SignupEvent::class => [
             SignupListenner::class,
+        ],
+        ForgotPasswordEvent::class => [
+            ForgotPasswordListener::class,
         ],
     ];
 

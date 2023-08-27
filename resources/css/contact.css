@@ -302,16 +302,6 @@ label {
     margin-left: 0px !important;
 }
 
-.delete:hover {
-    background-color: #bd3b3f !important;
-    border: 1px solid #af2024 !important;
-  }
-  
-.delete:active {
-    background-color: #bd3b3f !important;
-    border: 1px solid #af2024 !important;
-}
-
 .showtime {
     color: #fff;
     background: #007185;

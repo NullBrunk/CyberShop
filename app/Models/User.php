@@ -15,7 +15,8 @@ class User extends Model
     protected $fillable = [
         "id",
         "mail",
-        "pass"
+        "pass",
+        "avatar"
     ];
 
     protected $casts = [

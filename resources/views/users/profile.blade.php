@@ -13,11 +13,11 @@
     
     <div class="profilepage">
         <div class="banner">
-            <img src="/assets/img/banner.png">
+            <img class="w-100" src="/assets/img/banner.png">
         </div>
 
-        <div class="absolute informations">
-            <div class="profile-name">
+        <div class="absolute informations d-flex ">
+            <div class="profile-name d-flex ">
                 <img src="{{ $user -> avatar }}" alt="">
             </div>
             <div class="profile-info">

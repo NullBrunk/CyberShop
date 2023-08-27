@@ -61,7 +61,7 @@
                                                                             </span>
                                                                         </span>
 
-                                                                        <p class="option-details">   
+                                                                        <p class="d-flex">   
                                                                             <button class="change-main-img" onclick="change_main_img('{{ route('product.change_main', $img['id']) }}')">
                                                                                 <i class="bx bx-image"></i>
                                                                             </button>
@@ -153,7 +153,7 @@
                                         <button class="addtocart buttonupdate" name="submit" value="update">UPDATE<i class="bi bi-check"></i></button>
                                         
                                         <!-- Delete -->
-                                        <button class="deleteprod" style="margin-top:0px; margin-left: 3%; margin-bottom: 3%;"  name="submit" value="delete">DELETE <i class="bi bi-x"></i></button>
+                                        <button class="deleteprod button-red" style="margin-top:0px; margin-left: 3%; margin-bottom: 3%;"  name="submit" value="delete">DELETE <i class="bi bi-x"></i></button>
                                     
                                     </div>
                                 </form>

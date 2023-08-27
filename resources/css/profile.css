@@ -15,38 +15,27 @@ body {
     user-select: none;
 }
 
-.banner img {
-    width: 100%;
-    user-select: none;
-}
-
 .profilepage {
     width: 92vw;
     margin-top: 4vw;
     margin-left: 4vw;
 }
 
-
 .informations {    
-    display: flex;
-    flex-direction: row;
     color: #5e5e5e;
-   
     z-index: 10;
-
     width: calc(92vw - 10%);
     height: 160px;
-
     margin-left: 5%;
     margin-top: 10px;
 }
+
 .profile-info {
     margin-left: 170px;
 }
 
 .profile-name {
     position: absolute;
-    display: flex;
     border: 5px solid white;
     color: white;
     background-color: #bababa;
@@ -55,9 +44,6 @@ body {
     border-radius: 50%;
     user-select: none;
     font-family: Avenir;
-    font-size: 70px;
-    font-weight: 900;
-
     top: -40%;
     left: 0%;
 }
@@ -72,8 +58,6 @@ body {
     } 
 }
 
-
-
 .informations .mail {
     font-weight: bolder;
     margin-bottom: 0px !important;
@@ -84,7 +68,6 @@ body {
     font-size: 15px;
     font-family: Avenir;
 }
-
 
 .buttons {
     margin-left: auto;
@@ -131,7 +114,6 @@ body {
     border: none;
     font-weight: 900;
     font-size: 22px;
-
 }
 
 .more:hover {
@@ -140,6 +122,7 @@ body {
 .more:active {
     background-color: #5e5e5e;
 }
+
 .products .title {
     height: 20px;
     overflow: hidden;
@@ -168,7 +151,6 @@ body {
     border-radius: 8px;
     padding: 10px;
     overflow: scroll;
-
 }
 
 .more-infos p {
@@ -295,27 +277,6 @@ body {
     top: 0;
     background-color: #fff;
     z-index: 2;
-}
-
-
-.delete {
-    border-radius: 7px;;
-    background-color: #af2024;
-    border: 1px solid #bd3b3f;
-    padding: 6px;
-    color: #fff;
-    font-weight: 900;
-}
-
-
-.delete:hover {
-    background-color: #bd3b3f;
-    border: 1px solid #af2024 !important;
-}
-
-.delete:active {
-    background-color: #bd3b3f !important;
-    border: 1px solid #af2024 !important;
 }
 
 .settings-center {

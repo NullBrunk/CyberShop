@@ -86,7 +86,7 @@
                                         @endforeach
 
                                     </div>
-                                    <a href="/todo" class="btn btn-primary update-button cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900;"> BUY </a>                                  
+                                    <a href="/todo" class="btn btn-primary button-blue cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900;"> BUY </a>                                  
                                 </div>
                             </ul>
                             
@@ -109,16 +109,7 @@
                         <span>Cart</span>
 
                     </a>
-
-                    <ul style="width: 250px">
-
-                        <div id="cart_to_fill">
-                        </div>
-
-                        <li>
-
-                        </li>
-                    </ul>
+                    
                 </li>
             @endif
 

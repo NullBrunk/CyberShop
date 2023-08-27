@@ -44,7 +44,7 @@
                     </div>
 
                     <div>
-                        <button class="rounded update-button mt-3">Change</button>
+                        <button class="rounded mt-3 btn button-blue">Change</button>
                     </div>
                 </form>
 
@@ -59,7 +59,7 @@
                 @csrf
 
                 <div class="form-group mt-4">
-                    <p class="light">
+                    <p>
                         Actual password
                     </p>
                     <input type="password" class="form-control @error('pass') is-invalid @enderror" name="pass" placeholder="Your actual password">
@@ -72,7 +72,7 @@
                 </div>
 
                 <div class="form-row mt-4">
-                    <p class="light">
+                    <p >
                         New password
                     </p>
 
@@ -96,7 +96,7 @@
                 </div>
 
                
-                <button class="mt-3 update-button rounded">Update</button>
+                <button class="mt-3 rounded btn button-blue">Update</button>
 
             </form>
         </div>
@@ -120,7 +120,7 @@
                 @enderror
                 <div class="d-flex">
                     <input type="password" name="password" class="form form-control mr-12 @error('password_error') is-invalid @enderror" placeholder="Your actual password">
-                    <button class="delete">DELETE ACCOUNT</button>
+                    <button class="btn button-red fw-900">DELETE ACCOUNT</button>
                 </div>
                 
         

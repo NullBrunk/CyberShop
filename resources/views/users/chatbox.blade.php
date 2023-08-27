@@ -196,12 +196,12 @@
                                                 <div class="hovershow" style="position: relative; width: calc(100% - 2px); display:flex;">
                                                     <div id="menu{{ $msg["id"] }}" class="none">
                                                         @if($msg["type"] === "text")
-                                                            <button hx-target="#msg{{$msg['id']}}" hx-get="{{ route("contact.edit_form", $msg["id"]) }}" hx-swap="innerHTML" class="btn btn-primary update" style="margin: 0px; border: 1px solid #484883;;">
+                                                            <button hx-target="#msg{{$msg['id']}}" hx-get="{{ route("contact.edit_form", $msg["id"]) }}" hx-swap="innerHTML" class="btn button-blue" style="margin: 0px; border: 1px solid #484883;;">
                                                                 <i class="bi bi-pencil-square"></i>
                                                             </button>
                                                         @endif
         
-                                                        <button onclick='confirm_delete( "{{ route("contact.delete", $msg["id"]) }}", "divmsg{{$msg["id"]}}" )' class="btn btn-primary update delete" style="height: 32px; border 1px solid #bd3b3f; background-color: #af2024; border: 1px solid #bd3b3f;">
+                                                        <button onclick='confirm_delete( "{{ route("contact.delete", $msg["id"]) }}", "divmsg{{$msg["id"]}}" )' class="btn button-red">
                                                             <i class="bi bi-trash2-fill"></i>
                                                         </button>  
                                                     </div>

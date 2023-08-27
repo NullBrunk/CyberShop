@@ -5,7 +5,7 @@
         <meta charset="utf-8">
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-        <title>Login</title>
+        <title>Reset password</title>
         <meta content="" name="description">
         <meta content="" name="keywords">
 
@@ -45,30 +45,12 @@
                     <div class="col-md-7 col-lg-5">
                         <div data-aos="zoom-in" class="login-wrap p-4 p-md-5" style="padding-bottom: 1rem !important;">
                             <div class="icon d-flex align-items-center justify-content-center" >
-                                <span class="bx bx-user" style="font-size: 45px; "></span>
+                                <span class="bx bx-user-check" style="font-size: 45px; "></span>
                             </div>
 
-                            <h3 class="text-center mb-4">Login</h3>
-                    
-                            @if(session() -> has("success"))
-                                <script>
-                                    success("{{ session("success") }}", "Signed Up !"); 
-                                </script>
-                            @endif
+                            <h3 class="text-center mb-4">Reset password</h3>
 
-                            @if(session() -> has("reset_sent"))
-                                <script>
-                                    success("A mail has been sent to your mail address.", "Sended !"); 
-                                </script>
-                            @endif
-
-                            @if(session() -> has("reset"))
-                                <script>
-                                    success("{{ session("reset") }}", "Reset !")
-                                </script>
-                            @endif
-
-                            <livewire:login-form />
+                            @livewire("reset-password-form", [ "code" => $code ])
                             
                         </div>
                     </div>
@@ -77,9 +59,9 @@
         </section>
     </body>
 
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/aos/aos.js"></script>
+    <script src="/assets/js/main.js"></script>
 
 </html>
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\ForgotPasswords;
 use App\Http\Controllers\Products;
 use App\Http\Controllers\Comments;
 use App\Http\Controllers\Tmpimage;
@@ -51,6 +52,15 @@ Route::name("auth.") -> controller(Users::class) -> middleware("guest") -> group
     Route::post('/signup', "store");
 
     Route::get("/mail/verify/{slug}", "confirm_mail") -> name("confirm_mail");
+});
+
+Route::controller(ForgotPasswords::class) -> name("auth.") -> group(function() {
+    Route::view("/forgot", "auth.forgot_password") -> name("forgot_form");
+    Route::post("/forgot", "forgot") -> name("post");
+    
+    Route::get("/reset/{reset:reset_code}", "reset_form") -> name("reset_form");
+    Route::post("/reset/{reset:reset_code}", "reset") -> name("reset");
+
 });
 
 
