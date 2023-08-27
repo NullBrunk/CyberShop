@@ -13,7 +13,43 @@
     <div style="margin-top: 16vh !important;"></div> {{-- Place under the navbar --}}
 
     <div class="profilepage">
+        
+        <div class="products-profile mt-4 p-3 rounded">
+            <h5>Change profile picture color</h5>
 
+            
+            <div class="d-flex flex-column">
+                
+                <p class="mt-4 text-center"><img height="100" src="{{ $user -> avatar }}" alt="Profile picture of {{ $user -> mail }}"></p>
+                
+                @error("color")
+                    <div class="alert alert-danger">
+                        {{ $message }}
+                    </div>
+                @enderror
+
+                <form action="{{ route("settings.update_pp") }}" method="post">
+
+                    @csrf
+                    <div class="d-flex flex-row">
+                        <div class="w-50 d-flex flex-column text-center">
+                            <span>Background :</span>
+                            <input class="w-75 m-auto" type="color" name="bgcolor">
+                        </div>
+    
+                        <div class="w-50 d-flex flex-column text-center">
+                            <span>Frontground : </span>
+                            <input class="w-75 m-auto" type="color" name="fgcolor">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="rounded update-button mt-3">Change</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
 
         <div class="products-profile mt-4 p-3" >
             <h5>Change password</h5>

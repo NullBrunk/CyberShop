@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Events\SignupEvent;
 use Illuminate\Support\Str;
 use App\Http\Requests\Login;
+use App\Http\Requests\SettingsChangeColor;
 use Illuminate\Http\Request;
 use App\Http\Requests\Signup;
 use App\Models\MailValidation;
@@ -147,8 +148,8 @@ class Users extends Controller {
 
     public function settings_form() {
         
-        $user = User::find($_SESSION["id"]) -> first();
-
+        $user = User::find($_SESSION["id"]);
+        
         return view("users.settings", [
             "user" => $user,
         ]);
@@ -184,6 +185,22 @@ class Users extends Controller {
     }
 
 
+
+    /** 
+     * Change the color of the profile picture
+     * 
+     * @param 
+    */
+
+    public function update_pp(SettingsChangeColor $req) {
+        
+        $user = User::find($_SESSION["id"]);
+        
+        $user -> avatar = "https://ui-avatars.com/api/?background=random&size=300&rounded=true&length=1&name=" . $_SESSION["mail"] . "&background=" . str_replace("#", "", $req -> input("bgcolor")) . "&color=" . str_replace("#", "", $req -> input("fgcolor"));;
+        $user -> save();
+        
+        return back();
+    }
 
     /**
      * Delete a user if he is allowed to

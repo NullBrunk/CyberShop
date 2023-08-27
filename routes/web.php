@@ -144,6 +144,8 @@ Route::prefix('settings') -> controller(Users::class) -> middleware("logged") ->
     
     Route::post("", "settings") -> name("update");
     
+    Route::post("/updatepp", "update_pp") -> name("update_pp");
+
     Route::delete("/delete", "delete") -> name("delete");
 
 });
