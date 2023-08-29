@@ -1436,3 +1436,7 @@ tr:nth-child(even) td {
   color: #293e61;
   font-weight: 700;
 }
+
+.cartelem i {
+  font-size: 16px !important;
+}
