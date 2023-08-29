@@ -5,10 +5,12 @@
 
 @section("content")
 
-@php($img_nb = sizeof($images))
-@php($img_is_upper = $img_nb > 1)
-
-@php($mail = $product -> user -> mail)
+@php
+    include_once __DIR__ . "/../../../app/Http/Utils/Style.php";
+    $img_nb = sizeof($images);
+    $img_is_upper = $img_nb > 1;
+    $mail = $product -> user -> mail;
+@endphp
 
     <body>
         <link rel="stylesheet" href="/assets/vendor/swiper/swiper-bundle.min.css">
@@ -338,6 +340,22 @@
                                                 {{-- Menu to edit/delete a comment --}}
                                                 @if(isset($_SESSION["mail"]) && $mail === $_SESSION["mail"])           
                                                     <p class="trash"> 
+
+                                                        <div id="{{$comm -> id }}" class="none">
+
+                                                            <div class="d-flex flex-row justify-content-end mb-4">
+                                                                <a href="{{route("comment.update_form", $comm -> id )}}" 
+                                                                    id="{{$comm -> id  . 'updatebutton'}}" class="menu button-blue">
+                                                                    <i class="bi bi-pencil-square"></i>
+                                                                </a>
+                    
+                    
+                                                                <button id="{{$comm -> id  . 'deletebutton'}}" onclick="deletecomm({{ $comm -> id }})" class="menu button-red" style="margin-left: 0px;">
+                                                                    <i class="bi bi-trash2-fill"></i>
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        
                                                         <i id="" onclick='menu("{{$comm -> id }}")' class="dots bx bx-dots-vertical-rounded"></i>     
                                                     </p>
                                                 @endif 
@@ -345,56 +363,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="{{$comm -> id }}" class="none">
-
-                                            <div class="d-flex flex-row justify-content-end mb-4">
-                                                <a href="{{route("comment.update_form", $comm -> id )}}" 
-                                                    id="{{$comm -> id  . 'updatebutton'}}" class="menu button-blue">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </a>
-    
-    
-                                                <button id="{{$comm -> id  . 'deletebutton'}}" onclick="deletecomm({{ $comm -> id }})" class="menu button-red" style="margin-left: 0px;">
-                                                    <i class="bi bi-trash2-fill"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-
-                                        <span class="titlecomm"style="display:flex;margin-bottom: 0px;padding-bottom: 0px;">
-                                            {{ $comm["title"] }}
-                                            <span id="bruno{{ $comm -> id }}" class="likespan" >
-                                                <p class="like">
-                                                    <span id="num{{$comm -> id }}">
-                                                        {{ $comm -> like() -> count() }}
-                                                    </span>
-
-                                                    <i id="icon{{$comm -> id }}" class="bi"></i>
-
-                                                    <script>
-                                                        haveiliked("{{ route('like.get', $comm -> id ) }}", "icon{{$comm -> id }}")
-                                                    </script>
-                                                </p>
-                                            </span>
-                                        </span>
-
-                                        <script>
-                                            document.getElementById("bruno{{ $comm -> id }}").addEventListener("click", (event) => {
-                                                
-                                                @isset($_SESSION["logged"])
-                                                    heartclick("{{ route("like.toggle", $comm -> id ) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")
-                                                    
-                                                    if(!document.getElementById("icon{{$comm["id"]}}").classList.contains("bi-heart-fill")) { 
-
-                                                        const m = (0.2 - 1.0) / (112 - 710);
-                                                        const b = 1.0 - m * 710;
-        
-                                                        onButtonClick(m * event.clientY + b); 
-                                                    }
-                                                @endisset 
-                                            })
-                                        </script>
-
-
+                                        
 
                                         <div class="stars">
 
@@ -407,20 +376,54 @@
                                             @endfor
 
                                             <span class="at">
-                                                {{ \Carbon\Carbon::parse($comm["writed_at"]) -> format('d F Y, H:i') }}
+                                                {{ \Carbon\Carbon::parse($comm["writed_at"]) -> diffForHumans() }}
                                             </span>
 
                                             
                                         </div>
-    
 
-                                        <div class="comment">
-                                            <?php 
-                                            include_once __DIR__ . "/../../../app/Http/Utils/Style.php" ?>
-                                            {!! style($comm["content"]) !!}
-                                            <hr>
+                                        <span class="titlecomm d-flex">
+                                            {{ $comm["title"] }}
+                                        </span>
+
+                                        <div class="comment d-flex">
+                                            <div class="w-75">
+                                                {!! style($comm["content"]) !!}
+                                            </div>
+                                            <div id="bruno{{ $comm -> id }}" class="likespan">
+                                                <p class="like">
+                                                    <span id="num{{$comm -> id }}">
+                                                        {{ $comm -> like() -> count() }}
+                                                    </span>
+
+                                                    <i id="icon{{$comm -> id }}" class="bi"></i>
+
+                                                    <script>
+                                                        haveiliked("{{ route('like.get', $comm -> id ) }}", "icon{{$comm -> id }}")
+                                                    </script>
+                                                </p>
+                                            </div>
                                         </div>
-                                    </div>                  
+                                        <hr>
+                                    </div> 
+                                    
+                                    
+                                    @isset($_SESSION["logged"])
+                                        <script>
+                                            document.getElementById("bruno{{ $comm -> id }}").addEventListener("click", (event) => {
+                                            
+                                                heartclick("{{ route("like.toggle", $comm -> id ) }}", "icon{{$comm["id"]}}", "num{{$comm["id"]}}")
+                                                
+                                                if(!document.getElementById("icon{{$comm["id"]}}").classList.contains("bi-heart-fill")) { 
+
+                                                    const m = (0.2 - 1.0) / (112 - 710);
+                                                    const b = 1.0 - m * 710;
+
+                                                    onButtonClick(m * event.clientY + b); 
+                                                }
+                                            })
+                                        </script>
+                                    @endisset 
                                 @endforeach
                             @endif
 

@@ -546,7 +546,6 @@ section {
 .stars {
   display: flex;
   font-size:14px;
-  margin-top: 10px;
 }
 
 .at {
@@ -557,7 +556,7 @@ section {
 }
 
 .comment {
-  margin-top: 2%;
+  margin-top: 15px;
   margin-bottom:2%;
   font-family: "Amazon Ember",Arial,sans-serif;
   color: #0F1111;
@@ -613,8 +612,11 @@ abbr {
 
 .titlecomm {
   font-family: "Amazon Ember", Arial, sans-serif; 
-  font-weight: 700; 
+  font-weight: 800; 
   margin-bottom: 10px;
+  margin-top: 19px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
 }
 
 .commbutton:hover {
@@ -687,6 +689,7 @@ abbr {
   margin-left: auto;
   margin-top: 0vh;
   font-size: 26px; 
+  margin-bottom: 0px;
 }
 
 .dots {
@@ -1428,3 +1431,4 @@ tr:nth-child(even) td {
 .fw-900 {
   font-weight: 900;
 }
+

@@ -72,7 +72,7 @@
                     <br>
 
                     <input class="commbutton" type="submit" value="Update comment">
-                    <input name="abort" value="Abort" class="commbutton red" type="submit">
+                    <input name="abort" value="Abort" class="commbutton button-red" type="submit">
 
                     <br>
 
