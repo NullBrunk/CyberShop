@@ -1158,7 +1158,6 @@ tr:nth-child(even) td {
 
 .likespan {
   display: inline-block; 
-  margin-left: auto;
   font-weight: normal;
 }
 

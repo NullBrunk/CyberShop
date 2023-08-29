@@ -318,10 +318,10 @@
                             @if($comments)
                                 @foreach($comments as $comm)
 
-                                <div id="comment_div_{{ $comm -> id }}">
+                                <div id="comment_div_{{ $comm -> id }}" style="margin-top: 3%;">
 
                                     @php($mail = $comm -> user -> mail)
-                                    <div id="{{ "div" . $comm -> id  }}" class="comments">          
+                                    <div id="{{ "div" . $comm -> id  }}" >          
                                         <div class="d-flex">
                                             
                                             <p class="d-flex" style='margin-bottom: 0px;'>
@@ -386,25 +386,26 @@
                                             {{ $comm["title"] }}
                                         </span>
 
-                                        <div class="comment d-flex">
-                                            <div class="w-75">
+                                        <div class="comment">
+                                            <div>
                                                 {!! style($comm["content"]) !!}
                                             </div>
-                                            <div id="bruno{{ $comm -> id }}" class="likespan">
-                                                <p class="like">
-                                                    <span id="num{{$comm -> id }}">
-                                                        {{ $comm -> like() -> count() }}
-                                                    </span>
-
-                                                    <i id="icon{{$comm -> id }}" class="bi"></i>
-
-                                                    <script>
-                                                        haveiliked("{{ route('like.get', $comm -> id ) }}", "icon{{$comm -> id }}")
-                                                    </script>
-                                                </p>
-                                            </div>
                                         </div>
-                                        <hr>
+
+                                        <div id="bruno{{ $comm -> id }}" class="likespan">
+                                            <p class="like">
+                                                <span id="num{{$comm -> id }}">
+                                                    {{ $comm -> like() -> count() }}
+                                                </span>
+
+                                                <i id="icon{{$comm -> id }}" class="bi"></i>
+
+                                                <script>
+                                                    haveiliked("{{ route('like.get', $comm -> id ) }}", "icon{{$comm -> id }}")
+                                                </script>
+                                            </p>
+                                        </div>
+                                        <hr class="mt-4">
                                     </div> 
                                     
                                     
