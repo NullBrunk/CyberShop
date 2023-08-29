@@ -35,7 +35,7 @@
                 myConfetti({
                     spread: 80,
                     particleCount: 150,
-                    origin: { y: y, x: 0.88 }
+                    origin: { y: y, x: 0.1 }
                 });
             }
         </script>
