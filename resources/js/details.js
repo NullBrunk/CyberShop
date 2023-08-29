@@ -72,35 +72,44 @@ function addtocart(id){
             
             resp.json().then((data) => {
 
-                /* Add the product into the cart client side */
-                
-                const id_cart_elem = data.id
-                const url = location.protocol + "//" + window.location.hostname + ":8000/api/products/" + id
-
-                fetch(url).then((response) => {
+                if(data.add === true) {
+                    let elem = document.getElementById("cart_" + data.id).querySelector("div div span");
+                    elem.innerHTML = parseInt(elem.innerHTML) + 1;
+                }
+                else {   
+                    /* Add the product into the cart client side */
                     
-                    if (response.ok) {
-                        response.json().then((data) => {
+                    const id_cart_elem = data.id
+                    const url = location.protocol + "//" + window.location.hostname + ":8000/api/products/" + id
 
-                            let cart = document.getElementById("cart_to_fill");
+                    fetch(url).then((response) => {
+                        
+                        if (response.ok) {
+                            response.json().then((data) => {
 
-                            console.log(cart);
-                            cart.innerHTML += `
-                                <li id="cart_${id_cart_elem}">
-                                    <p class="show_cart">
+                                let cart = document.getElementById("cart_to_fill");
 
-                                        <img src="/storage/product_img/${data.img}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
+                                console.log(cart);
+                                cart.innerHTML += `
+                                    <li id="cart_${id_cart_elem}">
+                                        <div class="show_cart">
+                                            <img src="/storage/product_img/${data.img}" style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
 
-                                        <a href="/details/${data.id}" style="display: block;overflow: hidden; width: 57%; margin:auto;">${data.name}</a>
-                                        <img src="/assets/img/trash.png" onclick='deleteitem("cart_${id_cart_elem}")' class="trash-cart">
-                                    </p>
-                                </li>
-                                <hr id="hrcart_${id_cart_elem}">
-                            `     
-                        })
-                    }
-                })
-
+                                            <div class="d-flex flex-column cartelem" style="width: 57%; overflow: hidden;">
+                                                <a href="/details/${id_cart_elem}" style="width: 94%; padding: 6px 0px 0px 20px;">${data.name}</a>
+                                                <div>
+                                                    <i class="bi bi-x"></i><span>1</span>
+                                                </div>
+                                            </div>
+                                            <img src="/assets/img/trash.png" onclick='deleteitem("cart_${id_cart_elem}")' class="trash-cart">
+                                        </div>
+                                    </li>
+                                    <hr id="hrcart_${id_cart_elem}">
+                                `     
+                            })
+                        }
+                    })
+                }
                 // Update the span on top of the cart icon 
                 
                 const num = document.getElementById("number");

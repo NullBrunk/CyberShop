@@ -14,7 +14,6 @@ class Index extends Controller
      */
 
     public function show(){
-;
 
         // All doesn't exists as a category, so we add it manually
 

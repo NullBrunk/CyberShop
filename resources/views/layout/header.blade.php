@@ -3,7 +3,6 @@
 @endif
 
 @php($logged = isset($_SESSION["logged"]))
-
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
     <div class="container d-flex align-items-center" style="max-width: 87vw !important;">
@@ -23,21 +22,28 @@
                     <script>
                         async function deleteitem(id) {
 
-
                             let idproduct = id.split("_")[1];
                             // Supprimer un élément du panier
+
                             url = "/cart/delete/" + idproduct;
+
                             let resp = await fetch(url);
+                            let data = await resp.json();
+   
 
+                            if(data.removed) {
+    
+                                // Supprimer l'élément de la div sans avoir a reloader la page ainsi que son hr
+                                document.getElementById(id).remove();
+                                document.getElementById("hrcart_" + idproduct).remove()
 
-                            // Supprimer l'élément de la div sans avoir a reloader la page ainsi que son hr
-                            document.getElementById(id).remove();
-                            document.getElementById("hr" + id).remove()
+                            }
+                            else {
+                                let elem = document.getElementById(id).querySelector("div div span");
+                                elem.innerHTML = parseInt(elem.innerHTML) - 1;
+                            }
 
-
-                            // On modifie le nombre affiché en haut du panier
                             const num = document.getElementById("number");
-
 
                             if(num.innerHTML == 1){
                                 number = document.getElementById("number");
@@ -46,6 +52,7 @@
                             else {
                                 num.innerHTML = num.innerHTML - 1
                             }
+
                         }
                     </script>
 
@@ -53,15 +60,21 @@
                     {{-- Si le tableau représentant le cart n'est pas vide --}}
                     @if(!empty($_SESSION['cart']))
 
-                        @php($total = 0)
+                        <?php
+                            $total = 0;
+                            $v = 0;
+
+                            foreach($_SESSION['cart'] as $q){
+                                $v += $q["quantity"];
+                            }
+                        ?>
 
                         <li id="cart" style="list-style-type: none;" class="dropdown">
 
                             <a class="nav-link" href="{{ route("cart.display")}}">
-                                <span id="number" class="badge bg-primary badge-number">{{ sizeof($_SESSION["cart"]) }}</span>
+                                <span id="number" class="badge bg-primary badge-number">{{ $v }}</span>
                                 <i class="bi bi-cart3"></i>
                                 <span>Cart</span>
-
                             </a>
 
                             <ul style="width: 250px">
@@ -72,16 +85,22 @@
 
                                         @foreach($_SESSION['cart'] as $c)
                                         
-                                        <li id="cart_{{ $c -> id }}">
-                                            <p class="show_cart">
+                                        <li id="cart_{{ $c -> id_product }}">
+                                            <div class="show_cart">
 
-                                                <img src="/storage/product_img/{{ $c -> product -> product_images() -> where("is_main", "=", 1) -> first() -> img }}"       style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
+                                                <img src="/storage/product_img/{{ $c -> product -> product_images() -> where("is_main", "=", 1) -> first() -> img }}" style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
                                                 
-                                                <a href="/details/{{ $c -> product -> id }}" style="display: block;overflow: hidden; width: 57%; margin:auto;">{{ $c -> product -> name }}</a>
-                                                <img src="/assets/img/trash.png" onclick='deleteitem("cart_{{$c -> id}}")' class="trash-cart">
-                                            </p>
+                                                <div class="d-flex flex-column cartelem" style="width: 57%; overflow: hidden;">
+                                                    <a href="/details/{{ $c -> id_product }}" style="width: 94%; padding: 6px 0px 0px 20px;">{{ $c -> product -> name }}</a>
+                                                    <div>
+                                                        <i class="bi bi-x"></i><span>{{ $c -> quantity }}</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <img src="/assets/img/trash.png" onclick='deleteitem("cart_{{$c -> id_product}}")' class="trash-cart">
+                                            </div>
                                         </li>
-                                        <hr id="hrcart_{{ $c -> id }}">
+                                        <hr id="hrcart_{{ $c -> id_product }}">
 
                                         @endforeach
 
@@ -101,16 +120,27 @@
                 @endif
 
             @if(!$logged or empty($_SESSION['cart']))
-                <li id="cart" style="list-style-type: none;" class="dropdown">
+            <li id="cart" style="list-style-type: none;" class="dropdown">
 
-                    <a class="nav-link" href="{{ route("cart.display")}}">
-                        <span id="number" class="badge bg-primary badge-number"></span>
-                        <i class="bi bi-cart3"></i>
-                        <span>Cart</span>
+                <a class="nav-link" href="{{ route("cart.display")}}">
+                    <span id="number" class="badge bg-primary badge-number"></span>
+                    <i class="bi bi-cart3"></i>
+                    <span>Cart</span>
+                </a>
 
-                    </a>
+                <ul style="width: 250px">
+
+                    <div id="">
+
+                        <div id="cart_to_fill">
+
                     
-                </li>
+                        </div>
+                        <a href="/todo" class="btn btn-primary button-blue cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900;"> BUY </a>                                  
+                    </div>
+                </ul>
+                
+            </li>
             @endif
 
 
