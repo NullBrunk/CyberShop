@@ -82,13 +82,13 @@ class Carts extends Controller {
 
 
     /**
-     * Remove a product from teh SESSION cart and from the Database.
+     * Remove a product from the SESSION cart and from the Database.
      *     * 
      * @return redirect     
      * 
      */
 
-    public function remove(int $id){
+    public static function remove(int $id){
         
         $product = Cart::where("id_user", $_SESSION["id"]) -> where("id_product", $id) -> first();
         

@@ -72,7 +72,7 @@ Route::controller(ForgotPasswords::class) -> name("auth.") -> group(function() {
 
 Route::prefix('cart') -> controller(Carts::class) -> middleware("logged") -> name("cart.") -> group(function () {
     
-    Route::view("show", "static.todo") -> name("display");
+    Route::view("show", "products.cart") -> name("display");
 
     Route::get("" , 'initialize') -> name("initialize");
 

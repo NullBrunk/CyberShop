@@ -5,6 +5,8 @@
 @php($logged = isset($_SESSION["logged"]))
 <header id="header" class="fixed-top " style="background-color: #293E61 !important;">
 
+    <script src="/assets/js/cart_header.js"></script>
+
     <div class="container d-flex align-items-center" style="max-width: 87vw !important;">
         <h1 class="logo me-auto"> <a href="/">{{ config("app.name") }}</a> </h1>
 
@@ -20,45 +22,12 @@
                     <livewire:header />
 
                     <script>
-                        async function deleteitem(id) {
-
-                            let idproduct = id.split("_")[1];
-                            // Supprimer un élément du panier
-
-                            url = "/cart/delete/" + idproduct;
-
-                            let resp = await fetch(url);
-                            let data = await resp.json();
-   
-
-                            if(data.removed) {
-    
-                                // Supprimer l'élément de la div sans avoir a reloader la page ainsi que son hr
-                                document.getElementById(id).remove();
-                                document.getElementById("hrcart_" + idproduct).remove()
-
-                            }
-                            else {
-                                let elem = document.getElementById(id).querySelector("div div span");
-                                elem.innerHTML = parseInt(elem.innerHTML) - 1;
-                            }
-
-                            const num = document.getElementById("number");
-
-                            if(num.innerHTML == 1){
-                                number = document.getElementById("number");
-                                number.innerHTML = ""
-                            }
-                            else {
-                                num.innerHTML = num.innerHTML - 1
-                            }
-
-                        }
+                        
                     </script>
 
 
                     {{-- Si le tableau représentant le cart n'est pas vide --}}
-                    @if(!empty($_SESSION['cart']))
+                    @if(!empty($_SESSION['cart']) && Route::currentRouteName() !== "cart.display")
 
                         <?php
                             $total = 0;
@@ -77,7 +46,7 @@
                                 <span>Cart</span>
                             </a>
 
-                            <ul style="width: 250px">
+                            <ul style="width: 250px; max-height: 70vh; overflow: scroll;">
 
                                 <div id="">
 
@@ -105,7 +74,7 @@
                                         @endforeach
 
                                     </div>
-                                    <a href="/todo" class="btn btn-primary button-blue cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900;"> BUY </a>                                  
+                                    <a href="/cart/show" class="btn btn-primary button-blue cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900; margin-bottom: 25px;"> BUY </a>                                  
                                 </div>
                             </ul>
                             
@@ -136,7 +105,7 @@
 
                     
                         </div>
-                        <a href="/todo" class="btn btn-primary button-blue cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900;"> BUY </a>                                  
+                        <a href="/cart/show" class="btn btn-primary button-blue cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900;"> BUY </a>                                  
                     </div>
                 </ul>
                 
