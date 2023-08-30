@@ -74,7 +74,7 @@
                                         @endforeach
 
                                     </div>
-                                    <a href="/cart/show" class="btn btn-primary button-blue cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900; margin-bottom: 25px;"> BUY </a>                                  
+                                    <a href="/cart/show" class="btn btn-primary button-blue cart-buy" style="width: 90%;margin-left: 5%; font-weight: 900; margin-bottom: 10px;"> BUY </a>                                  
                                 </div>
                             </ul>
                             
