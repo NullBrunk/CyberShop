@@ -1440,3 +1440,12 @@ tr:nth-child(even) td {
 .cartelem i {
   font-size: 16px !important;
 }
+
+.cartbutton {
+  height: 28px;
+  margin-right: 6px;
+  padding: 0px 8px 0px 8px;
+  font-weight: 900;
+  font-family: Avenir;
+  width: 25px;
+}

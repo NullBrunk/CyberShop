@@ -39,8 +39,10 @@ class Carts extends Controller {
      * 
      */
 
-    public function add(Product $product){
+    public static function add(int $id){
         
+        $product = Product::findOrFail($id);
+
         $product_in_cart = Cart::where([
             "id_user" =>  $_SESSION["id"],
             "id_product" => $product -> id,

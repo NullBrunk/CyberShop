@@ -46,7 +46,7 @@
                                 <span>Cart</span>
                             </a>
 
-                            <ul style="width: 250px; max-height: 70vh; overflow: scroll;">
+                            <ul style="width: 290px; max-height: 70vh; overflow: scroll;">
 
                                 <div id="">
 
@@ -60,13 +60,15 @@
                                                 <img src="/storage/product_img/{{ $c -> product -> product_images() -> where("is_main", "=", 1) -> first() -> img }}" style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
                                                 
                                                 <div class="d-flex flex-column cartelem" style="width: 57%; overflow: hidden;">
-                                                    <a href="/details/{{ $c -> id_product }}" style="width: 94%; padding: 6px 0px 0px 20px;">{{ $c -> product -> name }}</a>
+                                                    <a href="/details/{{ $c -> id_product }}" style="width: 94%; padding: 6px 0px 0px 20px; overflow: hidden;">{{ $c -> product -> name }}</a>
                                                     <div>
                                                         <i class="bi bi-x"></i><span>{{ $c -> quantity }}</span>
                                                     </div>
                                                 </div>
-                                                
-                                                <img src="/assets/img/trash.png" onclick='deleteitem("cart_{{$c -> id_product}}")' class="trash-cart">
+                                                <div class="d-flex flex-row m-auto">
+                                                    <button  class="cartbutton button-blue rounded" onclick='addtocart("{{$c -> id_product}}")'>+</button>
+                                                    <button style="margin-right: 4px;" class="cartbutton button-red rounded" onclick='deleteitem("cart_{{$c -> id_product}}")'>-</button>
+                                                </div>
                                             </div>
                                         </li>
                                         <hr id="hrcart_{{ $c -> id_product }}">

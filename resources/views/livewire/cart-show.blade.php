@@ -26,7 +26,7 @@
                     <span class="text-end" style="width: 20%">
                         TOTAL PRICE
                     </span>
-                    <span class="text-end" style="width: 16%">DELETE</span>
+                    <span class="text-end" style="width: 16%">ACTIONS</span>
 
                 </div>
                 @foreach($_SESSION['cart'] as $c)
@@ -73,8 +73,11 @@
                             </div>
                             
                             <div style="width: 10%;" class="d-flex mt-4 pricess">
+                                <button class="delete button-blue" wire:click="plus({{ $c -> id_product }})">
+                                    <i class="bx bx-plus"></i>
+                                </button>
                                 <button class="delete button-red" wire:click="rm({{ $c -> id_product }})">
-                                    <i class="bx bx-trash-alt"></i>
+                                    <i class="bx bx-minus"></i>
                                 </button>
                             </div>
                             

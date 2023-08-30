@@ -38,13 +38,7 @@
                     origin: { y: y, x: 0.1 }
                 });
             }
-        </script>
 
-        <!-- CSS -->
-
-        <script src="/assets/js/details.js"></script>
-
-        <script>
             function deletecomm(commid){
                 Swal.fire({
                     title: 'Are you sure?',
