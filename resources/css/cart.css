@@ -74,8 +74,6 @@ section {
 
 .delete {
     height: 37px;
-    margin: auto;
-    border-radius: 10px;
     padding-right: 6px;
     padding-left: 6px;
 }

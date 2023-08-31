@@ -33,24 +33,31 @@ async function haveiliked(url, id) {
     let data = await resp.json()
 
     if(data.value == true){
-        document.getElementById(id).classList.add("bi-heart-fill")
+        document.getElementById("empty" + id).classList.add("filled")
+        document.getElementById("empty" + id).classList.remove("empty")
+
+        document.getElementById("filled" + id).classList.add("empty")
+        document.getElementById("filled" + id).classList.remove("filled")
+
     }
-    else {
-        document.getElementById(id).classList.add("bi-heart")
-    }
+    
 }
 
-async function heartclick(url, id, num){
-    let resp = await fetch(url);
+async function heartclick(url, id){
+    await fetch(url);
 
-    let elem = document.getElementById(id)
-    
-    elem.classList.toggle("bi-heart-fill")
-    elem.classList.toggle("bi-heart")
+    let empty = document.getElementById("empty" + id)
+    let filled = document.getElementById("filled" + id)
+
+    empty.classList.toggle("empty")
+    empty.classList.toggle("filled")
+
+    filled.classList.toggle("empty")
+    filled.classList.toggle("filled")
 
 
-    let number = document.getElementById(num)
-    if(elem.classList.contains("bi-heart-fill")){
+    let number = document.getElementById("num" + id)
+    if(empty.classList.contains("filled")){
         number.innerText = parseInt(number.innerText) + 1;
         return true;
     }
@@ -96,15 +103,19 @@ function addtocart(id){
                                             <img src="/storage/product_img/${data.img}" style="padding-left: 3%; width: 22%; display: block; user-select: none !important;">
 
                                             <div class="d-flex flex-column cartelem" style="width: 57%; overflow: hidden;">
-                                                <a href="/details/${id_cart_elem}" style="width: 94%; padding: 6px 0px 0px 20px;">${data.name}</a>
+                                                <a href="/details/${id_cart_elem}" style="width: 94%; padding: 6px 0px 0px 20px;  overflow: hidden;">${data.name}</a>
                                                 <div>
                                                     <i class="bi bi-x"></i><span>1</span>
                                                 </div>
                                             </div>
-                                            <img src="/assets/img/trash.png" onclick='deleteitem("cart_${id_cart_elem}")' class="trash-cart">
+                                            <div class="d-flex flex-row m-auto">
+                                                <button style="border-top-left-radius: 7px;border-bottom-left-radius: 7px;" class="cartbutton button-pink" onclick='deleteitem("cart_${id_cart_elem}")'>-</button>
+                                                <button style="border-top-right-radius: 7px;border-bottom-right-radius: 7px;" class="cartbutton button-blue" onclick='addtocart("${id_cart_elem}")'>+</button>
+                                            </div>
                                         </div>
                                     </li>
                                     <hr id="hrcart_${id_cart_elem}">
+
                                 `     
                             })
                         }

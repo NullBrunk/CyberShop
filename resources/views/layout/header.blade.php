@@ -66,8 +66,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="d-flex flex-row m-auto">
-                                                    <button  class="cartbutton button-blue rounded" onclick='addtocart("{{$c -> id_product}}")'>+</button>
-                                                    <button style="margin-right: 4px;" class="cartbutton button-red rounded" onclick='deleteitem("cart_{{$c -> id_product}}")'>-</button>
+                                                    <button style="border-top-left-radius: 7px;border-bottom-left-radius: 7px;" class="cartbutton button-pink" onclick='deleteitem("cart_{{$c -> id_product}}")'>-</button>
+                                                    <button style="border-top-right-radius: 7px;border-bottom-right-radius: 7px;" class="cartbutton button-blue" onclick='addtocart("{{$c -> id_product}}")'>+</button>
                                                 </div>
                                             </div>
                                         </li>

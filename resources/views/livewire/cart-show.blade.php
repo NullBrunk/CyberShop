@@ -72,12 +72,12 @@
                                 </p>
                             </div>
                             
-                            <div style="width: 10%;" class="d-flex mt-4 pricess">
-                                <button class="delete button-blue" wire:click="plus({{ $c -> id_product }})">
-                                    <i class="bx bx-plus"></i>
-                                </button>
-                                <button class="delete button-red" wire:click="rm({{ $c -> id_product }})">
+                            <div style="width: 10%;" class="d-flex mt-4 pricess justify-content-center">
+                                <button style="border-top-left-radius: 7px;border-bottom-left-radius: 7px;" class="delete button-pink" wire:click="rm({{ $c -> id_product }})">
                                     <i class="bx bx-minus"></i>
+                                </button>
+                                <button style="border-top-right-radius: 7px;border-bottom-right-radius: 7px;" class="delete button-blue" wire:click="plus({{ $c -> id_product }})">
+                                    <i class="bx bx-plus"></i>
                                 </button>
                             </div>
                             

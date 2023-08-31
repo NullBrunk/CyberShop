@@ -13,6 +13,19 @@ a:hover {
   text-decoration: none;
 }
 
+.addtocart {
+  background-color: #293e61 !important; 
+  font-size: 19px !important;
+  font-weight: bold;
+  padding: 14px 28px;
+  border-radius: 50px;
+  color: #fff;
+  border: 2px solid #007185 !important;
+  transition: 0.3s;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 h1,
 h2,
 h3,
@@ -459,19 +472,6 @@ section {
   max-width: 94%;
 }
 
-.addtocart {
-  background-color: #293e61 !important; 
-  font-size: 19px !important;
-  font-weight: bold;
-  padding: 14px 28px;
-  border-radius: 50px;
-  color: #fff;
-  border: 2px solid #007185 !important;
-  transition: 0.3s;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .formshow {
   margin-bottom:5%;
   display: flex;
@@ -875,15 +875,28 @@ tr:nth-child(even) td {
 }
 
 
+.button-pink {
+  color: white !important;
+  background-color: #ff6e6e !important;
+  border: 1px solid #f2878a !important;
+}
+
+.button-pink:hover, .button-pink:focus {
+  color: white !important;
+  background-color: #f2878a !important;
+  border: 1px solid #ff6e6e !important; 
+}
+
+
 .button-blue {
   color: white !important;
-  background-color: #32325d !important;
+  background-color: #37517e !important;
   border: 1px solid #484883 !important;
 }
 .button-blue:hover, .button-blue:active {
   color: white !important;
   background-color: #484883 !important;
-  border: 1px solid #32325d !important;
+  border: 1px solid #37517e !important;
 }
 
 
@@ -1140,33 +1153,93 @@ tr:nth-child(even) td {
   }
 }
 
-.like {
-  transition: all 0.5s;
-
-  border-radius: 20px;
-  padding: 1px 4px;
-  display: flex;
-  background: rgb(203, 200, 200);
-  margin-bottom: 0px !important
-}
-
-.like i {
-  margin-left: 5px;
+.like-button span {
   margin-right: 4px;
-  color: red;
+} 
+.like-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 9px 0px 9px;
+  background-color: #e8e8e8;  
+  border-style: solid;
+  border-radius: 35px;
+  font-size: 16px;
+  font-weight: 900;
+  color: rgb(134, 124, 124);
+  transition: transform 400ms cubic-bezier(.68,-0.55,.27,2.5), 
+  border-color 400ms ease-in-out,
+  background-color 400ms ease-in-out;
+  word-spacing: -2px;
 }
 
-.likespan {
-  display: inline-block; 
-  font-weight: normal;
+@keyframes movingBorders {
+  0% {
+    border-color: #fce4e4;
+  }
+
+  50% {
+    border-color: #ffd8d8;
+  }
+
+  90% {
+    border-color: #fce4e4;
+  }
 }
 
-.likespan span {
-  margin-left: 5px;
+.like-button:hover {
+  background-color: #eee;
+  transform: scale(105%);
+  animation: movingBorders 3s infinite;
 }
 
-.like:hover{
-  transform: scale(1.15);
+.like-button:hover .filled {
+  display: inline;
+}
+
+.like-button:hover .empty {
+  display: none;
+}
+
+
+.like-button svg {
+  fill: rgb(255, 110, 110);
+  transition: opacity 100ms ease-in-out;
+}
+
+.filled {
+  display: none;
+}
+
+@keyframes beatingHeart {
+  0% {
+    transform: scale(1);
+  }
+
+  15% {
+    transform: scale(1.15);
+  }
+
+  30% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.15);
+  }
+
+  60% {
+    transform: scale(1);
+  }
+}
+
+.like-button:hover .empty {
+  opacity: 0;
+}
+
+.like-button:hover .filled {
+  opacity: 1;
+  animation: beatingHeart 1.2s infinite;
 }
 
 .results_for {
@@ -1443,9 +1516,129 @@ tr:nth-child(even) td {
 
 .cartbutton {
   height: 28px;
-  margin-right: 6px;
   padding: 0px 8px 0px 8px;
   font-weight: 900;
   font-family: Avenir;
   width: 25px;
 }
+
+.button {
+  --width: 100px;
+  --height: 70px;
+  --tooltip-height: 35px;
+  --tooltip-width: 90px;
+  --gap-between-tooltip-to-button: 18px;
+  --button-color: #222;
+  --tooltip-color: #fff;
+  width: var(--width);
+  height: var(--height);
+  background: var(--button-color);
+  position: relative;
+  text-align: center;
+  border-radius: 0.45em;
+  transition: background 0.3s;
+
+  background-color: #293e61 !important; 
+  font-size: 22px !important;
+  font-weight: bold;
+  border-radius: 42px;
+  color: #fff;
+  border: 2px solid #007185 !important;
+  padding: 0px 85px;
+}
+
+.button::before {
+  position: absolute;
+  content: attr(data-tooltip);
+  width: var(--tooltip-width);
+  height: var(--tooltip-height);
+  background-color: #555;
+  font-size: 0.9rem;
+  color: #fff;
+  line-height: var(--tooltip-height);
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) + 10px);
+  left: calc(50% - var(--tooltip-width) / 2);
+}
+
+.button::after {
+  position: absolute;
+  content: '';
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: #555;
+  left: calc(50% - 10px);
+  bottom: calc(100% + var(--gap-between-tooltip-to-button) - 10px);
+}
+
+.button::after,.button::before {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s;
+  width: auto;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.button-wrapper,.text,.cart-icon {
+  overflow: hidden;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  color: #fff;
+}
+
+.text {
+  top: 0
+}
+
+.text,.cart-icon {
+  transition: top 0.5s;
+}
+
+.cart-icon {
+  color: #fff;
+  top: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-icon svg { 
+  width: 24px;
+  height: 24px;
+}
+
+.button:hover {
+  background: #222;
+}
+
+.button:hover .text {
+  top: -100%;
+}
+
+.button:hover .cart-icon {
+  top: 0;
+}
+
+.button:hover:before,.button:hover:after {
+  opacity: 1;
+  visibility: visible;
+  
+}
+
+.button:hover:after {
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button) - 20px);
+}
+
+.button:hover:before {
+  bottom: calc(var(--height) + var(--gap-between-tooltip-to-button));
+}
+
+
+
