@@ -239,7 +239,7 @@
                         
                         @csrf
 
-                        <input name="content" class="text" type="text" placeholder="Send a message to {{$user}}" autofocus>
+                        <input name="content" class="input-text" type="text" placeholder="Send a message to {{$user}}" autofocus>
                     
                         <input type="file" id="file-input" name="img" style="width: 0;" >
                         <label for="file-input">

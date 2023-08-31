@@ -257,7 +257,7 @@ label {
     border-radius: 0 0 8px 8px;
     background-color: #3e404b;
 }
-.textbar .text {
+.textbar .input-text {
     color: #e1e1e1;
     margin-left: 3.3vw;
     width: calc(100% - 64px - 6.6vw);

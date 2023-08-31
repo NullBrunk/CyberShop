@@ -48,7 +48,7 @@
 
                             <ul style="width: 290px; max-height: 70vh; overflow: scroll;">
 
-                                <div id="">
+                                <div id="" style="width: 100%;">
 
                                     <div id="cart_to_fill">
 
@@ -101,7 +101,7 @@
 
                 <ul style="width: 250px">
 
-                    <div id="">
+                    <div id="" style="width: 100%;">
 
                         <div id="cart_to_fill">
 
