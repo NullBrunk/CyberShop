@@ -169,7 +169,7 @@
                             @else
                                 <div class="d-flex justify-content-center formshow" onclick='window.location.href="{{route("product.edit_form", $product -> id)}}"'>  
                                     
-                                    <div id="submit"data-tooltip="Edit product" class="button ">
+                                    <div id="submit" data-tooltip="Edit product" class="button ">
                                         <div class="button-wrapper">
                                           <div class="text">EDIT</div>
                                             <span class="cart-icon">

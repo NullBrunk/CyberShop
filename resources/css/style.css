@@ -1576,6 +1576,7 @@ tr:nth-child(even) td {
   visibility: hidden;
   transition: all 0.5s;
   width: auto;
+  height: auto;
 }
 
 .text {
