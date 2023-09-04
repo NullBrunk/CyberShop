@@ -12,7 +12,7 @@ use App\Http\Controllers\Users;
 use App\Http\Controllers\Carts;
 use App\Http\Controllers\Index;
 use App\Http\Controllers\Likes;
-
+use App\Http\Controllers\Payment;
 
 /*
 |---------------------------------------------
@@ -220,3 +220,15 @@ Route::prefix('/uploads') -> controller(Tmpimage::class) -> middleware("logged")
 
 });
 
+
+
+/*
+|---------------------------------------------
+|  Payment
+*/
+
+Route::prefix("/payment") -> controller(Payment::class) -> middleware("logged") -> name("payment.") -> group(function () {
+    Route::post("/create-checkout-session", "create_checkout") -> name("checkout");
+    Route::get("/success", "success") -> name("success");
+    Route::get("/cancel", "cancel") -> name("cancel");
+});

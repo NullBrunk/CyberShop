@@ -104,13 +104,10 @@ section {
 }
 
 .div-button {
-    margin-top: 1.5rem !important;
+    margin-top: 2.5rem !important;
 }
 
 @media(max-width: 550px){
-    .div-button {
-        margin: 0px;
-    }
 
     .w75 {
         width: 100%;
