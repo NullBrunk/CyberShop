@@ -18,7 +18,33 @@ The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 
 
 
-https://github.com/NullBrunk/E-Commerce/assets/125673909/fdfd9e71-94ea-47a5-80d7-f817b27e1667
+
+https://github.com/NullBrunk/E-Commerce/assets/125673909/bb256fa4-6ef4-47b1-a745-e0b5a1dc62ae
+
+
+https://github.com/NullBrunk/E-Commerce/assets/125673909/a15e4a32-3035-49fa-99bc-f834218a315c
+
+
+
+https://github.com/NullBrunk/E-Commerce/assets/125673909/7ed51d3a-2cf4-4c0e-b333-465cd6b7f975
+
+
+
+https://github.com/NullBrunk/E-Commerce/assets/125673909/0465e9bc-2540-4ce4-a304-d05e39500112
+
+
+
+
+https://github.com/NullBrunk/E-Commerce/assets/125673909/4c6b2c51-15af-4138-8fd4-639f08370a90
+
+
+
+
+
+
+https://github.com/NullBrunk/E-Commerce/assets/125673909/75af32a3-3840-4cac-a018-9f6a3c27a972
+
+
 
 
 
