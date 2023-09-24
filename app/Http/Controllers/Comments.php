@@ -99,8 +99,7 @@ class Comments extends Controller {
 
         if($comment["id_user"] === $_SESSION["id"]){
             $comment -> delete();
-        }
-        else {
+        } else {
             return abort(403);
         }
 
@@ -121,8 +120,7 @@ class Comments extends Controller {
 
         if($comment["id_user"] === $_SESSION["id"]){
             return view("users.form_comment", [ "data" => $comment -> toArray() ]);
-        }
-        else {
+        } else {
             return abort(403); 
         }
     }
@@ -154,8 +152,7 @@ class Comments extends Controller {
                 "content" => htmlspecialchars($request["comment"]),
                 "rating" => $request["rating"], 
             ]);
-        }
-        else {
+        } else {
             return abort(403);
         }
 

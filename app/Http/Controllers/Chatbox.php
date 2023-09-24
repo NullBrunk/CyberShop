@@ -140,8 +140,7 @@ class Chatbox extends Controller {
 
         if(!isset($url[1])){
             return abort(403);
-        }
-        else {
+        } else { 
             $mail = $url[1];
         }
         
@@ -153,8 +152,7 @@ class Chatbox extends Controller {
         if(empty($id)){
             return to_route("contact.show") 
                     -> withErrors(["contact_no_one" => "You cant contact this user !"]);
-        }
-        else {
+        } else {
             $id = $id[0]["id"];
         }
 
@@ -183,8 +181,7 @@ class Chatbox extends Controller {
                 ]);
 
             }
-        }
-        else {
+        } else {
             
             # Else try to store basic text content
 
@@ -240,8 +237,7 @@ class Chatbox extends Controller {
             }
 
             $contact -> delete();
-        }
-        else {
+        } else {
             return abort(403);
         }
     }
@@ -265,8 +261,7 @@ class Chatbox extends Controller {
 
         if($contact_message["id_contactor"] === $_SESSION["id"] and $contact_message["type"] === "text" and $request -> server("HTTP_HX_REQUEST") === "true"){
             return view("users.form_contact", [ "message" => $contact_message]);
-        }
-        else {
+        } else {
             return abort(403);
         }
     }
@@ -291,8 +286,7 @@ class Chatbox extends Controller {
             $contact -> save();
 
             return redirect(url() -> previous() . "#msg" . $contact["id"]);
-        }
-        else {
+        } else {
             return abort(403);
         }
     }

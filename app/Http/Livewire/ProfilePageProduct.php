@@ -24,8 +24,7 @@ class ProfilePageProduct extends Component
 
         if($this -> limit === false){
             $this -> products = $query -> get();
-        }
-        else {
+        } else {
             $this -> products = $query -> limit(6) -> get();
         }
     }

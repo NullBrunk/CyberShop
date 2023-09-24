@@ -90,8 +90,7 @@ class Products extends Controller
 
         if($request -> input("q")){
             $search = $request -> input("q");
-        }
-        else {
+        } else {
             return back();
         }
 
@@ -107,8 +106,7 @@ class Products extends Controller
             -> where("is_main", "=", 1) 
             -> where("name", "like", "%" . $search . "%");
 
-        }
-        else {
+        } else {
             $query = Product::select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 
             -> where("is_main", "=", 1) 
@@ -128,8 +126,7 @@ class Products extends Controller
 
             if(!empty(self::rating($d))){
                 $value = self::rating($d)["icons"]; 
-            }
-            else {
+            } else {
                 $value = "";
             }
 
@@ -148,8 +145,7 @@ class Products extends Controller
                     "search" => $search,
                     "max_price" => $max_price
                 ]);
-        }
-        else {
+        } else {
             return view("products.categories", 
                 [
                     "products" => $data, 
@@ -442,8 +438,7 @@ class Products extends Controller
         // If HTMX is doing the request, don't display the navbar
         if($request -> server("HTTP_HX_REQUEST") === "true" ){
             $view = "products.pagination";
-        }
-        else {
+        } else {
             $view = "products.categories";
         }
 
@@ -456,8 +451,7 @@ class Products extends Controller
             -> desc()  
             -> paginate(4); 
 
-        }
-        else {
+        } else {
 
             $data = Product::select('products.id', 'products.id_user', 'products.name', 'products.price', 'products.descr', 'products.class', 'product_images.id as piid', 'product_images.img', 'product_images.is_main')
             -> join('product_images', 'product_images.id_product', '=', 'products.id') 

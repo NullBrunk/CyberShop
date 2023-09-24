@@ -64,9 +64,7 @@ class Users extends Controller {
 
 
             return to_route("cart.initialize");
-        }
-
-        else {
+        } else {
 
             return to_route("auth.login") -> withErrors([
                 "invalid" => "Wrong mail or password !"
@@ -181,8 +179,7 @@ class Users extends Controller {
             $_SESSION['pass'] = $hashed_new_pass;
 
             return back() -> with("success", true);
-        }
-        else {
+        } else {
             return back() -> withErrors(["pass" => "Invalid password"]);
         }
     }
@@ -225,8 +222,7 @@ class Users extends Controller {
             if($response === 1){
                 session(["deletedaccount" => true]);
                 return to_route("logout");
-            }
-            else {
+            } else {
                 return back() -> withErrors(["password_error" => true]);
             }
         }

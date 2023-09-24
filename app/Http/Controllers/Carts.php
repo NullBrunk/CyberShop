@@ -66,8 +66,7 @@ class Carts extends Controller {
                 "add" => false,
             ];
     
-        }
-        else {
+        } else {
             $product_in_cart -> quantity += 1;
             $product_in_cart -> save();
 
@@ -102,9 +101,7 @@ class Carts extends Controller {
             return [
                 "removed" => true,
             ];    
-        }
-
-        else {
+        } else {
             $product -> quantity = $product -> quantity - 1;
             $product -> save();
 

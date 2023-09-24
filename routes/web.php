@@ -232,3 +232,5 @@ Route::prefix("/payment") -> controller(Payment::class) -> middleware("logged") 
     Route::get("/success", "success") -> name("success");
     Route::get("/cancel", "cancel") -> name("cancel");
 });
+
+Route::view("/a", "payment.success");

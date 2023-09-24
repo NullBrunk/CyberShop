@@ -16,7 +16,7 @@ class Payment extends Controller
 {
     public function create_checkout() {
 
-        $stripe = new StripeClient(env("STRIPE_KEY"));
+        $stripe = new StripeClient(env("STRIPE_KEY_PRIVATE"));
 
         $reference = Str::uuid();
         $_SESSION["reference"] = $reference;
@@ -90,6 +90,7 @@ class Payment extends Controller
         }
         
         Tmp_orders::where("reference", $_SESSION["reference"]) -> delete();
+        Cart::where("id_user", $_SESSION["id"]) -> delete();
         unset($_SESSION["reference"]);
 
         return view("payment.cancel");

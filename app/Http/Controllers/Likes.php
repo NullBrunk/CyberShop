@@ -52,8 +52,7 @@ class Likes extends Controller
             Like::where("id_user", "=", $_SESSION["id"]) 
                 -> where("id_comment", "=", $comment -> id) 
                 -> delete();
-        }   
-        else {
+        } else {
             Like::create([
                 "id_user" => $_SESSION["id"],
                 "id_comment" => $comment -> id,

@@ -21,8 +21,7 @@ class Notifications extends Controller
                 if( isset($to_push[$notif["data"][0]["link"] ])){
                     $number = explode(" m", $to_push[$notif["data"][0]["link"]]["title"])[0];
                     $to_push[$notif["data"][0]["link"]]["title"] = (int)$number + 1 . " messages received.";
-                }
-                else {
+                } else {
                     $to_push[$notif["data"][0]["link"]] = [              
                         "icon" => "bx bx-chat",
                         "title" => "1 message received.",
