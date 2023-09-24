@@ -16,6 +16,37 @@ An E-Commerce website with the Laravel Framework (Currently in dev)
 
 The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 
+# General overview
+![all](https://github.com/NullBrunk/E-Commerce/assets/125673909/42d3eaba-36a1-4689-83e3-90540e955ce3)
+
+# Signup / Login 
+We use Livewire for dynamic validation
+![signuplogin](https://github.com/NullBrunk/E-Commerce/assets/125673909/cfe5bbd4-ac16-4f57-8dd8-dccc6a2a9957)
+
+# Reset password
+![res_password](https://github.com/NullBrunk/E-Commerce/assets/125673909/2022cb86-1bd0-49ae-8178-45fb423096b9)
+
+# Products
+![prodyct](https://github.com/NullBrunk/E-Commerce/assets/125673909/b3de9926-31aa-41db-8b5f-8152486018a8)
+
+
+# Comments
+
+We can post, delete, update or like a comment.
+![comments](https://github.com/NullBrunk/E-Commerce/assets/125673909/14fd8f03-5567-4308-b5b3-6170c18d1a31)
+
+# Profile
+![profile](https://github.com/NullBrunk/E-Commerce/assets/125673909/cd3fd157-a4c7-4d61-9639-8f1dfa1362ba)
+
+# Chatbox 
+
+With HTMX and JS we can easely edit/delete a chat message without having to reload the page
+![chatbox](https://github.com/NullBrunk/E-Commerce/assets/125673909/b94fce1a-231f-4de3-9a57-8b9888dee732)
+
+# Notifications 
+Notifications are dynamicely updated. We use a the Pusher websocket & Livewire events.
+![dynamic notifs](https://github.com/NullBrunk/E-Commerce/assets/125673909/622be458-7692-4fac-b801-e4f9b7b47325)
+
 
 # Installation
 
@@ -29,30 +60,16 @@ First of all you'll need to install MySQL or MariaDB, composer, npm and MailDev 
 ```bash
 # Install composer productions dependencies
 composer install --no-dev
-```
 
-Then, you can change the .env and put your SQL username, password, db_name host and port.
-Start the mariadb/mysql service and run
-
-Then start the MySQL service and run
-
-```bash
 php artisan migrate
-```
 
-Then you'll need to link the storage directory to public/storage/
-
-```bash
 php artisan storage:link
 ```
-
-Finally, you can launch the artisan development server on web port, and launch the API
 
 In one terminal type
 ```
 sudo php artisan serve --port=80
 ```
-
 In another type
 ```
 php artisan server --port=8000
