@@ -47,6 +47,10 @@ With HTMX and JS we can easely edit/delete a chat message without having to relo
 Notifications are dynamicely updated. We use a the Pusher websocket & Livewire events.
 ![dynamic notifs](https://github.com/NullBrunk/E-Commerce/assets/125673909/622be458-7692-4fac-b801-e4f9b7b47325)
 
+# Payment
+Payment handled by stripe.
+![payment](https://github.com/NullBrunk/E-Commerce/assets/125673909/441b4a75-84b0-4439-aa35-c752f85bfb17)
+
 
 # Installation
 
