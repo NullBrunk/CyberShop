@@ -16,6 +16,12 @@ An E-Commerce website with the Laravel Framework (Currently in dev)
 
 The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 
+
+
+https://github.com/NullBrunk/E-Commerce/assets/125673909/fdfd9e71-94ea-47a5-80d7-f817b27e1667
+
+
+
 # Installation
 
 ```bash
