@@ -16,42 +16,6 @@ An E-Commerce website with the Laravel Framework (Currently in dev)
 
 The Web App is iserved on localhost:80, and the API is served on localhost:8000.
 
-# General overview
-![all](https://github.com/NullBrunk/E-Commerce/assets/125673909/42d3eaba-36a1-4689-83e3-90540e955ce3)
-
-# Signup / Login 
-We use Livewire for dynamic validation
-![signuplogin](https://github.com/NullBrunk/E-Commerce/assets/125673909/cfe5bbd4-ac16-4f57-8dd8-dccc6a2a9957)
-
-# Reset password
-![res_password](https://github.com/NullBrunk/E-Commerce/assets/125673909/2022cb86-1bd0-49ae-8178-45fb423096b9)
-
-# Products
-![prodyct](https://github.com/NullBrunk/E-Commerce/assets/125673909/b3de9926-31aa-41db-8b5f-8152486018a8)
-
-
-# Comments
-
-We can post, delete, update or like a comment.
-![comments](https://github.com/NullBrunk/E-Commerce/assets/125673909/14fd8f03-5567-4308-b5b3-6170c18d1a31)
-
-# Profile
-![profile](https://github.com/NullBrunk/E-Commerce/assets/125673909/cd3fd157-a4c7-4d61-9639-8f1dfa1362ba)
-
-# Chatbox 
-
-With HTMX and JS we can easely edit/delete a chat message without having to reload the page
-![chatbox](https://github.com/NullBrunk/E-Commerce/assets/125673909/b94fce1a-231f-4de3-9a57-8b9888dee732)
-
-# Notifications 
-Notifications are dynamicely updated. We use a the Pusher websocket & Livewire events.
-![dynamic notifs](https://github.com/NullBrunk/E-Commerce/assets/125673909/622be458-7692-4fac-b801-e4f9b7b47325)
-
-# Payment
-Payment handled by stripe.
-![payment](https://github.com/NullBrunk/E-Commerce/assets/125673909/441b4a75-84b0-4439-aa35-c752f85bfb17)
-
-
 # Installation
 
 ```bash
