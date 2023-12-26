@@ -51,7 +51,7 @@ https://github.com/NullBrunk/E-Commerce/assets/125673909/574b7ca6-082b-4857-97e0
 
 
 
-# Installation
+# ⚒️ Installation
 
 ```bash
 git clone https://github.com/NullBrunk/E-Commerce
@@ -82,6 +82,6 @@ php artisan server --port=8000
 We have some services that are real-time on this Website. But since i dont want to bloat my tech-stack, i choosed to use https://pusher.com/ instead of a Redis/NodeJS websocket approach. The .env is actually filled with my PUSHER config, but since the free plan is limited, you can go signup and use the premium plan if you want, or use my prebuilt config.  
 
 
-# Thanks
+# 🤝 Thanks
 
 - Thanks to <a href="https://codepen.io/md-khokon">Md-khokon</a> for <a href="https://codepen.io/md-khokon/pen/bPLqzV">this amazing e-mail template</a>
