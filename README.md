@@ -69,11 +69,11 @@ php artisan storage:link
 
 In one terminal type
 ```
-sudo php artisan serve --port=80
+sudo php artisan serve --port 80
 ```
 In another type
 ```
-php artisan server --port=8000
+php artisan server --port 8000
 ```
 
 ### Quick note : 
