@@ -20,7 +20,7 @@ class Products extends Controller
     /**
      * Get the details of a given product
      *
-     * @param Product $product      The product threw model binding 
+     * @param Product $product      The product through model binding 
      * 
      * @return view                 A view with all the details of
      *                              the product, including comments
@@ -74,7 +74,7 @@ class Products extends Controller
 
 
     /**
-     * Search threw all the product with a LIKE operator
+     * Search through all the product with a LIKE operator
      *
      * @param Request $request
      * @param string $category   The category of the product
@@ -261,7 +261,7 @@ class Products extends Controller
     /**
      * Show an edition form to update a product if the user is allowed to 
      * 
-     * @param Product $product      Product threw model binding
+     * @param Product $product      Product through model binding
      *  
      * @return abort | view         a 403 page if he is not allowed
      *                              a view if he is.
@@ -283,7 +283,7 @@ class Products extends Controller
      * Edit a product if the user is allowed to
      *
      * @param UpdateProduct $request     The informations of the new product 
-     * @param Product $id                The product threw model binding
+     * @param Product $id                The product through model binding
      *  
      * @return redirect                  A 403 page if he is not allowed
      *                                   redirect to the page of the updated product
@@ -359,7 +359,7 @@ class Products extends Controller
     /**
      * Calculate the different rating (rounded, real, number of rates) 
      *
-     * @param Product $product      A product threw model binding
+     * @param Product $product      A product through model binding
      *  
      * @return array | redirect     An array with all the valuable informations
      *                              A 404 page if no one rated,
@@ -471,7 +471,7 @@ class Products extends Controller
     /**
      * Pass all the product details in JSON
      *
-     * @param Product $product         The product threw model binding
+     * @param Product $product         The product through model binding
      *
      * @return array
      */
@@ -494,7 +494,7 @@ class Products extends Controller
     /**  
      *  Remove an image of a product
      *
-     *  @param Product_images $id       the image threw model binding
+     *  @param Product_images $id       the image through model binding
      * 
      * @return      401 : Image is the main image, you are unauthorized
      *              403 : Image is not an image of a product that you sell , 403
@@ -523,7 +523,7 @@ class Products extends Controller
     /**
      * Fonction to change the main img of a product
      * 
-     * @param Product_images $image      The image threw model binding
+     * @param Product_images $image      The image through model binding
      * 
      */
 

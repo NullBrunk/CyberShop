@@ -12530,7 +12530,7 @@
             hasBlobSlice() &&
             hasCreateObjectURL() &&
             hasTiming() &&
-            // doesn't need CSSSupports but is a good way to detect Safari 9+ (we do want to support IE11 though)
+            // doesn't need CSSSupports but is a good way to detect Safari 9+ (we do want to support IE11 through)
             (hasCSSSupports() || isIE11());
 
         return function() {

@@ -88,7 +88,7 @@ class Comments extends Controller {
     /**
      * Delete a comment from the database
      *
-     * @param Comment $comment      Model binding of the comment threw his id
+     * @param Comment $comment      Model binding of the comment through his id
      * @param int $article          The id of the commented product
      * 
      * @return redirect             Redirection to the page where the user commented 
@@ -111,7 +111,7 @@ class Comments extends Controller {
     /**
      * Get a view of an update form to update a given comment
      *
-     * @param Comment $comment     Model binding of the comment threw his id
+     * @param Comment $comment     Model binding of the comment through his id
      * 
      * @return view                A view with a form to edit the comment
      */

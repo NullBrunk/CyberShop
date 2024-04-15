@@ -29,10 +29,10 @@ class Carts extends Controller {
     
 
     /**
-     * Ajouter un element au panier soit en incrémentant le champs "quantity",
-     * soit en créant un nouvel enregistrel 
+     * Add a product to the cart either by incrementing the quantity field
+     * either by creating a new record
      *
-     * @param Product $product       Product threw model binding.
+     * @param Product $product       Product through model binding.
 
      *     
      * @return response             
@@ -49,7 +49,7 @@ class Carts extends Controller {
         ]) -> first();          
 
 
-        # If the product isnt already in the cart 
+        # If the product isnt in the cart 
         
         if(!$product_in_cart) {
             $add_to_cart = Cart::create([
@@ -84,7 +84,7 @@ class Carts extends Controller {
 
     /**
      * Remove a product from the SESSION cart and from the Database.
-     *     * 
+     * 
      * @return redirect     
      * 
      */

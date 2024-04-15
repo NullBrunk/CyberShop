@@ -52,7 +52,7 @@ class ForgotPasswords extends Controller
      * Return a view with a form to reset the password if the user provide the good 
      * slug.
      * 
-     * @param ForgotPassword $reset     The forgot passwordthrew model binding
+     * @param ForgotPassword $reset     The forgot passwordthrough model binding
      */
 
     public function reset_form(ForgotPassword $reset) {

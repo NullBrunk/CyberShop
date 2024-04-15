@@ -15,7 +15,7 @@ class Likes extends Controller
     /**
      * Function that returns true if i have liked a product, else false
      *
-     * @param Comment $comment          the comment threw model binding 
+     * @param Comment $comment          the comment through model binding 
      *
      * 
      * @return array
@@ -42,7 +42,7 @@ class Likes extends Controller
      * like the comment
      *
      * @param Like $like            the like model
-     * @param Comment $comment          the comment threw model binding 
+     * @param Comment $comment          the comment through model binding 
      *
      */
 

@@ -44,7 +44,7 @@ class Chatbox extends Controller {
      *
      * @param string $slug     A mail to show, or nothing
      * 
-     * @return view            Une vue avec tous les messages échangés
+     * @return view            A view with all the messages sended and received
      * 
      */
 
@@ -70,7 +70,7 @@ class Chatbox extends Controller {
 
         if($slug) {
 
-            # If the user is contacting himself
+            # If the user is trying to contact himself
             if($slug === $_SESSION["mail"]){
                 return to_route("contact.show") 
                     -> withErrors(["contact_yourself" => "You cant contact yourself"]);  
@@ -135,9 +135,7 @@ class Chatbox extends Controller {
         $url = explode("/chatbox/", url() -> previous());
         
 
-        # If there is no slug, the user is 
-        # trying to send a message to ... no one
-
+        # If there is no slug, the user is trying to send a message to no one
         if(!isset($url[1])){
             return abort(403);
         } else { 
@@ -220,7 +218,7 @@ class Chatbox extends Controller {
     /**
      * Delete a message from a conversation if the user is allowed to
      *
-     * @param Contact $contact     The message to remove threw model binding
+     * @param Contact $contact     The message to remove through model binding
      * 
      * @return redirect            Redirect to the previous url   
      * 
@@ -249,7 +247,7 @@ class Chatbox extends Controller {
      * is not allowed to edit this contact message.
      *
      * @param Request $request
-     * @param Contact $contact     The message threw model binding
+     * @param Contact $contact     The message through model binding
      * 
      * @return view | redirect           
      * 
@@ -272,7 +270,7 @@ class Chatbox extends Controller {
      * Update the message if the user is allowed to, else return 403 
      *
      * @param ContactReq $request       The request with all the valuable information
-     * @param Contact $contact          The message to update threw model binding
+     * @param Contact $contact          The message to update through model binding
      * 
      * @return view | redirect           
      * 
