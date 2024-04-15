@@ -10,11 +10,6 @@
 
 </div>
 
-# E-Commerce
-
-An E-Commerce designed website designed with the Laravel Framework and Livewire + Pusher for some real-time parts. 
-
-
 # ⚒️ Installation
 As always, i created a Dockerfile as well as a docker-compose file if you want to test this app. 
 So you can simply do:
