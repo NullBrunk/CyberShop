@@ -11,7 +11,7 @@
 </div>
 
 # ⚒️ Installation
-As always, I created a Dockerfile as well as a docker-compose file if you want to test this app. 
+As always, I have created a Dockerfile as well as a docker-compose file if you want to test this app. 
 So you can simply do:
 
 ```bash
