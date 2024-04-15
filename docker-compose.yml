@@ -13,7 +13,7 @@ services:
       - ecomm
 
   mysql:
-    image: mysql
+    image: mariadb:11
     networks:
       - ecomm
     environment:
