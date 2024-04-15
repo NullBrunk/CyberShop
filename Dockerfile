@@ -23,9 +23,16 @@ RUN php artisan storage:link
 
 # Create an init script that runs the migration and launch the
 # http server
-RUN echo "php artisan migrate" > /init.sh
+
+# Ensure that the MySQL container is started
+RUN echo "sleep 20" > /init.sh 
+# Do the migration
+RUN echo "php artisan migrate" >> /init.sh
+# Serve the API
 RUN echo "php artisan serve --host 0.0.0.0 --port 8000&" >> /init.sh
+# Serve the app
 RUN echo "php artisan serve --host 0.0.0.0 --port 80" >> /init.sh
+
 RUN chmod +x /init.sh
 
 # Luanch it
