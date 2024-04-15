@@ -1,0 +1,25 @@
+version: "3"
+services:
+  web:
+    build: .
+    ports:
+      - "80:80"
+      - "8000:8000"
+    depends_on:
+      - mysql
+    links:
+      - mysql
+    networks:
+      - ecomm
+
+  mysql:
+    image: mysql
+    networks:
+      - ecomm
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=ecommerce
+
+networks:
+  ecomm:
+
