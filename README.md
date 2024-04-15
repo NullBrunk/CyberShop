@@ -15,10 +15,6 @@
 An E-Commerce designed website designed with the Laravel Framework and Livewire + Pusher for some real-time parts. 
 
 
-# 🗺️ General overview
-https://github.com/NullBrunk/E-Commerce/assets/125673909/bb256fa4-6ef4-47b1-a745-e0b5a1dc62ae
-
-
 # ⚒️ Installation
 As always, i created a Dockerfile as well as a docker-compose file if you want to test this app. 
 So you can simply do:
@@ -32,6 +28,10 @@ docker-compose up
 
 
 # 📚 Deep overview
+
+### 🗺️ General 
+https://github.com/NullBrunk/E-Commerce/assets/125673909/bb256fa4-6ef4-47b1-a745-e0b5a1dc62ae
+
 ### 🔐 Login
 https://github.com/NullBrunk/E-Commerce/assets/125673909/a15e4a32-3035-49fa-99bc-f834218a315c
 
