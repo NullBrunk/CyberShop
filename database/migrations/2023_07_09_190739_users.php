@@ -15,7 +15,7 @@ return new class extends Migration
             $table -> id();
             $table -> string('mail', 50) -> unique();
             $table -> string('pass', 130);
-            $table -> text("avatar") -> unique();
+            $table -> string("avatar", 200) -> unique();
             $table -> boolean('verified') -> default(false);
 
             $table -> timestamps();

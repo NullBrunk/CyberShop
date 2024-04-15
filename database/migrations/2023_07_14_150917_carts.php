@@ -15,7 +15,7 @@ return new class extends Migration
             $table -> unsignedBigInteger('id_product');
             $table -> foreign('id_product') -> references('id') -> on('products') -> onDelete('cascade');
            
-            $table -> int("quantity");
+            $table -> integer("quantity");
 
         });
     }
