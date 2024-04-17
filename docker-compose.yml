@@ -9,6 +9,7 @@ services:
       - mysql
     links:
       - mysql
+      - mailhog
     networks:
       - ecomm
 
@@ -19,6 +20,15 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=ecommerce
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - ecomm
+
 
 networks:
   ecomm:
