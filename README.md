@@ -19,6 +19,10 @@ git clone https://github.com/NullBrunk/E-Commerce && cd E-Commerce
 docker-compose up --build
 ```
 
+**note:**
+- The Web application is hosted on the port **80**
+- The API is hosted on the port **8000**
+- The SMTP mail client is hosted on the port **8025** (you'll receive the mail confirmation here when you signup)
 
 # 📚 Deep overview
 
