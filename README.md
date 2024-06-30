@@ -12,15 +12,16 @@
 </div>
 
 # ⚒️ Installation
-As always, I have created a Dockerfile as well as a docker-compose file if you want to test this app. 
-So you can simply do:
+
+> [!TIP]
+> You can use the Dockerfile as well as the docker-compose file if you want to test this app. 
 
 ```bash
 git clone https://github.com/NullBrunk/E-Commerce && cd E-Commerce 
 docker-compose up --build
 ```
 
-**note:**
+> [!Note]
 - The Web application is hosted on the port **80**
 - The API is hosted on the port **8000**
 - The SMTP mail client is hosted on the port **8025** (you'll receive the mail confirmation here when you signup)
