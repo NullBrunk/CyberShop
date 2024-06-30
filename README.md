@@ -22,9 +22,9 @@ docker-compose up --build
 ```
 
 > [!Note]
-- The Web application is hosted on the port **80**
-- The API is hosted on the port **8000**
-- The SMTP mail client is hosted on the port **8025** (you'll receive the mail confirmation here when you signup)
+> - The Web application is hosted on the port **80**
+> - The API is hosted on the port **8000**
+> - The SMTP mail client is hosted on the port **8025** (you'll receive the mail confirmation here when you signup)
 
 # 📚 Deep overview
 
