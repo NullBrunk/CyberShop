@@ -34,21 +34,21 @@ https://github.com/NullBrunk/E-Commerce/assets/125673909/bb256fa4-6ef4-47b1-a745
 ### 🔐 Signup/Login
 
 > [!Note]
-> Livewire is used for the dynamic validation, and bootstrap for the front-end effects
+> Livewire is used for the dynamic validation, and bootstrap for the front-end effects.
 > 
 https://github.com/NullBrunk/E-Commerce/assets/125673909/a15e4a32-3035-49fa-99bc-f834218a315c
 
 ### 🛒 Product
 
 > [!Note]
-> The drag & drop functionnality is done with filepond, a Markdown-like editor is available for the description section
+> The drag & drop functionnality is done with filepond, a Markdown-like editor is available for the description section.
 > 
 https://github.com/NullBrunk/E-Commerce/assets/125673909/7ed51d3a-2cf4-4c0e-b333-465cd6b7f975
 
 ### 📝 Comments
 
 > [!Note]
-> A Markdown-like editor is available for the feedback section. as well as a product/comment rating system
+> A Markdown-like editor is available for the feedback section. as well as a product/comment rating system.
 
 https://github.com/NullBrunk/E-Commerce/assets/125673909/0465e9bc-2540-4ce4-a304-d05e39500112
 
@@ -69,7 +69,7 @@ https://github.com/NullBrunk/E-Commerce/assets/125673909/75af32a3-3840-4cac-a018
 ### 💬 Chatbox
 
 > [!Note]
-> The dynamic notification component is updated with the Pusher websocket
+> The dynamic notification component is updated with the Pusher websocket + livewire
 
 https://github.com/NullBrunk/E-Commerce/assets/125673909/574b7ca6-082b-4857-97e0-82db359b1f99
 
