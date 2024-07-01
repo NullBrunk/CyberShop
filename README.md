@@ -14,7 +14,7 @@
 # ⚒️ Installation
 
 > [!TIP]
-> You can use the Dockerfile as well as the docker-compose file if you want to test this app. 
+> **You can use the Dockerfile as well as the docker-compose file if you want to test this app.**
 
 ```bash
 git clone https://github.com/NullBrunk/E-Commerce && cd E-Commerce 
