@@ -47,7 +47,7 @@ As you can see, livewire is used for the dynamic validation.
 ### 🛒 Product
 
 You can sell a product by adding it in the “market” section. Give it a name, a price, a category, and a main image. You can also add secondary images.
-<br>Finally, a MD-like editor is available for the product description (bold, italic, list, strikethrough text, links and so on ).
+<br>Finally, a MD-like editor is available for the product description (bold, italic, list, strikethrough text, links and so on).
 
 https://github.com/NullBrunk/E-Commerce/assets/125673909/7ed51d3a-2cf4-4c0e-b333-465cd6b7f975
 
