@@ -82,4 +82,5 @@ https://github.com/NullBrunk/E-Commerce/assets/125673909/574b7ca6-082b-4857-97e0
 The dynamic notification component is updated using livewire + pusher.js websocket. 
 
 # 🤝 Thanks
+
 - Thanks to <a href="https://codepen.io/md-khokon">Md-khokon</a> for <a href="https://codepen.io/md-khokon/pen/bPLqzV">this amazing e-mail template</a>.
