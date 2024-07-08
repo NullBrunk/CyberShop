@@ -5,7 +5,6 @@ LABEL app=CyberShop
 
 # Create the web directory to serve the app
 RUN mkdir -p /var/www/html
-
 WORKDIR /var/www/html/
 
 # Copy all the files from the git repo to the container
@@ -26,14 +25,16 @@ RUN apk add mariadb-client && apk cache clean
 RUN mv wait-for-mysql.sh /
 
 # Ensure that the MySQL container is started and launch migration
-RUN echo "/wait-for-mysql.sh" > /init.sh 
 # Serve the API
-RUN echo "php artisan serve --host 0.0.0.0 --port 8000&" >> /init.sh
 # Serve the app
-RUN echo "php artisan serve --host 0.0.0.0 --port 80" >> /init.sh
 
-RUN chmod +x /wait-for-mysql.sh
-RUN chmod +x /init.sh
+RUN echo "/wait-for-mysql.sh" > /init.sh \
+    && echo "php artisan serve --host 0.0.0.0 --port 8000&" >> /init.sh \
+    && echo "php artisan serve --host 0.0.0.0 --port 80" >> /init.sh
 
-# Luanch it
+
+RUN chmod +x /wait-for-mysql.sh \
+    && chmod +x /init.sh
+
+# Launch it
 CMD ["/init.sh"]
