@@ -1,0 +1,5 @@
+Dockerfile
+phpstan.neon
+phpunit.xml
+README.md
+docker-compose.yml

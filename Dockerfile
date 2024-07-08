@@ -1,5 +1,8 @@
 FROM composer
 
+LABEL version=v1.0.1
+LABEL app=CyberShop
+
 # Create the web directory to serve the app
 RUN mkdir -p /var/www/html
 
@@ -13,14 +16,13 @@ RUN cp /usr/local/etc/php/php.ini-production /usr/local/etc/php/php.ini
 RUN docker-php-ext-install pdo_mysql
 
 # Update and install the laravel deps
-RUN composer update
-RUN composer install --no-dev
+RUN composer update && composer install --no-dev
 
 # Publish the storage directory
 RUN php artisan storage:link
 
 # Install deps for the wait-for-mysql script
-RUN apk add mariadb-client
+RUN apk add mariadb-client && apk cache clean
 RUN mv wait-for-mysql.sh /
 
 # Ensure that the MySQL container is started and launch migration
