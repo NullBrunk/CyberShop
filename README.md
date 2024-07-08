@@ -8,7 +8,6 @@
 
 ![commerce](https://github.com/NullBrunk/CyberShop/assets/125673909/eee9fecb-8e8a-4f66-a510-9eca6278f299)
 
-
 </div>
 
 This project was my first project with the Laravel framework. I wanted to create a dynamic E-Commerce website, so I choose to use the Laravel/Livewire tech stack. Additionally, I used vanilla JS, some library like HTMX and Swiper, and Bootstrap for the front end part. I also used the Pusher websocket to create real-time notifications.
