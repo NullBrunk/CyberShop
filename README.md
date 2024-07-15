@@ -1,6 +1,26 @@
 <div align="center">
 
-<a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a>  
+# CyberShop
+
+<div>
+ <img width="54" src="https://github.com/user-attachments/assets/4f3a319a-592a-48e1-b9dd-6ae4c1233e30">
+    
+ <img width="54" src="https://github.com/user-attachments/assets/59de89f6-6cc0-4ebc-8208-00f8db39d323">
+
+ <img width="54" src="https://github.com/user-attachments/assets/bfdc4de8-9dc5-4c98-a2ae-2dd41f7d455f">
+ 
+ <img width="54" src="https://github.com/user-attachments/assets/0fbab25d-8122-4913-b780-9757d9fad54e">
+
+ <img width="54" src="https://github.com/user-attachments/assets/030604f6-3d32-444c-b130-31c9d75779e7">
+
+ <img width="54" src="https://github.com/user-attachments/assets/200b7a6d-9ff5-49e6-874e-065f86636e1e">
+
+ <img width="54" src="https://github.com/user-attachments/assets/f5730ce2-bbc4-43cc-851b-b5f20e606737">
+ 
+ <img width="54" src="https://github.com/user-attachments/assets/a2554b15-1528-4e29-8769-1413366eba77">
+</div>
+
+<br>
     
 ![GitHub top language](https://img.shields.io/github/languages/top/NullBrunk/CyberShop?style=for-the-badge)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/NullBrunk/CyberShop?style=for-the-badge)
