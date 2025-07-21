@@ -57,6 +57,7 @@ The products are sorted by categories. Each category has its own search bar, and
 
 https://github.com/NullBrunk/CyberShop/assets/125673909/bb256fa4-6ef4-47b1-a745-e0b5a1dc62ae
 
+
 ### 🔐 Signup/Login
 
 You can create an account with whatever email address you want, but you’ll need to validate it by clicking on the link sent by email. You can reset your password using the same email address.
